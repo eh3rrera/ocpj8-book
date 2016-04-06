@@ -2,7 +2,7 @@
 $(document).ready(function(){
 	var nav = '<div class="container"> \
 		<div class="title pull-left"> \
-			<b>Java 8 Programmer II Study Guide: Exam 1Z0-808</b> \
+			<b>Java 8 Programmer II Study Guide</b> \
 		</div> \
 		<div class="menu desktop pull-right"> \
 		  <a class="chapters dropdown-desktop" href="#"><i class="icon-book"></i><span>Chapters</span></a> \
