@@ -96,7 +96,7 @@ $(document).ready(function(){
 		</ul> \
 	  </div>';
 	  
-	var buy_info = '<p><a href="#" target="_blank">Buying the print/kindle version from Amazon</a></p> \
+	var buy_info = '<p><a href="http://www.amazon.com/dp/B01DXSGHX4" target="_blank">Buying the print/kindle version from Amazon</a></p> \
 		<p><a href="https://leanpub.com/java8-programmer-ii-study-guide/" target="_blank">Buying the PDF/EPUB/MOBI version from Leanpub</a></p>';
 	  
 	var problem_info = '<p>Do you have a problem or something to say?</p> \
