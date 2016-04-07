@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter TWENTY-EIGHT</i><br />
+			  Fork/Join Framework</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Use parallel Fork/Join Framework.</i><br /></p>
+			  
+			</div>	
+		</div>
+	</div>
+
+  
+  <div class="container">
+  
+	<div class="column">
+
+	  <h2>Answers</h2>
+
+	  <p><b>1. The correct answer is B.</b><br />
+	  Option A is false. <code>RecursiveAction</code> is a subclass of <code>ForkJoinTask</code>.<br />
+	  Option B is true. By default, one thread per CPU is created.<br />
+	  Option C is false. You don't need to shut down a <code>ForkJoinPool</code> explicitly. It's closed when the program ends.<br />
+	  Option D is false. <code>fork()</code> doesn't block the program, just add a task to the thread's queue.</p>
+
+	  <p><br /></p>
+
+	  <p><b>2. The correct answer is B.</b><br />
+	  If you don't call <code>fork()</code> before <code>join()</code>, there won't be any result to get.<br />
+	  If you call <code>join()</code> before <code>compute()</code>, the program will perform like if it was executed in one thread because of the blocking produced by <code>join()</code>.</p>
+
+	  <p><br /></p>
+
+	  <p><b>3. The correct answer is D.</b><br />
+	  <code>ForkJoinTask.invoke()</code> returns the same type as the generic type of <code>RecursiveTask</code> is the only true statement. You can't use <code>invokeAll()</code> because this method doesn't return a result. You can't use an <code>ExecutorService</code> because it uses a different type of threads and you can't have an action triggered when the task is completed.</p>
+
+	  <p><br /></p>
+
+	  <p><b>4. The correct answer is C.</b><br />
+	  The program tries to get the value of the nth Fibonacci number with the Fork/Join framework, but it does it in a very inefficient way because the subtasks will be very small.<br />
+	  Remember that Fork/Join is not the best choice for everything. Actually, solving this problem using this recursive algorithm is not the best way, but implementing it with an algorithm where Karatsuba multiplication and parallelism can be used will certainly provide much better results.</p>
+	  
+	  <p><br /></p>
+
+	  
+  
+	</div>
+  </div>
+		
+  <footer></footer>
+  
+</body>
+</html>

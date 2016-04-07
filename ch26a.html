@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter TWENTY-SIX</i><br />
+			  Thread Basics</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Create worker threads using Runnable, Callable and use an ExecutorService to concurrently execute tasks.<br /></i><i>Identify potential threading problems among deadlock, starvation, livelock, and race conditions.</i></p>
+			  
+			</div>	
+		</div>
+	</div>
+
+  
+  <div class="container">
+  
+	<div class="column">
+
+	  <h2>Answers</h2>
+
+	  <p><b>1. The correct answer is B.</b><br />
+	  <code>submit()</code> only takes either a <code>Runnable</code> or a <code>Callable</code> instance as an argument. The method signature of the <code>Callable</code> interface doesn't take any argument and returns a value.</p>
+
+	  <p><br /></p>
+
+	  <p><b>2. The correct answers are C and D.</b><br />
+	  Option A is false. The <code>submit()</code> method accepts a <code>Runnable</code> and returns a <code>Future</code> object.<br />
+	  Option B is false. <code>Executors</code> don't implement <code>AutoCloseable</code>. They are closed by calling the <code>shutdown()</code> or <code>shutdownNow()</code> methods.<br />
+	  Option C is true. A <code>Callable</code> task can be canceled with the <code>Future.cancel()</code> method.<br />
+	  Option D is true. A thread pool contains worked threads, which are generic threads that can execute any <code>Runnable</code> or <code>Callable</code> task.</p>
+
+	  <p><br /></p>
+
+	  <p><b>3. The correct answer is A.</b><br />
+	  The <code>get(long, TimeUnit)</code> method waits for at most the given time for the task to complete, and then retrieves its result. If there's no result yet, an exception is thrown.</p>
+
+	  <p><br /></p>
+
+	  <p><b>4. The correct answer is B.</b><br />
+	  One thread locks A and is trying to acquire the lock of B. At the same another thread is doing the opposite, it locks B and is trying the acquire the lock of A, so they are permanently blocked. This is a deadlock situation.</p>
+
+	  <p><br /></p>
+
+	  
+  
+	</div>
+  </div>
+		
+  <footer></footer>
+  
+</body>
+</html>

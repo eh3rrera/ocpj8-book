@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Part NINE</i><br />
+			  JDBC and Localization</h1>
+
+			  <h1><i class="chapter">Chapter TWENTY-NINE</i><br />
+			  JDBC API</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Describe the interfaces that make up the core of the JDBC API including the Driver, Connection, Statement, and ResultSet interfaces and their relationship to provider implementations.<br /></i><i>Identify the components required to connect to a database using the DriverManager class including the JDBC URL.<br /></i><i>Submit queries and read results from the database including creating statements, returning result sets, iterating through the results, and properly closing result sets, statements, and connections.</i></p>
+			  
+			</div>
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>Introduction</h2>
+
+	  <p>The Java Database Connectivity API (or JDBC) defines how we can access a relational database. You can find its classes and interfaces in the <code>java.sql</code> package.</p>
+
+	  <p>The latest version of this API, included in Java 8, is JDBC 4.2.</p>
+
+	  <p>The main benefit of using JDBC is that it hides the implementation details between databases by using a set of interfaces so you don't have to write different code for accessing different databases.</p>
+
+	  <p>This chapter assumes you know how to use SQL to select, insert, update, and delete records from a database entity.</p>
+
+	  <p>Also, for this chapter, it's recommended (although not required) to have access to a database to do some practices and test some concepts, however, it won't teach how to install or use a one.</p>
+
+	  <p>If you don't have a database installed (or access to one), perhaps the easiest way is to use <code>JavaDB</code>, a database that is shipped with Java that can be used as an embedded or network server database and you can find in the db directory of the JDK installation.</p>
+
+	  <p>For the exam, you are expected to know the main interfaces of JDBC, how to connect to a database, read results of a query, and perform some operations such as inserts or updates.</p>
+
+	  <h2>JDBC Interfaces</h2>
+
+	  <p>When using JDBC, you work with interfaces rather than implementations. Those implementations come from a JDBC driver.</p>
+
+	  <p>A driver is just a JAR file with classes that know how to talk to a specific database. For example, for MySQL, there's a <code>mysql-connector-java-XXX.jar</code>, where XXX is the version of the database.</p>
+
+	  <p>But you don't need to know how the classes inside the driver are implemented or named, you just have to know the four main interfaces that they have to implement:</p>
+
+	  <ul>
+		<li><code>java.sql.Driver</code><br />
+		Every JDBC driver must implement this interface to know how to connect to the database.</li>
+
+		<li><code>java.sql.Connection</code><br />
+		The implementation provides methods for getting information about the database, create statements, and managing connections.</li>
+
+		<li><code>java.sql.Statement</code><br />
+		The implementation is used to execute SQL statements and returning results.</li>
+
+		<li><code>java.sql.ResultSet</code><br />
+		The implementation is used for retrieving and updating the results of a query.</li>
+	  </ul>
+
+	  <p>In addition to these interfaces, an important class is <code>java.sql.DriverManager</code>, which keeps track of the loaded JDBC drivers and gets the actual connection to the database.</p>
+
+	  <h2>Connecting to a Database</h2>
+
+	  <p>First, to work with a database, you need to connect to it. This is done using the <code>DriverManager</code> class.</p>
+
+	  <p>Before attempting to establish a connection, the <code>DriverManager</code> class has to load and register the implementation(s) of <code>java.sql.Driver</code> (that knows how to establish the connection).</p>
+
+	  <p>Maybe you've seen in some program a line like this:</p>
+
+	  <p><code class="java hljs">Class.forName(<span class="hljs-string">"com.database.Driver"</span>)</code></p>
+
+	  <p>This loads the Driver implementation so <code>DriverManager</code> can register the driver. However, this is no longer required since JDBC 4.0, because <code>DriverManager</code> automatically loads any JDBC 4.0 driver in the classpath.</p>
+
+	  <p>Once the drivers are loaded, you can connect to a database with the <code>static</code> method <code>DriverManager.getConnection()</code>:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">Connection <span class="hljs-title">getConnection</span><span class="hljs-params">(String url)</span><br />
+	  Connection <span class="hljs-title">getConnection</span><span class="hljs-params">(String url,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Properties info)</span><br />
+	  Connection <span class="hljs-title">getConnection</span><span class="hljs-params">(String url,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;String user,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;String passw)</span></span></code></p>
+
+	  <p>This method will look through the registered drivers to see if it can find one that can make a connection using the given URL.</p>
+
+	  <p>The URL varies depending on the database used. However, they have three parts in common:</p>
+	  <hr />
+
+	  <h4><i>JDBC URL Format</i></h4>
+
+	  <p><i>1. Protocol (always the same)</i></p>
+
+	  <p><i>2. Subprotocol (most of the time the name of the database/type of the driver )</i></p>
+
+	  <p><i><code style="color:black;"><span style="font-size:300%"><b>jdbc:mysql://host:3306/db</b></span></code></i></p>
+
+	  <p><i>3. Database specific connection properties (most of the time the location of the database with format: //SERVER:HOST/DATABASE_NAME)</i></p>
+	  <hr />
+
+	  <ul>
+		<li>The first part is always the same, <i>jdbc</i>.</li>
+
+		<li>The second part, most of the time, is the name of the database and/or the type of the driver, like <i>mysql</i>, <i>postgresql</i>, <i>oracle:thin</i>.</li>
+
+		<li>The last part varies according to the database, but most of the time, it contains the name (or IP) of the host, the port and the name of the database you're connecting to, like <i>//192.168.0.1:3306/db1</i>.</li>
+	  </ul>
+
+	  <p>Here are some URL examples:</p>
+
+	  <p><code class="java hljs">jdbc:postgresql://localhost/test<br />
+	  jdbc:sqlserver://localhost\SQLEXPRESS;databasename=db<br />
+	  jdbc:derby:db;create=true</code></p>
+
+	  <p>We can connect to the database calling this method to get a <code>Connection</code> object:</p>
+
+	  <p><code class="java hljs">Connection con =<br />
+	  &nbsp; &nbsp; DriverManager.getConnection(<span class="hljs-string">"jdbc:mysql://localhost/db"</span>);</code></p>
+
+	  <p>If you need to pass a user or password for authentication, we can use:</p>
+
+	  <p><code class="java hljs">Properties props = <span class="hljs-keyword">new</span> Properties();<br />
+	  props.put(<span class="hljs-string">"user"</span>, <span class="hljs-string">"db_user"</span>);<br />
+	  props.put(<span class="hljs-string">"password"</span>, <span class="hljs-string">"db_p4assw0rd"</span>);<br />
+	  Connection con =<br />
+	  &nbsp; &nbsp; DriverManager.getConnection(<span class="hljs-string">"jdbc:mysql://localhost/db"</span>,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; props);</code></p>
+
+	  <p>Or:</p>
+
+	  <p><code class="java hljs">Connection con =<br />
+	  &nbsp; &nbsp; DriverManager.getConnection(<span class="hljs-string">"jdbc:mysql://localhost/db"</span>,<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "db_user"</span>,<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "db_p4assw0rd"</span>);</code></p>
+
+	  <p>Before you program finishes, you need to close the connection (otherwise you can run out of connections).</p>
+
+	  <p>Luckily, <code>Connection</code> implements <code>AutoCloseable</code>, which means you can use a <code>try-with-resources</code> to automatically close the connection:</p>
+
+	  <p><code class="java hljs">String url = <span class="hljs-string">"jdbc:mysql://localhost/db"</span>;<br />
+	  String user = <span class="hljs-string">"db_user"</span>;<br />
+	  String passw = <span class="hljs-string">" db_p4assw0rd"</span>;<br />
+	  <span class="hljs-keyword"><br />
+	  try</span>(Connection con =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; DriverManager.getConnection(url, user, passw)) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Database operations</span><br />
+	  } <span class="hljs-keyword">catch</span>(SQLException e) {<br />
+	  &nbsp; &nbsp; System.out.format(<span class="hljs-string">"%d-%s-%s"</span>,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; e.getErrorCode(),<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; e.getSQLState(),<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; e.getMessage());<br />
+	  }</code></p>
+
+	  <p>An&nbsp;<code>SQLException</code> is thrown whenever there's an error in JDBC (like when the driver to connect to the database is not found in the classpath) and many methods of the JDBC API throw it, so it has to be caught (or retrieved in the case of suppressed exceptions).</p>
+
+	  <p>As this exception is used for many errors, to know what went wrong, you have to use <code>getMessage()</code>, which returns a description of the error, <code>getSQLState()</code> that returns a standard error code, or <code>getErrorCode()</code>, which returns the database-specific code for the error.</p>
+
+	  <p>Now that we have a <code>Connection</code> object, we can execute some SQL statements.</p>
+
+	  <h2>Executing Queries</h2>
+
+	  <p>You a need a <code>Statement</code> object to execute queries and perform database operations.</p>
+
+	  <p>There are three <code>Statement</code> interfaces:</p>
+
+	  <ul>
+		<li><code>java.sql.Statement</code><br />
+		Represents simple SQL statements to the database, without parameters.</li>
+
+		<li><code>java.sql.PreparedStatement</code><br />
+		Represents precompiled SQL statements to execute statements multiple times efficiently. It can accept input parameters.</li>
+
+		<li><code>java.sql.CallableStatement</code><br />
+		Used to execute stored procedures. It can accept input as well as output parameters.</li>
+	  </ul>
+
+	  <p>In practice, <code>PreparedStatement</code> is the one often used, but for the exam, you only need to know <code>Statement</code>.</p>
+
+	  <p>You can get a <code>Statement</code> from a <code>Connection</code> object using the <code>createStatement()</code> method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">Statement <span class="hljs-title">createStatement</span><span class="hljs-params">()</span><br />
+	  Statement <span class="hljs-title">createStatement</span><span class="hljs-params">(<span class="hljs-keyword">int</span> resultSetType,<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int</span> resultSetConcurrency)</span></span></code></p>
+
+	  <p>When creating a <code>Statement</code>, you can define the type of the result set and its concurrency mode.</p>
+
+	  <p>There are three types of result sets:</p>
+
+	  <ul>
+		<li><code>ResultSet.TYPE_FORWARD_ONLY</code><br />
+		This is the default type. When specified, you can only go once through the results and in the order they were retrieved.</li>
+
+		<li><code>ResultSet.TYPE_SCROLL_INSENSITIVE</code><br />
+		When specified, you can go both forward and backward through the results and to a particular position in the result set.</li>
+
+		<li><code>ResultSet.TYPE_SCROLL_SENSITIVE</code><br />
+		When specified, you can also go forward, backward and to a particular position in the result set, but you will always see the latest changes to the data while using it, in contrast with <code>TYPE_SCROLL_INSENSITIVE</code>, which it's not "sensitive" to changes to the data.</li>
+	  </ul>
+
+	  <p>In practice, most drivers don't support <code>TYPE_SCROLL_SENSITIVE</code>. If you ask for it and is not available, you will get either <code>TYPE_FORWARD_ONLY</code> or (more likely) <code>TYPE_SCROLL_INSENSITIVE</code>.</p>
+
+	  <p>There are two concurrency modes:</p>
+
+	  <ul>
+		<li><code>ResultSet.CONCUR_READ_ONLY</code><br />
+		This is the default mode. When specified, you can't update (using an <code>INSERT</code>, <code>UPDATE</code>, or <code>DELETE</code> statement) a result set.</li>
+
+		<li><code>ResultSet.CONCUR_UPDATABLE</code><br />
+		It indicates that the result set can be updated.</li>
+	  </ul>
+
+	  <p>If you ask for a <code>CONCUR_UPDATABLE</code> mode and your driver doesn't support it, you can get a <code>CONCUR_READ_ONLY</code> mode.</p>
+
+	  <p>Most of the time, the default values are used:</p>
+
+	  <p><code class="java hljs">Statement stmt = con.createStatement();</code></p>
+
+	  <p>Now that we have a <code>Statement</code> object, we have three methods at our disposal to execute SQL commands:</p>
+
+	  <table border="1" width="100%">
+		<tr>
+		  <td style="text-align: center;"><b>Method</b></td>
+
+		  <td style="text-align: center;"><b>Supported SQL statements</b></td>
+
+		  <td style="text-align: center;"><b>Return type</b></td>
+		</tr>
+
+		<tr>
+		  <td><code>execute()</code></td>
+
+		  <td><code>SELECT</code><br />
+		  <code>INSERT</code><br />
+		  <code>UPDATE</code><br />
+		  <code>DELETE</code><br />
+		  <code>CREATE</code></td>
+
+		  <td><code>boolean</code> (<code>true</code> for <code>SELECT</code>, <code>false</code> for the rest)</td>
+		</tr>
+
+		<tr>
+		  <td><code>executeQuery(</code>)</td>
+
+		  <td><code>SELECT</code></td>
+
+		  <td><code>ResultSet</code></td>
+		</tr>
+
+		<tr>
+		  <td><code>executeUpdate()</code></td>
+
+		  <td><code>INSERT</code><br />
+		  <code>UPDATE</code><br />
+		  <code>DELETE</code><br />
+		  <code>CREATE</code></td>
+
+		  <td>Number of affected rows (zero for <code>CREATE</code>)</td>
+		</tr>
+	  </table>
+
+	  <p>A <code>Statement</code> object has to be closed, but like <code>Connection</code>, it implements <code>AutoCloseable</code>&nbsp;so it can be used with a <code>try-with-resources</code> also:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span>(Connection con =<br />
+	  &nbsp; &nbsp; &nbsp; DriverManager.getConnection(url, user, passw);<br />
+	  &nbsp; &nbsp; &nbsp; Statement stmt = con.createStatement()) {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;boolean</span> hasResults = stmt.execute(<span class="hljs-string">"SELECT * FROM user"</span>);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;if</span>(hasResults) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; // To retrieve the object with the results</span><br />
+	  &nbsp; &nbsp; &nbsp; ResultSet rs = stmt.getResultSet()<br />
+	  &nbsp; &nbsp;} <span class="hljs-keyword">else</span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; // To get the number of affected rows</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; int</span> affectedRows = stmt.getUpdateCount();<br />
+	  &nbsp; &nbsp;}<br />
+	  &nbsp; &nbsp;ResultSet rs = stmt.executeQuery(<span class="hljs-string">"SELECT * FROM user"</span>);<br />
+	  &nbsp; &nbsp;stmt.executeUpdate(<span class="hljs-string">"INSERT INTO user(id, name) "</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; + <span class="hljs-string">"VALUES(1, 'George')"</span>); <span class="hljs-comment">// Returns 1</span><br />
+	  &nbsp; &nbsp;stmt.executeUpdate(<span class="hljs-string">"UPDATE user SET name='Joe' "</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; + <span class="hljs-string">"WHERE id = 1"</span>); <span class="hljs-comment">// Returns 1<br /></span>&nbsp; &nbsp;stmt.executeUpdate(<span class="hljs-string">"DELETE FROM user "</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; + <span class="hljs-string">"WHERE id = 1"</span>); <span class="hljs-comment">// Returns 1</span><br />
+	  } <span class="hljs-keyword">catch</span>(SQLException e) {<br />
+	  &nbsp; &nbsp;e.printStackTrace();<br />
+	  }</code></p>
+
+	  <p>Choose the correct <code>execute()</code> method based on the type of SQL statement you're using, because if you use the wrong method, an <code>SQLException</code> will be thrown.</p>
+
+	  <p>When you use a <code>SELECT</code> statement, you can read the result through a <code>ResultSet</code> object, which we'll review next.</p>
+
+	  <h2>Reading Results</h2>
+
+	  <p>A <code>ResultSet</code> object is used to read the results of a query in a tabular format (rows containing the columns specified).</p>
+
+	  <p>This object keeps a cursor that points to the current row and you can only read one row at a time.</p>
+
+	  <p>In the beginning, the cursor is just before the first row. Calling the <code>next()</code> method will advance the cursor one position and return <code>true</code> if there's data, or <code>false</code> if there isn't any. This way, you can iterate in a loop over the entire result set.</p>
+
+	  <p>Like <code>Connection</code> and <code>Statement</code>, a <code>ResultSet</code> object needs to be closed too and also implements <code>AutoCloseable</code>:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span>(Connection con =<br />
+	  &nbsp; &nbsp; &nbsp; DriverManager.getConnection(url, user, passw);<br />
+	  &nbsp; &nbsp; &nbsp; Statement stmt = con.createStatement();<br />
+	  &nbsp; &nbsp; &nbsp; ResultSet rs =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;stmt.executeQuery(<span class="hljs-string">"SELECT * FROM user"</span>)) {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;while</span>(rs.next()) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; // Read row</span><br />
+	  &nbsp; &nbsp;}<br />
+	  } <span class="hljs-keyword">catch</span>(SQLException e) {<br />
+	  &nbsp; &nbsp;e.printStackTrace();<br />
+	  }</code></p>
+
+	  <p>It's a good practice to close these resources in this way, but it's not required. Here are the rules for closing JDBC resources:</p>
+
+	  <ul>
+		<li>The <code>ResultSet</code>&nbsp;object is closed first, then the <code>Statement</code>&nbsp;object, then the <code>Connection</code>&nbsp;object.</li>
+
+		<li>A <code>ResultSet</code> is automatically closed when another <code>ResultSet</code> is executed from the same <code>Statement</code> object.</li>
+
+		<li>Closing a <code>Statement</code> also closes the <code>ResultSet</code>.</li>
+
+		<li>Closing a <code>Connection</code> also closes the <code>Statement</code> and <code>ResultSet</code> objects.</li>
+	  </ul>
+
+	  <p>If the query doesn't return results, a <code>ResultSet</code> object is still returned (although <code>next()</code> will return <code>false</code> at the first call).</p>
+
+	  <p>Remember, <code>next()</code> doesn't just tell if there are more records to process, it also advances the cursor to the next row.</p>
+
+	  <p>This means that even when you want to access only the first row of the result, you still have to call <code>next()</code> (preferably with an <code>if</code> statement, because if there are no elements, an&nbsp;<code>SQLException</code> is thrown if you try to access any):</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">if</span>(rs.next) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// Access the first element if there's any</span><br />
+	  }</code></p>
+
+	  <p>Now, to actually get the data, <code>ResultSet</code> has getter methods for a lot of data types, for example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-title">getInt</span>() returns an <span class="hljs-keyword">int</span><br />
+	  <span class="hljs-title">getLong</span><span class="hljs-params">()</span> returns a Long<br />
+	  <span class="hljs-title">getString</span><span class="hljs-params">()</span> returns a String<br />
+	  <span class="hljs-title">getObject</span><span class="hljs-params">()</span> returns an Object<br />
+	  <span class="hljs-title">getDate</span><span class="hljs-params">()</span> returns a java.sql.Date<br />
+	  <span class="hljs-title">getTime</span><span class="hljs-params">()</span> returns a java.sql.Time<br />
+	  <span class="hljs-title">getTimeStamp</span><span class="hljs-params">()</span> returns java.sql.Timestamp</span></code></p>
+
+	  <p>For each method, there are two versions:</p>
+
+	  <ul>
+		<li>One that takes a <code>String</code> that represents the name of the column (this is <b>NOT</b> case-sensitive).</li>
+
+		<li>Another one that takes an <code>int</code> that represents the column index according to the order declared in the <code>SELECT</code> clause. The first column starts with <code><b>1</b></code>, not <code><b>0</b></code>.</li>
+	  </ul>
+
+	  <p>For example:</p>
+
+	  <p><code class="java hljs">Result rs = stmt.executeQuery(<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; "SELECT id, name FROM user"<br /></span>);<br />
+	  <span class="hljs-keyword">while</span>(rs.next()) {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;int</span> id = rs.getString(<span class="hljs-string">"id"</span>);<br />
+	  &nbsp; &nbsp;String name = rs.getString(<span class="hljs-string">"name"</span>);<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// Do something</span><br />
+	  }</code></p>
+
+	  <p>It's equivalent to:</p>
+
+	  <p><code class="java hljs">Result rs = stmt.executeQuery(<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; "SELECT id, name FROM user"<br /></span>);<br />
+	  <span class="hljs-keyword">while</span>(rs.next()) {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;int</span> id = rs.getString(<span class="hljs-number">1</span>);<br />
+	  &nbsp; &nbsp;String name = rs.getString(<span class="hljs-number">2</span>);<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// Do something</span><br />
+	  }</code></p>
+
+	  <p>If we reference a non-existent column (either by index or name), an&nbsp;<code>SQLException</code> will be thrown.</p>
+
+	  <p>Notice that methods <code>getDate()</code>, <code>getTime()</code>, and <code>getTimeStamp()</code> don't return standard date or time objects, so they might need to be converted, for example:</p>
+
+	  <p><code class="java hljs">Result rs = stmt.executeQuery(<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; "SELECT insertion_date FROM user"<br /></span>);<br />
+	  <span class="hljs-keyword">while</span>(rs.next()) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// Getting the date part</span><br />
+	  &nbsp; &nbsp;java.sql.Date sqlDate = rs.getDate(<span class="hljs-number">1</span>);<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// Getting the time part</span><br />
+	  &nbsp; &nbsp;java.sql.Time sqlTime = rs.getDate(<span class="hljs-number">1</span>);<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// Getting both, the date and time part</span><br />
+	  &nbsp; &nbsp;java.sql.Timestamp sqlTimestamp =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; rs.getTimestamp(<span class="hljs-number">1</span>);<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// Converting date</span><br />
+	  &nbsp; &nbsp;LocalDate localDate = sqlDate.toLocalDate();<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// Converting time</span><br />
+	  &nbsp; &nbsp;LocalTime localTime = sqlTime.toLocalTime();<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// Converting timestamp</span><br />
+	  &nbsp; &nbsp;Instant instant = sqlTimestamp.toInstant();<br />
+	  &nbsp; &nbsp;LocalDateTime localDateTime =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; sqlTimestamp.toLocalDateTime();<br />
+	  }</code></p>
+
+	  <p>So that's how you work with <code>TYPE_FORWAD_ONLY</code> result sets.</p>
+
+	  <p>When working with scrollable result sets (<code>TYPE_SCROLL_INSENSITIVE</code> or <code>TYPE_SCROLL_SENSITIVE</code>), we have a lot of options to move the cursor.</p>
+
+	  <p>Here's the complete list of methods for moving the cursor (just remember that all methods, except <code>next()</code>, need a scrollable result set):</p>
+
+	  <table border="1" width="100%">
+		<tr>
+		  <td style="text-align: center;"><b>Method</b></td>
+
+		  <td style="text-align: center;"><b>Description</b></td>
+		</tr>
+
+		<tr>
+		  <td><code>boolean absolute(int row)</code></td>
+
+		  <td>Moves the cursor to the given row number in the result set, counting from the beginning (if the argument is positive) or the end (if negative).<br />
+		  If the argument is zero, the cursor is moved before the first row.<br />
+		  It returns true if the cursor is moved to a valid position or false if the cursor is before the first row or after the last row.</td>
+		</tr>
+
+		<tr>
+		  <td><code>void afterLast()</code></td>
+
+		  <td>Moves the cursor after the last row.</td>
+		</tr>
+
+		<tr>
+		  <td><code>void beforeFirst()</code></td>
+
+		  <td>Moves the cursor before the first row.</td>
+		</tr>
+
+		<tr>
+		  <td><code>boolean first()</code></td>
+
+		  <td>Moves the cursor to the first row.<br />
+		  It returns true if the cursor is on a valid row or false if there are no rows in the result set.</td>
+		</tr>
+
+		<tr>
+		  <td><code>boolean last()</code></td>
+
+		  <td>Moves the cursor to the last row.<br />
+		  Returns true if the cursor is on a valid row or false if there are no rows in the result set.</td>
+		</tr>
+
+		<tr>
+		  <td><code>boolean next()</code></td>
+
+		  <td>Moves the cursor to the next row.<br />
+		  It returns true if the new current row is valid or false if there are no more rows.</td>
+		</tr>
+
+		<tr>
+		  <td><code>boolean previous()</code></td>
+
+		  <td>Moves the cursor to the previous row.<br />
+		  It returns true if the new current row is valid or false if the cursor is before the first row.</td>
+		</tr>
+
+		<tr>
+		  <td><code>boolean relative(int rows)</code></td>
+
+		  <td>Moves the cursor a relative number of rows, either positive or negative.<br />
+		  Moving beyond the first/last row in the result set positions the cursor before/after the first/last row.<br />
+		  It returns true if the cursor is on a valid row, false otherwise.</td>
+		</tr>
+	  </table>
+
+	  <p>So considering this table:</p>
+
+	  <table border="1" width="100%">
+		<tr>
+		  <td style="text-align: center;"><b>ID</b></td>
+
+		  <td style="text-align: center;"><b>NAME</b></td>
+
+		  <td style="text-align: center;"><b>INSERTION_DATE</b></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;">1</td>
+
+		  <td style="text-align: center;">THOMAS</td>
+
+		  <td style="text-align: center;">2016 / 03 / 01</td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;">2</td>
+
+		  <td style="text-align: center;">LAURA</td>
+
+		  <td style="text-align: center;">2016 / 03 / 01</td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;">3</td>
+
+		  <td style="text-align: center;">MAX</td>
+
+		  <td style="text-align: center;">2016 / 03 / 01</td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;">4</td>
+
+		  <td style="text-align: center;">KIM</td>
+
+		  <td style="text-align: center;">2016 / 03 / 01</td>
+		</tr>
+	  </table>
+
+	  <p>The following program shows some of these methods. Try to follow it:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span>(Connection con =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;DriverManager.getConnection(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;url, user, passw);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Statement stmt = con.createStatement(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ResultSet.TYPE_SCROLL_INSENSITIVE,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ResultSet.CONCUR_READ_ONLY);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ResultSet rs = stmt.executeQuery(<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "SELECT * FROM user"</span>)) {<br />
+	  &nbsp; &nbsp;System.out.println(rs.absolute(<span class="hljs-number">3</span>)); <span class="hljs-comment">// true</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.getInt(<span class="hljs-number">1</span>)); <span class="hljs-comment">// 3</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.absolute(-<span class="hljs-number">3</span>)); <span class="hljs-comment">// true</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.getInt(<span class="hljs-number">1</span>)); <span class="hljs-comment">// 2</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.absolute(<span class="hljs-number">0</span>)); <span class="hljs-comment">// false</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.next()); <span class="hljs-comment">// true</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.getInt(<span class="hljs-number">1</span>)); <span class="hljs-comment">// 1</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.previous()); <span class="hljs-comment">// false</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.relative(<span class="hljs-number">2</span>)); <span class="hljs-comment">// true</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.getInt(<span class="hljs-number">1</span>)); <span class="hljs-comment">// 2</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.relative(<span class="hljs-number">0</span>)); <span class="hljs-comment">// true</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.getInt(<span class="hljs-number">1</span>)); <span class="hljs-comment">// 2</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.relative(<span class="hljs-number">10</span>)); <span class="hljs-comment">// false</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.previous()); <span class="hljs-comment">// true</span><br />
+	  &nbsp; &nbsp;System.out.println(rs.getInt(<span class="hljs-number">1</span>)); <span class="hljs-comment">// 4</span><br />
+	  } <span class="hljs-keyword">catch</span>(SQLException e) {<br />
+	  &nbsp; &nbsp;e.printStackTrace();<br />
+	  }</code></p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li>The Java Database Connectivity API (or JDBC) defines how we can access a relational database. You can find its classes and interfaces in the <code>java.sql</code> package.</li>
+
+		<li>When using JDBC, you work with interfaces rather than implementations. Those implementations come from a JDBC driver. The four main interfaces to implement are:
+
+		  <ul>
+			<li><code>java.sql.Driver</code></li>
+
+			<li><code>java.sql.Connection</code></li>
+
+			<li><code>java.sql.Statement</code></li>
+
+			<li><code>java.sql.ResultSet</code></li>
+		  </ul>
+		</li>
+
+		<li>In addition to these interfaces, an important class is <code>java.sql.DriverManager</code>, which keeps track of the loaded JDBC drivers and gets the actual connection to the database.</li>
+
+		<li>Once the drivers are loaded, you can connect to a database with the static method <code>DriverManager.getConnection(String url)</code>.</li>
+
+		<li>The URL varies depending on the database used. However, they have three parts in common:
+
+		  <ul>
+			<li>The first part is always the same, <i>jdbc</i>.</li>
+
+			<li>The second part, most of the time, is the name of the database and/or the type of the driver, like <i>mysql</i>, <i>postgresql</i>, <i>oracle:thin</i>.</li>
+
+			<li>The last part varies according to the database, but most of the time, it contains the name (or IP) of the host, the port and the name of the database you're connecting to, like <i>//192.168.0.1:3306/db1</i>.</li>
+		  </ul>
+		</li>
+
+		<li>Once we have a <code>Connection</code> object, we can execute some SQL statements by getting a <code>Statement</code> object.</li>
+
+		<li>You can get a <code>Statement</code> from a <code>Connection</code> object using the <code>createStatement()</code> method.</li>
+
+		<li>When creating a <code>Statement</code>, you can define the type of the result set and its concurrency mode.</li>
+
+		<li>There are three types of result sets, <code>ResultSet.TYPE_FORWARD_ONLY</code>, <code>ResultSet.TYPE_SCROLL_INSENSITIVE</code>, <code>ResultSet.TYPE_SCROLL_SENSITIVE</code>.</li>
+
+		<li>There are two concurrency modes, <code>ResultSet.CONCUR_READ_ONLY</code>, <code>ResultSet.CONCUR_UPDATABLE</code>.</li>
+
+		<li>We have three methods in <code>Statement</code> to execute SQL commands:
+
+		  <ul>
+			<li><code>boolean execute(String sql</code>)</li>
+
+			<li><code>ResultSet executeQuery(String sql)</code></li>
+
+			<li><code>int executeUpdate(String sql)</code></li>
+		  </ul>
+		</li>
+
+		<li>A <code>ResultSet</code> object is used to read the results of a query in a tabular format (rows containing the columns specified). This object keeps a cursor that points to the current row and you can only read one row at a time.</li>
+
+		<li>The rules for closing JDBC resources are:
+
+		  <ul>
+			<li>The <code>ResultSet</code> object is closed first, then the <code>Statement</code> object, then the <code>Connection</code> object.</li>
+
+			<li>A <code>ResultSet</code> is automatically closed when another <code>ResultSet</code> is executed from the same <code>Statement</code> object.</li>
+
+			<li>Closing a <code>Statement</code> also closes the <code>ResultSet</code>.</li>
+
+			<li>Closing a <code>Connection</code> also closes the <code>Statement</code> and <code>ResultSet</code> objects.</li>
+		  </ul>
+		</li>
+
+		<li>To actually get the data, <code>ResultSet</code> has getter methods for a lot of data types. For each method, there are two versions, one that takes the name of the column and another that takes its column index.</li>
+
+		<li>When working with scrollable result sets (<code>TYPE_SCROLL_INSENSITIVE</code> or <code>TYPE_SCROLL_SENSITIVE</code>), we have a lot of options to move the cursor, like <code>absolute(int row)</code>, <code>first()</code>, <code>previous()</code>, and <code>relative(int rows)</code>.</li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_29_1</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; try</span>(Connection con =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; DriverManager.getConnection(<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"jdbc:mysql://localhost"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Statement stmt = con.createStatement();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ResultSet rs = stmt.executeQuery(<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"SELECT * FROM user"</span>)) {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;while</span>(rs.next()) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(rs.getObject(<span class="hljs-number">1</span>));<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
+	  &nbsp; &nbsp; &nbsp; } <span class="hljs-keyword">catch</span>(SQLException e) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"SQLException"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;}<br />
+	  }</code></p>
+
+	  <p>What is the result if the query doesn't return any result?<br />
+	  A. <code>SQLException</code><br />
+	  B. Nothing is printed<br />
+	  C. Compilation fails<br />
+	  D. An uncaught exception occurs at runtime</p>
+
+	  
+
+	  <p>2. Which of the following is equivalent to <code>rs.absolute(-1)</code>?<br />
+	  A. <code>rs.absolute(1);</code><br />
+	  B. <code>rs.afterLast();</code><br />
+	  C. <code>rs.last();</code><br />
+	  D. <code>rs.relative(-1);</code></p>
+
+	  
+
+	  <p>3. Which of the following options shows the correct order to close database resources?<br />
+	  A. <code>ResultSet</code>, <code>Connection</code>, <code>Statement</code><br />
+	  B. <code>Statement</code>, <code>ResultSet</code>, <code>Connection</code><br />
+	  C. <code>Connection</code>, <code>Statement</code>, <code>ResultSet</code><br />
+	  D. <code>ResultSet</code>, <code>Statement</code>, <code>Connection</code></p>
+
+	  
+
+	  <p>4. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_29_4</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; try</span>(Connection con =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; DriverManager.getConnection(<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"jdbc:mysql://localhost"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Statement stmt = con.createStatement()) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;stmt.execute(<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "INSERT INTO user VALUES(1,'Joe')"<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;);<br />
+	  &nbsp; &nbsp; &nbsp; } <span class="hljs-keyword">catch</span>(SQLException e) { <span class="hljs-comment">/** ... */</span> }<br />
+	  &nbsp; &nbsp;}<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>true</code><br />
+	  B. <code>false</code><br />
+	  C. <code>1</code><br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>5. Which of the following can be a valid way to get the value of the first column of a row?<br />
+	  A. <code>rs.getInteger(1);</code><br />
+	  B. <code>rb.getString("0");</code><br />
+	  C. <code>rb.getObject(0);</code><br />
+	  D. <code>rb.getBoolean(1);</code></p>
+
+  
+
+  
+    
+		<div class="answers">
+			<a href="ch29a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch28.html">28. Fork/Join Framework</a>
+			</div>
+			<div class="next">
+				<a href="ch30.html">30. Localization</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter FOUR</i><br />
+			  Interfaces</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Develop code that declares, implements and/or extends interfaces and use the atOverride annotation.</i></p>
+			  
+			</div>	
+		</div>
+	</div>
+
+  
+  <div class="container">
+  
+	<div class="column">
+
+	  <h2>Answers</h2>
+
+	  <p><b>1. The correct answer is C.</b><br />
+	  Since the method signature (method name plus parameter list) of <code>aMethod()</code> is the same in interface <code>A</code> and class <code>Test</code>, the compiler thinks the method in <code>Test</code> is overriding the default method. However, overriding a method includes the return type, which doesn't match (<code>long</code> vs.&nbsp;<code>int</code>).</p>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>2. The correct answer is C.</b><br />
+	  An interface method cannot be <code>default</code> and <code>static</code> at the same time. Therefore, a compile-time error is generated.</p>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>3. The correct answer is A.</b><br />
+	  There is nothing wrong with the code. The <code>equals</code> method is valid since it doesn't have the signature of <code>Object</code>'s equals. The <code>this</code> keyword can be used inside the default method (it refers to the object that implements the interface) and because we are testing the same instance (<code>q</code>), the code returns <code>true</code>.</p>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>4. The correct answer is B.</b><br />
+	  If you want to call the default method of the super interface from the implementing class, you have to do it with the following syntax:</p>
+
+	  <p><code class="java hljs">NameOfTheInteface.<span class="hljs-keyword">super</span>.defaultMethod();</code></p>
+
+	  <p>However, this only works with the most direct super interface. In the case of the example, interface <code>E</code>. If you try to use:</p>
+
+	  <p><code class="java hljs">D.<span class="hljs-keyword">super</span>.print();</code></p>
+
+	  <p>The compiler would generate an error saying that you cannot bypass a more specific direct super type.</p>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>5. The correct answer is C.</b><br />
+	  Interface <code>F</code> defines a <code>static</code> method that should be used as:</p>
+
+	  <p><code class="java hljs">F.test();</code></p>
+
+	  <p>Since the type of variable <code>q</code> is <code>F</code>, you cannot use method <code>test()</code>. If the type of variable <code>q were Question_4_5</code>, the program would print <code>Q</code> test.</p>
+
+	  <p>By the way, <code>test()</code> on <code>Question_4_5</code> doesn't redefine <code>test()</code> on interface <code>F</code>, since <code>static</code> methods on interfaces are not inherited.</p>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>6. The correct answer is B.</b><br />
+	  In an inheritance hierarchy, the most specific method is the one called, which in this case, it's the one defined by <code>Question_4_6</code>.</p>
+
+	  <p>If we remove method <code>doIt()</code> in class <code>Question_4_6</code>, the program would stop compiling, since the default method <code>doIt()</code> inherited from <code>G</code> will conflict with the method inherited from <code>H</code> (the compiler wouldn't know which one you intended to run).</p>
+		
+	  <p><b><br /></b></p>
+	  
+  
+	</div>
+  </div>
+		
+  <footer></footer>
+  
+</body>
+</html>

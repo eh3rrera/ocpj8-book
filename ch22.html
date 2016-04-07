@@ -1,0 +1,1204 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter TWENTY-TWO</i><br />
+			  Time Zones and Daylight Savings</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Work with dates and times across time zones and manage changes resulting from daylight savings including Format date and times values.</i><br /></p>
+			  
+			</div>	
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>Core time zone classes</h2>
+
+	  <p>Before Java 8, if we wanted to work with time zone information, we have to use the class <code>java.util.TimeZone</code>. Now with the new Date/Time API, there'are new and better options.</p>
+
+	  <p>They are:</p>
+
+	  <p><b>ZoneID</b><br />
+	  Represents the ID of time zone. For example, <i>Asia/Tokyo</i>.</p>
+
+	  <p><b>ZoneOffset</b><br />
+	  Represents a time zone offset. It's a subclass of ZoneId. For example, <i>-06:00</i>.</p>
+
+	  <p><b>ZonedDateTime</b><br />
+	  Represents a date/time with time zone information. For example, <i>2015-08-30T20:05:12.463-05:00[America/Mexico_City]</i>.</p>
+
+	  <p><b>OffsetDateTime</b><br />
+	  Represents a date/time with an offset from UTC/Greenwich. For example, <i>2015-08-30T20:05:12.463-05:00</i>.</p>
+
+	  <p><b>OffsetTime</b><br />
+	  Represents a time with an offset from UTC/Greenwich. For example, <i>20:05:12.463-05:00</i>.</p>
+
+	  <p>Just like the classes of the previous chapter, these one are located in the <code>java.time</code> package and are immutable.</p>
+
+	  <h2>ZoneId and ZoneOffset classes</h2>
+
+	  <p>The world is divided into time zones in which the same standard time is kept. By convention, a time zone is expressed as the number of hours different from the Coordinated Universal Time (<i>UTC</i>). Since the Greenwich Mean Time (<i>GMT</i>) and the Zulu time (<i>Z</i>), used in military, have no offset from <i>UTC</i>, they're often used as synonyms.</p>
+
+	  <p>Java uses the Internet Assigned Numbers Authority (IANA) database of time zones, which keeps a record of all known time zones around the world and is updated many times per year.</p>
+
+	  <p>Each time zone has an ID, represented by the class <code>java.time.ZoneId</code>. There are three types of ID:</p>
+
+	  <p>The first type just states the offset from UTC/GMT time. They are represented by the class <code>ZoneOffset</code> and they consist of digits starting with <i>+</i> or <i>-</i>, for example,&nbsp;<i>+02:00</i>.</p>
+
+	  <p>The second type also states the offset from UTC/GMT time, but with one of the following prefixes: <i>UTC</i>, <i>GMT</i> and <i>UT</i>, for example, <i>UTC+11:00</i>. They are also represented by the class <code>ZoneOffset</code>.</p>
+
+	  <p>The third type is region based. These IDs have the format <i>area/city</i>, for example, <i>Europe/London</i>.</p>
+
+	  <p>You can get all the available zone IDs with the <code>static</code> method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">Set&lt;String&gt; <span class="hljs-title">getAvailableZoneIds</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p>For example, to print them in the console:</p>
+
+	  <p><code class="java hljs">ZoneId.getAvailableZoneIds().stream().forEach(System.out::println);</code></p>
+
+	  <p>To get the zone ID of your system use the <code>static</code> method:</p>
+
+	  <p><code class="java hljs">ZoneId.systemDefault()</code></p>
+
+	  <p>Under the cover, it uses <code>java.util.TimeZone.getDefault()</code> to find the default time zone and converts it to a <code>ZoneId</code>.</p>
+
+	  <p>If you want to create a specific <code>ZoneId</code> object use the method <code>of()</code>:</p>
+
+	  <p><code class="java hljs">ZoneId singaporeZoneId = ZoneId.of(<span class="hljs-string">"Asia/Singapore"</span>);</code></p>
+
+	  <p>This method parses the ID producing a <code>ZoneOffset</code> or a <code>ZoneRegion</code> (both extend from <code>ZoneId</code>).</p>
+
+	  <p>Actually, the above line produces a <code>ZoneRegion</code>. A <code>ZoneOffset</code> is returned if for example, ID is <i>Z</i>, or starts with <i>+</i> or <i>-</i>. For example:</p>
+
+	  <p><code class="java hljs">ZoneId zoneId = ZoneId.of(<span class="hljs-string">"Z"</span>); <span class="hljs-comment">// Z represents the zone ID for UTC<br /></span>ZoneId zoneId = ZoneId.of(<span class="hljs-string">"-2"</span>); <span class="hljs-comment">// -02:00</span></code></p>
+
+	  <p>The rules for this method are:</p>
+
+	  <ul>
+		<li>If the zone ID equals Z, the result is <code>ZoneOffset.UTC</code>. Any other letter will throw an exception.</li>
+
+		<li>If the zone ID starts with + or -, the ID is parsed as a <code>ZoneOffset</code> using <code>ZoneOffset.of(String)</code>.</li>
+
+		<li>If the zone ID equals <code>GMT</code>, <code>UTC</code> or <code>UT</code> then the result is a <code>ZoneId</code> with the same ID and rules equivalent to <code>ZoneOffset.UTC</code>.</li>
+
+		<li>If the zone ID starts with <code>UTC+</code>, <code>UTC-</code>, <code>GMT+</code>, <code>GMT-</code>, <code>UT+</code> or <code>UT-</code> then the ID is split in two, with a two or three letter prefix and a suffix starting with the sign. The suffix is parsed as a <code>ZoneOffset</code>. The result will be a <code>ZoneId</code> with the specified prefix and the normalized offset ID.</li>
+
+		<li>All other IDs are parsed as region-based zone IDs. If the format is invalid (it has to match the expression <code>[A-Za-z][A-Za-z0-9~/._+-]+)</code> or is not found, an exception is thrown.<br /></li>
+	  </ul>
+
+	  <p>Remember that a <code>ZoneOffset</code> represents an offset, generally from UTC. This class has a lot more constructors than <code>ZoneId</code>:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// The offset must be in the range of -18 to +18<br /></span>ZoneOffset offsetHours = ZoneOffset.ofHours(<span class="hljs-number">1</span>);<br />
+	  <span class="hljs-comment">// The range is -18 to +18 for hours and 0 to ± 59 for minutes<font color="#000000"><br /></font></span><span class="hljs-comment">// If the hours are negative, the minutes must be negative or zero<br /></span>ZoneOffset offsetHrMin = ZoneOffset.ofHoursMinutes(<span class="hljs-number">1</span>, <span class="hljs-number">30</span>);<br />
+	  <span class="hljs-comment">// The range is -18 to +18 for hours and 0 to ± 59 for mins and secs<font color="#000000">]<br /></font></span><span class="hljs-comment">// If the hours are negative, mins and secs must be negative or zero<br /></span>ZoneOffset offsetHrMinSe = ZoneOffset.ofHoursMinutesSeconds(<span class="hljs-number">1</span>,<span class="hljs-number">30</span>,<span class="hljs-number">0</span>);<br />
+	  <span class="hljs-comment">// The offset must be in the range -18:00 to +18:00<font color="#000000"><br /></font></span><span class="hljs-comment">// Which corresponds to -64800 to +64800<br /></span>ZoneOffset offsetTotalSeconds = ZoneOffset.ofTotalSeconds(<span class="hljs-number">3600</span>);<br />
+	  <span class="hljs-comment">// The range must be from +18:00 to -18:00<br /></span>ZoneOffset offset = ZoneOffset.of(<span class="hljs-string">"+01:30:00"</span>);</code></p>
+
+	  <p>The formats accepted by the <code>of()</code> method are:</p>
+
+	  <ul>
+		<li><i>Z (for UTC)</i></li>
+
+		<li><i>+h</i></li>
+
+		<li><i>+hh</i></li>
+
+		<li><i>+hh:mm</i></li>
+
+		<li><i>-hh:mm</i></li>
+
+		<li><i>+hhmm</i></li>
+
+		<li><i>-hhmm</i></li>
+
+		<li><i>+hh:mm:ss</i></li>
+
+		<li><i>-hh:mm:ss</i></li>
+
+		<li><i>+hhmmss</i></li>
+
+		<li><i>-hhmmss</i><br /></li>
+	  </ul>
+
+	  <p>If you pass an invalid format or an out-of-range value to any of these methods, an exception is thrown.</p>
+
+	  <p>To get the value of the offset, you can use:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Gets the offset as int<font color="#000000"><br /></font></span><span class="hljs-keyword">int</span> offsetInt = offset.get(ChronoField.OFFSET_SECONDS);<br />
+	  <span class="hljs-comment">// Gets the offset as long<font color="#000000"><br /></font></span><span class="hljs-keyword">long</span> offsetLong= offset.getLong(ChronoField.OFFSET_SECONDS);<br />
+	  <span class="hljs-comment">// Gets the offset in seconds<br /></span><span class="hljs-keyword">int</span> offsetSeconds = offset.getTotalSeconds();</code></p>
+
+	  <p><code>ChronoField.OFFSET_SECONDS</code> is the only accepted value of <code>ChronoField</code>, so the three statements above return the same result. Other values throw an exception.</p>
+
+	  <p>Anyway, once you have a <code>ZoneId</code> object, you can use it to create a <code>ZonedDateTime</code> instance.</p>
+	  <hr />
+
+	  <h4>A ZonedDateTime object</h4>
+
+	  <div>
+		<small><i>&nbsp; &nbsp; &nbsp; &nbsp; Date</i></small>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<small><i>Offset</i></small>
+	  </div>
+
+	  <div>
+		<code>2015-08-31 T08:45:20.000 +02:00[Africa/Cairo]</code>
+	  </div>
+
+	  <div>
+		<small><i>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Time</i></small>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<small><i>Time zone</i></small>
+		<hr />
+	  </div>
+
+	  <h2>ZonedDateTime class</h2>
+
+	  <p>A <code>java.time.ZonedDateTime</code> object represents a point in time relative to a time zone.</p>
+
+	  <p>A <code>ZonedDateTime</code> object has three parts:</p>
+
+	  <ul>
+		<li>A date</li>
+
+		<li>A time</li>
+
+		<li>A time zone</li>
+	  </ul>
+
+	  <p>Which means that it stores all date and time fields, to a precision of nanoseconds, and a time zone with a zone offset.</p>
+
+	  <p>So once you have a <code>ZoneId</code> object, you can combine it with a <code>LocalDate</code>, a <code>LocalDateTime</code>, or an <code>Instant</code>, to transform it into <code>ZonedDateTime</code>:</p>
+
+	  <p><code class="java hljs">ZoneId australiaZone = ZoneId.of(<span class="hljs-string">"Australia/Victoria"</span>);<br />
+	  <br />
+	  LocalDate date = LocalDate.of(<span class="hljs-number">2010</span>, <span class="hljs-number">07</span>, <span class="hljs-number">03</span>);<br />
+	  ZonedDateTime zonedDate = date.atStartOfDay(australiaZone);<br />
+	  <br />
+	  LocalDateTime dateTime = LocalDateTime.of(<span class="hljs-number">2010</span>, <span class="hljs-number">07</span>, <span class="hljs-number">03</span>, <span class="hljs-number">09</span>, <span class="hljs-number">00</span>);<br />
+	  ZonedDateTime zonedDateTime = dateTime.atZone(australiaZone);<br />
+	  <br />
+	  Instant instant = Instant.now();<br />
+	  ZonedDateTime zonedInstant = instant.atZone(australiaZone);</code></p>
+
+	  <p>Or using the <code>of</code> method:</p>
+
+	  <p><code class="java hljs">ZonedDateTime zonedDateTime2 =<br />
+	  &nbsp; &nbsp; ZonedDateTime.of(LocalDate.now(), LocalTime.now(), australiaZone);<br />
+	  ZonedDateTime zonedDateTime3 =<br />
+	  &nbsp; &nbsp; ZonedDateTime.of(LocalDateTime.now(), australiaZone);<br />
+	  ZonedDateTime zonedDateTime4 =<br />
+	  &nbsp; &nbsp; ZonedDateTime.ofInstant(Instant.now(), australiaZone);<br />
+	  <span class="hljs-comment">// year, month, day, hours, minutes, seconds, nanoseconds, zoneId<br /></span>ZonedDateTime zonedDateTime5 =<br />
+	  &nbsp; &nbsp; ZonedDateTime.of(<span class="hljs-number">2015</span>,<span class="hljs-number">1</span>,<span class="hljs-number">30</span>,<span class="hljs-number">13</span>,<span class="hljs-number">59</span>,<span class="hljs-number">59</span>,<span class="hljs-number">999</span>, australiaZone);</code></p>
+
+	  <p>You can also get the current date/time from the system clock in the default time zone with:</p>
+
+	  <p><code class="java hljs">ZonedDateTime now = ZonedDateTime.now();</code></p>
+
+	  <p>From a <code>ZonedDateTime</code> you can get <code>LocalDate</code>, <code>LocalTime</code>, or a <code>LocalDateTime</code> (without the time zone part) with:</p>
+
+	  <p><code class="java hljs">LocalDateTime currentDate = now.toLocalDate();<br />
+	  LocalDateTime currentTime = now.toLocalTime();<br />
+	  LocalDateTime currentDateTime = now.toLocalDateTime();</code></p>
+
+	  <p><code>ZonedDateTime</code> also have most of the methods of <code>LocalDateTime</code> that we reviewed in the previous chapter:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">//To get the value of a specified field</span><br />
+	  <span class="hljs-keyword">int</span> day = now.getDayofMonth();<br />
+	  <span class="hljs-keyword">int</span> dayYear = now.getDayOfYear();<br />
+	  <span class="hljs-keyword">int</span> nanos = now.getNano();<br />
+	  Month monthEnum = now.getMonth();<br />
+	  <span class="hljs-keyword">int</span> year = now.get(ChronoField.YEAR);<br />
+	  <span class="hljs-keyword">long</span> micro = now.getLong(ChronoField.MICRO_OF_DAY);<br />
+	  <span class="hljs-comment">// This is new, gets the zone offset such as "-03:00"<br /></span>ZoneOffset offset = now.getOffset();<br />
+	  <span class="hljs-comment">// To create another instance<br /></span>ZonedDateTime zdt1 = now.with(ChronoField.HOUR_OF_DAY, <span class="hljs-number">10</span>);<br />
+	  ZonedDateTime zdt2 = now.withSecond(<span class="hljs-number">49</span>);<br />
+	  <span class="hljs-comment">// Since these methods return a new instance, we can chain them!<br /></span>ZonedDateTime zdt3 = now.withYear(<span class="hljs-number">2013</span>).withMonth(<span class="hljs-number">12</span>);<br />
+	  <span class="hljs-comment"><font color="#000000"><br /></font>// The following two methods are specific to ZonedDateTime</span><br />
+	  <span class="hljs-comment">// Returns a copy of the date/time with a<font color="#000000"><br /></font></span><span class="hljs-comment">// different zone, retaining the instant<br /></span>ZonedDateTime zdt4 = now.withZoneSameInstant(australiaZone);<br />
+	  <span class="hljs-comment">// Returns a copy of this date/time with a different time zone,<font color="#000000"><br /></font></span><span class="hljs-comment">// retaining the local date/time if it's valid for the new time zone<br /></span>ZonedDateTime zdt5 = now.withZoneSameLocal(australiaZone);<br />
+	  <span class="hljs-comment"><font color="#000000"><br /></font>// Adding<br /></span>ZonedDateTime zdt6 = now.plusDays(<span class="hljs-number">4</span>);<br />
+	  ZonedDateTime zdt7 = now.plusWeeks(<span class="hljs-number">3</span>);<br />
+	  ZonedDateTime zdt8 = newYear2001.plus(<span class="hljs-number">2</span>, ChronoUnit.HOURS);<br />
+	  <span class="hljs-comment"><font color="#000000"><br /></font>// Subtracting<br /></span>ZonedDateTime zdt9 = now.minusMinutes(<span class="hljs-number">20</span>);<br />
+	  ZonedDateTime zdt10 = now.minusNanos(<span class="hljs-number">99999</span>);<br />
+	  ZonedDateTime zdt11 = now.minus(<span class="hljs-number">10</span>, ChronoUnit.SECONDS);</code></p>
+
+	  <p>The method <code>toString()</code> returns the date/time in the format of a <code>LocalDateTime</code> followed by a <code>ZoneOffset</code>, optionally, a <code>ZoneId</code> if it is not the same as the offset, and omitting the parts with value zero:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Prints 2014-09-19T00:30Z<br /></span>System.out.println(<br />
+	  &nbsp; &nbsp; ZonedDateTime.of(<span class="hljs-number">2014</span>,<span class="hljs-number">9</span>,<span class="hljs-number">19</span>,<span class="hljs-number">0</span>,<span class="hljs-number">30</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,ZoneId.of(<span class="hljs-string">"Z"</span>)));<br />
+	  <span class="hljs-comment">// Prints 2015-08-31T12:39:27.492-04:00[America/Montreal]<br /></span>System.out.println(<br />
+	  &nbsp; &nbsp; ZonedDateTime.now(ZoneId.of(<span class="hljs-string">"America/Montreal"</span>)));</code></p>
+
+	  <h2>Daylight savings</h2>
+
+	  <p>Many countries in the world adopt what is called Daylight Saving Time (DST), the practice of advance the clock by an hour in the summer (well, not exactly in the summer in all countries but let's bear with this) when the daylight savings time starts.</p>
+
+	  <p>When the daylight time ends, clocks are set back by an hour. This is done to make better use of natural daylight.</p>
+
+	  <p><code>ZonedDateTime</code> is fully aware of DST.</p>
+
+	  <p>For an example, let's take a country where DST is fully observed, like Italy (UTC/GMT +2).</p>
+
+	  <p>In 2015, DST started in Italy on March, 29th and ended on October, 25th. This means that on:</p>
+
+	  <p><i>March, 29 2015 at <b>2:00:00</b> A.M. clocks were turned <b>forward</b> 1 hour to<br />
+	  March, 29 2015 at <b>3:00:00</b> A.M. local daylight time instead</i><br />
+	  (So a time like March, 29 2015 2:30:00 A.M. didn't actually exist!)</p>
+
+	  <p><i>October, 25 2015 at <b>3:00:00</b> A.M. clocks were turned <b>backward</b> 1 hour to<br />
+	  October, 25 2015 at <b>2:00:00</b> A.M. local daylight time instead</i><br />
+	  (So a time like October, 25 2015 2:30:00 A.M. actually existed twice!)</p>
+
+	  <p>If we create an instance of <code>LocalDateTime</code> with this date/time and print it:</p>
+
+	  <p><code class="java hljs">LocalDateTime ldt = LocalDateTime.of(<span class="hljs-number">2015</span>, <span class="hljs-number">3</span>, <span class="hljs-number">29</span>, <span class="hljs-number">2</span>, <span class="hljs-number">30</span>);<br />
+	  System.out.println(ldt);</code></p>
+
+	  <p>The result will be:</p>
+
+	  <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">03</span>-<span class="hljs-number">29</span>T02:<span class="hljs-number">30</span></code></p>
+
+	  <p>But if we create an instance of <code>ZonedDateTime</code> for Italy (notice that the format uses a city, not a country) and printed:</p>
+
+	  <p><code class="java hljs">ZonedDateTime zdt = ZonedDateTime.of(<br />
+	  <span class="hljs-number">&nbsp; &nbsp; &nbsp;2015</span>, <span class="hljs-number">3</span>, <span class="hljs-number">29</span>, <span class="hljs-number">2</span>, <span class="hljs-number">30</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, ZoneId.of(<span class="hljs-string">"Europe/Rome"</span>));<br />
+	  System.out.println(zdt);</code></p>
+
+	  <p>The result will be just like in the real world when using DST:</p>
+
+	  <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">03</span>-<span class="hljs-number">29</span>T03:<span class="hljs-number">30</span>+<span class="hljs-number">02</span>:<span class="hljs-number">00</span>[Europe/Rome]</code></p>
+
+	  <p>But be careful. We have to use a regional <code>ZoneId</code>, a <code>ZoneOffset</code> won't do the trick because this class doesn't have the zone rules information to account for DST:</p>
+
+	  <p><code class="java hljs">ZonedDateTime zdt1 = ZonedDateTime.of(<br />
+	  <span class="hljs-number">&nbsp; &nbsp; &nbsp;2015</span>, <span class="hljs-number">3</span>, <span class="hljs-number">29</span>, <span class="hljs-number">2</span>, <span class="hljs-number">30</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, ZoneOffset.ofHours(<span class="hljs-number">2</span>));<br />
+	  ZonedDateTime zdt2 = ZonedDateTime.of(<br />
+	  <span class="hljs-number">&nbsp; &nbsp; &nbsp;2015</span>, <span class="hljs-number">3</span>, <span class="hljs-number">29</span>, <span class="hljs-number">2</span>, <span class="hljs-number">30</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, ZoneId.of(<span class="hljs-string">"UTC+2"</span>));<br />
+	  System.out.println(zdt1); System.out.println(zdt2);</code></p>
+
+	  <p>The result will be:</p>
+
+	  <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">03</span>-<span class="hljs-number">29</span>T02:<span class="hljs-number">30</span>+<span class="hljs-number">02</span>:<span class="hljs-number">00</span>[UTC+<span class="hljs-number">02</span>:<span class="hljs-number">00</span>] <span class="hljs-number">2015</span>-<span class="hljs-number">03</span>-<span class="hljs-number">29</span>T02:<span class="hljs-number">30</span>+<span class="hljs-number">02</span>:<span class="hljs-number">00</span></code></p>
+
+	  <p>When DST ends, something similar happens</p>
+
+	  <p><code class="java hljs">LocalDateTime ldt = LocalDateTime.of(<span class="hljs-number">2015</span>, <span class="hljs-number">10</span>, <span class="hljs-number">25</span>, <span class="hljs-number">3</span>, <span class="hljs-number">30</span>);<br />
+	  System.out.println(ldt);</code></p>
+
+	  <p>The result will be:</p>
+
+	  <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">10</span>-<span class="hljs-number">25</span>T02:<span class="hljs-number">30</span></code></p>
+
+	  <p>When we create an instance of <code>ZonedDateTime</code> for Italy, we have to add an hour to see the effect (otherwise we we'll be creating the <code>ZonedDateTime</code> at 3:00 of the new time):</p>
+
+	  <p><code class="java hljs">ZonedDateTime zdt = ZonedDateTime.of(<br />
+	  <span class="hljs-number">&nbsp; &nbsp; 2015</span>, <span class="hljs-number">10</span>, <span class="hljs-number">25</span>, <span class="hljs-number">2</span>, <span class="hljs-number">30</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, ZoneId.of(<span class="hljs-string">"Europe/Rome"</span>));<br />
+	  ZonedDateTime zdt2 = zdt.plusHours(<span class="hljs-number">1</span>);<br />
+	  System.out.println(zdt);<br />
+	  System.out.println(zdt2);</code></p>
+
+	  <p>The result will be:</p>
+
+	  <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">10</span>-<span class="hljs-number">25</span>T02:<span class="hljs-number">30</span>+<span class="hljs-number">02</span>:<span class="hljs-number">00</span>[Europe/Rome] <span class="hljs-number">2015</span>-<span class="hljs-number">10</span>-<span class="hljs-number">25</span>T02:<span class="hljs-number">30</span>+<span class="hljs-number">01</span>:<span class="hljs-number">00</span>[Europe/Rome]</code></p>
+
+	  <p>We also need to be careful when adjusting the time across the DST boundary with a version of the methods <code>plus()</code> and <code>minus()</code> that takes a <code>TemporalAmount</code> implementation, in other words, a <code>Period</code> or a <code>Duration</code>. This is because both differ in their treatment of daylight savings time.</p>
+
+	  <p>Consider one hour before the beginning of DST in Italy:</p>
+
+	  <p><code class="java hljs">ZonedDateTime zdt = ZonedDateTime.of(<br />
+	  <span class="hljs-number">&nbsp; &nbsp; 2015</span>, <span class="hljs-number">3</span>, <span class="hljs-number">29</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, ZoneId.of(<span class="hljs-string">"Europe/Rome"</span>));</code></p>
+
+	  <p>When we add a <code>Duration</code> of one day:</p>
+
+	  <p><code class="java hljs">System.out.println(zdt.plus(Duration.ofDays(<span class="hljs-number">1</span>)));</code></p>
+
+	  <p>The result is:</p>
+
+	  <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">03</span>-<span class="hljs-number">30</span>T02:<span class="hljs-number">00</span>+<span class="hljs-number">02</span>:<span class="hljs-number">00</span>[Europe/Rome]</code></p>
+
+	  <p>When we add a <code>Period</code> of one day:</p>
+
+	  <p><code class="java hljs">System.out.println(zdt.plus(Period.ofDays(<span class="hljs-number">1</span>)));</code></p>
+
+	  <p>The result is:</p>
+
+	  <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">03</span>-<span class="hljs-number">30</span>T01:<span class="hljs-number">00</span>+<span class="hljs-number">02</span>:<span class="hljs-number">00</span>[Europe/Rome]</code></p>
+
+	  <p>The reason is that <code>Period</code> adds a <i>conceptual</i> date, while <code>Duration</code> adds <i>exactly</i> one day (24 hours or 86, 400 seconds) and when it crosses the DST boundary, one hour is added, and the final time is <i>02:00</i> instead of <i>01:00</i>.</p>
+
+	  <h2>OffsetDateTime and OffsetTime</h2>
+
+	  <p><code>OffsetDateTime</code> represents an object with date/time information and an offset from UTC, for example, <i>2015-01-01T11:30-06:00</i>.</p>
+
+	  <p>You may think&nbsp;<code>Instant</code>, <code>OffsetDateTime</code> and <code>ZonedDateTime</code> are very much alike, after all, they all store the date and time to a nanosecond precision. However, there are subtle but important differences:</p>
+
+	  <ul>
+		<li><code>Instant</code> represents a point in time in the UTC time zone.</li>
+
+		<li><code>OffsetDateTime</code> represents a point in time with an offset (any offset).</li>
+
+		<li><code>ZonedDateTime</code> represents a point in time in a time zone (any time zone), adding full time zone rules like daylight saving time adjustments.</li>
+	  </ul>
+
+	  <p><code>OffsetTime</code> represents a time with an offset from UTC, for example, <i>11:30-06:00</i>. The common way to create an instance of these classes is:</p>
+
+	  <p><code class="java hljs">OffsetDateTime odt = OffsetDateTime.of(<br />
+	  &nbsp; &nbsp; LocalDateTime.now(), ZoneOffset.of(+<span class="hljs-number">03</span>:<span class="hljs-number">00</span>));<br />
+	  OffsetTime ot = OffsetTime.of(<br />
+	  &nbsp; &nbsp; LocalTime.now(), ZoneOffset.of(-<span class="hljs-number">08</span>:<span class="hljs-number">00</span>));</code></p>
+
+	  <p>Both classes have practically the same methods that their <code>LocalDateTime</code>, <code>ZonedDateTime</code>, and <code>LocalTime</code> counterparts. With an offset from UTC and without time zone variations, they always represent an exact instant in time, which may be more suited for certain types of applications (the Java documentation recommends <code>OffsetDateTime</code> when communicating with a database or in a network protocol).</p>
+
+	  <h2>Parsing and Formatting</h2>
+
+	  <p><code>java.time.format.DateTimeFormatter</code> is the new class for parsing and formatting dates. It can be used in two ways:</p>
+
+	  <ul>
+		<li>The date/time classes <code>LocalDate</code>, <code>LocalTime</code>, <code>LocalDateTime</code>, <code>ZonedDateTime</code>, <code>OffsetDate</code> and <code>OffsetDateTime</code> all have the following three methods: <code class="java hljs"><span class="hljs-comment">// Formats the date/time object using the specified formatter<br /></span><span class="hljs-function">String <span class="hljs-title">format</span><span class="hljs-params">(DateTimeFormatter formatter)</span><br />
+		<span class="hljs-comment">// Obtains an instance of a date/time object (of type T)<font color="#000000"><br /></font></span><span class="hljs-comment">// from a string with a default format<font color="#000000"><br /></font></span><span class="hljs-keyword">static</span> T <span class="hljs-title">parse</span><span class="hljs-params">(CharSequence text)<font color="#000000"><br /></font></span><span class="hljs-comment">// Obtains an instance of a date/time object (of type T)<font color="#000000"><br /></font></span><span class="hljs-comment">// from a string using a specific formatter<br /></span><span class="hljs-keyword">static</span> T <span class="hljs-title">parse</span><span class="hljs-params">(CharSequence text, DateTimeFormatter formatter)</span></span></code></li>
+
+		<li>DateTimeFormatter has the following two methods: <code class="java hljs"><span class="hljs-comment">// Formats a date/time object using the formatter instance<br /></span><span class="hljs-function">String <span class="hljs-title">format</span><span class="hljs-params">(TemporalAccessor temporal)<font color="#000000"><br /></font></span><span class="hljs-comment">// Parses the text producing a temporal object<br /></span>TemporalAccessor <span class="hljs-title">parse</span><span class="hljs-params">(CharSequence text)</span></span></code></li>
+	  </ul>
+
+	  <p>All format methods throw the runtime exception:<br />
+	  <code>java.time.DateTimeException</code><br />
+	  All parse methods throw the runtime exception:<br />
+	  <code>java.time.format.DateTimeParseException</code></p>
+
+	  <p><code>DateTimeFormatter</code> provides three ways to format date/time objects:</p>
+
+	  <ul>
+		<li>Predefined formatters</li>
+
+		<li>Locale-specific formatters</li>
+
+		<li>Formatters with custom patterns</li>
+	  </ul>
+
+	  <table border="1" cellspace="5" width="98%">
+		<tr>
+		  <th>Formatter</th>
+
+		  <th>Description</th>
+
+		  <th>Example</th>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>BASIC_ISO_DATE</code></td>
+
+		  <td style="text-align: center;">Date fields without separators</td>
+
+		  <td style="text-align: center;"><i>20150803</i></td>
+		</tr>
+
+		<tr>
+		  <td>
+			<div style="text-align: center;">
+			  <code>ISO_LOCAL_DATE</code>
+			</div>
+
+			<div style="text-align: center;">
+			  <code>ISO_LOCAL_TIME</code>
+			</div>
+
+			<div style="text-align: center;">
+			  <code>ISO_LOCAL_DATETIME</code>
+			</div>
+		  </td>
+
+		  <td style="text-align: center;">Date fields with separators</td>
+
+		  <td>
+			<div style="text-align: center;">
+			  <i>2015-08-03</i>
+			</div>
+
+			<div style="text-align: center;">
+			  <i>13:40:10</i>
+			</div>
+
+			<div style="text-align: center;">
+			  <i>2015-08-03T13:40:10</i>
+			</div>
+		  </td>
+		</tr>
+
+		<tr>
+		  <td>
+			<div style="text-align: center;">
+			  <code>ISO_OFFSET_DATE</code>
+			</div>
+
+			<div style="text-align: center;">
+			  <code>ISO_OFFSET_TIME</code>
+			</div>
+
+			<div style="text-align: center;">
+			  <code>ISO_OFFSET_DATETIME</code>
+			</div>
+		  </td>
+
+		  <td style="text-align: center;">Date fields with separators and zone offset</td>
+
+		  <td>
+			<div style="text-align: center;">
+			  <i>2015-08-03+07:00</i>
+			</div>
+
+			<div style="text-align: center;">
+			  <i>13:40:10+07:00</i>
+			</div>
+
+			<div style="text-align: center;">
+			  <i>2015-08-03 T13:40:10+07:00</i>
+			</div>
+		  </td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>ISO_ZONED_DATE_TIME</code></td>
+
+		  <td style="text-align: center;">A zoned date and time</td>
+
+		  <td style="text-align: center;"><i>2015-08-03 T13:40:10 +07:00 [Asia/Bangkok]</i></td>
+		</tr>
+
+		<tr>
+		  <td>
+			<div style="text-align: center;">
+			  <code>ISO_DATE</code>
+			</div>
+
+			<div style="text-align: center;">
+			  <code>ISO_TIME</code>
+			</div>
+
+			<div style="text-align: center;">
+			  <code>ISO_DATETIME</code>
+			</div>
+		  </td>
+
+		  <td>
+			<div style="text-align: center;">
+			  Date or Time with or without offset
+			</div>
+
+			<div style="text-align: center;">
+			  DateTime with ZoneId
+			</div>
+		  </td>
+
+		  <td>
+			<div style="text-align: center;">
+			  <i>2015-08-03+07:00</i>
+			</div>
+
+			<div style="text-align: center;">
+			  <i>13:40:10</i>
+			</div>
+
+			<div style="text-align: center;">
+			  <i>2015-08-03 T13:40:10+07:00 [Asia/Bangkok]</i>
+			</div>
+		  </td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>ISO_INSTANT</code></td>
+
+		  <td style="text-align: center;">Date and Time of an Instant</td>
+
+		  <td style="text-align: center;"><i>2015-08-03 T13:40:10Z</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>ISO_ORDINAL_DATE</code></td>
+
+		  <td style="text-align: center;">Year and day of the year</td>
+
+		  <td style="text-align: center;"><i>2015-200</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>ISO_WEEK_DATE</code></td>
+
+		  <td style="text-align: center;">Year, week and day of the week</td>
+
+		  <td style="text-align: center;"><i>2015-W34-2</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>RFC_1123_DATE_TIME</code></td>
+
+		  <td style="text-align: center;">RFC 1123 / RFC 822 date format</td>
+
+		  <td style="text-align: center;"><i>Mon, 3 Ago 2015 13:40:10 GMT</i></td>
+		</tr>
+	  </table>
+
+	  <p style="text-align: center;"><b>Predefined Formatters</b></p>
+
+	  <p><br /></p>
+
+	  <table border="1" cellspace="5" width="98%">
+		<tr>
+		  <th>Style</th>
+
+		  <th>Date</th>
+
+		  <th>Time</th>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>SHORT</code></td>
+
+		  <td style="text-align: center;">8/3/15</td>
+
+		  <td style="text-align: center;"><i>1:40 PM</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>MEDIUM</code></td>
+
+		  <td style="text-align: center;">Aug 03, 2015</td>
+
+		  <td style="text-align: center;"><i>1:40:00 PM</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>LONG</code></td>
+
+		  <td style="text-align: center;">August 03, 2015</td>
+
+		  <td style="text-align: center;"><i>1:40:00 PM PDT</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>FULL</code></td>
+
+		  <td style="text-align: center;">Monday, August 03, 2015</td>
+
+		  <td style="text-align: center;"><i>1:40:00 PM PDT</i></td>
+		</tr>
+	  </table>
+
+	  <p style="text-align: center;"><b>Locale-specific Styles</b></p>
+
+	  <p><br /></p>
+
+	  <table border="1" cellspace="5" width="98%">
+		<tr>
+		  <th>Symbol</th>
+
+		  <th>Meaning</th>
+
+		  <th>Examples</th>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>G</code></td>
+
+		  <td style="text-align: center;"><code>Era</code></td>
+
+		  <td style="text-align: center;"><i>AD; Anno Domini; A</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>u</code></td>
+
+		  <td style="text-align: center;"><code>Year</code></td>
+
+		  <td style="text-align: center;"><i>2015; 15</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>y</code></td>
+
+		  <td style="text-align: center;"><code>Year of Era</code></td>
+
+		  <td style="text-align: center;"><i>2015; 15</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>D</code></td>
+
+		  <td style="text-align: center;"><code>Day of Year</code></td>
+
+		  <td style="text-align: center;"><i>150</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>M / L</code></td>
+
+		  <td style="text-align: center;"><code>Month of Year</code></td>
+
+		  <td style="text-align: center;"><i>7; 07; Jul; July; J</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>d</code></td>
+
+		  <td style="text-align: center;"><code>Day of Month</code></td>
+
+		  <td style="text-align: center;"><i>20</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>Q / q</code></td>
+
+		  <td style="text-align: center;"><code>Quarter of year</code></td>
+
+		  <td style="text-align: center;"><i>2; 02; Q2; 2nd quarter</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>Y</code></td>
+
+		  <td style="text-align: center;"><code>Week-based Year</code></td>
+
+		  <td style="text-align: center;"><i>2015; 15</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>w</code></td>
+
+		  <td style="text-align: center;"><code>Week of Week-based Year</code></td>
+
+		  <td style="text-align: center;"><i>30</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>W</code></td>
+
+		  <td style="text-align: center;"><code>Week of Month</code></td>
+
+		  <td style="text-align: center;"><i>2</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>E</code></td>
+
+		  <td style="text-align: center;"><code>Day of Week</code></td>
+
+		  <td style="text-align: center;"><i>Tue; Tuesday; T</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>e / c</code></td>
+
+		  <td style="text-align: center;"><code>Localized Day of Week</code></td>
+
+		  <td style="text-align: center;"><i>2; 02; Tue; Tuesday; T</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>F</code></td>
+
+		  <td style="text-align: center;"><code>Week of Month</code></td>
+
+		  <td style="text-align: center;"><i>2</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>a</code></td>
+
+		  <td style="text-align: center;"><code>AM/PM of Day</code></td>
+
+		  <td style="text-align: center;"><i>AM</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>h</code></td>
+
+		  <td style="text-align: center;"><code>Hour (1-12)</code></td>
+
+		  <td style="text-align: center;"><i>10</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>K</code></td>
+
+		  <td style="text-align: center;"><code>Hour (0-11)</code></td>
+
+		  <td style="text-align: center;"><i>1</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>k</code></td>
+
+		  <td style="text-align: center;"><code>Hour (1-24)</code></td>
+
+		  <td style="text-align: center;"><i>20</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>H</code></td>
+
+		  <td style="text-align: center;"><code>Hour (0-23)</code></td>
+
+		  <td style="text-align: center;"><i>23</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>m</code></td>
+
+		  <td style="text-align: center;"><code>Minute</code></td>
+
+		  <td style="text-align: center;"><i>10</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>s</code></td>
+
+		  <td style="text-align: center;"><code>Second</code></td>
+
+		  <td style="text-align: center;"><i>11</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>S</code></td>
+
+		  <td style="text-align: center;"><code>Fraction of Second</code></td>
+
+		  <td style="text-align: center;"><i>999</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>A</code></td>
+
+		  <td style="text-align: center;"><code>Milli of Day</code></td>
+
+		  <td style="text-align: center;"><i>2345</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>n</code></td>
+
+		  <td style="text-align: center;"><code>Nano of Second</code></td>
+
+		  <td style="text-align: center;"><i>865437987</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>N</code></td>
+
+		  <td style="text-align: center;"><code>Nano of Day</code></td>
+
+		  <td style="text-align: center;"><i>12986497300</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>V</code></td>
+
+		  <td style="text-align: center;"><code>Time Zone ID</code></td>
+
+		  <td style="text-align: center;"><i>Asia/Manila; Z; -06:00</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>z</code></td>
+
+		  <td style="text-align: center;"><code>Time Zone Name</code></td>
+
+		  <td style="text-align: center;"><i>Pacific Standard Time; PST</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>O</code></td>
+
+		  <td style="text-align: center;"><code>Localized Zone Offset</code></td>
+
+		  <td style="text-align: center;"><i>GMT+4; GMT+04:00; UTC-04:00;</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>X</code></td>
+
+		  <td style="text-align: center;"><code>Zone Offset ('Z' for zero)</code></td>
+
+		  <td style="text-align: center;"><i>Z; -08; -0830; -08:30</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>x</code></td>
+
+		  <td style="text-align: center;"><code>Zone Offset</code></td>
+
+		  <td style="text-align: center;"><i>+0000; -08; -0830; -08:30</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>Z</code></td>
+
+		  <td style="text-align: center;"><code>Zone Offset</code></td>
+
+		  <td style="text-align: center;"><i>+0000; -0800; -08:00</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>'</code></td>
+
+		  <td style="text-align: center;"><code>Escape for Text</code></td>
+
+		  <td style="text-align: center;"></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>''</code></td>
+
+		  <td style="text-align: center;"><code>Single Quote</code></td>
+
+		  <td style="text-align: center;"></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>[ ]</code></td>
+
+		  <td style="text-align: center;"><code>Optional Section Start / End</code></td>
+
+		  <td style="text-align: center;"></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code># { }</code></td>
+
+		  <td style="text-align: center;"><code>Reserved for future use</code></td>
+
+		  <td style="text-align: center;"></td>
+		</tr>
+	  </table>
+
+	  <p style="text-align: center;"><b>Custom Patterns</b></p>
+
+	  <p><br /></p>
+
+	  <p>Assuming:</p>
+
+	  <p><code class="java hljs">LocalDate ldt = LocalDate.of(<span class="hljs-number">2015</span>, <span class="hljs-number">1</span>, <span class="hljs-number">20</span>);</code></p>
+
+	  <p>These are examples of using a predefined formatter:</p>
+
+	  <p><code class="java hljs">System.out.println(DateTimeFormatter.ISO_DATE.format(ldt));<br />
+	  System.out.println(ldt.format(DateTimeFormatter.ISO_DATE));</code></p>
+
+	  <p>The output will be:</p>
+
+	  <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">01</span>-<span class="hljs-number">20</span> <span class="hljs-number">2015</span>-<span class="hljs-number">01</span>-<span class="hljs-number">20</span></code></p>
+
+	  <p>These are examples of using a localized style:</p>
+
+	  <p><code class="java hljs">DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);<br />
+	  <span class="hljs-comment">// With the current locale<br /></span>System.out.println(formatter.format(ldt));<br />
+	  System.out.println(ldt.format(formatter));<br />
+	  <span class="hljs-comment">// With another locale<br /></span>System.out.println( formatter.withLocale(Locale.GERMAN).format(ldt));</code></p>
+
+	  <p>One output can be:</p>
+
+	  <p><code class="java hljs"><span class="hljs-number">20</span>/<span class="hljs-number">01</span>/<span class="hljs-number">15</span> <span class="hljs-number">20</span>/<span class="hljs-number">01</span>/<span class="hljs-number">15</span> <span class="hljs-number">20.01</span>.15</code></p>
+
+	  <p>And these are examples of using a custom pattern:</p>
+
+	  <p><code class="java hljs">DateTimeFormatter formatter = DateTimeFormatter.ofPattern("QQQQ Y");<br />
+	  <span class="hljs-comment">// With the current locale<br /></span>System.out.println(formatter.format(ldt));<br />
+	  System.out.println(ldt.format(formatter));<br />
+	  <span class="hljs-comment">// With another locale<br /></span>System.out.println(formatter.withLocale(Locale.GERMAN).format(ldt));</code></p>
+
+	  <p>One output can be:</p>
+
+	  <p><code class="java hljs"><span class="hljs-number">1</span>st quarter <span class="hljs-number">2015<font color="#000000"><br /></font></span><span class="hljs-number">1</span>st quarter <span class="hljs-number">2015<font color="#000000"><br /></font></span><span class="hljs-number">1</span>. Quartal <span class="hljs-number">2015</span></code></p>
+
+	  <p>If the formatter uses information that is not available, a <code>DateTimeException</code> will be thrown. For example, using a <code>DateTimeFormatter.ISO_OFFSET_DATE</code> with a <code>LocalDate</code> instance (it doesn't have offset information).</p>
+
+	  <p>To parse a date and/or time value from a string, use one of the <code>parse</code> methods. For example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Format according to ISO-8601<br /></span>String dateTimeStr1 = <span class="hljs-string">"2015-06-29T14:45:30"</span>;<br />
+	  <span class="hljs-comment">// Custom format<br /></span>String dateTimeStr2 = <span class="hljs-string">"2015/06/29 14:45:30"</span>;<br />
+	  LocalDateTime ldt = LocalDateTime.parse(dateTimeStr1);<br />
+	  <span class="hljs-comment">// Using DateTimeFormatter<br /></span>DateTimeFormatter formatter = DateTimeFormatter.ofPattern(<span class="hljs-string">"yyyy/MM/dd HH:mm:ss"</span>);<br />
+	  <span class="hljs-comment">// DateTimeFormatter returns a TemporalAccessor instance<br /></span>TemporalAccessor ta = formatter.parse(dateTimeStr2);<br />
+	  <span class="hljs-comment">// LocalDateTime returns an instance of the same type<br /></span>ldt = LocalDateTime.parse(dateTimeStr2, formatter);</code></p>
+
+	  <p>The version of <code>parse()</code> of the date/time objects takes a string in a format according to ISO-8601, this is:</p>
+
+	  <table border="1" cellspace="5" width="98%">
+		<tr>
+		  <th>Class</th>
+
+		  <th>Format</th>
+
+		  <th>Example</th>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>LocalDate</code></td>
+
+		  <td style="text-align: center;"><code>uuuu-MM-dd</code></td>
+
+		  <td style="text-align: center;"><i>2007-12-03</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>LocalTime</code></td>
+
+		  <td style="text-align: center;"><code>HH:mm:ss</code></td>
+
+		  <td style="text-align: center;"><i>10:15</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>LocalDateTime</code></td>
+
+		  <td style="text-align: center;"><code>uuuu-MM-dd'T'HH:mm:ss</code></td>
+
+		  <td style="text-align: center;"><i>2007-12-03T10:15:30</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>ZonedDateTime</code></td>
+
+		  <td style="text-align: center;"><code>uuuu-MM-dd'T'HH:mm:ss XXXXX[VV]</code></td>
+
+		  <td style="text-align: center;"><i>2011-12-03T10:15:30 +01:00[Europe/Paris]</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>OffsetDateTime</code></td>
+
+		  <td style="text-align: center;"><code>uuuu-MM-dd'T'HH:mm:ssXXXXX</code></td>
+
+		  <td style="text-align: center;"><i>2011-12-03T10:15:30 +01:00</i></td>
+		</tr>
+
+		<tr>
+		  <td style="text-align: center;"><code>OffsetTime</code></td>
+
+		  <td style="text-align: center;"><code>HH:mm:ssXXXXX</code></td>
+
+		  <td style="text-align: center;"><i>10:15:30+01:00</i></td>
+		</tr>
+	  </table>
+
+	  <p>If the formatter uses information that is not available or if the pattern of the format is invalid, a <code>DateTimeParseException</code> will be thrown.</p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li><code>ZoneId</code>, <code>ZoneOffset</code>, <code>ZonedDateTime</code>, <code>OffsetDateTime</code>, and <code>OffsetTime</code> are the classes of the new Java Date/Time API that store information about time zones and time offsets. They are located in the <code>java.time</code> package and are immutable.</li>
+
+		<li>Each time zone has an ID, represented by the class <code>ZoneId</code>. There are three types of ID.</li>
+
+		<li>The first type just states the offset from UTC/GMT time. They are represented by the class <code>ZoneOffset</code> and they consist of digits starting with <i>+</i> or <i>-</i>, for example <i>+02:00</i>.</li>
+
+		<li>The second type also states the offset from UTC/GMT time, but with one of the following prefixes: UTC, GMT and UT, for example, <i>UTC+11:00</i>. They are also represented by the class <code>ZoneOffset</code>.</li>
+
+		<li>The third type is region based. These IDs have the format <i>area/city</i>, for example, <i>Europe/London</i>.</li>
+
+		<li>If you want to create a specific <code>ZoneId</code> object use the method <code>of</code>:<br />
+		<code class="java hljs">ZoneId.of(<span class="hljs-string">"Asia/Singapore"</span>);<br />
+		ZoneId.of(<span class="hljs-string">"+3"</span>)</code></li>
+
+		<li>The first two of the above methods produce an object of type <code>ZoneRegion</code>. The last one, an object of type <code>ZoneOffset</code>.</li>
+
+		<li>A <code>java.time.ZonedDateTime</code> object represents a point in time relative to a time zone.</li>
+
+		<li>A <code>ZonedDateTime</code> object has three parts, a date, a time, and a time zone. It can be created with either:<br />
+		<code class="java hljs">ZoneId australiaZone = ZoneId.of(<span class="hljs-string">"Australia/Victoria"</span>);<br />
+		ZonedDateTime zonedDateTime5 =<br />
+		&nbsp; &nbsp; ZonedDateTime.of(<span class="hljs-number">2015</span>,<span class="hljs-number">1</span>,<span class="hljs-number">30</span>,<span class="hljs-number">13</span>,<span class="hljs-number">59</span>,<span class="hljs-number">59</span>,<span class="hljs-number">999</span>, australiaZone);</code></li>
+
+		<li>Or through a <code>LocalDate</code>, <code>LocalTime</code>, <code>LocalDateTime</code> or <code>Instant</code> plus a <code>ZoneId</code>.</li>
+
+		<li>If we create an instance of <code>ZonedDateTime</code> for a region where a Daylight Saving Time (DST) is observed, the instance will support it, advancing the clock one hour when DST starts, and setting it back when DST ends.</li>
+
+		<li><code>Period</code> and <code>Duration</code> differ in their treatment of DST.</li>
+
+		<li><code>Period</code> adds a conceptual day to a date, while <code>Duration</code> adds an exact day to a date, without taking into account DST.</li>
+
+		<li><code>OffsetDateTime</code> represents an object with date/time information and an offset from UTC, for example, <i>2015-01-01T11:30-06:00</i>.</li>
+
+		<li><code>OffsetTime</code> represents a time with an offset from UTC, for example, <i>11:30-06:00</i>.</li>
+
+		<li><code>java.time.format.DateTimeFormatter</code> is the new class for parsing and formatting dates. It can be used in two ways:</li>
+
+		<li>The date/time classes <code>LocalDate</code>, <code>LocalTime</code>, <code>LocalDateTime</code>, <code>ZonedDateTime</code>, <code>OffsetDate</code> and <code>OffsetDateTime</code> all have the methods:<br />
+		<code class="java hljs"><span class="hljs-function">String <span class="hljs-title">format</span><span class="hljs-params">(DateTimeFormatter formatter)<font color="#000000"><br /></font></span><span class="hljs-keyword">static</span> T <span class="hljs-title">parse</span><span class="hljs-params">(CharSequence text)<font color="#000000"><br /></font></span><span class="hljs-keyword">static</span> T <span class="hljs-title">parse</span><span class="hljs-params">(CharSequence text, DateTimeFormatter formatter)<br /></span></span></code></li>
+
+		<li><code>DateTimeFormatter</code> has the following two methods:<br />
+		<code class="java hljs">String <span class="hljs-title">format</span><span class="hljs-params">(TemporalAccessor temporal)<br /></span>TemporalAccessor <span class="hljs-title">parse</span><span class="hljs-params">(CharSequence text)</span></code></li>
+
+		<li>All format methods throw the runtime exception <code>java.time.DateTimeException</code>, while all parse methods throw the runtime exception <code>java.time.format.DateTimeParseException</code>.</li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Which of the following are valid ways to create a <code>ZoneId</code> object?<br />
+	  A. <code>ZoneId.ofHours(2);</code><br />
+	  B. <code>ZoneId.of("2");</code><br />
+	  C. <code>ZoneId.of("-1");</code><br />
+	  D. <code>ZoneId.of("America/Canada");</code></p>
+
+	  
+
+	  <p>2. Given:</p>
+
+	  <p><code class="java hljs">ZoneOffset offset = ZoneOffset.of(<span class="hljs-string">"Z"</span>);<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; offset.get(ChronoField.HOUR_OF_DAY)<br />
+	  );</code></p>
+
+	  <p>Which of the following is the result of executing the above lines?<br />
+	  A. <code>0</code><br />
+	  B. <code>1</code><br />
+	  C. <code>12:00</code><br />
+	  D. An exception is thrown</p>
+
+	  
+
+	  <p>3. Given:</p>
+
+	  <p><code class="java hljs">ZonedDateTime zdt =<br />
+	  &nbsp; &nbsp; ZonedDateTime.of(<span class="hljs-number">2015</span>,<span class="hljs-number">02</span>,<span class="hljs-number">28</span>,<span class="hljs-number">5</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ZoneId.of(<span class="hljs-string">"+05:00"</span>));<br />
+	  System.out.println(zdt.toLocalTime());</code></p>
+
+	  <p>Assuming a local time zone of +2:00, which of the following is the result of executing the above lines?<br />
+	  A. <code>05:00</code><br />
+	  B. <code>17:00</code><br />
+	  C. <code>02:00</code><br />
+	  D. <code>03:00</code></p>
+
+	  
+
+	  <p>4. Given:</p>
+
+	  <p><code class="java hljs">ZonedDateTime zdt =<br />
+	  &nbsp; &nbsp; ZonedDateTime.of(<span class="hljs-number">2015</span>,<span class="hljs-number">10</span>,<span class="hljs-number">4</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ZoneId.of(<span class="hljs-string">"America/Asuncion"</span>))<br />
+	  &nbsp; &nbsp; .plus(Duration.ofHours(<span class="hljs-number">1</span>));<br />
+	  System.out.println(zdt);</code></p>
+
+	  <p>Assuming that DST starts on October, 4, 2015 at 0:00:00, which of the following is the result of executing the above lines?<br />
+	  A. <code>2015-10-04T00:00-03:00[America/Asuncion]</code><br />
+	  B. <code>2015-10-04T01:00-03:00[America/Asuncion]</code><br />
+	  C. <code>2015-10-04T02:00-03:00[America/Asuncion]</code><br />
+	  D. <code>2015-10-03T23:00-03:00[America/Asuncion]</code></p>
+
+	  
+
+	  <p>5. Given:</p>
+
+	  <p><code class="java hljs">ZonedDateTime zdt =<br />
+	  &nbsp; &nbsp; ZonedDateTime.of(<span class="hljs-number">2015</span>,<span class="hljs-number">3</span>,<span class="hljs-number">22</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ZoneId.of(<span class="hljs-string">"America/Asuncion"</span>))<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; .minus(Period.ofDays(<span class="hljs-number">1</span>));<br />
+	  System.out.println(zdt);</code></p>
+
+	  <p>Assuming that DST ends on March, 22, 2015 at 0:00:00, which of the following is the result of executing the above lines?<br />
+	  A. <code>2015-03-21T01:00-03:00[America/Asuncion]</code><br />
+	  B. <code>2015-03-21T00:00-03:00[America/Asuncion]</code><br />
+	  C. <code>2015-03-20T23:00-03:00[America/Asuncion]</code><br />
+	  D. <code>2015-03-21T02:00-03:00[America/Asuncion]</code></p>
+
+	  
+
+	  <p>6. Which of the following statements are true?<br />
+	  A. <code>java.time.ZoneOffset</code> is a subclass of <code>java.time.ZoneId</code>.<br />
+	  B. <code>java.time.Instant</code> can be obtained from <code>java.time.ZonedDateTime</code>.<br />
+	  C. <code>java.time.ZoneOffset</code> can manage DST.<br />
+	  D. <code>java.time.OffsetDateTime</code> represents a point in time in the UTC time zone.</p>
+
+	  
+
+	  <p>7. Given:</p>
+
+	  <p><code class="java hljs">DateTimeFormatter formatter =<br />
+	  &nbsp; &nbsp; DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; formatter<br />
+	  &nbsp; &nbsp; .withLocale(Locale.ENGLISH)<br />
+	  &nbsp; &nbsp; .format(LocalDateTime.of(<span class="hljs-number">2015</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">16</span>, <span class="hljs-number">0</span>))<br />
+	  );</code></p>
+
+	  <p>Which of the following is the result of executing the above lines?<br />
+	  A. <code>5/7/15 4:00 PM</code><br />
+	  B. <code>5/7/15</code><br />
+	  C. <code>4:00 PM</code><br />
+	  D. <code>4:00:00 PM</code></p>
+
+	  
+
+	  <p>8. Given:</p>
+
+	  <p><code class="java hljs">DateTimeFormatter formatter =<br />
+	  &nbsp; &nbsp; DateTimeFormatter.ofPattern(<span class="hljs-string">"HH:mm:ss X"</span>);<br />
+	  OffsetDateTime odt =<br />
+	  &nbsp; &nbsp; OffsetDateTime.parse(<span class="hljs-string">"11:50:20 Z"</span>, formatter);</code></p>
+
+	  <p>Which of the following statements is true about the above lines?<br />
+	  A. The pattern <i>HH:mm:ss X</i> is invalid.<br />
+	  B. An <code>OffsetDateTime</code> is created successfully.<br />
+	  C. <i>Z</i> is an invalid offset.<br />
+	  D. An exception is thrown at runtime.</p>
+
+  
+
+  
+    
+		<div class="answers">
+			<a href="ch22a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch21.html">21. Core Date/Time Classes</a>
+			</div>
+			<div class="next">
+				<a href="ch23.html">23. Java I/O Fundamentals</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

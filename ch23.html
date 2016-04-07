@@ -1,0 +1,940 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Part SEVEN</i><br />
+			  Java I/O</h1>
+
+			  
+
+			  <h1><i class="chapter">Chapter TWENTY-THREE</i><br />
+			  Java I/O Fundamentals</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Read and write data from the console.<br /></i><i>Use BufferedReader, BufferedWriter, File, FileReader, FileWriter, FileInputStream, FileOutputStream, ObjectOutputStream, ObjectInputStream, and PrintWriter in the java.io package.</i></p>
+			  
+			</div>
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>I/O Streams</h2>
+
+	  <p>Java I/O (Input/Output or Reading/Writing) is a large topic, but let's start by defining what is a stream in I/O.</p>
+
+	  <p>Although conceptually, they're kind of similar, I/O streams are not related in any way with the Stream API. Therefore, all references to streams in this chapter refer to I/O stream.</p>
+
+	  <p>In simple words, a stream is a sequence of data.</p>
+
+	  <p>In the context of this chapter, that sequence of data is the content of a file. Take for example this sequence of bytes:</p>
+
+	  <p><code>...10101010001011101001010100000111...</code></p>
+
+	  <p>When we read that sequence of bytes from a file, we are reading an <i>input stream</i>.</p>
+
+	  <p>When we write that sequence of bytes to a file, we are writing an <i>output stream</i>.</p>
+
+	  <p>Moreover, the content of a file can be so large that it might not fit into memory, so when working with streams, we can't focus on the entire stream at once, but only in small portions (either byte by byte or a group of bytes) at any time.</p>
+
+	  <p>But Java not only supports streams of bytes.</p>
+
+	  <p>In the <code>java.io</code> package, we can find classes to work with byte and character streams as well.</p>
+
+	  <h2>Files</h2>
+
+	  <p>Let's think of a <i>file</i> as a resource that stores data (either in byte or character format).</p>
+
+	  <p>Files are organized in <i>directories</i>, which in addition to files, can contain other directories as well.</p>
+
+	  <p>Files and directories are managed by a <i>file system</i>.</p>
+
+	  <p>Different operating systems can use different file systems, but the files and directories are organized in a hierarchical way. For example, in a Unix-based file system, that would be:</p>
+
+	  <p><code class="hljs">/<br />
+	  |&mdash; home<br />
+	  | |&mdash; documents<br />
+	  | | |&mdash; file.txt<br />
+	  | |&mdash; music<br />
+	  | |&mdash; user.properties</code></p>
+
+	  <p>Where a file or a directory can be represented by a <code>String</code> called <i>path</i>, where the value to the left of a separator character (which changes between file systems) is the parent of the value to the right of the separator, like <code>/home/documents/file.txt</code>, or <code>c:\home\documents\file.txt</code> on Windows.</p>
+
+	  <p>In Java, the <code>java.io.File</code> class represents either a file or a directory path of a file system (there isn't a <code>Directory</code> class, at least in the standard Java I/O API, for directories):</p>
+
+	  <p><code class="java hljs">File file = <span class="hljs-keyword">new</span> File(<span class="hljs-string">"/home/user.properties"</span>);</code></p>
+
+	  <p>When you create an instance of the <code>File</code> class, you're not creating a new file, you are just creating an object that may represent an actual file or directory (it may not even exist yet).</p>
+
+	  <p>But once you have a <code>File</code> object, you can use some methods to work with that file/directory. For example:</p>
+
+	  <p><code class="java hljs">String path = ...<br />
+	  File file = <span class="hljs-keyword">new</span> File(path);<br />
+	  <span class="hljs-keyword">if</span>(file.exists()) {<br />
+	  &nbsp; &nbsp; <span class="hljs-comment">// Name of the file/directory<br /></span>&nbsp; &nbsp; String name = file.getName();<br />
+	  &nbsp; &nbsp; <span class="hljs-comment">// Path of its parent<br /></span>&nbsp; &nbsp; String parent = file.getParent();<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Returning the time the file/directory was modified</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // in milliseconds since 00:00:00 GMT, January 1, 1970</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; long</span> millis = file.lastModified();<br />
+	  <br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // If the object represents a file</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; if</span>(file.isFile()) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Returning the size of the file in bytes</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; long</span> size = file.length();<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp; <span class="hljs-comment">// If the object represents a directory</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; else</span> <span class="hljs-keyword">if</span>(file.isDirectory()) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Returns true only if the directory was created</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; boolean</span> dirCreated = file.mkdir();<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Returns true only if the directory was created,<br /></span> <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // along with all necessary parent directories</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; boolean</span> dirsCreated = file.mkdirs();<br />
+	  <br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Get all the files/directories in a directory</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; <span class="hljs-comment">// Just the names<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; String[] fileNames = file.list();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; <span class="hljs-comment">// As File instances<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; File[] files = file.listFiles();<br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; boolean</span> wasRenamed = file.renameTo(<span class="hljs-keyword">new</span> File(<span class="hljs-string">"new file"</span>));<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; boolean</span> wasDeleted = file.delete();<br />
+	  }</code></p>
+
+	  <h2>Understanding the java.io Package</h2>
+
+	  <p>Now we have reviewed the basics, we can dissect the Java I/O API.</p>
+
+	  <p>There are a lot of classes in the <code>java.io</code> package, but in this chapter, we'll only review the ones covered by the exam.</p>
+
+	  <p>We can start by listing four <b>ABSTRACT CLASSES</b> that are the parents of all the other classes.</p>
+
+	  <p>The first two deal with byte streams:</p>
+
+	  <ul>
+		<li><code>InputStream</code></li>
+
+		<li><code>OutputStream</code></li>
+	  </ul>
+
+	  <p>The other two deal with character streams:</p>
+
+	  <ul>
+		<li><code>Reader</code></li>
+
+		<li><code>Writer</code></li>
+	  </ul>
+
+	  <p>So we can say that all the classes that have <code><b>Stream</b></code> in their name read or write streams of <b>BYTES</b>.</p>
+
+	  <p>And all the classes that have <code><b>Reader</b></code> or <code><b>Writer</b></code> in their name read or write streams of <b>CHARACTERS</b>.</p>
+
+	  <p>You shouldn't have any problem in knowing that classes that have <code><b>Input</b></code> or <code><b>Reader</b></code> in their names are for <b>READING</b> (either bytes or characters).</p>
+
+	  <p>That all the classes that have <code><b>Output</b></code> and <code><b>Writer</b></code> in their names are for <b>WRITING</b> (either bytes or characters).</p>
+
+	  <p>And that every class that <b>READS</b> something (or do it in a certain way), has a corresponding class that <b>WRITES</b> that something (or do it in that certain way), like <code>FileReader</code> and <code>FileWriter</code>.</p>
+
+	  <p>However, this last rule has exceptions. The ones you should know about are <code><b>PrintStream</b></code> and <code><b>PrintWriter</b></code> (looking at the name I think it's obvious that these classes are just for output, but at least, you can tell which works with bytes and which with characters).</p>
+
+	  <p>Next, we have classes that have <code><b>Buffered</b></code> in their name, which use a buffer to read or write data in groups (of bytes or characters) to do it more efficiently.</p>
+
+	  <p>Finally, based on the idea that we can use some classes in <b>COMBINATION</b>, we can further classify the classes in the API as wrappers and non-wrappers.</p>
+
+	  <p>Non-wrapper classes generally take an instance of <code>File</code> or a <code>String</code> to create an instance, while wrapper classes take another stream class to create an instance. The following is an example of a wrapper class:</p>
+
+	  <p><code class="java hljs">ObjectInputStream ois =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; new</span> ObjectInputStream(<span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-string">"obj.dat"</span>));</code></p>
+
+	  <p>When combining classes this way, in almost all cases, it's not valid mix <b>OPPOSITE</b> concepts, like combining a <code>Reader</code> with a <code>Writer</code> or a <code>Reader</code> with an <code>InputStream</code>:</p>
+
+	  <p><code class="java hljs">BufferedReader br =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; new</span> BufferedReader(<span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-string">"file.txt"</span>)); <span class="hljs-comment">//error</span></code></p>
+
+	  <p>This classification isn't that evident by looking at the name of the classes, but if you know what each of the classes do and think about it, you'll know if they can wrap other <code>java.io</code> classes or not.</p>
+
+	  <h2>FileInputStream</h2>
+
+	  <p><code>FileInputStream</code> reads bytes from a file. It inherits from <code>InputStream</code>.</p>
+
+	  <p>It can be created either with a <code>File</code> object or a <code>String path</code>:</p>
+
+	  <p><code class="java hljs">FileInputStream(File file)<br />
+	  FileInputStream(String path)</code></p>
+
+	  <p>Here's how you use it:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span> (InputStream in = <span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-string">"c:\\file.txt"</span>)) {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; int</span> b;<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-comment">// -1 indicates the end of the file</span>&nbsp;<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; while</span>((b = in.read()) != -<span class="hljs-number">1</span>) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Do something with the byte read</span><br />
+	  &nbsp; &nbsp; }<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+	  <p>There's also a <code>read()</code> method that reads bytes into an array of bytes:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">byte</span>[] data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">byte</span>[<span class="hljs-number">1024</span>];<br />
+	  <span class="hljs-keyword">int</span> numberOfBytesRead;<br />
+	  <span class="hljs-keyword">while</span>((numberOfBytesRead = in.read(data)) != -<span class="hljs-number">1</span>) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Do something with the array data</span><br />
+	  }</code></p>
+
+	  <p>All the classes we'll review should be closed. Fortunately, they implement <code>AutoClosable</code> so they can be used in a <code>try-with-resources</code>.</p>
+
+	  <p>Also, almost all methods of these classes throw <code>IOExceptions</code> or one of its subclasses (such a <code>FileNotFoundException</code>, which is pretty descriptive).</p>
+
+	  <h2>FileOutputStream</h2>
+
+	  <p><code>FileOutputStream</code> writes bytes to a file. It inherits from <code>OutputStream</code>.</p>
+
+	  <p>It can be created either with a <code>File</code> object or a <code>String</code> path and an optional <code>boolean</code> that indicates whether you want to overwrite or append to the file if it exists (it's overwritten by default):</p>
+
+	  <p><code class="java hljs">FileOutputStream(File file)<br />
+	  FileOutputStream(File file, <span class="hljs-keyword">boolean</span> append)<br />
+	  FileOutputStream(String path)<br />
+	  FileOutputStream(String path, <span class="hljs-keyword">boolean</span> append)</code></p>
+
+	  <p>Here's how you use it:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span> (OutputStream out =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; new</span> FileOutputStream(<span class="hljs-string">"c:\\file.txt"</span>)) {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; int</span> b;<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Made up method to get some data</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; while</span>((b = getData()) != -<span class="hljs-number">1</span>) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; <span class="hljs-comment">// Writes b to the file output stream<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; out.write(b);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; out.flush();<br />
+	  &nbsp; &nbsp; }<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+	  <p>When you write to an <code>OutputStream</code>, the data may get cached internally in memory and written to disk at a later time. If you want to make sure that all data is written to disk without having to close the <code>OutputStream</code>, you can call the <code>flush()</code> method every once in a while.</p>
+
+	  <p><code>FileOutputStream</code> also contains overloaded versions of <code>write()</code> that allows you to write to a byte array.</p>
+
+	  <h2>FileReader</h2>
+
+	  <p><code>FileReader</code> reads characters from a text file. It inherits from <code>Reader</code>.</p>
+
+	  <p>It can be created either with a <code>File</code> object or a <code>String</code> path:</p>
+
+	  <p><code class="java hljs">FileReader(File file)<br />
+	  FileReader(String path)</code></p>
+
+	  <p>Here's how you use it:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span> (Reader r = <span class="hljs-keyword">new</span> FileReader(<span class="hljs-string">"/file.txt"</span>)) {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; int</span> c;<br />
+	  &nbsp; &nbsp;&nbsp;<span style="color: rgb(0, 106, 0);">// -1 indicates the end of the file</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; while</span>((c = r.read()) != -<span class="hljs-number">1</span>) {&nbsp;<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; char</span> character = (<span class="hljs-keyword">char</span>)c;<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Do something with the character</span><br />
+	  &nbsp; &nbsp; }<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+	  <p>There's also a <code>read()</code> method that reads characters into an array of <code>char</code>s:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">char</span>[] data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">char</span>[<span class="hljs-number">1024</span>];<br />
+	  <span class="hljs-keyword">int</span> numberOfCharsRead = r.read(data);<br />
+	  <span class="hljs-keyword">while</span>((numberOfCharsRead = r.read(data)) != -<span class="hljs-number">1</span>) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Do something with the array data</span><br />
+	  }</code></p>
+
+	  <p><code>FileReader</code> assumes that you want to decode the characters in the file using the default character encoding of the machine your program is running on.</p>
+
+	  <h2>FileWriter</h2>
+
+	  <p><code>FileWriter</code> writes characters to a text file. It inherits from <code>Writer</code>.</p>
+
+	  <p>It can be created either with a <code>File</code> object or a <code>String</code> path and an optional <code>boolean</code> that indicates whether you want to overwrite or append to the file if it exists (it's overwritten by default):</p>
+
+	  <p><code class="java hljs">FileWriter(File file)<br />
+	  FileWriter(File file, <span class="hljs-keyword">boolean</span> append)<br />
+	  FileWriter(String path)<br />
+	  FileWriter(String path, <span class="hljs-keyword">boolean</span> append)</code></p>
+
+	  <p>Here's how you use it:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span> (Writer w = <span class="hljs-keyword">new</span> FileWriter(<span class="hljs-string">"/file.txt"</span>)) {<br />
+	  &nbsp; &nbsp; w.write(<span class="hljs-string">'-'</span>); <span class="hljs-comment">// writing a character</span><br />
+	  &nbsp; &nbsp; <span class="hljs-comment">// writing a string<br /></span>&nbsp; &nbsp; w.write(<span class="hljs-string">"Writing to the file..."</span>);<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+	  <p>Just like an <code>OutputStream</code>, the data may get cached internally in memory and written to disk at a later time. If you want to make sure that all data is written to disk without having to close the <code>FileWriter</code>, you can call the <code>flush()</code> method every once in a while.</p>
+
+	  <p><code>FileWriter</code> also contains overloaded versions of <code>write()</code> that allows you to write to a <code>char</code> array and to a <code>String</code>.</p>
+
+	  <p><code>FileWriter</code> assumes that you want to encode the characters in the file using the default character encoding of the machine your program is running on.</p>
+
+	  <h2>BufferedReader</h2>
+
+	  <p><code>BufferedReader</code> reads text from a character stream. Rather than read one character at a time, <code>BufferedReader</code> reads a large block at a time into a buffer. It inherits from <code>Reader</code>.</p>
+
+	  <p>This is a wrapper class that is created by passing a <code>Reader</code> to its constructor, and optionally, the size of the buffer:</p>
+
+	  <p><code class="java hljs">BufferedReader(Reader in)<br />
+	  BufferedReader(Reader in, <span class="hljs-keyword">int</span> size)</code></p>
+
+	  <p><code>BufferedReader</code> has one extra read method (in addition to the ones inherited by <code>Reader)</code>, <code>readLine()</code>. Here's how you use it:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span> ( BufferedReader br =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp;new</span> BufferedReader( <span class="hljs-keyword">new</span> FileReader(<span class="hljs-string">"/file.txt"</span>) ) ) {<br />
+	  &nbsp; &nbsp;String line;<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// null indicates the end of the file</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;while</span>((line = br.readLine()) != <span class="hljs-keyword">null</span>) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; // Do something with the line</span><br />
+	  &nbsp; &nbsp;}<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+	  <p>When the <code>BufferedReader</code> is closed, it will also close the <code>Reader</code> instance it reads from.</p>
+
+	  <h2>BufferedWriter</h2>
+
+	  <p><code>BufferedWriter</code> writes text to a character stream, buffering characters for efficiency. It inherits from <code>Writer</code>.</p>
+
+	  <p>This is a wrapper class that is created by passing a <code>Writer</code> to its constructor, and optionally, the size of the buffer:</p>
+
+	  <p><code class="java hljs">BufferedWriter(Writer out)<br />
+	  BufferedWriter(Writer out, <span class="hljs-keyword">int</span> size)</code></p>
+
+	  <p><code>BufferedWriter</code> has one extra write method (in addition to the ones inherited by <code>Writer</code>), <code>newLine()</code>. Here's how you use it:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span> ( BufferedWriter bw =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp;new</span> BufferedWriter( <span class="hljs-keyword">new</span> FileWriter(<span class="hljs-string">"/file.txt"</span>) ) ) {<br />
+	  &nbsp; &nbsp;w.newLine(<span class="hljs-string">"Writing to the file..."</span>);<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+	  <p>Since data is written to a buffer first, you can call the <code>flush()</code> method to make sure that the text written until that moment is indeed written to the disk.</p>
+
+	  <p>When the <code>BufferedWriter</code> is closed, it will also close the <code>Writer</code> instance it writes to.</p>
+
+	  <h2>ObjectInputStream/ ObjectOutputStream</h2>
+
+	  <p>The process of converting an object to a data format that can be stored (in a file for example) is called serialization and converting that stored data format into an object is called deserialization.</p>
+
+	  <p>If you want to serialize an object, its class must implement the <code>java.io.Serializable</code> interface, which has no methods to implement, it only tags the objects of that class as serializable.</p>
+
+	  <p>If you try to serialize a class that doesn't implement that interface, a <code>java.io.NotSerializableException</code> (a subclass of <code>IOException</code>) will be thrown at runtime.</p>
+
+	  <p><code>ObjectOutputStream</code> allows you to serialize objects to an <code>OutputStream</code> while <code>ObjectInputStream</code> allows you to deserialized objects from an <code>InputStream</code>. So both are considered wrapper classes.</p>
+
+	  <p>Here's the constructor of the <code>ObjectOutputStream</code> class:</p>
+
+	  <p><code class="java hljs">ObjectOutputStream(OutputStream out)</code></p>
+
+	  <p>This class has methods to write many primitive types, like:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">writeInt</span><span class="hljs-params">(<span class="hljs-keyword">int</span> val)</span><br />
+	  <span class="hljs-keyword">void</span> <span class="hljs-title">writeBoolean</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> val)</span></span></code></p>
+
+	  <p>But the most useful is <code>writeObject(Object)</code>. Here's an example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Box</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Serializable</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;/** ... */</span><br />
+	  }<br />
+	  ...<br />
+	  <span class="hljs-keyword">try</span>( ObjectOutputStream oos =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp;new</span> ObjectOutputStream(<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;new</span> FileOutputStream(<span class="hljs-string">"obj.dat"</span>) ) ) {<br />
+	  &nbsp; &nbsp; Box box = <span class="hljs-keyword">new</span> Box();<br />
+	  &nbsp; &nbsp; oos.writeObject(box);<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+	  <p>To deserialize the file <code>obj.dat</code>, we use <code>ObjectInputStream</code> class. Here's its constructor:</p>
+
+	  <p><code class="java hljs">ObjectInputStream(InputStream in)</code></p>
+
+	  <p>This class has methods to read many data types, among them:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">Object <span class="hljs-title">readObject</span><span class="hljs-params">()</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; throws</span> IOException, ClassNotFoundException</span></code></p>
+
+	  <p>Notice that it returns an <code>Object</code> type. Thus, we have to cast the object explicitly. This can lead to a <code>ClassCastException</code> thrown at runtime. Note that this method also throws a <code>ClassNotFoundException</code> (a checked exception), in case the class of a serialized object cannot be found.</p>
+
+	  <p>Here's an example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span> (ObjectInputStream ois =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; new</span> ObjectInputStream(<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new</span> FileInputStream(<span class="hljs-string">"obj.dat"</span>) ) ) {<br />
+	  &nbsp; &nbsp; Box box = <span class="hljs-keyword">null</span>;<br />
+	  &nbsp; &nbsp; Object obj = ois.readObject();<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; if</span>(obj <span class="hljs-keyword">instanceof</span> Box) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; box = (Box)obj;<br />
+	  &nbsp; &nbsp; }<br />
+	  } <span class="hljs-keyword">catch</span>(IOException ioe) { <span class="hljs-comment">/** ... */</span> }<br />
+	  <span class="hljs-keyword">catch</span>(ClassNotFoundException cnfe) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;/** ... */</span><br />
+	  }</code></p>
+
+	  <p>Two important notes. When deserializing an object, the constructor, and any initialization block are not executed, Second, <code>null</code> objects are not serialized/deserialized.</p>
+
+	  <h2>PrintWriter</h2>
+
+	  <p><code>PrintWriter</code> is a subclass of <code>Writer</code> that writes formatted data to another (wrapped) stream, even an <code>OutputStream</code>. Just look at its constructors:</p>
+
+	  <p><code class="java hljs">PrintWriter(File file)<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; throws</span> FileNotFoundException<br />
+	  <span class="hljs-title">PrintWriter</span><span class="hljs-params">(File file, String charset)</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; throws</span> FileNotFoundException, UnsupportedEncodingException<br />
+	  <span class="hljs-title">PrintWriter</span><span class="hljs-params">(OutputStream out)</span><br />
+	  <span class="hljs-title">PrintWriter</span><span class="hljs-params">(OutputStream out, <span class="hljs-keyword">boolean</span> autoFlush)</span><br />
+	  <span class="hljs-title">PrintWriter</span><span class="hljs-params">(String fileName)</span> <span class="hljs-keyword">throws</span> FileNotFoundException<br />
+	  <span class="hljs-title">PrintWriter</span><span class="hljs-params">(String fileName, String charset)</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; throws</span> FileNotFoundException, UnsupportedEncodingException<br />
+	  <span class="hljs-title">PrintWriter</span><span class="hljs-params">(Writer out)</span><br />
+	  <span class="hljs-title">PrintWriter</span><span class="hljs-params">(Writer out, <span class="hljs-keyword">boolean</span> autoFlush)</span></span></code></p>
+
+	  <p>By default, it uses the default charset of the machine you're running the program, but at least, this class accepts the following charsets (there are other optional charsets):</p>
+
+	  <ul>
+		<li><code>US-ASCII</code></li>
+
+		<li><code>ISO-8859-1</code></li>
+
+		<li><code>UTF-8</code></li>
+
+		<li><code>UTF-16BE</code></li>
+
+		<li><code>UTF-16LE</code></li>
+
+		<li><code>UTF-16</code></li>
+	  </ul>
+
+	  <p>As any <code>Writer</code>, this class has the <code>write()</code> method we've seen in other <code>Writer</code> subclasses, but it overwrites them to avoid throwing an <code>IOException</code>.</p>
+
+	  <p>It also adds the methods <code>format()</code>, <code>print()</code>, <code>printf()</code>, <code>println()</code>.</p>
+
+	  <p>Here's how you use this class:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Opens or creates the file without automatic line flushing</span><br />
+	  <span class="hljs-comment">// and converting characters by using the default character encoding</span><br />
+	  <span class="hljs-keyword">try</span>(PrintWriter pw = <span class="hljs-keyword">new</span> PrintWriter(<span class="hljs-string">"/file.txt"</span>)) {<br />
+	  &nbsp; &nbsp; pw.write(<span class="hljs-string">"Hi"</span>); <span class="hljs-comment">// Writing a String</span><br />
+	  &nbsp; &nbsp; pw.write(<span class="hljs-number">100</span>); <span class="hljs-comment">// Writing a character</span><br />
+	  <span class="hljs-comment"><br />
+	  &nbsp; &nbsp; // write the string representation of the argument</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // it has versions for all primitives, char[], String, and Object</span><br />
+	  &nbsp; &nbsp; pw.print(<span class="hljs-keyword">true</span>);<br />
+	  &nbsp; &nbsp; pw.print(<span class="hljs-number">10</span>);<br />
+	  <span class="hljs-comment"><br />
+	  &nbsp; &nbsp; // same as print() but it also writes a line break as defined by</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // System.getProperty("line.separator") after the value</span><br />
+	  &nbsp; &nbsp; pw.println(); <span class="hljs-comment">// Just writes a new line</span><br />
+	  &nbsp; &nbsp; pw.println(<span class="hljs-string">"A new line..."</span>);<br />
+	  <span class="hljs-comment"><br />
+	  &nbsp; &nbsp; // format() and printf() are the same methods</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // They write a formatted string using a format string,<br /></span> <span class="hljs-comment">&nbsp; &nbsp; // its arguments and an optional Locale</span><br />
+	  &nbsp; &nbsp; pw.format(<span class="hljs-string">"%s %d"</span>, <span class="hljs-string">"Formatted string "</span>, <span class="hljs-number">1</span>);<br />
+	  &nbsp; &nbsp; pw.printf(<span class="hljs-string">"%s %d"</span>, <span class="hljs-string">"Formatted string "</span>, <span class="hljs-number">2</span>);<br />
+	  &nbsp; &nbsp; pw.format(Locale.GERMAN, <span class="hljs-string">"%.2f"</span>, <span class="hljs-number">3.1416</span>);<br />
+	  &nbsp; &nbsp; pw.printf(Locale.GERMAN, <span class="hljs-string">"%.3f"</span>, <span class="hljs-number">3.1416</span>);<br />
+	  } <span class="hljs-keyword">catch</span>(FileNotFoundException e) {&nbsp;<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // if the file cannot</span><span class="hljs-comment">&nbsp;be opened or created</span><br />
+	  }&nbsp;</code></p>
+
+	  <p>You can learn more about format strings for <code>format()</code> and <code>printf()</code> in <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html" target="_blank">https://docs.oracle.com/javase/8/docs/api/java/util/Formatter.html</a></p>
+
+	  <h2>Standard streams</h2>
+
+	  <p>Java initializes and provides three stream objects as <code>public static</code> fields of the <code>java.lang.System</code> class:</p>
+
+	  <ul>
+		<li><code>InputStream System.in</code><br />
+		The standard input stream (typically the input from the keyboard)</li>
+
+		<li><code>PrintStream System.out</code><br />
+		The standard output stream (typically the default display output)</li>
+
+		<li><code>PrintStream System.err</code><br />
+		The standard error output stream (typically the default display output)</li>
+	  </ul>
+
+	  <p><code>PrintStream</code> does exactly the same and has the same features that <code>PrintWriter</code>, it just works with <code>OutputStreams</code> only.</p>
+
+	  <p>The following example shows how to read a single character (a byte) from the command line:</p>
+
+	  <p><code class="java hljs">System.out.print(<span class="hljs-string">"Enter a character: "</span>);<br />
+	  <span class="hljs-keyword">try</span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; int</span> c = System.in.read();<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
+	  &nbsp; &nbsp; System.err.println(<span class="hljs-string">"Error: "</span> + e);<br />
+	  }</code></p>
+
+	  <p>Or to read <code>String</code>s:</p>
+
+	  <p><code class="java hljs">BufferedReader br =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; new</span> BufferedReader(<span class="hljs-keyword">new</span> InputStreamReader(System.in));<br />
+	  String line = br.readLine();<br />
+	  <span class="hljs-comment">// Or using the java.util.Scanner class</span><br />
+	  Scanner scanner = <span class="hljs-keyword">new</span> Scanner(System.in);<br />
+	  String line = scanner.nextLine();</code></p>
+
+	  <h2>java.io.Console</h2>
+
+	  <p>Since Java 6, we have the <code>java.io.Console</code> class to access the console of the machine your program is running on.</p>
+
+	  <p>You can get a reference to this class (is a singleton) with <code>System.console()</code>.</p>
+
+	  <p>But keep in mind that if you program is running in an environment that doesn't have access to a console (like an IDE or if your program is running as a background process), <code>System.console()</code> will return null.</p>
+
+	  <p>With the <code>Console</code> object, you can easily read user input with the <code>readLine()</code> method and even read passwords with <code>readPassword()</code>.</p>
+
+	  <p>For output, this class has the <code>format()</code> and <code>printf()</code> methods that work just like the ones of <code>PrintWriter</code>.</p>
+
+	  <p>Finally, the methods <code>reader()</code> and <code>writer()</code> return an instance of <code>Reader</code> and <code>Writer</code> respectively:</p>
+
+	  <p><code class="java hljs">Console console = System.console();<br />
+	  <span class="hljs-comment">// Check if the console is available<br /></span><span class="hljs-keyword">if</span>(console != <span class="hljs-keyword">null</span>) {<br />
+	  &nbsp; &nbsp; console.writer().println(<span class="hljs-string">"Enter your user and password"</span>);<br />
+	  &nbsp; &nbsp; String user = console.readLine(<span class="hljs-string">"Enter user: "</span>);<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // readPassword() hides what the user is typing</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; char</span>[] pass = console.readPassword(<span class="hljs-string">"Password: "</span>);<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Clear password from memory by overwriting it</span><br />
+	  &nbsp; &nbsp; Arrays.fill(pass, <span class="hljs-string">'x'</span>);<br />
+	  }</code></p>
+
+	  <p><code>readPassword()</code> returns a <code>char</code> array so it can be totally and immediately removed from memory (<code>String</code>s live in a pool in memory and are garbage collected, so an array is safer).</p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li>An I/O Stream is a sequence of data that represents the content of a file.</li>
+
+		<li>An input stream is for reading and an output stream is for writing.</li>
+
+		<li>In the <code>java.io</code> package, we can find classes to work with byte and character streams.</li>
+
+		<li>There are four main <code>abstract</code> classes from which the rest of the classes extend from <code>InputStream</code>, <code>OutputStream</code>, <code>Reader</code>, <code>Writer</code>.</li>
+
+		<li>
+		  <code>java.io</code> classes can be classified as:
+
+		  <ul>
+			<li>Either for byte streams or character streams</li>
+
+			<li>Either for input or for output</li>
+
+			<li>Either wrappers or non-wrappers</li>
+		  </ul>
+		</li>
+
+		<li>Java initializes and provides three stream objects as <code>public static</code> fields of the <code>java.lang.System</code> class:
+
+		  <ul>
+			<li><code>InputStream System.in</code><br />
+			The standard input stream (typically the input from the keyboard)</li>
+
+			<li><code>PrintStream System.out</code><br />
+			The standard output stream (typically the default display output)</li>
+
+			<li><code>PrintStream System.err</code><br />
+			The standard error output stream (typically the default display output)</li>
+		  </ul>
+		</li>
+
+		<li>The following table summarizes the classes reviewed in this chapter:</li>
+	  </ul>
+
+	  <table border="1" width="100%">
+    <tr>
+      <td style="text-align: center;"><b>Class</b></td>
+
+      <td style="text-align: center;"><b>Extends From</b></td>
+
+      <td style="text-align: center;"><b>Main<br />
+      Constructor<br />
+      Arguments</b></td>
+
+      <td style="text-align: center;"><b>Main Methods</b></td>
+
+      <td style="text-align: center;"><b>Description</b></td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center;"><code>File</code></td>
+
+      <td style="text-align: center;"><code>&mdash;</code></td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>String</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>exists</code></li>
+
+          <li style="text-align: left;"><code>getParent</code></li>
+
+          <li style="text-align: left;"><code>isDirectory</code></li>
+
+          <li style="text-align: left;"><code>isFile</code></li>
+
+          <li style="text-align: left;"><code>listFiles</code></li>
+
+          <li style="text-align: left;"><code>mkdirs</code></li>
+
+          <li style="text-align: left;"><code>delete</code></li>
+
+          <li style="text-align: left;"><code>renameTo</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">Represents a file or directory.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center;"><code>FileInputStream</code></td>
+
+      <td style="text-align: center;"><code>InputStream</code></td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>File</code></li>
+
+          <li style="text-align: left;"><code>String</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>read</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">Reads file content as bytes.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center;"><code>FileOutputStream</code></td>
+
+      <td style="text-align: center;"><code>OutputStream</code></td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>File</code></li>
+
+          <li style="text-align: left;"><code>File, boolean</code></li>
+
+          <li style="text-align: left;"><code>String</code></li>
+
+          <li style="text-align: left;"><code>String, boolean</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>write</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">Writes file content as bytes.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center;"><code>FileReader</code></td>
+
+      <td style="text-align: center;"><code>Reader</code></td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>File String</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>read</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">Read file content as character.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center;"><code>FileWriter</code></td>
+
+      <td style="text-align: center;"><code>Writer</code></td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>File</code></li>
+
+          <li style="text-align: left;"><code>File, boolean</code></li>
+
+          <li style="text-align: left;"><code>String</code></li>
+
+          <li style="text-align: left;"><code>String, boolean</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>write</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">Write file content as character.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center;"><code>BufferedReader</code></td>
+
+      <td style="text-align: center;"><code>Reader</code></td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>Reader</code></li>
+
+          <li style="text-align: left;"><code>Reader, int</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>readLine</code></li>
+
+          <li style="text-align: left;"><code>read</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">Reads text to a character stream, buffering characters for efficiency.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center;"><code>BufferedWriter</code></td>
+
+      <td style="text-align: center;"><code>Writer</code></td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>Writer</code></li>
+
+          <li style="text-align: left;"><code>Writer, int</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>newLine</code></li>
+
+          <li style="text-align: left;"><code>write</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">Writes text to a character stream, buffering characters for efficiency.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center;"><code>ObjectInputStream</code></td>
+
+      <td style="text-align: center;"><code>InputStream</code></td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>InputStream</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>readObject</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">Deserializes primitive data and objects.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center;"><code>ObjectOutputStream</code></td>
+
+      <td style="text-align: center;"><code>OutputStream</code></td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>OutputStream</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>writeObject</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">Serializes primitive data and objects</td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center;"><code>PrintWriter</code></td>
+
+      <td style="text-align: center;"><code>Writer</code></td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>File</code></li>
+
+          <li style="text-align: left;"><code>OutputStream</code></li>
+
+          <li style="text-align: left;"><code>String</code></li>
+
+          <li style="text-align: left;"><code>Writer</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>format</code></li>
+
+          <li style="text-align: left;"><code>print</code></li>
+
+          <li style="text-align: left;"><code>printf</code></li>
+
+          <li style="text-align: left;"><code>println</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">Writes formatted data to a character stream.</td>
+    </tr>
+
+    <tr>
+      <td style="text-align: center;"><code>Console</code></td>
+
+      <td style="text-align: center;"><code>&mdash;</code></td>
+
+      <td style="text-align: center;"><code>&mdash;</code></td>
+
+      <td style="text-align: center;">
+        <ul>
+          <li style="text-align: left;"><code>readLine</code></li>
+
+          <li style="text-align: left;"><code>readPassword</code></li>
+
+          <li style="text-align: left;"><code>format</code></li>
+
+          <li style="text-align: left;"><code>printf</code></li>
+        </ul>
+      </td>
+
+      <td style="text-align: center;">Provides access to the console, if any.</td>
+    </tr>
+  </table>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Which of the following is a valid way to create a <code>PrintWriter</code> object? A. <code>new PrintWriter(new Writer("file.txt"));</code><br />
+	  B. <code>new PrintWriter();</code><br />
+	  C. <code>new PrintWriter(new FileReader("file.txt"));</code><br />
+	  D. <code>new PrintWriter(new OutputStream("file.txt"));</code></p>
+
+	  
+
+	  <p>2. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span> (Writer w = <span class="hljs-keyword">new</span> FileWriter(<span class="hljs-string">"/file.txt"</span>)) {<br />
+	  &nbsp; &nbsp; w.write(<span class="hljs-string">'1'</span>);<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+	  <p>Which of the following is the result of executing the above lines if the file already exists?<br />
+	  A. It overwrites the file<br />
+	  B. It appends <code>1</code> to the file<br />
+	  C. Nothing happens since the file already exists<br />
+	  D. An <code>IOException</code> is thrown</p>
+
+	  
+
+	  <p>3. Which of the following is the type of the <code>System.in</code> object?<br />
+	  A. <code>Reader</code><br />
+	  B. <code>InputStream</code><br />
+	  C. <code>BufferedReader</code><br />
+	  D. <code>BufferedInputStream</code></p>
+
+	  
+
+	  <p>4. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; int</span> val = <span class="hljs-number">54</span>;<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_23_4</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Test t = <span class="hljs-keyword">new</span> Test();<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; try</span> (ObjectOutputStream oos =<br />
+	  <span class="hljs-keyword">&nbsp; new</span> ObjectOutputStream(<span class="hljs-keyword">new</span> FileOutputStream(<span class="hljs-string">"d.dat"</span>))) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; oos.writeObject(t);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; } <span class="hljs-keyword">catch</span> (IOException e) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Error"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>Which of the following is the result of executing the above lines?<br />
+	  A. Nothing is printed, the class is serialized in <code>d.dat</code><br />
+	  B. Nothing is printed, but the class is not serialized<br />
+	  C. <code>Error</code><br />
+	  D. An runtime exception is thrown</p>
+
+	  
+
+	  <p>5. What does the <code>flush()</code> method does?<br />
+	  A. It marks the stream as ready to be written.<br />
+	  B. It closes the stream.<br />
+	  C. It writes the data stored in disk to a cache.<br />
+	  D. It writes the data stored in a cache to disk.</p>
+
+  
+
+  
+
+    
+		<div class="answers">
+			<a href="ch23a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch22.html">22. Time Zones and Daylight Savings</a>
+			</div>
+			<div class="next">
+				<a href="ch24.html">24. NIO.2</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

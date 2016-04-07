@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+				<h1><i class="chapter">Chapter TEN</i><br />
+				Java Built-In Lambda Interfaces</h1>
+
+				<p><br /></p>
+
+				<h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+				<p style="text-align: center;"><i>Use &nbsp;the built-in interfaces included in the java.util.function package such as Predicate, Consumer, Function, and Supplier.<br />
+				Develop code that uses primitive versions of functional interfaces.<br />
+				Develop code that uses binary versions of functional interfaces.<br />
+				Develop code that uses the UnaryOperator interface.</i></p>
+			  
+			</div>		
+		</div>
+	</div>
+
+  
+  <div class="container">
+  
+	<div class="column">
+
+	  <h2>Answers</h2>
+
+	  <p><b>1. The correct answer is A.</b><br />
+	  The <code>and(Predicate)</code> method of the <code>Predicate</code> interface represents a short-circuiting logical <b>AND</b>. This means that the other predicate won't be evaluated if the value of the first predicate can predict the result of the operation (if the first predicate return false in the case of <b>AND</b>).</p>
+
+	  <p>In the code, when <code>p1</code> is executed, it prints <code>"p1"</code> and then false is returned, which stops the execution of the second predicate.</p>
+
+	  <p><br /></p>
+
+	  <p><b>2. The correct answer is B.</b><br />
+	  <code>BiConsumer</code> represents a consumer that takes two arguments and doesn't return a result. This interface takes one object and a primitive value as a second argument, so the naming convention, in this case, is <code>ObjXXXConsumer</code>, where <code>XXX</code> is the primitive type.</p>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>3. The correct answer is C.</b><br />
+	  The <code>compose</code> method (for <code>Functions</code> and <code>UnaryOperators</code>) first applies the operator passed as a parameter to its input and then applies the other operator to the result.</p>
+
+	  <p>In this case, <code>u2</code> is executed first, and its result (<code>24</code>) is passed to <code>u1</code>, resulting in <code>4</code>.</p>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>4. The correct answer is D.</b><br />
+	  Option A is false. A <code>Consumer</code> is an operation that accepts a single input argument and returns no result.<br />
+	  Option B is false. <code>UnaryOperator</code> is a specialization of the <code>Function</code> interface.<br />
+	  Option C is false. The <code>BiFunction</code> interface has primitive versions for <code>int</code>, <code>long</code>, and <code>boolean</code>.<br />
+	  Option D is true. A <code>Supplier</code> represents an operation that takes no arguments, but it returns some value.</p>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>5. The correct answer is D.</b><br />
+	  <code>getAsBoolean()</code> is a method of <code>BooleanSupplier</code>, not <code>Supplier</code>. To compile this program, you either change s to <code>BooleanSupplier</code> or leave it as a <code>Supplier</code> and call the method <code>get()</code>.</p>
+
+	  <p><br /></p>
+
+	  <p><b>6. The correct answer is D.</b><br />
+	  <code>BiPredicate</code> doesn't have primitive versions.</p>
+
+	  <p><br /></p>
+
+	  <p><b>7. The correct answer is B.</b><br />
+	  <code>Function</code> has three types of primitive versions:</p>
+
+	  <ul>
+		<li>To indicate that the function returns a generic type and takes a primitive argument, the interface is named <b>XXXFunction</b>, for example,&nbsp;<code>LongFunction</code>.</li>
+
+		<li>To indicate that the function returns a primitive type and takes a generic argument, the interface is named <b>ToXXXFunction</b>, for example, <code>ToLongFunction</code>.</li>
+
+		<li>To indicate that the function takes a primitive argument and returns another primitive type, the interface is named <b>XXXToYYYFunction</b>, where <b>XXX</b> is the argument type and <b>YYY</b> is the return type, for example,&nbsp;<code>LongToDoubleFunction</code>.</li>
+	  </ul>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>8. The correct answers are A and C.</b><br />
+	  Option A is true. The <code>BinaryOperator</code> interface extends from the <code>BiFunction</code> interface.<br />
+	  Option B is false. There's no <code>BiSupplier</code> interface. Since <code>Supplier</code> just returns values without taking arguments, it doesn't have any sense to have a binary version.<br />
+	  Option C is true. The <code>Supplier</code> interface doesn't define any default methods.<br />
+	  Option D is false. <code>minBy</code> and <code>maxBy</code> are two <code>static</code> (not default) methods of the <code>BinaryOperator</code> interface.</p>
+
+	  <p><b><br /></b></p>
+  
+	</div>
+  </div>
+		
+  <footer></footer>
+  
+</body>
+</html>

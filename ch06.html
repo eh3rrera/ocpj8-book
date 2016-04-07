@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+				<h1><i class="chapter">Part TWO</i><br />
+				Generics and Collections</h1>
+
+				
+
+				<h1><i class="chapter">Chapter SIX</i><br />
+				Generics</h1>
+
+				<p><br /></p>
+
+				<h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+				<p style="text-align: center;"><i>Create and use a generic class.</i></p>
+			  
+			</div>	
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>Generics</h2>
+
+	  <p>Without generics, you can declare a <code>List</code> like this:</p>
+
+	  <p><code class="java hljs">List list = <span class="hljs-keyword">new</span> ArrayList();</code></p>
+
+	  <p>As by default, a <code>List</code> accepts objects of any type, you can add elements of different type to list:</p>
+
+	  <p><code class="java hljs">list.add(<span class="hljs-string">"a"</span>);<br />
+	  list.add(<span class="hljs-keyword">new</span> Integer(<span class="hljs-number">1</span>));<br />
+	  list.add(Boolean.TRUE);</code></p>
+
+	  <p>And get values like this:</p>
+
+	  <p><code class="java hljs">String s = (String) list.get(<span class="hljs-number">0</span>);</code></p>
+
+	  <p>This can lead to ugly runtime errors and more complexity. Because of that, generics were added in Java 5 as a mechanism for type checking.</p>
+
+	  <p>A generic is a type declared inside angle brackets, following the class name. For example:</p>
+
+	  <p><code class="java hljs">List&lt;String&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();</code></p>
+
+	  <p>By adding the generic type to <code>List</code>, we are telling the <b>COMPILER</b> to check that only <code>String</code> values can be added to the list:</p>
+
+	  <p><code class="java hljs">list.add(<span class="hljs-string">"a"</span>); <span class="hljs-comment">// OK</span><br />
+	  list.add(<span class="hljs-keyword">new</span> Integer(<span class="hljs-number">1</span>)); <span class="hljs-comment">// Compile-time error</span><br />
+	  list.add(Boolean.TRUE); <span class="hljs-comment">// Compile-time error</span></code></p>
+
+	  <p>Since now we only have values of one type, we can safely get elements without a cast:</p>
+
+	  <p><code class="java hljs">String s = list.get(<span class="hljs-number">0</span>);</code></p>
+
+	  <p>It's important to emphasize that generics are a thing of the compiler. At runtime, Java doesn't know about generics.</p>
+
+	  <p>Under the hood, the compiler inserts all the checks and casts for you, but at runtime, a generic type is seen by Java as a <code>java.lang.Object</code> type.</p>
+
+	  <p>In other words, the compiler verifies that you're working with the right type and then, generates code with the <code>java.lang.Object</code> type.</p>
+
+	  <p>The process of replacing all references to generic types with <code>Object</code> is called <i>type erasure</i>.</p>
+
+	  <p>Because of this, at runtime, <code>List&lt;String&gt;</code> and <code>List&lt;Integer&gt;</code> are the same, because the type information has been erased by the compiler (they are just seen as <code>List</code>).</p>
+
+	  <p>Generics only work with objects. Something like the following won't compile:</p>
+
+	  <p><code class="java hljs">List&lt;<span class="hljs-keyword">int</span>&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;<span class="hljs-keyword">int</span>&gt;();</code></p>
+
+	  <p>Finally, a class that accepts generics but it's declared without one is called raw type:</p>
+
+	  <p><code class="java hljs"><span style="color: rgb(0, 106, 0);">// Raw type<br /></span>List raw = <span class="hljs-keyword">new</span> ArrayList();<br />
+	  <span style="color: rgb(0, 106, 0);">// Generic type<br /></span>List&lt;String&gt; generic = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();&nbsp;</code></p>
+
+	  <h2>The Diamond Operator</h2>
+
+	  <p>Since Java 7, instead of specifying the generic type on both sides of the assignment:</p>
+
+	  <p><code class="java hljs">List&lt;List&lt;String&gt;&gt; generic = <span class="hljs-keyword">new</span> ArrayList&lt;List&lt;String&gt;&gt;();</code></p>
+
+	  <p>We can simplify the creation of the object by just writing:</p>
+
+	  <p><code class="java hljs">List&lt;List&lt;String&gt;&gt; generic = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();</code></p>
+
+	  <p>The short form on the right side is called the <i>diamond operator</i> (because it looks like a diamond).</p>
+
+	  <p>But be careful. The above example is different than:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Without the diamond operator, the raw type is used</span><br />
+	  List&lt;List&lt;String&gt;&gt; generic = <span class="hljs-keyword">new</span> ArrayList();</code></p>
+
+	  <p>You can only use the diamond operator if the compiler can infer the parameter type(s) from the context, the good news is that in Java 8, type inference was improved:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testGenericParam</span><span class="hljs-params">(List&lt;String&gt; list)</span></span> { }<br />
+	  <span class="hljs-function"><span class="hljs-keyword"><br />
+	  void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // In Java 7, this line generates a compile error</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // In Java 8, this lines compiles fine</span><br />
+	  &nbsp; &nbsp; testGenericParam(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;());<br />
+	  }</code></p>
+
+	  <h2>Generic Classes</h2>
+
+	  <p>Looking at the definition of <code>List</code> and a couple of its methods, we can see how this class is designed to work with generics:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">Collection</span>&lt;<span class="hljs-title">E</span>&gt;</span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span></span>;<br />
+	  <span class="hljs-function">&nbsp; &nbsp; Iterator&lt;E&gt; <span class="hljs-title">iterator</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>We can see how a generic type is defined for classes and interfaces. It's just a matter of declaring a <i>type parameter</i> next to the class (or interface) name.</p>
+
+	  <p>By the way, <code>E</code> is just and identifier, like a named variable. It can be anything you want. However, the convention is to use single uppercase letters. Some common letters are:</p>
+
+	  <ul>
+		<li><code>E</code> for element</li>
+
+		<li><code>K</code> for a map key</li>
+
+		<li><code>V</code> for a map value</li>
+
+		<li><code>T</code>, <code>U</code> for data types</li>
+	  </ul>
+
+	  <p>This way, when a <code>List</code> is declared like this:</p>
+
+	  <p><code class="java hljs">List&lt;String&gt; list = <span class="hljs-keyword">null</span>;</code></p>
+
+	  <p><code>E</code> is given the value of <code>String</code>, and wherever the type <code>E</code> is defined, <code>String</code> will be used.</p>
+
+	  <p>So generic classes give us a lot of flexibility.</p>
+
+	  <p>For example, consider this class:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Holder</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> String s;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-title">Holder</span><span class="hljs-params">(String s)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; this</span>.s = s;<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">getObject</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; return</span> s;<br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printObject</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(s);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>There's nothing wrong with it, but it only accept objects of type <code>String</code>. What if later we need a class just like that, but that works with <code>Integer</code> types? Do we create an <code>Integer</code> version?</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">IntegerHolder</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> Integer s;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-title">Holder</span><span class="hljs-params">(Integer s)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; this</span>.s = s;<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> Integer <span class="hljs-title">getObject</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; return</span> s;<br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printObject</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(s);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>Duplicate code feels and looks wrong. An <code>Object</code> version? No, thank you, we will need to add casts everywhere.</p>
+
+	  <p>Generics help us in cases like this. Just declare a type parameter:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Holder</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // ...</span><br />
+	  }</code></p>
+
+	  <p>And the generic type <code>T</code> will be available anywhere within the class:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Holder</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> T t;<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Holder</span><span class="hljs-params">(T t)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; this</span>.t = t;<br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> T <span class="hljs-title">getObject</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; return</span> t;<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printObject</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(t);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>Now, we an instance is created, we just specify the type of <code>T</code> for that instance:</p>
+
+	  <p><code class="java hljs">Holder&lt;String&gt; h1 = <span class="hljs-keyword">new</span> Holder&lt;&gt;(<span class="hljs-string">"Hi"</span>);<br />
+	  Holder&lt;Integer&gt; h2 = <span class="hljs-keyword">new</span> Holder&lt;&gt;(<span class="hljs-number">1</span>);<br />
+	  String s = h1.getObject();</code></p>
+
+	  <p>If we don't specify a type parameter, we will be using the raw type (that uses the <code>Object</code> type):</p>
+
+	  <p><code class="java hljs">Holder h3 = <span class="hljs-keyword">new</span> Holder(<span class="hljs-string">"Hi again"</span>);<br />
+	  Object o = h3.getObject();</code></p>
+
+	  <p>If we need it, we can have more than one type parameter:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Holder</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">U</span>&gt;</span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // ...</span><br />
+	  }</code></p>
+
+	  <h2>Generic Methods</h2>
+
+	  <p>We can also declare type parameters in any method (not for the whole class). But the syntax is a little different, for example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Utils</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(T t)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(t);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>This defines a method that takes an argument of type <code>T</code>. Here are two more examples of generic methods:</p>
+
+	  <p><code class="java hljs">&lt;T&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">genericMethod1</span><span class="hljs-params">(List&lt;T&gt; list)</span></span> { }<br />
+	  &lt;T, U&gt; <span class="hljs-function">T <span class="hljs-title">genericMethod2</span><span class="hljs-params">(U u)</span></span> {<br />
+	  &nbsp; &nbsp; T t = <span class="hljs-keyword">null</span>;<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; return</span> t;<br />
+	  }</code></p>
+
+	  <p>When a method declares its own generic type, it has to be specified before the return type (in contrast to classes, which declare it after the class name).</p>
+
+	  <p>To call the method of the first example, you can do it normally:</p>
+
+	  <p><code class="java hljs">Utils().print(<span class="hljs-number">10</span>);</code></p>
+
+	  <p>Or by explicitly specifying the type between the dot and the name of the method:</p>
+
+	  <p><code class="java hljs">Utils().&lt;Integer&gt;print(<span class="hljs-number">10</span>);</code></p>
+
+	  <h2>Wildcards</h2>
+
+	  <p>Generics are useful in many cases, but not all. We have two main problems.</p>
+
+	  <p>You could think that since <code>ArrayList</code> implements <code>List</code> and <code>String</code> is a subclass of <code>Object</code>, something like this is fine:</p>
+
+	  <p><code class="java hljs">List&lt;Object&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();</code></p>
+
+	  <p>But it doesn't compile, an <code>ArrayList&lt;String&gt;</code> cannot be cast to <code>List&lt;Object&gt;</code> because when working with generics, you cannot assign a derived type to a base type, both types should be the same (either explicitly or by using the diamond operator).</p>
+
+	  <p>Think about it this way. A list of type <code>List&lt;Object&gt;</code> can hold instances of <code>Object</code> and its subclasses, in other words, every object in Java, not just strings, so you could have a list of strings and integers for example, which clearly violates type safety.</p>
+
+	  <p>But if you change the declaration to use a wildcard parameter:</p>
+
+	  <p><code class="java hljs">List&lt;?&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();</code></p>
+
+	  <p>It will compile.</p>
+
+	  <p>The unbounded wildcard type (<code>&lt;?&gt;</code>) means that the type of the list is unknown so that it can match <b>ANY</b> type.</p>
+
+	  <p>In fact you can consider in a way <code>List&lt;?&gt;</code> as the superclass of all <code>List</code>s, since you can assign any type of <code>List</code>:</p>
+
+	  <p><code class="java hljs">List&lt;String&gt; stringList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  List&lt;Integer&gt; intList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  <span style="color: rgb(0, 106, 0);">// No problem<br /></span>List&lt;?&gt; unknownTypeList = stringList;<br />
+	  <span style="color: rgb(0, 106, 0);">// No problem either<br /></span>List&lt;?&gt; unknownTypeList = intList;<br />
+	  <span class="hljs-keyword">for</span>(Object o : unknownTypeList) { <span class="hljs-comment">// Object?</span><br />
+	  &nbsp; &nbsp;System.out.println(o);<br />
+	  }</code></p>
+
+	  <p>Since the compiler doesn't know the type of the elements of <code>List&lt;?&gt;</code>, we have to use <code>Object</code> to assure there won't be any problem at runtime.</p>
+
+	  <p>But don't think that <code>List&lt;Object&gt;</code> is the same as <code>List&lt;?&gt;</code>. It's not. With <code>List&lt;Object&gt;</code> the previous examples won't compile.</p>
+
+	  <p>There's another difference. The following code won't compile:</p>
+
+	  <p><code class="java hljs">List&lt;?&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();<br />
+	  list.add(<span class="hljs-string">"Hi"</span>); <span class="hljs-comment">// Compile-time error</span></code></p>
+
+	  <p>Since the compiler cannot infer the type of the elements, it can't assure type safety (you can only insert null because it doesn't have a type).</p>
+
+	  <p>To avoid this problem, the compiler generates an error when you try to modify the list. This way, when using an unbounded wildcard the list becomes <b>IMMUTABLE</b>.</p>
+
+	  <p>This can be a problem or a benefit, depending on how you use it. This wildcard is used in arguments of methods where the code just uses methods of the generic class or from <code>Object</code>, not of a particular type, for example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword"><span style="color: rgb(0, 106, 0);">// You can pass any type of List here<br /></span>int</span> <span class="hljs-title">getSize</span><span class="hljs-params">(List&lt;?&gt; list)</span></span> { &nbsp;<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; return</span> list.size();<br />
+	  }</code></p>
+
+	  <p>That was the first problem. The second problem is that when working with a type parameter, we can only use methods from <code>Object</code> since we don't know the exact type of the type parameter, for example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Printer</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(T t)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; System.out.println(t.toUpperCase());<span class="hljs-comment">// Error</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; // What if T doesn't represent a String?</span><br />
+	  &nbsp; &nbsp;}<br />
+	  }</code></p>
+
+	  <p>The solution is to use the so-called bounded wildcards:</p>
+
+	  <ul>
+		<li><code>? extends T</code> (Upper-bounded wildcard)</li>
+
+		<li><code>? super T</code> (Lower-bounded wildcard)</li>
+	  </ul>
+
+	  <p>By using these wildcards, you can relax a little the restrictions imposed by generics. This will also allow you to use some sort of polymorphism or subtyping with generics, and for that same reason, this is the trickiest part of the exam.</p>
+
+	  <p>Let's start with the upper-bounded wildcard.</p>
+
+	  <p>The error in the example above can be solved using the upper-bounded generic (not exactly a wildcard) this way:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Printer</span>&lt;<span class="hljs-title">T</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">String</span>&gt;</span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(T t)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; System.out.println(t.toUpperCase());<span class="hljs-comment">//OK!</span><br />
+	  &nbsp; &nbsp;}<br />
+	  }</code></p>
+
+	  <p><code>&lt;T extends String&gt;</code> means that any class that extends (or implements when working with an interface) <code>String</code> (or <code>String</code> itself) can be used as the type parameter. As <code>T</code> is replaced by <code>String</code>, it's safe to its methods:</p>
+
+	  <p><code class="java hljs">Printer&lt;String&gt; p1 = <span class="hljs-keyword">new</span> Printer&lt;&gt;(); <span class="hljs-comment">// OK</span><br />
+	  <span style="color: rgb(0, 106, 0);">// Error, Byte is not a String<br /></span>Printer&lt;Byte&gt; p2 = <span class="hljs-keyword">new</span> Printer&lt;&gt;();&nbsp;</code></p>
+
+	  <p>The upper-bounded wildcard can also solve this problem:</p>
+
+	  <p><code class="java hljs">List&lt;Object&gt; list =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; new</span> ArrayList&lt;String&gt;(); <span class="hljs-comment">// Error</span><br />
+	  List&lt;? extends Object&gt; list2 =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; new</span> ArrayList&lt;String&gt;(); <span class="hljs-comment">// OK!</span></code></p>
+
+	  <p>Still, we can't modify the list:</p>
+
+	  <p><code class="java hljs">list2.add(<span class="hljs-string">"Hi"</span>); <span class="hljs-comment">// Compile-time error</span></code></p>
+
+	  <p>The reason is the same. The compiler still can't know for sure what type will the list hold (we could add any type).</p>
+
+	  <p>Notice than, for example, <code>List&lt;Number&gt;</code> is more restrictive than <code>List&lt;? extends Number&gt;</code>, in the sense that the former only accepts direct assignments of type <code>List&lt;Number&gt;</code>, but the latter, accepts direct assignments of <code>List&lt;Integer&gt;</code>, <code>List&lt;Float&gt;</code>, etc., for example:</p>
+
+	  <p><code class="java hljs">List&lt;Integer&gt; listInteger = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  List&lt;Float&gt; listFloat = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  List&lt;Number&gt; listNumber = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  listNumber.add(<span class="hljs-keyword">new</span> Integer(<span class="hljs-number">1</span>)); <span class="hljs-comment">// OK</span><br />
+	  listNumber.add(<span class="hljs-keyword">new</span> Float(<span class="hljs-number">1.0F</span>)); <span class="hljs-comment">// OK</span><br />
+	  listNumber = listInteger; <span class="hljs-comment">// Error</span><br />
+	  listNumber = listFloat; <span class="hljs-comment">// Error</span><br />
+	  <br />
+	  List&lt;? extends Number&gt; listExtendsNum = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  <span class="hljs-comment">// This would cause an error<br />
+	  // listExtendsNum.add(new Integer(1));</span><br />
+	  listExtendsNum = listInteger; <span class="hljs-comment">// OK</span><br />
+	  listExtendsNum = listFloat; <span class="hljs-comment">// OK</span></code></p>
+
+	  <p>Finally, we have the lower-bounded wildcard. If we have a list like this:</p>
+
+	  <p><code class="java hljs">List&lt;? <span class="hljs-keyword">super</span> Integer&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();</code></p>
+
+	  <p>It means that list can be assigned to an <code>Integer</code> list (<code>List&lt;Integer&gt;</code>) or some supertype of <code>Integer</code> (like <code>List&lt;Number&gt;</code> or <code>List&lt;Object&gt;</code>).</p>
+
+	  <p>This time, since you know that the list would be typed to at least an <code>Integer</code>, it's safe for the compiler to allow modifications to the list:</p>
+
+	  <p><code class="java hljs">List&lt;? <span class="hljs-keyword">super</span> Integer&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  list.add(<span class="hljs-number">1</span>); <span class="hljs-comment">// OK!</span><br />
+	  list.add(<span class="hljs-number">2</span>); <span class="hljs-comment">// OK!</span></code></p>
+
+	  <p>Think about it, even if the list's type is <code>List&lt;Object&gt;</code>, an <code>Integer</code> can be assigned to an <code>Object</code> or a <code>Number</code> (or another superclass if there were another one) for that matter.</p>
+
+	  <p>And what types can we add to the list?</p>
+
+	  <p>We can add instances of <code>T</code> or one of its subclasses because they are <code>T</code> also (in the example, <code>Integer</code> doesn't have subclasses, so we can only insert <code>Integer</code> instances).</p>
+
+	  <p>So don't get confused, one thing is what can you assign and another thing is what you can add, for example:</p>
+
+	  <p><code class="java hljs">List&lt;Integer&gt; listInteger = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  List&lt;Object&gt; listObject = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  List&lt;? <span class="hljs-keyword">super</span> Number&gt; listSuperNum = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  listSuperNum.add(<span class="hljs-keyword">new</span> Integer(<span class="hljs-number">1</span>)); <span class="hljs-comment">// OK</span><br />
+	  listSuperNum.add(<span class="hljs-keyword">new</span> Float(<span class="hljs-number">1.0F</span>)); <span class="hljs-comment">// OK</span><br />
+	  listSuperNum = listInteger; <span class="hljs-comment">// Error!</span><br />
+	  listSuperNum = listObject; <span class="hljs-comment">// OK</span></code></p>
+
+	  <h2>Generic limitations</h2>
+
+	  <p>We have talked about some of the limitations of generics, and other can be inferred from what we've reviewed, but anyway, here's a summary of all of them:</p>
+
+	  <p>Generics don't work with primitive types:</p>
+
+	  <p><code class="java hljs"><span style="color: rgb(0, 106, 0);">// Use Wrappers instead<br /></span>List&lt;<span class="hljs-keyword">int</span>&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();&nbsp;</code></p>
+
+	  <p>You cannot create an instance of a type parameter:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
+	  &nbsp; &nbsp;T var = <span class="hljs-keyword">new</span> T();<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// You don't know the type's constructors</span><br />
+	  }</code></p>
+
+	  <p>You cannot declare <code>static</code> fields of a type parameter:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// If a static member is shared by many instances,<br /></span> <span class="hljs-comment">&nbsp; &nbsp;// and each instance can declare a different type,<br /></span> <span class="hljs-comment">&nbsp; &nbsp;// what is the actual type of var?</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;static</span> T var;<br />
+	  }</code></p>
+
+	  <p>Due to type erasure, you cannot use <code>instanceof</code> with generic types:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">if</span>(obj <span class="hljs-keyword">instanceof</span> List&lt;Integer&gt;) { <span class="hljs-comment">// Error</span><br />
+	  }<br />
+	  <span class="hljs-keyword">if</span> (obj <span class="hljs-keyword">instanceof</span> List&lt;?&gt;) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // It only works with the unbounded</span>&nbsp;<br />
+	  <span style="color: rgb(0, 106, 0);">&nbsp; &nbsp; // wildcard to verify that obj is a List<br /></span><span style="font-size: 0.88em;">}&nbsp;</span></code></p>
+
+	  <p>You cannot instantiate an array of generic types</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
+	  &nbsp; &nbsp; T[] array; <span class="hljs-comment">// OK</span><br />
+	  &nbsp; &nbsp; T[] array1 = <span class="hljs-keyword">new</span> T[<span class="hljs-number">100</span>]; <span class="hljs-comment">// Error</span><br />
+	  &nbsp; &nbsp; List&lt;String&gt;[] array2 = <span class="hljs-keyword">new</span> List&lt;String&gt;[<span class="hljs-number">10</span>]; <span class="hljs-comment">// Error</span><br />
+	  }</code></p>
+
+	  <p>You cannot create, catch, or throw generic types</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GenericException</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">Exception</span></span> { } <span class="hljs-comment">// Error</span><br />
+	  <br />
+	  &lt;T extends Exception&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; try</span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // ...</span><br />
+	  &nbsp; &nbsp; } <span class="hljs-keyword">catch</span>(T e) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Error</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>However, you can use a type parameter in a <code>throws</code> clause:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>&lt;<span class="hljs-title">T</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Exception</span>&gt;</span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> T</span> { } <span class="hljs-comment">// OK<br /></span> }</code></p>
+
+	  <p>You cannot overload a method where type erasure will leave the parameters with the same type:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // List&lt;Integer&gt; and List&lt;Integer&gt;</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // will be converted to List at runtime</span><br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">(List&lt;String&gt; list)</span></span> { }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">(List&lt;Integer&gt; list)</span></span> { }<br />
+	  }</code></p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li>Generics are a mechanism for type checking at compile-time.</li>
+
+		<li>The process of replacing all references to generic types at runtime with an <code>Object</code> type is called <i>type erasure</i>.</li>
+
+		<li>A generic class used without a generic type argument (like <code>List list = null;</code>) is known as a <i>raw type</i>.</li>
+
+		<li>The <i>diamond operator</i> (<code>&lt;&gt;</code>) can be used to simplify the use of generics when the type can be inferred by the compiler.</li>
+
+		<li>It's possible to define a generic class or interface by declaring a <i>type paramete</i>r next to the class or interface name.</li>
+
+		<li>We can also declare type parameters in any method, specifying the type before the method return type (in contrast to classes, which declare it after the class name).</li>
+
+		<li>The unbounded wildcard type (<code>&lt;?&gt;</code>) means that the type of the list is unknown so that it can match <b>ANY</b> type. This also means that for example, <code>List&lt;?&gt;</code> is a supertype of any <code>List</code> type (like <code>List&lt;Integer&gt;</code> or <code>List&lt;Float&gt;</code>).</li>
+
+		<li>The upper-bounded wildcard (<code>? extends T</code>) means that you can assign either <code>T</code> or a subclass of <code>T</code>.</li>
+
+		<li>The lower-bounded wildcard (<code>? super T</code>) means that you can assign either <code>T</code> or a superclass of <code>T</code>.</li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_6_1</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Question_6_1 q = <span class="hljs-keyword">new</span> Question_6_1();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; List&lt;Integer&gt; l = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; l.add(<span class="hljs-number">20</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; l.add(<span class="hljs-number">30</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; q.m1(l);<br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">m1</span><span class="hljs-params">(List&lt;?&gt; l)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; m2(l); <span class="hljs-comment">// 1</span><br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> &gt;T&lt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m2</span><span class="hljs-params">(List&lt;T&gt; l)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; l.set(<span class="hljs-number">1</span>, l.get(<span class="hljs-number">0</span>)); <span class="hljs-comment">// 2</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(l);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>[20, 20]</code><br />
+	  B. Compilation fails on the line marked as <code>// 1</code><br />
+	  C. Compilation fails on the line marked as <code>// 2</code><br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>2. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_6_2</span> &lt;<span class="hljs-title">T</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Number</span>&gt;</span> {<br />
+	  &nbsp; &nbsp; T t;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Question_6_2 q =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;new</span> Question_6_2&lt;Integer&gt;(); <span class="hljs-comment">// 1</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; q.t = <span class="hljs-keyword">new</span> Float(<span class="hljs-number">1</span>); <span class="hljs-comment">// 2</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(q.t);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>1.0</code><br />
+	  B. Compilation fails on the line marked as <code>// 1</code><br />
+	  C. Compilation fails on the line marked as <code>// 2</code><br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>3. Which of the following declarations don't compile?<br />
+	  A. <code>List&lt;?&gt; l1 = new ArrayList&lt;&gt;()</code>;<br />
+	  B. <code>List&lt;String&gt; l2 = new ArrayList()</code>;<br />
+	  C. <code>List&lt;? super Object&gt; l3 = new ArrayList&lt;String&gt;();</code><br />
+	  D. <code>List&lt;? extends Object&gt; l4 = new ArrayList&lt;String&gt;();</code></p>
+
+	  <p>4. Given</p>
+
+	  <p><code class="java hljs">List&lt;? <span class="hljs-keyword">super</span> Number&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;Object&gt;(); <span class="hljs-comment">// 1</span><br />
+	  list.add(<span class="hljs-keyword">new</span> Integer(<span class="hljs-number">2</span>)); <span class="hljs-comment">// 2</span><br />
+	  list.add(<span class="hljs-keyword">new</span> Object()); <span class="hljs-comment">// 3</span></code></p>
+
+	  <p>Which line will generate a compile-time error?<br />
+	  A. Line marked as <code>// 1</code><br />
+	  B. Line marked as <code>// 2</code><br />
+	  C. Line marked as <code>// 3</code><br />
+	  D. No compile-time error is generated</p>
+
+  
+
+  
+    
+		<div class="answers">
+			<a href="ch06a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch05.html">05. Enumerations</a>
+			</div>
+			<div class="next">
+				<a href="ch07.html">07. Collections</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

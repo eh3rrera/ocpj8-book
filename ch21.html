@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Part SIX</i><br />
+			  Date/Time API</h1>
+
+			  
+
+			  <h1><i class="chapter">Chapter TWENTY-ONE</i><br />
+			  Core Date/Time Classes</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Create and manage date-based and time-based events including a combination of date and time into a single object using LocalDate, LocalTime, LocalDateTime, Instant, Period, and Duration.<br /></i><i>Define and create and manage date-based and time-based events using Instant, Period, Duration, and TemporalUnit.</i></p>
+			  
+			</div>	
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>A new Date/Time API</h2>
+
+	  <p>Since the beginning of Java, <code>java.util.Date</code> and <code>java.util.Calendar</code> (introduced later) have been the classes to use when working with dates and times.</p>
+
+	  <p>However, these classes are far from perfect, some of their problems are:</p>
+
+	  <ul>
+		<li><code>java.util.Date</code> represents time with "only" milliseconds precision (which may not be enough in some applications). Years start from 1900 and months start at 0.</li>
+
+		<li>The time zone of the date is the JVM's default time zone.</li>
+
+		<li>Both <code>java.util.Date</code> and <code>java.util.Calendar</code> are mutable classes, meaning that when they change, they don't create another instance with the new values (which is not ideal now that you can program in a functional style with Java).</li>
+	  </ul>
+
+	  <p>For those reasons, Java 8 introduced a new Date/Time API based on the popular date/time library Joda-Time and contained in the also new <code>java.time</code> package.</p>
+
+	  <p>This chapter will deal with the core classes of the new API, that don't provide time zone information. The classes that do provide time zone information will be the topic of the next chapter.</p>
+
+	  <p>Let's start with a high-level overview of the core classes.</p>
+
+	  <p>All these classes are immutable, thread-safe, and with the exception of <code>Instant</code>, they don't store or represent a time-zone.</p>
+
+	  <p>On the one hand, we have:</p>
+
+	  <p><b>LocalDate</b><br />
+	  Represents a date with the year, month, and day of the month information. For example, <i>2015-08-25</i>.</p>
+
+	  <p><b>LocalTime</b><br />
+	  Represents a time with hour, minutes, seconds, and nanoseconds information. For example, <i>13:21.05.123456789</i>.</p>
+
+	  <p><b>LocalDateTime</b><br />
+	  A combination of the above. For example, <i>2015-08-25 13:21.05.12345</i>.</p>
+
+	  <p>On the other hand:</p>
+
+	  <p><b>Instant</b><br />
+	  Represents a single point in time in seconds and nanoseconds. For example <i>923,456,789 seconds and 186,054,812 nanoseconds</i>.</p>
+
+	  <p><b>Period</b><br />
+	  Represents an amount of time in terms of years, months and days. For example, <i>5 years, 2 months and 9 days</i>.</p>
+
+	  <p><b>Duration</b><br />
+	  Represents an amount of time in terms of seconds and nanoseconds. For example, <i>12.87656 seconds</i>.</p>
+
+	  <p><code>LocalDate</code>, <code>LocalTime</code>, <code>LocalDateTime</code> and <code>Instant</code> implement the interface <code>java.time.temporal.Temporal</code>, so they all have similar methods.</p>
+
+	  <p>While <code>Period</code> and <code>Duration</code> implement the interface <code>java.time.temporal.TemporalAmount</code>, which also makes them very similar.</p>
+
+	  <h2>LocalDate Class</h2>
+
+	  <p>The key to learning how to use this class is to have in mind that it holds the year, month, day and derived information of a date. All of its methods use this information or have a version to work with each of them.</p>
+
+	  <p>The following are the most important (most used) methods of this class.</p>
+
+	  <p>To create an instance, we can use the static method of:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// With year(-999999999 to 999999999),<br /></span><span class="hljs-comment">// month (1 to 12), day of the month (1 - 31)}<br /></span>LocalDate newYear2001 = LocalDate.of(<span class="hljs-number">2001</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);<br />
+	  <span class="hljs-comment">// This version uses the enum java.time.Month<br /></span>LocalDate newYear2002 = LocalDate.of(<span class="hljs-number">2002</span>, Month.JANUARY, <span class="hljs-number">1</span>);</code></p>
+
+	  <p>Notice that unlike <code>java.util.Date</code>, months start from one. If you try to create a date with invalid values (like February, 29), an exception will be thrown. For today's date use <code>now()</code>:</p>
+
+	  <p><code class="java hljs">LocalDate today = LocalDate.now();</code></p>
+
+	  <p>Once we have an instance of <code>LocalDate</code>, we can get the year, the month, and the day with methods like the following:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">int</span> year = today.getYear();<br />
+	  <span class="hljs-keyword">int</span> month = today.getMonthValue();<br />
+	  Month monthAsEnum = today.getMonth(); <span class="hljs-comment">// as an enum<font color="#000000"><br /></font></span><span class="hljs-keyword">int</span> dayYear = today.getDayOfYear();<br />
+	  <span class="hljs-keyword">int</span> dayMonth = today.getDayOfMonth();<br />
+	  DayOfWeek dayWeekEnum = today.getDayOfWeek(); <span class="hljs-comment">//as an enum</span></code></p>
+
+	  <p>We can also use the get method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">get</span><span class="hljs-params">(java.time.TemporalField field)</span> <span class="hljs-comment">// value as int<font color="#000000"><br /></font></span><span class="hljs-keyword">long</span> <span class="hljs-title">getLong</span><span class="hljs-params">(java.time.TemporalField field)</span> <span class="hljs-comment">// value as long</span></span></code></p>
+
+	  <p>Which takes an implementation of the interface <code>java.time.TemporalField</code> to access a specific field of a date. <code>java.time.ChronoField</code> is an enumeration that implements this interface, so we can have for example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">int</span> year = today.get(ChronoField.YEAR);<br />
+	  <span class="hljs-keyword">int</span> month = today.get(ChronoField.MONTH_OF_YEAR);<br />
+	  <span class="hljs-keyword">int</span> dayYear = today.get(ChronoField.DAY_OF_YEAR);<br />
+	  <span class="hljs-keyword">int</span> dayMonth = today.get(ChronoField.DAY_OF_MONTH);<br />
+	  <span class="hljs-keyword">int</span> dayWeek = today.get(ChronoField.DAY_OF_WEEK);<br />
+	  <span class="hljs-keyword">long</span> dayEpoch = today.getLong(ChronoField.EPOCH_DAY);</code></p>
+
+	  <p>The supported values for <code>ChronoField</code> are:</p>
+
+	  <ul>
+		<li><code>DAY_OF_WEEK</code></li>
+
+		<li><code>ALIGNED_DAY_OF_WEEK_IN_MONTH</code></li>
+
+		<li><code>ALIGNED_DAY_OF_WEEK_IN_YEAR</code></li>
+
+		<li><code>DAY_OF_MONTH</code></li>
+
+		<li><code>DAY_OF_YEAR</code></li>
+
+		<li><code>EPOCH_DAY</code></li>
+
+		<li><code>ALIGNED_WEEK_OF_MONTH</code></li>
+
+		<li><code>ALIGNED_WEEK_OF_YEAR</code></li>
+
+		<li><code>MONTH_OF_YEAR</code></li>
+
+		<li><code>PROLEPTIC_MONTH YEAR_OF_ERA</code></li>
+
+		<li><code>YEAR</code></li>
+
+		<li><code>ERA</code><br /></li>
+	  </ul>
+
+	  <p>Using a different value will throw an exception. The same is true when getting a value that doesn't fit into an <code>int</code> with <code>get(TemporalField)</code>.</p>
+
+	  <p>To check a <code>LocalDate</code> against another instance, we have three methods plus another one for leap years:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">boolean</span> after = newYear2001.isAfter(newYear2002); <span class="hljs-comment">// false</span><br />
+	  <span class="hljs-keyword">boolean</span> before = newYear2001.isBefore(newYear2002); <span class="hljs-comment">// true</span><br />
+	  <span class="hljs-keyword">boolean</span> equal = newYear2001.equals(newYear2002); <span class="hljs-comment">// false</span><br />
+	  <span class="hljs-keyword">boolean</span> leapYear = newYear2001.isLeapYear(); <span class="hljs-comment">// false</span></code></p>
+
+	  <p>Once an instance of this class is created, we cannot modify it, but we can create another instance from an existing one.</p>
+
+	  <p>One way is through the <code>with()</code> method and its versions:</p>
+
+	  <p><code class="java hljs">LocalDate newYear2003 = newYear2001.with(ChronoField.YEAR, <span class="hljs-number">2003</span>);<br />
+	  LocalDate newYear2004 = newYear2001.withYear(<span class="hljs-number">2004</span>);<br />
+	  LocalDate december2001 = newYear2001.withMonth(<span class="hljs-number">12</span>);<br />
+	  LocalDate february2001 = newYear2001.withDayOfYear(<span class="hljs-number">32</span>);<br />
+	  <span class="hljs-comment">// Since these methods return a new instance, we can chain them!</span><br />
+	  LocalDate xmas2001 = newYear2001.withMonth(<span class="hljs-number">12</span>).withDayOfMonth(<span class="hljs-number">25</span>);</code></p>
+
+	  <p>Another way is by adding or subtracting guess what? Years, months, days, or even weeks:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Adding</span><br />
+	  LocalDate newYear2005 = newYear2001.plusYears(<span class="hljs-number">4</span>);<br />
+	  LocalDate march2001 = newYear2001.plusMonths(<span class="hljs-number">2</span>);<br />
+	  LocalDate january15_2001 = newYear2001.plusDays(<span class="hljs-number">14</span>);<br />
+	  LocalDate lastWeekJanuary2001 = newYear2001.plusWeeks(<span class="hljs-number">3</span>);<br />
+	  LocalDate newYear2006 = newYear2001.plus(<span class="hljs-number">5</span>, ChronoUnit.YEARS);&nbsp;<br />
+	  <span class="hljs-comment"><br />
+	  // Subtracting</span><br />
+	  LocalDate newYear2000 = newYear2001.minusYears(<span class="hljs-number">1</span>);<br />
+	  LocalDate nov2000 = newYear2001.minusMonths(<span class="hljs-number">2</span>);<br />
+	  LocalDate dec30_2000 = newYear2001.minusDays(<span class="hljs-number">2</span>);<br />
+	  LocalDate lastWeekDec2001 = newYear2001.minusWeeks(<span class="hljs-number">1</span>);<br />
+	  LocalDate newYear1999 = newYear2001.minus(<span class="hljs-number">2</span>, ChronoUnit.YEARS);</code></p>
+
+	  <p>Notice that the plus and minus versions take a <code>java.time.temporal.ChronoUnit</code> enumeration, different than <code>java.time.ChronoField</code>. The supported values are:</p>
+
+	  <ul>
+		<li><code>DAYS</code></li>
+
+		<li><code>WEEKS</code></li>
+
+		<li><code>MONTHS</code></li>
+
+		<li><code>YEARS</code></li>
+
+		<li><code>DECADES</code></li>
+
+		<li><code>CENTURIES</code></li>
+
+		<li><code>MILLENNIA</code></li>
+
+		<li><code>ERAS</code><br /></li>
+	  </ul>
+
+	  <p>Finally, the method <code>toString()</code> returns the date in the format <i>uuuu-MM-dd</i>:</p>
+
+	  <p><code class="java hljs">System.out.println(newYear2001.toString()); <span class="hljs-comment">// Prints 2001-01-01</span></code></p>
+
+	  <h2>LocalTime Class</h2>
+
+	  <p>The key to learning how to use this class is to have in mind that it holds the hour, minutes, seconds, and nanoseconds. All of its methods use this information or have a version to work with each of them.</p>
+
+	  <p>The following are the most important (most used) methods of this class. As you can see, they are the same (or very similar) methods of <code>LocalDate</code>, adapted to work with time instead of date.</p>
+
+	  <p>To create an instance, we can use the <code>static</code> method of:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// With hour (0-23) and minutes (0-59)</span><br />
+	  LocalTime fiveThirty = LocalTime.of(<span class="hljs-number">5</span>, <span class="hljs-number">30</span>);<br />
+	  <span class="hljs-comment">// With hour, minutes, and seconds (0-59)</span><br />
+	  LocalTime noon = LocalTime.of(<span class="hljs-number">12</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br />
+	  <span class="hljs-comment">// With hour, minutes, seconds, and nanoseconds (0-999,999,999)</span><br />
+	  LocalTime almostMidnight = LocalTime.of(<span class="hljs-number">23</span>, <span class="hljs-number">59</span>, <span class="hljs-number">59</span>, <span class="hljs-number">999999</span>);</code></p>
+
+	  <p>If you try to create a time with an invalid value (like <code>LocalTime.of(24, 0)</code>), an exception will be thrown. To get the current time use <code>now()</code>:</p>
+
+	  <p><code class="java hljs">LocalTime now = LocalTime.now();</code></p>
+
+	  <p>Once we have an instance of <code>LocalTime</code>, we can get the hour, the minutes, and other information with methods like the following:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">int</span> hour = now.getHour();<br />
+	  <span class="hljs-keyword">int</span> minute = now.getMinutes();<br />
+	  <span class="hljs-keyword">int</span> second = now. getSeconds();<br />
+	  <span class="hljs-keyword">int</span> nanosecond = now. getNano();</code></p>
+
+	  <p>We can also use the <code>get()</code> method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">get</span><span class="hljs-params">(java.time.TemporalField field)</span> <span class="hljs-comment">// value as int</span><br />
+	  <span class="hljs-keyword">long</span> <span class="hljs-title">getLong</span><span class="hljs-params">(java.time.TemporalField field)</span> <span class="hljs-comment">// value as long</span></span></code></p>
+
+	  <p>Just like in the case of <code>LocalDate</code>, we can have, for example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">int</span> hourAMPM = now.get(ChronoField.HOUR_OF_AMPM); <span class="hljs-comment">// 0 - 11</span><br />
+	  <span class="hljs-keyword">int</span> hourDay = now.get(ChronoField.HOUR_OF_DAY); <span class="hljs-comment">// 0 - 23</span><br />
+	  <span class="hljs-keyword">int</span> minuteDay = now.get(ChronoField.MINUTE_OF_DAY); <span class="hljs-comment">// 0 - 1,439</span><br />
+	  <span class="hljs-keyword">int</span> minuteHour = now.get(ChronoField.MINUTE_OF_HOUR); <span class="hljs-comment">// 0 - 59</span><br />
+	  <span class="hljs-keyword">int</span> secondDay = now.get(ChronoField.SECOND_OF_DAY); <span class="hljs-comment">// 0 - 86,399</span><br />
+	  <span class="hljs-keyword">int</span> secondMinute = now.get(ChronoField.SECOND_OF_MINUTE);<span class="hljs-comment">// 0 - 59</span><br />
+	  <span class="hljs-keyword">long</span> nanoDay = now.getLong(ChronoField.NANO_OF_DAY);<span class="hljs-comment">//0-86399999999</span><br />
+	  <span class="hljs-keyword">int</span> nanoSecond = now.get(ChronoField.NANO_OF_SECOND);<span class="hljs-comment">//0-999999999</span></code></p>
+
+	  <p>The supported values for <code>ChronoField</code> are:</p>
+
+	  <ul>
+		<li><code>NANO_OF_SECOND</code></li>
+
+		<li><code>NANO_OF_DAY</code></li>
+
+		<li><code>MICRO_OF_SECOND</code></li>
+
+		<li><code>MICRO_OF_DAY</code></li>
+
+		<li><code>MILLI_OF_SECOND</code></li>
+
+		<li><code>MILLI_OF_DAY</code></li>
+
+		<li><code>SECOND_OF_MINUTE</code></li>
+
+		<li><code>SECOND_OF_DAY</code></li>
+
+		<li><code>MINUTE_OF_HOUR</code></li>
+
+		<li><code>MINUTE_OF_DAY</code></li>
+
+		<li><code>HOUR_OF_AMPM</code></li>
+
+		<li><code>CLOCK_HOUR_OF_AMPM</code></li>
+
+		<li><code>HOUR_OF_DAY</code></li>
+
+		<li><code>CLOCK_HOUR_OF_DAY</code></li>
+
+		<li><code>AMPM_OF_DAY</code><br /></li>
+	  </ul>
+
+	  <p>Using a different value will throw an exception. The same is true when getting a value that doesn't fit into an <code>int</code> with <code>get(TemporalField)</code>.</p>
+
+	  <p>To check a time object against another one, we have three methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">boolean</span> after = fiveThirty.isAfter(noon); <span class="hljs-comment">// false</span><br />
+	  <span class="hljs-keyword">boolean</span> before = fiveThirty.isBefore(noon); <span class="hljs-comment">// true</span><br />
+	  <span class="hljs-keyword">boolean</span> equal = noon.equals(almostMidnight); <span class="hljs-comment">// false</span></code></p>
+
+	  <p>Like <code>LocalDate</code>, once an instance of <code>LocalTime</code> is created we cannot modify it, but we can create another instance from an existing one.</p>
+
+	  <p>One way is through the with method and its versions:</p>
+
+	  <p><code class="java hljs">LocalTime ten = noon.with(ChronoField.HOUR_OF_DAY, <span class="hljs-number">10</span>);<br />
+	  LocalTime eight = noon.withHour(<span class="hljs-number">8</span>);<br />
+	  LocalTime twelveThirty = noon.withMinute(<span class="hljs-number">30</span>);<br />
+	  LocalTime thirtyTwoSeconds = noon.withSecond(<span class="hljs-number">32</span>);<br />
+	  <span class="hljs-comment">// Since these methods return a new instance, we can chain them!</span><br />
+	  LocalTime secondsNano = nooon.withSecond(<span class="hljs-number">20</span>).withNano(<span class="hljs-number">999999</span>);</code></p>
+
+	  <p>Of course, another way is by adding or subtracting hours, minutes, seconds, or nanoseconds:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Adding</span><br />
+	  LocalTime sixThirty = fiveThirty.plusHours(<span class="hljs-number">1</span>);<br />
+	  LocalTime fiveForty = fiveThirty.plusMinutes(<span class="hljs-number">10</span>);<br />
+	  LocalTime plusSeconds = fiveThirty.plusSeconds(<span class="hljs-number">14</span>);<br />
+	  LocalTime plusNanos = fiveThirty.plusNanos(<span class="hljs-number">99999999</span>);<br />
+	  LocalTime sevenThirty = fiveThirty.plus(<span class="hljs-number">2</span>, ChronoUnit.HOURS);<br />
+	  <span class="hljs-comment"><br />
+	  // Subtracting</span><br />
+	  LocalTime fourThirty = fiveThirty.minusHours(<span class="hljs-number">1</span>);<br />
+	  LocalTime fiveTen = fiveThirty.minusMinutes(<span class="hljs-number">20</span>);<br />
+	  LocalTime minusSeconds = fiveThirty.minusSeconds(<span class="hljs-number">2</span>);<br />
+	  LocalTime minusNanos = fiveThirty.minusNanos(<span class="hljs-number">1</span>);<br />
+	  LocalTime fiveTwenty = fiveThirty.minus(<span class="hljs-number">10</span>, ChronoUnit.MINUTES);</code></p>
+
+	  <p>Notice that the plus and minus versions take a <code>java.time.temporal.ChronoUnit</code> enumeration, different than <code>java.time.ChronoField</code>. The supported values are:</p>
+
+	  <ul>
+		<li><code>NANOS</code></li>
+
+		<li><code>MICROS</code></li>
+
+		<li><code>MILLIS</code></li>
+
+		<li><code>SECONDS</code></li>
+
+		<li><code>MINUTES</code></li>
+
+		<li><code>HOURS</code></li>
+
+		<li><code>HALF_DAYS</code><br /></li>
+	  </ul>
+
+	  <p>Finally, the method <code>toString()</code> returns the time in the format <i>HH:mm:ss.SSSSSSSSS</i>, omitting the parts with value zero (for example, just returning <i>HH:mm</i> if it has zero seconds/nanoseconds):</p>
+
+	  <p><code class="java hljs">System.out.println(fiveThirty.toString()); <span class="hljs-comment">// Prints 05:30</span></code></p>
+
+	  <h2>LocalDateTime Class</h2>
+
+	  <p>The key to learning how to use this class is to remember that it combines <code>LocalDate</code> and <code>LocalTime</code> classes.</p>
+
+	  <p>It represents both a date and a time, with information like year, month, day, hours, minutes, seconds, and nanoseconds. Other fields, such as day of the year, day of the week, and week of year can also be accessed.</p>
+
+	  <p>To create an instance, we can use either the static method <code>of()</code> or from a <code>LocalDate</code> or <code>LocalTime</code> instance:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Setting seconds and nanoseconds to zero</span><br />
+	  LocalDateTime dt1 = LocalDateTime.of(<span class="hljs-number">2014</span>, <span class="hljs-number">09</span>, <span class="hljs-number">19</span>, <span class="hljs-number">14</span>, <span class="hljs-number">05</span>);<br />
+	  <span class="hljs-comment">// Setting nanoseconds to zero</span><br />
+	  LocalDateTime dt2 = LocalDateTime.of(<span class="hljs-number">2014</span>, <span class="hljs-number">09</span>, <span class="hljs-number">19</span>, <span class="hljs-number">14</span>, <span class="hljs-number">05</span>, <span class="hljs-number">20</span>);<br />
+	  <span class="hljs-comment">// Setting all fields</span><br />
+	  LocalDateTime dt3 = LocalDateTime.of(<span class="hljs-number">2014</span>, <span class="hljs-number">09</span>, <span class="hljs-number">19</span>, <span class="hljs-number">14</span>, <span class="hljs-number">05</span>, <span class="hljs-number">20</span>, <span class="hljs-number">9</span>);<br />
+	  <span class="hljs-comment">// Asumming this date</span> LocalDate date = LocalDate.now();<br />
+	  <span class="hljs-comment">// And this time</span> LocaDate time = LocalTime.now();<br />
+	  <span class="hljs-comment">// Combine the above date with the given time like this</span><br />
+	  LocalDateTime dt4 = date.atTime(<span class="hljs-number">14</span>, <span class="hljs-number">30</span>, <span class="hljs-number">59</span>, <span class="hljs-number">999999</span>);<br />
+	  <span class="hljs-comment">// Or this</span> LocalDateTime dt5 = date.atTime(time);<br />
+	  <span class="hljs-comment">// Combine this time with the given date. Notice that LocalTime</span><br />
+	  <span class="hljs-comment">// only has this constructor to be combined with a LocalDate</span><br />
+	  LocalDateTime dt6 = time.atDate(date);</code></p>
+
+	  <p>If you try to create an instance with an invalid value or date, an exception will be thrown. To get the current date/time use <code>now()</code>:</p>
+
+	  <p><code class="java hljs">LocalDateTime now = LocalDateTime.now();</code></p>
+
+	  <p>Once we have an instance of <code>LocalDateTime</code>, we can get the information with the methods we know from <code>LocalDate</code> and <code>LocalTime</code>, such as:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">int</span> year = now.getYear();<br />
+	  <span class="hljs-keyword">int</span> dayYear = now.getDayOfYear();<br />
+	  <span class="hljs-keyword">int</span> hour = now.getHour();<br />
+	  <span class="hljs-keyword">int</span> minute = now.getMinutes();</code></p>
+
+	  <p>We can also use the <code>get()</code> method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">get</span><span class="hljs-params">(java.time.TemporalField field)</span><br />
+	  <span class="hljs-keyword">long</span> <span class="hljs-title">getLong</span><span class="hljs-params">(java.time.TemporalField field)</span></span></code></p>
+
+	  <p>For example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">int</span> month = now.get(ChronoField.MONTH_OF_YEAR);<br />
+	  <span class="hljs-keyword">int</span> minuteHour = now.get(ChronoField.MINUTE_OF_HOUR);</code></p>
+
+	  <p>The supported values for <code>ChronoField</code> are:</p>
+
+	  <ul>
+		<li><code>NANO_OF_SECOND</code></li>
+
+		<li><code>NANO_OF_DAY</code></li>
+
+		<li><code>MICRO_OF_SECOND</code></li>
+
+		<li><code>MICRO_OF_DAY</code></li>
+
+		<li><code>MILLI_OF_SECOND</code></li>
+
+		<li><code>MILLI_OF_DAY</code></li>
+
+		<li><code>SECOND_OF_MINUTE</code></li>
+
+		<li><code>SECOND_OF_DAY</code></li>
+
+		<li><code>MINUTE_OF_HOUR</code></li>
+
+		<li><code>MINUTE_OF_DAY</code></li>
+
+		<li><code>HOUR_OF_AMPM</code></li>
+
+		<li><code>CLOCK_HOUR_OF_AMPM</code></li>
+
+		<li><code>HOUR_OF_DAY</code></li>
+
+		<li><code>CLOCK_HOUR_OF_DAY</code></li>
+
+		<li><code>AMPM_OF_DAY</code></li>
+
+		<li><code>DAY_OF_WEEK</code></li>
+
+		<li><code>ALIGNED_DAY_OF_WEEK_IN_MONTH</code></li>
+
+		<li><code>ALIGNED_DAY_OF_WEEK_IN_YEAR</code></li>
+
+		<li><code>DAY_OF_MONTH</code></li>
+
+		<li><code>DAY_OF_YEAR</code></li>
+
+		<li><code>EPOCH_DAY</code></li>
+
+		<li><code>ALIGNED_WEEK_OF_MONTH</code></li>
+
+		<li><code>ALIGNED_WEEK_OF_YEAR</code></li>
+
+		<li><code>MONTH_OF_YEAR</code></li>
+
+		<li><code>PROLEPTIC_MONTH</code></li>
+
+		<li><code>YEAR_OF_ERA</code></li>
+
+		<li><code>YEAR</code></li>
+
+		<li><code>ERA</code><br /></li>
+	  </ul>
+
+	  <p>Using a different value will throw an exception. The same is true when getting a value that doesn't fit into an <code>int</code> with <code>get(TemporalField)</code>.</p>
+
+	  <p>To check a <code>LocalDateTime</code> object against another one, we have three methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">boolean</span> after = now.isAfter(dt1); <span class="hljs-comment">// true</span><br />
+	  <span class="hljs-keyword">boolean</span> before = now.isBefore(dt1); <span class="hljs-comment">// false</span><br />
+	  <span class="hljs-keyword">boolean</span> equal = now.equals(dt1); <span class="hljs-comment">// false</span></code></p>
+
+	  <p>Once an instance of <code>LocalTime</code> is created, we cannot modify it, but we can create another instance from an existing one.</p>
+
+	  <p>One way is through the with method and its versions:</p>
+
+	  <p><code class="java hljs">LocalDateTime dt7 = now.with(ChronoField.HOUR_OF_DAY, <span class="hljs-number">10</span>);<br />
+	  LocalDateTime dt8 = now.withMonth(<span class="hljs-number">8</span>);<br />
+	  <span class="hljs-comment">// Since these methods return a new instance, we can chain them!</span><br />
+	  LocalDateTime dt9 = now.withYear(<span class="hljs-number">2013</span>).withMinute(<span class="hljs-number">0</span>);</code></p>
+
+	  <p>Another way is by adding or subtracting years, months, days, weeks, hours, minutes, seconds, or nanoseconds:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Adding</span><br />
+	  LocalDateTime dt10 = now.plusYears(<span class="hljs-number">4</span>);<br />
+	  LocalDateTime dt11 = now.plusWeeks(<span class="hljs-number">3</span>);<br />
+	  LocalDateTime dt12 = newYear2001.plus(<span class="hljs-number">2</span>, ChronoUnit.HOURS);<br />
+	  <span class="hljs-comment"><br />
+	  // Subtracting</span><br />
+	  LocalDateTime dt13 = now.minusMonths(<span class="hljs-number">2</span>);<br />
+	  LocalDateTime dt14 = now.minusNanos(<span class="hljs-number">1</span>);<br />
+	  LocalDateTime dt15 = now.minus(<span class="hljs-number">10</span>, ChronoUnit.SECONDS);</code></p>
+
+	  <p>In this case, the supported values for <code>ChronoUnit</code> are:</p>
+
+	  <ul>
+		<li><code>NANOS</code></li>
+
+		<li><code>MICROS</code></li>
+
+		<li><code>MILLIS</code></li>
+
+		<li><code>SECONDS</code></li>
+
+		<li><code>MINUTES</code></li>
+
+		<li><code>HOURS</code></li>
+
+		<li><code>HALF_DAYS</code></li>
+
+		<li><code>DAYS</code></li>
+
+		<li><code>WEEKS</code></li>
+
+		<li><code>MONTHS</code></li>
+
+		<li><code>YEARS</code></li>
+
+		<li><code>DECADES</code></li>
+
+		<li><code>CENTURIES</code></li>
+
+		<li><code>MILLENNIA</code></li>
+
+		<li><code>ERAS</code><br /></li>
+	  </ul>
+
+	  <p>Finally, the method <code>toString()</code> returns the date-time in the format <i>uuuu-MM-dd'T'HH:mm:ss.SSSSSSSSS</i>, omitting the parts with value zero, for example:</p>
+
+	  <p><code class="java hljs">System.out.println(dt1.toString()); <span class="hljs-comment">// Prints 2014-09-19T14:05</span></code></p>
+
+	  <h2>Instant Class</h2>
+
+	  <p>Although in practical terms, a <code>LocalDateTime</code> instance represents an instant in the time line, there is another class that may be more appropriate.</p>
+
+	  <p>In Java 8, the <code>java.time.Instant</code> class represents an instant in the number of seconds that has passed since the epoch, a convention used in UNIX/POSIX systems and set at midnight of January 1, 1970 UTC time.</p>
+
+	  <p>From that date, time is measured in 86,400 seconds per day. This information is stored as a <code>long</code>. The class also supports a nanosecond precision, stored as an <code>int</code>.</p>
+
+	  <p>You can create an instance of this class with the following methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Setting seconds</span><br />
+	  Instant fiveSecondsAfterEpoch = Instant.ofEpochSecond(<span class="hljs-number">5</span>);<br />
+	  <span class="hljs-comment">// Setting seconds and nanoseconds (can be negative)</span><br />
+	  Instant sixSecTwoNanBeforeEpoch = Instant.ofEpochSecond(-<span class="hljs-number">6</span>, -<span class="hljs-number">2</span>);<br />
+	  <span class="hljs-comment">// Setting milliseconds after (can be before also) epoch</span><br />
+	  Instant fifthyMilliSecondsAfterEpoch = Instant.ofEpochMilli(<span class="hljs-number">50</span>);</code></p>
+
+	  <p>For the current instance of the system clock use:</p>
+
+	  <p><code class="java hljs">Instant now = Instant.now();</code></p>
+
+	  <p>Once we have an instance of <code>Instance</code>, we can get the information with the following methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">long</span> seconds = now.getEpochSecond(); <span class="hljs-comment">// Gets the seconds</span><br />
+	  <span class="hljs-keyword">int</span> nanos1 = now.getNano(); <span class="hljs-comment">// Gets the nanoseconds</span><br />
+	  <span class="hljs-comment">// Gets the value as an int</span><br />
+	  <span class="hljs-keyword">int</span> milis = now.get(ChronoField.MILLI_OF_SECOND);<br />
+	  <span class="hljs-comment">// Gets the value as a long</span><br />
+	  <span class="hljs-keyword">long</span> nanos2 = now.getLong(ChronoField.NANO_OF_SECOND);</code></p>
+
+	  <p>The supported <code>ChronoField</code> values are:</p>
+
+	  <ul>
+		<li><code>NANO_OF_SECOND</code></li>
+
+		<li><code>MICRO_OF_SECOND</code></li>
+
+		<li><code>MILLI_OF_SECOND</code></li>
+
+		<li><code>INSTANT_SECONDS</code><br /></li>
+	  </ul>
+
+	  <p>Using any other value will throw an exception. The same is true when getting a value that doesn't fit into an <code>int</code> with <code>get(TemporalField)</code>.</p>
+
+	  <p>To check a <code>LocalDateTime</code> object against another one, we have three methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">boolean</span> after = now.isAfter(fiveSecondsAfterEpoch); <span class="hljs-comment">// true</span><br />
+	  <span class="hljs-keyword">boolean</span> before = now.isBefore(fiveSecondsAfterEpoch); <span class="hljs-comment">// false</span><br />
+	  <span class="hljs-keyword">boolean</span> equal = now.equals(fiveSecondsAfterEpoch); <span class="hljs-comment">// false</span></code></p>
+
+	  <p>Once an instance of this object is created, we cannot modify it, but we can create another instance from an existing one.</p>
+
+	  <p>One way is through the with method:</p>
+
+	  <p><code class="java hljs">Instant i1 = now.with(ChronoField.NANO_OF_SECOND, <span class="hljs-number">10</span>);</code></p>
+
+	  <p>Another way is by adding or subtracting seconds, milliseconds, or nanoseconds:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Adding</span><br />
+	  Instant dt10 = now.plusSeconds(<span class="hljs-number">400</span>);<br />
+	  Instant dt11 = now.plusMillis(<span class="hljs-number">98622200</span>);<br />
+	  Instant dt12 = now.plusNanos(<span class="hljs-number">3000138900</span>);<br />
+	  Instant dt13 = newYear2001.plus(<span class="hljs-number">2</span>, ChronoUnit.MINUTES);<br />
+	  <span class="hljs-comment"><br />
+	  // Subtracting</span><br />
+	  Instant dt14 = now.minusSeconds(<span class="hljs-number">2</span>);<br />
+	  Instant dt15 = now.minusMillis(<span class="hljs-number">1</span>);<br />
+	  Instant dt16 = now.minusNanos(<span class="hljs-number">1</span>);<br />
+	  Instant dt17 = now.minus(<span class="hljs-number">10</span>, ChronoUnit.SECONDS);</code></p>
+
+	  <p>The supported <code>ChronoUnit</code> values are:</p>
+
+	  <ul>
+		<li><code>NANOS</code></li>
+
+		<li><code>MICROS</code></li>
+
+		<li><code>MILLIS</code></li>
+
+		<li><code>SECONDS</code></li>
+
+		<li><code>MINUTES</code></li>
+
+		<li><code>HOURS</code></li>
+
+		<li><code>HALF_DAYS</code></li>
+
+		<li><code>DAYS</code><br /></li>
+	  </ul>
+
+	  <p>Finally, the method <code>toString()</code> returns the instance in the format <i>uuuu-MM-dd'T'HH:mm:ss.SSSSSSSSS</i>, for example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Prints 1970-01-01T00:00:00.050Z</span><br />
+	  System.out.println(fifthyMilliSecondsAfterEpoch.toString());</code></p>
+
+	  <p>Notice that it contains zone time information (Z). This is because <code>Instant</code> represents a point in time from the epoch of <i>1970-01-01Z</i> in the UTC zone time.</p>
+
+	  <h2>Period Class</h2>
+
+	  <p>The <code>java.time.Period</code> class represents an amount of time in terms of years, months and days.</p>
+
+	  <p>You can create an instance of this class with the following of methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Setting years, months, days (can be negative)</span><br />
+	  Period period5y4m3d = Period.of(<span class="hljs-number">5</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>);<br />
+	  <span class="hljs-comment">// Setting days (can be negative), years and months will be zero</span><br />
+	  Period period2d = Period.ofDays(<span class="hljs-number">2</span>);<br />
+	  <span class="hljs-comment">// Setting months (can be negative), years and days will be zero</span><br />
+	  Period period2m = Period.ofMonths(<span class="hljs-number">2</span>);<br />
+	  <span class="hljs-comment">// Setting weeks (can be negative). The resulting period will</span><br />
+	  <span class="hljs-comment">// be in days (1 week = 7 days). Years and months will be zero</span><br />
+	  Period period14d = Period.ofWeeks(<span class="hljs-number">2</span>);<br />
+	  <span class="hljs-comment">// Setting years (can be negative), days and months will be zero</span><br />
+	  Period period2y = Period.ofDays(<span class="hljs-number">2</span>);</code></p>
+
+	  <p>A <code>Period</code> can be also thought as the difference between two <code>LocalDates</code>. Luckily, there's a method that support this concept:</p>
+
+	  <p><code class="java hljs">LocalDate march2003 = LocalDate.of(<span class="hljs-number">2003</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>);<br />
+	  LocalDate may2003 = LocalDate.of(<span class="hljs-number">2003</span>, <span class="hljs-number">5</span>, <span class="hljs-number">1</span>);<br />
+	  Period dif = Period.between(march2003, may2003); <span class="hljs-comment">// 2 months</span></code></p>
+
+	  <p>The start date is <b>INCLUDED</b>, but <b>NOT</b> the end date.</p>
+
+	  <p>Be careful about how the date is calculated.</p>
+
+	  <p>First complete months are counted, and then the remaining number of days is calculated. The number of months is then split into years (1 years equals 12 months). A month is considered if the end day of the month is greater than or equal to the start day of the month.</p>
+
+	  <p>The result of this method can be a negative period if the end is before the start (year, month and day will have a negative sign).</p>
+
+	  <p>Here are some examples:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// dif1 will be 1 year 2 months 2 days</span><br />
+	  Period dif1 = Period.between( LocalDate.of(<span class="hljs-number">2000</span>, <span class="hljs-number">2</span>, <span class="hljs-number">10</span>), LocalDate.of(<span class="hljs-number">2001</span>, <span class="hljs-number">4</span>, <span class="hljs-number">12</span>));<br />
+	  <span class="hljs-comment">// dif2 will be 25 days</span><br />
+	  Period dif2 = Period.between( LocalDate.of(<span class="hljs-number">2013</span>, <span class="hljs-number">5</span>, <span class="hljs-number">9</span>), LocalDate.of(<span class="hljs-number">2013</span>, <span class="hljs-number">6</span>, <span class="hljs-number">3</span>));<br />
+	  <span class="hljs-comment">// dif3 will be -2 years -3 days</span><br />
+	  Period dif3 = Period.between( LocalDate.of(<span class="hljs-number">2014</span>, <span class="hljs-number">11</span>, <span class="hljs-number">3</span>), LocalDate.of(<span class="hljs-number">2012</span>, <span class="hljs-number">10</span>, <span class="hljs-number">31</span>));</code></p>
+
+	  <p>Once we have an instance of <code>Period</code>, we can get the information with the following methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">int</span> days = period5y4m3d.getDays();<br />
+	  <span class="hljs-keyword">int</span> months = period5y4m3d.getMonths();<br />
+	  <span class="hljs-keyword">int</span> year = period5y4m3d.getYears();<br />
+	  <span class="hljs-keyword">int</span> days2 = period5y4m3d.get(ChronoUnit.DAYS);</code></p>
+
+	  <p>The supported <code>ChronoUnit</code> values are:</p>
+
+	  <ul>
+		<li><code>DAYS</code></li>
+
+		<li><code>MONTHS</code></li>
+
+		<li><code>YEARS</code><br /></li>
+	  </ul>
+
+	  <p>Using any other value will throw an exception.</p>
+
+	  <p>Once an instance of <code>Period</code> is created, we cannot modify it, but we can create another instance from an existing one.</p>
+
+	  <p>One way is through the with method and its versions:</p>
+
+	  <p><code class="java hljs">Period period8d = period2d.withDays(<span class="hljs-number">8</span>);<br />
+	  <span class="hljs-comment">// Since these methods return a new instance, we can chain them!</span><br />
+	  Period period2y1m2d = period2d.withYears(<span class="hljs-number">2</span>).withMonths(<span class="hljs-number">1</span>);</code></p>
+
+	  <p>Another way is by adding or subtracting years, months, or days:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Adding</span><br />
+	  Period period9y4m3d = period5y4m3d.plusYears(<span class="hljs-number">4</span>);<br />
+	  Period period5y7m3d = period5y4m3d.plusMonths(<span class="hljs-number">3</span>);<br />
+	  Period period5y4m6d = period5y4m3d.plusDays(<span class="hljs-number">3</span>);<br />
+	  Period period7y4m3d = period5y4m3d.plus(period2y);<br />
+	  <span class="hljs-comment"><br />
+	  // Subtracting</span><br />
+	  Period period5y4m3d = period5y4m3d.minusYears(<span class="hljs-number">2</span>);<br />
+	  Period period5y4m3d = period5y4m3d.minusMonths(<span class="hljs-number">1</span>);<br />
+	  Period period5y4m3d = period5y4m3d.minusDays(<span class="hljs-number">1</span>);<br />
+	  Period period5y4m3d = period5y4m3d.minus(period2y);</code></p>
+
+	  <p>Methods plus and minus take an implementation of the interface <code>java.time.temporal.TemporalAmount</code> (i.e. another instance of <code>Period</code> or an instance of <code>Duration</code>).</p>
+
+	  <p>Finally, the method <code>toString()</code> returns the period in the format <code>PNYNMND</code>, for example:</p>
+
+	  <p><code class="java hljs">System.out.println(period5y4m3d.toString()); <span class="hljs-comment">// Prints P5Y4M3D</span></code></p>
+
+	  <p>A zero period will be represented as zero days, <code>P0D</code>.</p>
+
+	  <h2>Duration Class</h2>
+
+	  <p>The <code>java.time.Duration</code> class is like the <code>Period</code> class, the only thing is that it represents an amount of time in terms of seconds and nanoseconds.</p>
+
+	  <p>You can create an instance of this class with the following of methods:</p>
+
+	  <p><code class="java hljs">Duration oneDay = Duration.ofDays(<span class="hljs-number">1</span>); <span class="hljs-comment">// 1 day = 86400 seconds</span><br />
+	  Duration oneHour = Duration.ofHours(<span class="hljs-number">1</span>); <span class="hljs-comment">// 1 hour = 3600 seconds</span><br />
+	  Duration oneMin = Duration.ofMinutes(<span class="hljs-number">1</span>); <span class="hljs-comment">// 1 minute = 60 seconds</span><br />
+	  Duration tenSeconds = Duration.ofSeconds(<span class="hljs-number">10</span>);<br />
+	  <span class="hljs-comment">// Set seconds and nanoseconds (if they are outside the range</span><br />
+	  <span class="hljs-comment">// 0 to 999,999,999, the seconds will be altered, like below)</span><br />
+	  Duration twoSeconds = Duration.ofSeconds(<span class="hljs-number">1</span>, <span class="hljs-number">1000000000</span>);<br />
+	  <span class="hljs-comment">// Seconds and nanoseconds are extracted from the passed milisecs</span><br />
+	  Duration oneSecondFromMilis = Duration.ofMilis(<span class="hljs-number">2</span>);<br />
+	  <span class="hljs-comment">// Seconds and nanoseconds are extracted from the passed nanos</span><br />
+	  Duration oneSecondFromNanos = Duration.ofNanos(<span class="hljs-number">1000000000</span>);<br />
+	  Duration oneSecond = Duration.of(<span class="hljs-number">1</span>, ChronoUnit.SECONDS);</code></p>
+
+	  <p>Valid values of <code>ChronoUnit</code> are:</p>
+
+	  <ul>
+		<li><code>NANOS</code></li>
+
+		<li><code>MICROS</code></li>
+
+		<li><code>MILLIS</code></li>
+
+		<li><code>SECONDS</code></li>
+
+		<li><code>MINUTES</code></li>
+
+		<li><code>HOURS</code></li>
+
+		<li><code>HALF_DAYS</code></li>
+
+		<li><code>DAYS</code><br /></li>
+	  </ul>
+
+	  <p>A <code>Duration</code> can also be created as the difference between two implementations of the interface <code>java.time.temporal.Temporal</code>, as long as they support seconds (and for more accuracy, nanoseconds), like <code>LocalTime</code>, <code>LocalDateTime</code>, and <code>Instant</code>. So we can have something like this:</p>
+
+	  <p><code class="java hljs">Duration dif = Duration.between( Instant.ofEpochSecond(<span class="hljs-number">123456789</span>), Instant.ofEpochSecond(<span class="hljs-number">99999</span>));</code></p>
+
+	  <p>The result can be negative if the end is before the start. A negative duration is expressed with a negative sign in the seconds part. For example, a duration of -100 nanoseconds is stored as -1 second plus 999,999,900 nanoseconds.</p>
+
+	  <p>If the objects are of different types, then the duration is calculated based on the type of the first object. But this only works if the first argument is a <code>LocalTime</code> and the second is a <code>LocalDateTime</code> (because it can be converted to <code>LocalTime</code>). Otherwise, an exception is thrown.</p>
+
+	  <p>Once we have an instance of <code>Duration</code>, we can get the information with the following methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Nanoseconds part the duration, from 0 to 999,999,999</span><br />
+	  <span class="hljs-keyword">int</span> nanos = oneSecond.getNano();<br />
+	  <span class="hljs-comment">// Seconds part of the duration, positive or negative</span><br />
+	  <span class="hljs-keyword">int</span> seconds = oneSecond.getSeconds();<br />
+	  <span class="hljs-comment">// Supports SECONDS and NANOS.Other units throw an exception</span><br />
+	  <span class="hljs-keyword">int</span> oneSec = oneSecond.get(ChronoUnit.SECONDS);</code></p>
+
+	  <p>Once an instance of <code>Duration</code> is created, we cannot modify it, but we can create another instance from an existing one.</p>
+
+	  <p>One way is through the with method and its versions:</p>
+
+	  <p><code class="java hljs">Duration duration1sec8nan = oneSecond.withNanos(<span class="hljs-number">8</span>);<br />
+	  Duration duration2sec1nan = oneSecond.withSeconds(<span class="hljs-number">2</span>).withNanos(<span class="hljs-number">1</span>);</code></p>
+
+	  <p>Another way is by adding or subtracting days, hours, minutes, seconds, milliseconds, or nanoseconds:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Adding</span><br />
+	  Duration plus4Days = oneSecond.plusDays(<span class="hljs-number">4</span>);<br />
+	  Duration plus3Hours = oneSecond.plusHours(<span class="hljs-number">3</span>);<br />
+	  Duration plus3Minutes = oneSecond.plusMinutes(<span class="hljs-number">3</span>);<br />
+	  Duration plus3Seconds = oneSecond.plusSeconds(<span class="hljs-number">3</span>);<br />
+	  Duration plus3Millis = oneSecond.plusMillis(<span class="hljs-number">3</span>);<br />
+	  Duration plus3Nanos = oneSecond.plusNanos(<span class="hljs-number">3</span>);<br />
+	  Duration plusAnotherDuration = oneSecond.plus(twoSeconds);<br />
+	  Duration plusChronoUnits = oneSecond.plus(<span class="hljs-number">1</span>, ChronoUnit.DAYS);&nbsp;<br />
+	  <span class="hljs-comment"><br />
+	  // Subtracting</span><br />
+	  Duration minus4Days = oneSecond.minusDays(<span class="hljs-number">4</span>);<br />
+	  Duration minus3Hours = oneSecond.minusHours(<span class="hljs-number">3</span>);<br />
+	  Duration minus3Minutes = oneSecond.minusMinutes(<span class="hljs-number">3</span>);<br />
+	  Duration minus3Seconds = oneSecond.minusSeconds(<span class="hljs-number">3</span>);<br />
+	  Duration minus3Millis = oneSecond.minusMillis(<span class="hljs-number">3</span>);<br />
+	  Duration minus3Nanos = oneSecond.minusNanos(<span class="hljs-number">3</span>);<br />
+	  Duration minusAnotherDuration = oneSecond.minus(twoSeconds);<br />
+	  Duration minusChronoUnits = oneSecond.pminus(<span class="hljs-number">1</span>, ChronoUnit.DAYS);</code></p>
+
+	  <p>Methods <code>plus</code> and <code>minus</code> take either another <code>Duration</code> or a valid <code>ChronoUnit</code> value (the same values used to create an instance).</p>
+
+	  <p>Finally, the method <code>toString()</code> returns the duration with the format <i>PTnHnMnS</i>. Any fractional seconds are placed after a decimal point in the seconds section. If a section has a zero value, it's omitted. For example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-number">2</span> days <span class="hljs-number">4</span> minutes PT48H4M<br />
+	  <span class="hljs-number">45</span> seconds <span class="hljs-number">99</span> milliseconds PT45.099S</code></p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li><code>LocalDate</code>, <code>LocalTime</code>, <code>LocalDateTime</code>, <code>Instant</code>, <code>Period</code>, <code>Duration</code> are the core classes of the new Java Date/Time API, located in the package <code>java.time</code>. They are immutable, thread-safe, and with the exception of <code>Instant</code>, they don't store or represent a time-zone.<br /></li>
+
+		<li><code>LocalDate</code>, <code>LocalTime</code>, <code>LocalDateTime</code> and <code>Instant</code> implement interface <code>java.time.temporal.Temporal</code>, so they all have similar methods. While <code>Period</code> and <code>Duration</code> implement interface <code>java.time.temporal.TemporalAmount</code>, which also makes them very similar.<br /></li>
+
+		<li><code>LocalDate</code> represents a date with the year, month, and day of the month information. You can create an instance using:<br />
+		<code class="java hljs">LocalDate.of(<span class="hljs-number">2015</span>, <span class="hljs-number">08</span>, <span class="hljs-number">01</span>);</code></li>
+
+		<li>Valid <code>ChronoField</code> values to use with the <code>get()</code> method are: <code>DAY_OF_WEEK, ALIGNED_DAY_OF_WEEK_IN_MONTH, ALIGNED_DAY_OF_WEEK_IN_YEAR, DAY_OF_MONTH, DAY_OF_YEAR, EPOCH_DAY, ALIGNED_WEEK_OF_MONTH, ALIGNED_WEEK_OF_YEAR, MONTH_OF_YEAR, PROLEPTIC_MONTH, YEAR_OF_ERA, YEAR,</code> and <code>ERA</code>.<br /></li>
+
+		<li>Valid <code>ChronoUnits</code> values to use with the <code>plus()</code> and <code>minus()</code> methods are: <code>DAYS, WEEKS, MONTHS, YEARS, DECADES, CENTURIES, MILLENNIA,</code> and <code>ERAS</code>.<br /></li>
+
+		<li><code>LocalTime</code> represents a time with hour, minutes, seconds, and nanoseconds information. You can create an instance using:<br />
+		<code class="java hljs">LocalTime.of(<span class="hljs-number">14</span>, <span class="hljs-number">20</span>, <span class="hljs-number">50</span>, <span class="hljs-number">99999</span>);</code></li>
+
+		<li>Valid <code>ChronoField</code> values to use with the <code>get()</code> method are: <code>NANO_OF_SECOND, NANO_OF_DAY, MICRO_OF_SECOND, MICRO_OF_DAY, MILLI_OF_SECOND, MILLI_OF_DAY, SECOND_OF_MINUTE, SECOND_OF_DAY, MINUTE_OF_HOUR, MINUTE_OF_DAY, HOUR_OF_AMPM, CLOCK_HOUR_OF_AMPM, HOUR_OF_DAY, CLOCK_HOUR_OF_DAY,</code> and <code>AMPM_OF_DAY</code>.<br /></li>
+
+		<li>Valid <code>ChronoUnits</code> values to use with the <code>plus()</code> and <code>minus()</code> methods are: <code>NANOS, MICROS, MILLIS, SECONDS, MINUTES, HOURS,</code> and <code>HALF_DAYS</code>.<br /></li>
+
+		<li><code>LocalDateTime</code> is a combination of <code>LocalDate</code> or <code>LocalTime</code>. You can create an instance using:<br />
+		<code class="java hljs">LocalDateTime.of(<span class="hljs-number">2015</span>, <span class="hljs-number">08</span>, <span class="hljs-number">01</span>, <span class="hljs-number">14</span>, <span class="hljs-number">20</span>, <span class="hljs-number">50</span>, <span class="hljs-number">99999</span>);</code></li>
+
+		<li>Valid <code>ChronoField</code> and <code>ChronoUnits</code> values are a combination of the ones used for <code>LocalDate</code> and <code>LocalTime</code>.<br /></li>
+
+		<li><code>Instant</code> represents a single point in time in seconds and nanoseconds. You can create an instance using:<br />
+		<code class="java hljs">Instant.ofEpochSecond(<span class="hljs-number">134556767</span>, <span class="hljs-number">999999999</span>);</code></li>
+
+		<li>Valid <code>ChronoField</code> values to use with the <code>get()</code> method are: <code>NANO_OF_SECOND, MICRO_OF_SECOND, MILLI_OF_SECOND,</code> and <code>INSTANT_SECONDS</code>.<br /></li>
+
+		<li>Valid <code>ChronoUnits</code> values to use with the <code>plus()</code> and <code>minus()</code> methods are: <code>NANOS, MICROS, MILLIS, SECONDS, MINUTES, HOURS, HALF_DAYS,</code> and <code>DAYS</code>.<br /></li>
+
+		<li><code>Period</code> represents an amount of time in terms of years, months and days. You can create an instance using:<br />
+		<code class="java hljs">Period.of(<span class="hljs-number">3</span>, <span class="hljs-number">12</span>, <span class="hljs-number">30</span>);</code></li>
+
+		<li>Valid <code>ChronoUnits</code> values to use with the <code>get()</code> method are: <code>DAYS, MONTHS, YEARS</code>.<br /></li>
+
+		<li><code>Duration</code> represents an amount of time in terms of seconds and nanoseconds. You can create an instance using:<br />
+		<code class="java hljs">Duration.ofSeconds(<span class="hljs-number">50</span>, <span class="hljs-number">999999</span>);</code></li>
+
+		<li>Valid <code>ChronoUnits</code> values to use with the constructor and the <code>get()</code>, <code>plus()</code>, and <code>minus()</code> methods are: <code>NANOS, MICROS, MILLIS, SECONDS, MINUTES, HOURS, HALF_DAYS,</code> and <code>DAYS</code>.<br /></li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Which of the following are valid ways to create a <code>LocalDate</code> object?<br />
+	  A. <code>LocalDate.of(2014);</code><br />
+	  B. <code>LocalDate.with(2014, 01, 30);</code><br />
+	  C. <code>LocalDate.of(2014, 0, 30);</code><br />
+	  D. <code>LocalDate.now().plusDays(5);</code></p>
+
+	  
+
+	  <p>2. Given:</p>
+
+	  <p><code class="java hljs">LocalDate.of(<span class="hljs-number">2014</span>, <span class="hljs-number">01</span>, <span class="hljs-number">02</span>).atTime(<span class="hljs-number">14</span>, <span class="hljs-number">30</span>, <span class="hljs-number">59</span>, <span class="hljs-number">999999</span>)</code></p>
+
+	  <p>Which of the following is the result of executing the above line?<br />
+	  A. A <code>LocalDate</code> of <code>2014-01-02</code><br />
+	  B. A <code>LocalTime</code> of <code>14:30:59:999999</code><br />
+	  C. A <code>LocalDateTime</code> of <code>2014-01-02 14:30:59:999999</code><br />
+	  D. An exception is thrown</p>
+
+	  
+
+	  <p>3. Which of the following are valid <code>ChronoUnit</code> values for <code>LocalTime</code>?<br />
+	  A. <code>YEAR</code><br />
+	  B. <code>NANOS</code><br />
+	  C. <code>DAY</code><br />
+	  D. <code>HALF_DAYS</code></p>
+
+	  
+
+	  <p>4. Which of the following statements are true?<br />
+	  A. <code>java.time.Period</code> implements <code>java.time.temporal.Temporal</code><br />
+	  B. <code>java.time.Instant</code> implements <code>java.time.temporal.Temporal</code><br />
+	  C. <code>LocalDate</code> and <code>LocalTime</code> are thread-safe<br />
+	  D. <code>LocalDateTime.now()</code> will return the current time in UTC zone</p>
+
+	  
+
+	  <p>5. Which of the following is a valid way to get the nanoseconds part of an <code>Instant</code> object referenced by <code>i</code>?<br />
+	  A. <code>int nanos = i.getNano();</code><br />
+	  B. <code>long nanos = i.get(ChronoField.NANOS);</code><br />
+	  C. <code>long nanos = i.get(ChronoUnit.NANOS);</code><br />
+	  D. <code>int nanos = i.getEpochNano();</code></p>
+
+	  
+
+	  <p>6. Given:</p>
+
+	  <p><code class="java hljs">System.out.println(<br />
+	  &nbsp; &nbsp; Period.between(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; LocalDate.of(<span class="hljs-number">2015</span>, <span class="hljs-number">3</span>, <span class="hljs-number">20</span>),<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; LocalDate.of(<span class="hljs-number">2015</span>, <span class="hljs-number">2</span>, <span class="hljs-number">20</span>))<br />
+	  );</code></p>
+
+	  <p>Which of the following is the result of executing the above line?<br />
+	  A. <code>P29D</code><br />
+	  B. <code>P-29D</code><br />
+	  C. <code>P1M</code><br />
+	  D. <code>P-1M</code></p>
+
+	  
+
+	  <p>7. Given:</p>
+
+	  <p><code class="java hljs">System.out.println(<br />
+	  &nbsp; &nbsp; Duration.between(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; LocalDateTime.of(<span class="hljs-number">2015</span>, <span class="hljs-number">3</span>, <span class="hljs-number">20</span>, <span class="hljs-number">18</span>, <span class="hljs-number">00</span>),<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; LocalTime.of(<span class="hljs-number">18</span>, <span class="hljs-number">05</span>) )<br />
+	  );</code></p>
+
+	  <p>Which of the following is the result of executing the above line?<br />
+	  A. <code>PT5M</code><br />
+	  B. <code>PT-5M</code><br />
+	  C. <code>PT300S</code><br />
+	  D. An exception is thrown</p>
+
+	  
+
+	  <p>8. Which of the following are valid <code>ChronoField</code> values for <code>LocalDate</code>?<br />
+	  A. <code>DAY_OF_WEEK</code><br />
+	  B. <code>HOUR_OF_DAY</code><br />
+	  C. <code>DAY_OF_MONTH</code><br />
+	  D. <code>MILLI_OF_SECOND</code></p>
+  
+
+  
+    
+		<div class="answers">
+			<a href="ch21a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch20.html">20. Assertions</a>
+			</div>
+			<div class="next">
+				<a href="ch22.html">22. Time Zones and Daylight Savings</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

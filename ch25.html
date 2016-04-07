@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter TWENTY-FIVE</i><br />
+			  Files and Streams</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Use Stream API with NIO.2.</i><br /></p>
+			  
+			</div>
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>New Stream Methods in NIO.2</h2>
+
+	  <p>With the arrival of streams to Java, some difficult file operations to implement in NIO.2 (that often required an entire class) have been simplified.</p>
+
+	  <p><code>java.nio.file.Files</code>, a class with static methods we reviewed in the last chapter, added operations that return implementations of the <code>Stream</code> interface.<br /></p>
+
+	  <p>The methods are:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">find</span><span class="hljs-params">(Path start,<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int</span> maxDepth,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; BiPredicate&lt;Path,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; BasicFileAttributes&gt; matcher,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FileVisitOption... options)</span><br />
+	  <span class="hljs-keyword"><br />
+	  static</span> Stream&lt;Path&gt; <span class="hljs-title">list</span><span class="hljs-params">(Path dir)</span><br />
+	  <span class="hljs-keyword"><br />
+	  static</span> Stream&lt;String&gt; <span class="hljs-title">lines</span><span class="hljs-params">(Path path)</span><br />
+	  <span class="hljs-keyword">static</span> Stream&lt;String&gt; <span class="hljs-title">lines</span><span class="hljs-params">(Path path, Charset cs)</span><br />
+	  <span class="hljs-keyword"><br />
+	  static</span> Stream&lt;Path&gt; <span class="hljs-title">walk</span><span class="hljs-params">(Path start,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileVisitOption... options)</span><br />
+	  <span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">walk</span><span class="hljs-params">(Path start,<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;int</span> maxDepth,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileVisitOption... options)</span></span></code></p>
+
+	  <p>An important thing to notice is that the returned streams are <b>LAZY</b>, which means that the elements are not loaded (or read) until they are used. This is a great performance enhancement.</p>
+
+	  <p>Let's describe each method starting with <code>File.list()</code>.</p>
+
+	  <h2>Files.list()</h2>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">list</span><span class="hljs-params">(Path dir)</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException</span></code></p>
+
+	  <p>This method iterates over a directory to return a stream which elements are <code>Path</code> objects that represent the entries of that directory.</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span>(Stream&lt;Path&gt; stream =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Files.list(Paths.get(<span class="hljs-string">"/temp"</span>))) {<br />
+	  &nbsp; &nbsp; stream.forEach(System.out::println);<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
+	  &nbsp; &nbsp; e.printStackTrace();<br />
+	  }</code></p>
+
+	  <p>A possible output:</p>
+
+	  <p><code class="java hljs">/temp/dir1<br />
+	  /temp/dir2<br />
+	  /temp/file.txt</code></p>
+
+	  <p>The use of a <code>try-with-resources</code> is recommended so the stream's close method can be invoked to close the file system resources.</p>
+
+	  <p>As you can see, this method list directories and files in the specified directory. However, it is not recursive, in other words, it <b>DOESN'T</b> traverses subdirectories.</p>
+
+	  <p>Another two important considerations about this method:</p>
+
+	  <ul>
+		<li>If the argument doesn't represent a directory, an exception is thrown.</li>
+
+		<li>This method is thread safe but is weakly consistent, meaning that while iterating a directory, updates to it may or may not be reflected in the returned stream.</li>
+	  </ul>
+
+	  <h2>Files.walk()</h2>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">walk</span><span class="hljs-params">(Path start,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileVisitOption... options)</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException<br />
+	  <span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">walk</span><span class="hljs-params">(Path start,<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;int</span> maxDepth,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileVisitOption... options)</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException</span></code></p>
+
+	  <p>This method also iterates over a directory to return a stream which elements are <code>Path</code> objects that represent the entries of that directory.</p>
+
+	  <p>The difference with <code>Files.list()</code> is that <code>Files.walk()</code> <b>DOES</b> recursively traverse the subdirectories.</p>
+
+	  <p>It does it with a <i>depth-first</i> strategy, which traverses the directory structure from the root to all the way down a subdirectory before exploring another one.</p>
+
+	  <p>For example, considering this structure:</p>
+
+	  <p><code class="java hljs">/temp/<br />
+	  &nbsp; &nbsp;/dir1/<br />
+	  &nbsp; &nbsp; &nbsp; /subdir1/<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;111.txt<br />
+	  &nbsp; &nbsp; &nbsp; /subdir2/<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;121.txt<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;122.txt<br />
+	  &nbsp; &nbsp;/dir2/<br />
+	  &nbsp; &nbsp; &nbsp; 21.txt<br />
+	  &nbsp; &nbsp; &nbsp; 22.txt<br />
+	  &nbsp; &nbsp;file.txt</code></p>
+
+	  <p>The following code:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span>(Stream&lt;Path&gt; stream =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Files.walk(Paths.get(<span class="hljs-string">"c:/temp"</span>))) {<br />
+	  &nbsp; &nbsp; stream.forEach(System.out::println);<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
+	  &nbsp; &nbsp; e.printStackTrace();<br />
+	  }</code></p>
+
+	  <p>Will output:</p>
+
+	  <p><code class="java hljs">/temp<br />
+	  /temp/dir1<br />
+	  /temp/dir1/subdir1<br />
+	  /temp/dir1/subdir1/111.txt<br />
+	  /temp/dir1/subdir2<br />
+	  /temp/dir1/subdir2/121.txt<br />
+	  /temp/dir1/subdir2/122.txt<br />
+	  /temp/dir2<br />
+	  /temp/dir2/21.txt<br />
+	  /temp/dir2/22.txt<br />
+	  /temp/file.txt</code></p>
+
+	  <p>By default, this method uses a maximum subdirectory depth of <code>Integer.MAX_VALUE</code>. But you can use the overloaded version that takes the maximum depth as the second parameter:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span>(Stream&lt;Path&gt; stream =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Files.walk(Paths.get(<span class="hljs-string">"/temp"</span>), <span class="hljs-number">1</span>)) {<br />
+	  &nbsp; &nbsp; stream.forEach(System.out::println);<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
+	  &nbsp; &nbsp; e.printStackTrace();<br />
+	  }</code></p>
+
+	  <p>The output is:</p>
+
+	  <p><code class="java hljs">/temp<br />
+	  /temp/dir1<br />
+	  /temp/dir2<br />
+	  /temp/file.txt</code></p>
+
+	  <p>A value of <code>0</code> means that only the starting directory is visited.</p>
+
+	  <p>Also, this method doesn't follow symbolic links by default.</p>
+
+	  <p>Symbolic links can cause a <i>cycle</i>, an infinite circular dependency between directories. However, this method is smart enough to detect a cycle and throw a <code>FileSystemLoopException</code>.</p>
+
+	  <p>To follow symbolic links, just use the argument of type <code>FileVisitOption</code> (preferably, also using the maximum depth argument) this way:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span>(Stream&lt;Path&gt; stream =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Files.walk(Paths.get(<span class="hljs-string">"/temp"</span>),<br />
+	  <span class="hljs-number">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2</span>,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileVisitOption.FOLLOW_LINKS)<br />
+	  ) {<br />
+	  &nbsp; &nbsp; stream.forEach(System.out::println);<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
+	  &nbsp; &nbsp; e.printStackTrace();<br />
+	  }</code></p>
+
+	  <p>Just like <code>Files.list()</code>, it's recommended to use <code>Files.walk()</code> with <code>try-with-resources</code>, if the argument doesn't represent a directory, an exception is thrown and it's considered a <i>weakly consistent</i> method.</p>
+
+	  <h2>Files.find()</h2>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">find</span><span class="hljs-params">(Path start,<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; int</span> maxDepth,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; BiPredicate&lt;Path,BasicFileAttributes&gt; matcher,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; FileVisitOption... options)</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; throws</span> IOException</span></code></p>
+
+	  <p>This method is similar to <code>Files.walk()</code>, but takes an additional argument of type <code>BiPredicate</code> that is used to filter the files and directories.</p>
+
+	  <p>Remember that a <code>BiPredicate</code> takes two arguments and returns a <code>boolean</code>. In this case:</p>
+
+	  <ul>
+		<li>The first argument is the <code>Path</code> object that represents the file or directory.</li>
+
+		<li>The second argument is a <code>BasicFileAttributes</code> object that represents the attributes of the file or directory in the file system (like creation time, if it's a file, directory or symbolic link, size, etc.).</li>
+
+		<li>The returned <code>boolean</code> indicates if the file should be included in the returned stream.</li>
+	  </ul>
+
+	  <p>The following example returns a stream that includes just directories:</p>
+
+	  <p><code class="java hljs">BiPredicate&lt;Path, BasicFileAttributes&gt; predicate =<br />
+	  &nbsp; &nbsp; (path, attrs) -&gt; {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; <span class="hljs-keyword">return</span> attrs.isDirectory();<br />
+	  };<br />
+	  <span class="hljs-keyword">int</span> maxDepth = <span class="hljs-number">2</span>;<br />
+	  <span class="hljs-keyword">try</span>(Stream&lt;Path&gt; stream =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Files.find(Paths.get(<span class="hljs-string">"/temp"</span>),<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; maxDepth, predicate)) {<br />
+	  &nbsp; &nbsp; stream.forEach(System.out::println);<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
+	  &nbsp; &nbsp; e.printStackTrace();<br />
+	  }</code></p>
+
+	  <p>A possible output can be:</p>
+
+	  <p><code class="java hljs">/temp<br />
+	  /temp/dir1<br />
+	  /temp/dir1/subdir1<br />
+	  /temp/dir1/subdir2<br />
+	  /temp/dir2</code></p>
+
+	  <p>Like <code>Files.walk()</code>, it can also take a <code>FileVisitOption</code> for visiting symbolic links, it's recommended to use it in a <code>try-with-resources</code> and throws an exception if it cannot read a file or directory.</p>
+
+	  <h2>Files.lines()</h2>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Stream&lt;String&gt; <span class="hljs-title">lines</span><span class="hljs-params">(Path path, Charset cs)</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException<br />
+	  <span class="hljs-keyword">static</span> Stream&lt;String&gt; <span class="hljs-title">lines</span><span class="hljs-params">(Path path)</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException</span></code></p>
+
+	  <p>This method reads all the lines of a file as a stream of <code>String</code>s.</p>
+
+	  <p>As the stream is lazy, it doesn't load all the lines into memory, only the line read at any given time. If the file doesn't exist, an exception is thrown.</p>
+
+	  <p>The file's bytes are decoded using the specified charset or with <code>UTF-8</code> by default.</p>
+
+	  <p>For example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">try</span>(Stream&lt;String&gt; stream =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Files.lines(Paths.get(<span class="hljs-string">"/temp/file.txt"</span>))) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; stream.forEach(System.out::println);<br />
+	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
+	  &nbsp; &nbsp; e.printStackTrace();<br />
+	  }</code></p>
+
+	  <p>In Java 8, a <code>lines()</code> method was added to <code>java.io.BufferedReader</code> as well:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">Stream&lt;String&gt; <span class="hljs-title">lines</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p>The stream is lazy and its elements are the lines read from the <code>BufferedReader</code>.</p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li>In Java 8, new methods that return implementations of the <code>Stream</code> interface have been added to <code>java.nio.file.Files</code>.</li>
+
+		<li>The returned streams are <b>LAZY</b>, which means that the elements are not loaded (or read) until they are used.</li>
+
+		<li>The use of a <code>try-with-resources</code> in this methods is recommended so the stream's <code>close</code> method can be invoked to close the file system resources.</li>
+
+		<li><code>Files.list()</code> iterates over a directory to return a stream which elements are <code>Path</code> objects that represent the entries of that directory.</li>
+
+		<li>This method lists directories and files of the specified directory. However, it is not recursive, in other words, it <b>DOESN'T</b> traverses subdirectories.</li>
+
+		<li><code>Files.walk()</code> also iterates over a directory in a depth-first strategy to return a stream which elements are<code>Path</code> objects that represent the entries of that directory.</li>
+
+		<li>The difference with <code>Files.list()</code> is that <code>Files.walk()</code> <b>DOES</b> recursively traverse the subdirectories. You can also pass the maximum traversal depth and an option to follow symbolic links.</li>
+
+		<li><code>Files.find()</code> is similar to <code>Files.walk()</code>, but takes an additional argument of type <code>BiPredicate&lt;Path,BasicFileAttributes&gt;</code> that is used to filter the files and directories.</li>
+
+		<li><code>Files.lines()</code> reads all the lines of a file as a stream of Strings without loading them all into memory.</li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Given the following structure and class:</p>
+
+	  <p><code class="java hljs">/temp/<br />
+	  &nbsp; &nbsp;/dir1/<br />
+	  &nbsp; &nbsp; &nbsp; 1.txt<br />
+	  &nbsp; &nbsp;0.txt</code></p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_25_1</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; try</span>(Stream&lt;Path&gt; stream =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Files.walk(Paths.get(<span class="hljs-string">"/temp"</span>), <span class="hljs-number">0</span>)) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; stream.forEach(System.out::println);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; } <span class="hljs-keyword">catch</span>(IOException e) { }<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>/temp</code><br />
+	  B. <code>/temp/dir1<br />
+	  /temp/0.txt</code><br />
+	  C. <code>/temp/0.txt</code><br />
+	  D. Nothing is printed</p>
+
+	  
+
+	  <p>2. Which of the following statements is true?<br />
+	  A. <code>Files.find()</code> has a default subdirectory depth of <code>Integer.MAX_VALUE</code>.<br />
+	  B. <code>Files.find()</code> follows symbolic links by default.<br />
+	  C. <code>Files.walk()</code> follows symbolic links by default.<br />
+	  D. <code>Files.walk()</code> traverses subdirectories recursively.</p>
+
+	  <p>3. Which of the following options is equivalent to</p>
+
+	  <p><code class="java hljs">Files.walk(Paths.get(<span class="hljs-string">"."</span>))<br />
+	  &nbsp; &nbsp; .filter(p -&gt; p.toString().endsWith(<span class="hljs-string">"txt"</span>));</code></p>
+
+	  <p>A. <code class="hljs">Files.list(Paths.get("."))<br />
+	  &nbsp; &nbsp; .filter(p -&gt; p.toString().endsWith("txt"));</code><br />
+	  B. <code class="hljs">Files.find(Paths.get("."),<br />
+	  &nbsp; &nbsp; (p,a) -&gt; p.toString().endsWith("txt"));</code><br />
+	  C. <code class="hljs">Files.find(Paths.get("."), Integer.MAX_VALUE,<br />
+	  &nbsp; &nbsp; &nbsp;p -&gt; p.toString().endsWith("txt"));</code><br />
+	  D. <code class="hljs">Files.find(Paths.get("."), Integer.MAX_VALUE,<br />
+	  &nbsp; &nbsp; (p,a) -&gt; p.toString().endsWith("txt"));</code></p>
+
+	  
+
+	  <p>4. Which is the behavior of <code>Files.lines(Path)</code> if the <code>Path</code> object represents a file that doesn't exist?<br />
+	  A. It returns an empty stream.<br />
+	  B. It creates the file.<br />
+	  C. It throws an <code>IOException</code> when the method is called.<br />
+	  D. It throws an <code>IOException</code> when the stream is first used.</p>
+
+  
+
+  
+
+    
+		<div class="answers">
+			<a href="ch25a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch24.html">24. NIO.2</a>
+			</div>
+			<div class="next">
+				<a href="ch26.html">26. Thread Basics</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

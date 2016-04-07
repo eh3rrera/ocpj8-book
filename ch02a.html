@@ -7,6 +7,10 @@
   <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
   <link href="css/code.css" rel="stylesheet" type="text/css" />
   <link href="css/style.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
 </head>
 
 <body>
@@ -14,6 +18,16 @@
 		<div class="title-container">
 			<div class="chapter-title">
 			
+				<h1><i class="chapter">Chapter TWO</i><br />
+				Inheritance and Polymorphism</h1>
+
+				<p><br /></p>
+
+				<h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+				<p style="text-align: center;"><i>Implement inheritance including visibility modifiers and composition.<br />
+				Implement polymorphism.<br />
+				Develop code that uses abstract classes and methods.</i></p>
 			  
 			  
 			</div>	
@@ -27,10 +41,68 @@
 
 	  <h2>Answers</h2>
 
+	  <p><b>1. The correct answer is B.</b><br />
+	  The method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Question_1_3 q)</span></span></code></p>
+
+	  <p>Doesn't override the equals method from <code>java.lang.Object</code> (look at the access modifier). For that reason, the <code>if</code> condition fails. Note that if the method call were:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">if</span>(q1.equals(q2)) { ...</code></p>
+
+	  <p>We will be calling the method with the <code>protected</code> modifier, making the condition true.</p>
+
+	  <p><br /></p>
+
+	  <p><b>2. The correct answer is D.</b><br />
+	  The proper signatures of the methods are:</p>
+
+	  <ul>
+		<li><code>public int hashCode()</code></li>
+
+		<li><code>public boolean equals(Object obj)</code></li>
+
+		<li><code>public String toString()</code></li>
+	  </ul>
+
+	  <p>So the only correct answer is option D.</p>
+
+	  <p><br /></p>
+
+	  <p><b>3. The correct answer is A.</b><br />
+	  You could say that the overload is ambiguous, and compilation fails, since <code>null</code> can be assigned to any type, but in fact, there's a rule that says the in overloading the most <b>SPECIFIC</b> one is chosen. Since <code>Integer</code> is more specific than <code>Object</code>, the former is selected.</p>
+
+	  <p><br /></p>
+
+	  <p><b>4. The correct answer is B.</b><br />
+	  Static methods are hidden not overridden. Since the main method is in the subclass, the subclass method is called.</p>
+
+	  <p>The call to <code>Question_2_4.print()</code> yields the same result:</p>
+
+	  <p><code>Subclass</code></p>
+
+	  <p>The call to <code>SuperClass.print()</code> yields:</p>
+
+	  <p><code>Superclass</code></p>
+
+	  <p><br /></p>
+
+	  <p><b>5. The correct answer is A.</b><br />
+	  Static methods are allowed in <code>abstract</code> classes, the only restriction being that they cannot be <code>abstract</code>. All methods that are accessible are inherited by subclasses. If an inherited method is <code>static</code>, the only difference is that the method can be hidden instead of overridden.</p>
+
+	  <p><br /></p>
+
+	  <p><b>6. The correct answer is B.</b><br />
+	  Even when the variable is cast to <code>SuperClass3</code>, Java chooses to execute the method of the subclass thanks to polymorphism. If we want to execute the method of the superclass, we have to instantiate an object from that class.</p>
+		
+	  <p><br /></p>
+
 	  
   
 	</div>
   </div>
+		
+  <footer></footer>
   
 </body>
 </html>
