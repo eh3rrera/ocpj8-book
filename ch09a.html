@@ -1,117 +1,105 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter NINE</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter NINE</i><br />
 			  Lambda Expressions</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Create and use Lambda expressions.</i></p>
-			  
-			</div>	
-		</div>
-	</div>
+                <p style="text-align: center;"><i>Create and use Lambda expressions.</i></p>
 
-  
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-	  <h2>Answers</h2>
 
-	  <p><b>1. The correct answer is C.</b><br />
-	  Option A is invalid since the parameter list doesn't have parenthesis.<br />
-	  Option B is invalid since an empty <code>return</code> statement is invalid.<br />
-	  Option C is valid. The body doesn't need to use the <code>return</code> keyword if it only has one statement.<br />
-	  Option D is invalid since the body has two statements and they must be enclosed in curly brackets.</p>
+    <div class="container">
 
-	  <p><br /></p>
+        <div class="column">
 
-	  <p><b>2. The correct answer is D.</b><br />
-	  Option A is invalid because a is already used as the variable identifier.<br />
-	  Option B is invalid because the lambda expression must return an <code>int</code> value.<br />
-	  Option C is invalid because you can't pass a constant value in the parameter list of the lambda expression.<br />
-	  Option D is valid because it takes a <code>String</code> argument and returns an <code>int</code> value.</p>
+            <h2>Answers</h2>
 
-	  <p><br /></p>
+            <p><b>1. The correct answer is C.</b><br /> Option A is invalid since the parameter list doesn't have parenthesis.<br /> Option B is invalid since an empty <code>return</code> statement is invalid.<br /> Option C is valid. The body doesn't need to use the <code>return</code> keyword if it only has one statement.<br /> Option D is invalid since the body has two statements and they must be enclosed in curly brackets.</p>
 
-	  <p><b>3. The correct answers are A and C.</b><br />
-	  Lambda expressions can be used in:</p>
+            <p><br /></p>
 
-	  <ul>
-		<li>A variable declaration</li>
+            <p><b>2. The correct answer is D.</b><br /> Option A is invalid because a is already used as the variable identifier.<br /> Option B is invalid because the lambda expression must return an <code>int</code> value.<br /> Option C is invalid because you can't pass a constant value in the parameter list of the lambda expression.<br /> Option D is valid because it takes a <code>String</code> argument and returns an <code>int</code> value.</p>
 
-		<li>An assignment</li>
+            <p><br /></p>
 
-		<li>A return statement</li>
+            <p><b>3. The correct answers are A and C.</b><br /> Lambda expressions can be used in:</p>
 
-		<li>An array initializer</li>
+            <ul>
+                <li>A variable declaration</li>
 
-		<li>As a method or constructor arguments</li>
+                <li>An assignment</li>
 
-		<li>A ternary conditional expression</li>
+                <li>A return statement</li>
 
-		<li>A cast expression</li>
-	  </ul>
+                <li>An array initializer</li>
 
-	  <p><b><br /></b></p>
+                <li>As a method or constructor arguments</li>
 
-	  <p><b>4. The correct answer is B.</b><br />
-	  Option A is invalid because the interface is not functional (it doesn't have an <code>abstract</code> method). Option B is correct because the interface method doesn't take an argument and the type of the lambda expression can be cast to a <code>java.lang.Number</code> object. Option C is invalid because a <code>double</code> can't be cast to an <code>int</code>. Option D is invalid because the lambda expression's signature doesn't match the signature of the functional interface method <code>m(Integer[])</code>.</p>
+                <li>A ternary conditional expression</li>
 
-	  <p><br /></p>
+                <li>A cast expression</li>
+            </ul>
 
-	  <p><b>5. The correct answer is C.</b><br />
-	  Lambda expression cannot access the default methods of its functional interface (<code>aMethod(</code>) in this case).</p>
+            <p><b><br /></b></p>
 
-	  <p>Since <code>Question_9_4</code> implements <code>AnInterface</code>, this class does have that method, but it can be accessed from <code>main()</code> because it's a <code>static</code> method.</p>
+            <p><b>4. The correct answer is B.</b><br /> Option A is invalid because the interface is not functional (it doesn't have an <code>abstract</code> method). Option B is correct because the interface method doesn't take an argument and the type of the lambda expression can be cast to a <code>java.lang.Number</code> object. Option C is invalid because a <code>double</code> can't be cast to an <code>int</code>. Option D is invalid because the lambda expression's signature doesn't match the signature of the functional interface method <code>m(Integer[])</code>.</p>
 
-	  <p><br /></p>
+            <p><br /></p>
 
-	  <p><b>6. The only correct answer is A.</b><br />
-	  A <code>return</code> keyword is not always required (or optional) in a lambda expression. It depends on the signature of the functional interface method.</p>
+            <p><b>5. The correct answer is C.</b><br /> Lambda expression cannot access the default methods of its functional interface (<code>aMethod(</code>) in this case).</p>
 
-	  <p>Curly brackets are required whenever the <code>return</code> keyword is used in a lambda expression. Both can be omitted if the lambda expression's body is just one statement:</p>
+            <p>Since <code>Question_9_4</code> implements <code>AnInterface</code>, this class does have that method, but it can be accessed from <code>main()</code> because it's a <code>static</code> method.</p>
 
-	  <p><code class="java hljs">() -&gt; <span class="hljs-number">2</span> * <span class="hljs-number">3</span>; <span class="hljs-comment">// Valid</span><br />
+            <p><br /></p>
+
+            <p><b>6. The only correct answer is A.</b><br /> A <code>return</code> keyword is not always required (or optional) in a lambda expression. It depends on the signature of the functional interface method.</p>
+
+            <p>Curly brackets are required whenever the <code>return</code> keyword is used in a lambda expression. Both can be omitted if the lambda expression's body is just one statement:</p>
+
+            <p><code class="java hljs">() -&gt; <span class="hljs-number">2</span> * <span class="hljs-number">3</span>; <span class="hljs-comment">// Valid</span><br />
 	  () -&gt; { <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> * <span class="hljs-number">3</span>; }; <span class="hljs-comment">// Valid</span><br />
 	  () -&gt; <span class="hljs-keyword">return</span> <span class="hljs-number">2</span> * <span class="hljs-number">3</span>; <span class="hljs-comment">// Not Valid!</span></code></p>
 
-	  <p><b><br /></b></p>
+            <p><b><br /></b></p>
 
-	  <p><b>7. The correct answer is D.</b><br />
-	  For a lambda expression, this resolves to the enclosing class where the lambda is written.</p>
+            <p><b>7. The correct answer is D.</b><br /> For a lambda expression, this resolves to the enclosing class where the lambda is written.</p>
 
-	  <p><br /></p>
+            <p><br /></p>
 
-	  <p><b>8. The correct answer is C.</b><br />
-	  Lambda expressions can access instance and static variables, but in this case, the parameter of the lambda expression shadows the instance variable <code>i</code>, so the value of <code>6</code> is used.</p>
+            <p><b>8. The correct answer is C.</b><br /> Lambda expressions can access instance and static variables, but in this case, the parameter of the lambda expression shadows the instance variable <code>i</code>, so the value of <code>6</code> is used.</p>
 
-	  <p><br /></p>
-  
-	</div>
-  </div>
-		
-  <footer></footer>
-  
+            <p><br /></p>
+
+        </div>
+    </div>
+
+    <footer></footer>
+
 </body>
+
 </html>

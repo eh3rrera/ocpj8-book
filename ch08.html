@@ -2,58 +2,58 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-				<h1><i class="chapter">Part THREE</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Part THREE</i><br />
 				Lambda Expressions</h1>
 
-				
 
-				<h1><i class="chapter">Chapter EIGHT</i><br />
+
+                <h1><i class="chapter">Chapter EIGHT</i><br />
 				Functional Interfaces</h1>
 
-				<p><br /></p>
+                <p><br /></p>
 
-				<h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-				<p style="text-align: center;"><i>Create and use Lambda expressions.</i></p>
-			  
-			</div>	
-		</div>
-	</div>
-	
-	
+                <p style="text-align: center;"><i>Create and use Lambda expressions.</i></p>
 
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-		<h2>Simplifying things</h2>
 
-	  <p>Suppose we have a program that has a list of cars and we need to search for all compact cars.</p>
 
-	  <p>We can have something like this to do the work:</p>
+    <div class="container">
 
-	  <p><code class="java hljs"><span class="hljs-function">List&lt;Car&gt; <span class="hljs-title">findCompactCars</span><span class="hljs-params">(List&lt;Car&gt; cars)</span></span> {<br />
+        <div class="column">
+
+            <h2>Simplifying things</h2>
+
+            <p>Suppose we have a program that has a list of cars and we need to search for all compact cars.</p>
+
+            <p>We can have something like this to do the work:</p>
+
+            <p><code class="java hljs"><span class="hljs-function">List&lt;Car&gt; <span class="hljs-title">findCompactCars</span><span class="hljs-params">(List&lt;Car&gt; cars)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;List&lt;Car&gt; compactCars = <span class="hljs-keyword">new</span> ArrayList&lt;Car&gt;();<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">for</span>(Car car : cars) {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">if</span>(car.getType().equals(CarTypes.COMPACT)) {<br />
@@ -63,11 +63,11 @@
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> compactCars;<br />
 	  }</code></p>
 
-	  <p>Easy. But the next day, the users realize they also need to search for cars that cost more than 20,000 USD.</p>
+            <p>Easy. But the next day, the users realize they also need to search for cars that cost more than 20,000 USD.</p>
 
-	  <p>So we come up with something like this:</p>
+            <p>So we come up with something like this:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function">List&lt;Car&gt; <span class="hljs-title">findCompactCars</span><span class="hljs-params">(List&lt;Car&gt; cars)</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-function">List&lt;Car&gt; <span class="hljs-title">findCompactCars</span><span class="hljs-params">(List&lt;Car&gt; cars)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;List&lt;Car&gt; twentyKCars = <span class="hljs-keyword">new</span> ArrayList&lt;Car&gt;();<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">for</span>(Car car : cars) {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">if</span>(car.getCostUSD() &gt; <span class="hljs-number">20000</span>) {<br />
@@ -77,51 +77,51 @@
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> twentyKCars;<br />
 	  }</code></p>
 
-	  <p>Now look at the code. It's practically the same. The only differences are the lines:</p>
+            <p>Now look at the code. It's practically the same. The only differences are the lines:</p>
 
-	  <p><code class="java hljs">car.getType().equals(CarTypes.COMPACT)</code></p>
+            <p><code class="java hljs">car.getType().equals(CarTypes.COMPACT)</code></p>
 
-	  <p>And:</p>
+            <p>And:</p>
 
-	  <p><code class="java hljs">car.getCostUSD() &gt; <span class="hljs-number">20000</span></code></p>
+            <p><code class="java hljs">car.getCostUSD() &gt; <span class="hljs-number">20000</span></code></p>
 
-	  <p>What if we need to filter by another condition in the future?</p>
+            <p>What if we need to filter by another condition in the future?</p>
 
-	  <p>It's wrong to have duplicate or copy-pasted code, it's not very flexible to change and error-prone.</p>
+            <p>It's wrong to have duplicate or copy-pasted code, it's not very flexible to change and error-prone.</p>
 
-	  <h2>The Object-Oriented Approach</h2>
+            <h2>The Object-Oriented Approach</h2>
 
-	  <p>Since Java is an object-oriented let's leverage this by solving the problem using a popular design pattern, Strategy.</p>
+            <p>Since Java is an object-oriented let's leverage this by solving the problem using a popular design pattern, Strategy.</p>
 
-	  <p>This pattern does what we just need, encapsulate the behavior that varies (algorithm) and makes all these behavior interchangeable.</p>
+            <p>This pattern does what we just need, encapsulate the behavior that varies (algorithm) and makes all these behavior interchangeable.</p>
 
-	  <p>The recommended way to implement the Strategy pattern in Java is with an interface so we can create implementations with for each algorithm (in our case, the conditions to test)</p>
+            <p>The recommended way to implement the Strategy pattern in Java is with an interface so we can create implementations with for each algorithm (in our case, the conditions to test)</p>
 
-	  <p>So let's code an interface that can contain the search condition that varies, for example:</p>
+            <p>So let's code an interface that can contain the search condition that varies, for example:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Searchable</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Searchable</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Car car)</span></span>;<br />
 	  }</code></p>
 
-	  <p>And place the code that varies into implementations of that interface:</p>
+            <p>And place the code that varies into implementations of that interface:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CompactCarSearch</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Searchable</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CompactCarSearch</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Searchable</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Car car)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> car.getType().equals(CarTypes.COMPACT);<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>And:</p>
+            <p>And:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TwentyKCarSearch</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Searchable</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TwentyKCarSearch</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Searchable</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Car car)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> car.getCostUSD() &gt; <span class="hljs-number">20000</span>;<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>That way, we can make the method that does the actual search a little more general:</p>
+            <p>That way, we can make the method that does the actual search a little more general:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function">List&lt;Car&gt; <span class="hljs-title">findCars</span><span class="hljs-params">(List&lt;Car&gt; cars, Searchable s)</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-function">List&lt;Car&gt; <span class="hljs-title">findCars</span><span class="hljs-params">(List&lt;Car&gt; cars, Searchable s)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;List&lt;Car&gt; searchedCars = <span class="hljs-keyword">new</span> ArrayList&lt;Car&gt;();<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">for</span>(Car car : cars) {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">if</span>(s.test(car)) {<br />
@@ -131,74 +131,74 @@
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> searchedCars;<br />
 	  }</code></p>
 
-	  <p>And call the function in this way:</p>
+            <p>And call the function in this way:</p>
 
-	  <p><code class="java hljs">List&lt;Car&gt; compactCars = findCars(cars, <span class="hljs-keyword">new</span> CompactCarSearch());<br />
+            <p><code class="java hljs">List&lt;Car&gt; compactCars = findCars(cars, <span class="hljs-keyword">new</span> CompactCarSearch());<br />
 	  List&lt;Car&gt; twentyKCars = findCars(cars, <span class="hljs-keyword">new</span> TwentyKCarSearch());</code></p>
 
-	  <p>We don't have duplicate code anymore.</p>
+            <p>We don't have duplicate code anymore.</p>
 
-	  <p>If the user wants another way to search for a car, instead of copy-pasting a search method, now we just implement another class with a condition.</p>
+            <p>If the user wants another way to search for a car, instead of copy-pasting a search method, now we just implement another class with a condition.</p>
 
-	  <p>We are now more flexible to change.</p>
+            <p>We are now more flexible to change.</p>
 
-	  <p>But it's still a <b>COMPLEX</b> solution. Instead of having two methods we have two classes and one interface.</p>
+            <p>But it's still a <b>COMPLEX</b> solution. Instead of having two methods we have two classes and one interface.</p>
 
-	  <p>What if we turn the implementations into anonymous classes? For example:</p>
+            <p>What if we turn the implementations into anonymous classes? For example:</p>
 
-	  <p><code class="java hljs">List&lt;Car&gt; compactCars = findCars(cars,<span class="hljs-keyword">new</span> Searchable() {<br />
+            <p><code class="java hljs">List&lt;Car&gt; compactCars = findCars(cars,<span class="hljs-keyword">new</span> Searchable() {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Car car)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> car.getType().equals(CarTypes.COMPACT);<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  });</code></p>
 
-	  <p>A little bit better, we can even assign the class to a variable if we want to use it in other parts of our program:</p>
+            <p>A little bit better, we can even assign the class to a variable if we want to use it in other parts of our program:</p>
 
-	  <p><code class="java hljs">Searchable compactCarSearch = <span class="hljs-keyword">new</span> Searchable() {<br />
+            <p><code class="java hljs">Searchable compactCarSearch = <span class="hljs-keyword">new</span> Searchable() {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Car car)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> car.getType().equals(CarTypes.COMPACT);<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  });<br />
 	  List&lt;Car&gt; compactCars = findCars(cars, compactCarSearch);</code></p>
 
-	  <p>Not bad, but wouldn't be great to just pass the condition to the method? Like this for example:</p>
+            <p>Not bad, but wouldn't be great to just pass the condition to the method? Like this for example:</p>
 
-	  <p><code class="java hljs"><span class="hljs-comment">// Don't even try, it won't work</span><br />
+            <p><code class="java hljs"><span class="hljs-comment">// Don't even try, it won't work</span><br />
 	  List&lt;Car&gt; compactCars = findCars(cars,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;car.getType().equals(CarTypes.COMPACT));</code></p>
 
-	  <h2>A new type of value</h2>
+            <h2>A new type of value</h2>
 
-	  <p>Basically, in Java we work with two types of value, primitive values, and references to objects.</p>
+            <p>Basically, in Java we work with two types of value, primitive values, and references to objects.</p>
 
-	  <p>Both can be used as the arguments of a method:</p>
+            <p>Both can be used as the arguments of a method:</p>
 
-	  <p><code class="java hljs">method1(<span class="hljs-number">3</span>);<br />
+            <p><code class="java hljs">method1(<span class="hljs-number">3</span>);<br />
 	  method2(<span class="hljs-keyword">new</span> Object());</code></p>
 
-	  <p>So if we want to pass some piece of code to a method, we have to wrap it in an object (like in the previous example).</p>
+            <p>So if we want to pass some piece of code to a method, we have to wrap it in an object (like in the previous example).</p>
 
-	  <p>But in Java 8, we can pass that piece of code directly through the use of a lambda expression.</p>
+            <p>But in Java 8, we can pass that piece of code directly through the use of a lambda expression.</p>
 
-	  <p>Coincidentally, to use a lambda expression instead of an object in the previous example, we have to start from the same interface:</p>
+            <p>Coincidentally, to use a lambda expression instead of an object in the previous example, we have to start from the same interface:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Searchable</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Searchable</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Car car)</span></span>;<br />
 	  }</code></p>
 
-	  <p>A functional interface.</p>
+            <p>A functional interface.</p>
 
-	  <h2>A functional interface</h2>
+            <h2>A functional interface</h2>
 
-	  <p>The starting point to learn about lambda expressions is learning about functional interfaces.</p>
+            <p>The starting point to learn about lambda expressions is learning about functional interfaces.</p>
 
-	  <p>A functional interface is any interface that has exactly <b>ONE ABSTRACT</b> method.</p>
+            <p>A functional interface is any interface that has exactly <b>ONE ABSTRACT</b> method.</p>
 
-	  <p>This is a tricky definition. Many people think that just having one method makes an interface functional (since interface methods are abstract by default), but it doesn't.</p>
+            <p>This is a tricky definition. Many people think that just having one method makes an interface functional (since interface methods are abstract by default), but it doesn't.</p>
 
-	  <p>Take for example default methods. Since default methods have an implementation, they are not abstract. So interfaces like the following, are considered functional:</p>
+            <p>Take for example default methods. Since default methods have an implementation, they are not abstract. So interfaces like the following, are considered functional:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">int</span> <span class="hljs-title">defaultMethod</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
@@ -214,83 +214,83 @@
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span>;<br />
 	  }</code></p>
 
-	  <p>If an interface declares an abstract method with the signature of one of the methods of <code>java.lang.Object</code>, it doesn't count toward the functional interface method count since any implementation of the interface will have an implementation of the method (since all classes extend from <code>java.lang.Object</code>).</p>
+            <p>If an interface declares an abstract method with the signature of one of the methods of <code>java.lang.Object</code>, it doesn't count toward the functional interface method count since any implementation of the interface will have an implementation of the method (since all classes extend from <code>java.lang.Object</code>).</p>
 
-	  <p>So an interface like the following is considered functional:</p>
+            <p>So an interface like the following is considered functional:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object o)</span></span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">hashCode</span><span class="hljs-params">()</span></span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function">String <span class="hljs-title">toString</span><span class="hljs-params">()</span></span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span>;<br />
 	  }</code></p>
 
-	  <p>A more confusing scenario is when an interface inherits a method that is equivalent but not identical to another:</p>
+            <p>A more confusing scenario is when an interface inherits a method that is equivalent but not identical to another:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">(List&lt;Double&gt; l)</span></span>;<br />
 	  }<br />
 	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">B</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">A</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">(List l)</span></span>;<br />
 	  }</code></p>
 
-	  <p>In this case, the method is the same, so it's taken as one method. The class that implements <code>B</code> will have to implement the method that can legally override all the abstract methods:</p>
+            <p>In this case, the method is the same, so it's taken as one method. The class that implements <code>B</code> will have to implement the method that can legally override all the abstract methods:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">(List l)</span></span>;</code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">(List l)</span></span>;</code></p>
 
-	  <p>By the way, neither an empty interface is not considered functional.</p>
+            <p>By the way, neither an empty interface is not considered functional.</p>
 
-	  <p>The key here is to have <b>EXACTLY ONE ABSTRACT</b> method; that's why these interfaces are also called Single Abstract Method interfaces (SAM Interfaces).</p>
+            <p>The key here is to have <b>EXACTLY ONE ABSTRACT</b> method; that's why these interfaces are also called Single Abstract Method interfaces (SAM Interfaces).</p>
 
-	  <p>To make things easier, Java 8 also introduced the <code>@FunctionalInterface</code> annotation, which generates a compile-time error when the interface you have annotated is not a valid functional interface.</p>
+            <p>To make things easier, Java 8 also introduced the <code>@FunctionalInterface</code> annotation, which generates a compile-time error when the interface you have annotated is not a valid functional interface.</p>
 
-	  <p><code class="java hljs"><span class="hljs-comment">// This won't compile</span><br />
+            <p><code class="java hljs"><span class="hljs-comment">// This won't compile</span><br />
 	  <span class="hljs-annotation">@FunctionalInterface</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m</span><span class="hljs-params">(<span class="hljs-keyword">long</span> l)</span></span>;<br />
 	  }</code></p>
 
-	  <p>Java interfaces that only have one method declared in their definition are now annotated as functional interfaces. Some examples are:</p>
+            <p>Java interfaces that only have one method declared in their definition are now annotated as functional interfaces. Some examples are:</p>
 
-	  <ul>
-		<li><code>java.lang.Runnable</code></li>
+            <ul>
+                <li><code>java.lang.Runnable</code></li>
 
-		<li><code>java.util.Comparator</code></li>
+                <li><code>java.util.Comparator</code></li>
 
-		<li><code>java.util.concurrent.Callable</code></li>
+                <li><code>java.util.concurrent.Callable</code></li>
 
-		<li><code>java.awt.event.ActionListener</code></li>
-	  </ul>
+                <li><code>java.awt.event.ActionListener</code></li>
+            </ul>
 
-	  <p>But remember, this annotation is just to help you, having it won't make an interface functional.</p>
+            <p>But remember, this annotation is just to help you, having it won't make an interface functional.</p>
 
-	  <p>In the next chapter, will see how functional interfaces and lambda expressions are related.</p>
+            <p>In the next chapter, will see how functional interfaces and lambda expressions are related.</p>
 
-	  
 
-	  <h2>Key Points</h2>
 
-	  <ul>
-		<li>A functional interface is any interface that has exactly one abstract method.</li>
+            <h2>Key Points</h2>
 
-		<li>Since default methods have an implementation, they are not abstract so a functional interface can have any number of them.</li>
+            <ul>
+                <li>A functional interface is any interface that has exactly one abstract method.</li>
 
-		<li>If an interface declares an abstract method with the signature of one of the methods of <code>java.lang.Object</code>, it doesn't count toward the functional interface method count.</li>
+                <li>Since default methods have an implementation, they are not abstract so a functional interface can have any number of them.</li>
 
-		<li>A functional interface is valid when it inherits a method that is <i>equivalent</i> but not <i>identical</i> to another.</li>
+                <li>If an interface declares an abstract method with the signature of one of the methods of <code>java.lang.Object</code>, it doesn't count toward the functional interface method count.</li>
 
-		<li>An empty interface is not considered a functional interface.</li>
+                <li>A functional interface is valid when it inherits a method that is <i>equivalent</i> but not <i>identical</i> to another.</li>
 
-		<li>A functional interface is valid even if the <code>@FunctionalInterface</code> annotation would be omitted.</li>
+                <li>An empty interface is not considered a functional interface.</li>
 
-		<li>Functional interfaces are the basis of lambda expressions.</li>
-	  </ul>
+                <li>A functional interface is valid even if the <code>@FunctionalInterface</code> annotation would be omitted.</li>
 
-	  <h2>Self Test</h2>
+                <li>Functional interfaces are the basis of lambda expressions.</li>
+            </ul>
 
-	  <p>1. Given:</p>
+            <h2>Self Test</h2>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
+            <p>1. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">int</span> <span class="hljs-title">m1</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
@@ -302,90 +302,71 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What of the following statements are true?<br />
-	  A. Compilation fails<br />
-	  B. It compiles successfully<br />
-	  C. It compiles only if interface <code>B</code> declares a default method<br />
-	  D. An exception occurs at runtime if this interface is implemented by a class</p>
+            <p>What of the following statements are true?<br /> A. Compilation fails<br /> B. It compiles successfully<br /> C. It compiles only if interface <code>B</code> declares a default method<br /> D. An exception occurs at runtime if this interface is implemented by a class</p>
 
-	  
 
-	  <p>2. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">C</span></span> {<br />
+            <p>2. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">C</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">m</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">m</span><span class="hljs-params">(<span class="hljs-keyword">long</span> i)</span></span>;<br />
 	  }</code></p>
 
-	  <p>What of the following statements are true?<br />
-	  A. This code compiles successfully<br />
-	  B. If we remove the annotation, this code will compile<br />
-	  C. If we remove one method, this code will compile<br />
-	  D. The <code>@FunctionalInterface</code> annotation makes this interface functional</p>
+            <p>What of the following statements are true?<br /> A. This code compiles successfully<br /> B. If we remove the annotation, this code will compile<br /> C. If we remove one method, this code will compile<br /> D. The <code>@FunctionalInterface</code> annotation makes this interface functional</p>
 
-	  
 
-	  <p>3. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">D</span></span> {<br />
+            <p>3. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">D</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">int</span> <span class="hljs-title">subtract</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> a - b;<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What of the following statements are true?<br />
-	  A. This code compiles successfully<br />
-	  B. This code doesn't compile<br />
-	  C. This is an example of a functional interface<br />
-	  D. Removing the sum method would make this interface functional</p>
+            <p>What of the following statements are true?<br /> A. This code compiles successfully<br /> B. This code doesn't compile<br /> C. This is an example of a functional interface<br /> D. Removing the sum method would make this interface functional</p>
 
-	  
 
-	  <p>4. Which of the following interfaces of the Java API can be considered functional?<br />
-	  A. <code>java.util.concurrent.Callable</code><br />
-	  B. <code>java.util.Map</code><br />
-	  C. <code>java.util.Iterator</code><br />
-	  D. <code>java.lang.Comparable</code></p>
 
-	  <p>5. Given:</p>
+            <p>4. Which of the following interfaces of the Java API can be considered functional?<br /> A. <code>java.util.concurrent.Callable</code><br /> B. <code>java.util.Map</code><br /> C. <code>java.util.Iterator</code><br /> D. <code>java.lang.Comparable</code></p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">E</span></span> {<br />
+            <p>5. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">E</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> a + b;<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What of the following statements are true?<br />
-	  A. This code doesn't compile<br />
-	  B. This code compiles successfully<br />
-	  C. This is an example of a functional interface<br />
-	  D. Adding the <code>@FunctionalInterface</code> annotation would make this interface functional</p>
+            <p>What of the following statements are true?<br /> A. This code doesn't compile<br /> B. This code compiles successfully<br /> C. This is an example of a functional interface<br /> D. Adding the <code>@FunctionalInterface</code> annotation would make this interface functional</p>
 
-  
 
-  
-    
-		<div class="answers">
-			<a href="ch08a.html" target="_blank">Open answers page</a>
-		</div>
 
-		<div class="book-info"></div>
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch07.html">07. Collections</a>
-			</div>
-			<div class="next">
-				<a href="ch09.html">09. Lambda Expressions</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+
+            <div class="answers">
+                <a href="ch08a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch07.html">07. Collections</a>
+                </div>
+                <div class="next">
+                    <a href="ch09.html">09. Lambda Expressions</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>

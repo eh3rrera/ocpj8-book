@@ -2,127 +2,127 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter THIRTEEN</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter THIRTEEN</i><br />
 			  Iterating and Filtering Collections</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Collections Streams and Filters.<br /></i><i>Iterate using forEach methods of Streams and List.<br /></i><i>Filter a collection by using lambda expressions.</i></p>
-			  
-			</div>
-		</div>
-	</div>
-	
-	
+                <p style="text-align: center;"><i>Collections Streams and Filters.<br /></i><i>Iterate using forEach methods of Streams and List.<br /></i><i>Filter a collection by using lambda expressions.</i></p>
 
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-		<h2>Iteration</h2>
 
-	  <p>Usually, when you have a list, you'd want to iterate over its elements. A common way is to use a <code>for</code> block.</p>
 
-	  <p>Either with an index:</p>
+    <div class="container">
 
-	  <p><code class="java hljs">List&lt;String&gt; words = ...<br />
+        <div class="column">
+
+            <h2>Iteration</h2>
+
+            <p>Usually, when you have a list, you'd want to iterate over its elements. A common way is to use a <code>for</code> block.</p>
+
+            <p>Either with an index:</p>
+
+            <p><code class="java hljs">List&lt;String&gt; words = ...<br />
 	  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; words.size(); i++) {<br />
 	  &nbsp; &nbsp; System.out.println(words.get(i));<br />
 	  }</code></p>
 
-	  <p>Or with an iterator:</p>
+            <p>Or with an iterator:</p>
 
-	  <p><code class="java hljs">List&lt;String&gt; words = ...<br />
+            <p><code class="java hljs">List&lt;String&gt; words = ...<br />
 	  <span class="hljs-keyword">for</span>(Iterator&lt;String&gt; it = words.iterator(); it.hasNext();) {<br />
 	  &nbsp; &nbsp; System.out.println(it.next());<br />
 	  }</code></p>
 
-	  <p>Or with the so-called <code>for-each</code> loop:</p>
+            <p>Or with the so-called <code>for-each</code> loop:</p>
 
-	  <p><code class="java hljs">List&lt;String&gt; words = ...<br />
+            <p><code class="java hljs">List&lt;String&gt; words = ...<br />
 	  <span class="hljs-keyword">for</span>(String w : words) {<br />
 	  &nbsp; &nbsp; System.out.println(w);<br />
 	  }</code></p>
 
-	  <p>Besides looking ugly, the first two add points where an error can happen (the index and iterator variables). The recommended way is to use the <code>for-each</code> loop whenever you can.</p>
+            <p>Besides looking ugly, the first two add points where an error can happen (the index and iterator variables). The recommended way is to use the <code>for-each</code> loop whenever you can.</p>
 
-	  <p>Therefore, taking advantage of functional interfaces, Java 8 adds another option to iterate lists based on the <code>for-each</code> loop, the <code>foreach</code> method:</p>
+            <p>Therefore, taking advantage of functional interfaces, Java 8 adds another option to iterate lists based on the <code>for-each</code> loop, the <code>foreach</code> method:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">forEach</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; action)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">forEach</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; action)</span></span></code></p>
 
-	  <p>Since this method is defined in the <code>Iterable</code> interface, is not only available to lists, but to all the implementations of this interface, such as <code>Queues</code>, <code>Sets</code>, <code>Deques</code>, and even some SQL-related exceptions, like <code>SQLException</code>.</p>
+            <p>Since this method is defined in the <code>Iterable</code> interface, is not only available to lists, but to all the implementations of this interface, such as <code>Queues</code>, <code>Sets</code>, <code>Deques</code>, and even some SQL-related exceptions, like <code>SQLException</code>.</p>
 
-	  <p>Also, notice this is a default method, which means that there's a default implementation that implementing classes can override (and many do, mostly to deal with concurrent modifications).</p>
+            <p>Also, notice this is a default method, which means that there's a default implementation that implementing classes can override (and many do, mostly to deal with concurrent modifications).</p>
 
-	  <p>This is the default implementation:</p>
+            <p>This is the default implementation:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">for</span> (T t : <span class="hljs-keyword">this</span>) {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">for</span> (T t : <span class="hljs-keyword">this</span>) {<br />
 	  &nbsp; &nbsp; action.accept(t);<br />
 	  }</code></p>
 
-	  <p>So basically, it's a <code>for-each</code> loop using the new functional features of Java 8.</p>
+            <p>So basically, it's a <code>for-each</code> loop using the new functional features of Java 8.</p>
 
-	  <p>To use it, we can start with an anonymous class:</p>
+            <p>To use it, we can start with an anonymous class:</p>
 
-	  <p><code class="java hljs">List&lt;String&gt; words = ...<br />
+            <p><code class="java hljs">List&lt;String&gt; words = ...<br />
 	  words.forEach(<span class="hljs-keyword">new</span> Consumer&lt;String&gt;() {<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(String t)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(t);<br />
 	  &nbsp; &nbsp; }<br />
 	  });</code></p>
 
-	  <p>Remember that the <code>Consumer</code> interface represents an operation that takes one parameter but doesn't return any result.</p>
+            <p>Remember that the <code>Consumer</code> interface represents an operation that takes one parameter but doesn't return any result.</p>
 
-	  <p>That anonymous class can be transformed into a lambda expression:</p>
+            <p>That anonymous class can be transformed into a lambda expression:</p>
 
-	  <p><code class="java hljs">words.forEach(t -&gt; System.out.println(t));</code></p>
+            <p><code class="java hljs">words.forEach(t -&gt; System.out.println(t));</code></p>
 
-	  <p>Or in this particular example, a method reference:</p>
+            <p>Or in this particular example, a method reference:</p>
 
-	  <p><code class="java hljs">words.forEach(System.out::println);</code></p>
+            <p><code class="java hljs">words.forEach(System.out::println);</code></p>
 
-	  <p>Just remember the rules about using final or effectively final variables inside anonymous classes or lambda expressions. Code like the following is not valid:</p>
+            <p>Just remember the rules about using final or effectively final variables inside anonymous classes or lambda expressions. Code like the following is not valid:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span> max = <span class="hljs-number">0</span>;<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> max = <span class="hljs-number">0</span>;<br />
 	  words.forEach(t -&gt; {<br />
 	  <span class="hljs-comment"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>// The following line won't compile, you can't modify max<br /></span>&nbsp; &nbsp; max = Math.max(max, t.length());<br />
 	  &nbsp; &nbsp; System.out.println(t);<br />
 	  });</code></p>
 
-	  <p>If you want to do things like this (get the max length of all the strings in a list), it's better to use streams to iterate the collection and apply other operations (for this particular example, we'll see how to calculate the max length with the <code>reduce</code> method in a later chapter).</p>
+            <p>If you want to do things like this (get the max length of all the strings in a list), it's better to use streams to iterate the collection and apply other operations (for this particular example, we'll see how to calculate the max length with the <code>reduce</code> method in a later chapter).</p>
 
-	  <p>The <code>Stream</code> interface provides a corresponding <code>forEach</code> method:</p>
+            <p>The <code>Stream</code> interface provides a corresponding <code>forEach</code> method:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forEach</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; action)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forEach</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; action)</span></span></code></p>
 
-	  <p>Since this method doesn't return a stream, it represents a terminal operation.</p>
+            <p>Since this method doesn't return a stream, it represents a terminal operation.</p>
 
-	  <p>Using it is not different than the <code>Iterable</code> version:</p>
+            <p>Using it is not different than the <code>Iterable</code> version:</p>
 
-	  <p><code class="java hljs">Stream&lt;String&gt; words = ...<br />
+            <p><code class="java hljs">Stream&lt;String&gt; words = ...<br />
 	  <span class="hljs-comment">// As an anonymous class<br /></span>words.forEach((<span class="hljs-keyword">new</span> Consumer&lt;String&gt;() {<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(String t)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(t);<br />
@@ -131,53 +131,53 @@
 	  <span class="hljs-comment">// As a lamba expression<br /></span>words.forEach(t -&gt; System.out.println(t));<br />
 	  <span class="hljs-comment">// As a method reference<br /></span>words.forEach(System.out::println);</code></p>
 
-	  <p>Of course, the advantage of using streams is that you can chain operations, for example:</p>
+            <p>Of course, the advantage of using streams is that you can chain operations, for example:</p>
 
-	  <p><code class="java hljs">words.sorted()<br />
+            <p><code class="java hljs">words.sorted()<br />
 	  &nbsp; &nbsp; .limit(<span class="hljs-number">2</span>)<br />
 	  &nbsp; &nbsp; .forEach(System.out::println);</code></p>
 
-	  <p>As a terminal operation, you can't do things like this:</p>
+            <p>As a terminal operation, you can't do things like this:</p>
 
-	  <p><code class="java hljs">words.forEach(t -&gt; System.out.println(t.length()));<br />
+            <p><code class="java hljs">words.forEach(t -&gt; System.out.println(t.length()));<br />
 	  words.forEach(System.out::println);</code></p>
 
-	  <p>If you want to do something like this, either create a new stream each time:</p>
+            <p>If you want to do something like this, either create a new stream each time:</p>
 
-	  <p><code class="java hljs">Stream.of(wordList).forEach(t -&gt; System.out.println(t.length()));<br />
+            <p><code class="java hljs">Stream.of(wordList).forEach(t -&gt; System.out.println(t.length()));<br />
 	  Stream.of(wordList).forEach(System.out::println);</code></p>
 
-	  <p>Or wrap the code inside one lambda:</p>
+            <p>Or wrap the code inside one lambda:</p>
 
-	  <p><code class="java hljs">Consumer&lt;String&gt; print = t -&gt; {<br />
+            <p><code class="java hljs">Consumer&lt;String&gt; print = t -&gt; {<br />
 	  &nbsp; &nbsp; System.out.println(t.length());<br />
 	  &nbsp; &nbsp; System.out.println(t);<br />
 	  };<br />
 	  words.forEach(print);</code></p>
 
-	  <p>You can't use <code>return</code>, <code>break</code> or <code>continue</code> to terminate an iteration either. <code>break</code> and <code>continue</code> will generate a compilation error since they cannot be used outside of a loop and return doesn't make sense when we see that the <code>foreach</code> method is implemented basically as:</p>
+            <p>You can't use <code>return</code>, <code>break</code> or <code>continue</code> to terminate an iteration either. <code>break</code> and <code>continue</code> will generate a compilation error since they cannot be used outside of a loop and return doesn't make sense when we see that the <code>foreach</code> method is implemented basically as:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">for</span> (T t : <span class="hljs-keyword">this</span>) {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">for</span> (T t : <span class="hljs-keyword">this</span>) {<br />
 	  &nbsp; &nbsp;<span class="hljs-comment">// Inside accept, return has no effect<br /></span>&nbsp; &nbsp;action.accept(t);<br />
 	  }</code></p>
 
-	  <p>As a side note (since it's not covered in the exam), Java 8 also added a <code>forEach</code> method to the <code>Map</code> interface. However, since a map has a key and value, this new method takes a <code>BiConsumer</code>:</p>
+            <p>As a side note (since it's not covered in the exam), Java 8 also added a <code>forEach</code> method to the <code>Map</code> interface. However, since a map has a key and value, this new method takes a <code>BiConsumer</code>:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">forEach</span><span class="hljs-params">(BiConsumer&lt;? <span class="hljs-keyword">super</span> K,? <span class="hljs-keyword">super</span> V&gt; action)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">forEach</span><span class="hljs-params">(BiConsumer&lt;? <span class="hljs-keyword">super</span> K,? <span class="hljs-keyword">super</span> V&gt; action)</span></span></code></p>
 
-	  <p>With a default implementation is equivalent to:</p>
+            <p>With a default implementation is equivalent to:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">for</span> (Map.Entry&lt;K, V&gt; entry : map.entrySet()) {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">for</span> (Map.Entry&lt;K, V&gt; entry : map.entrySet()) {<br />
 	  &nbsp; &nbsp; action.accept(entry.getKey(), entry.getValue());<br />
 	  }</code></p>
 
-	  <h2>Filtering</h2>
+            <h2>Filtering</h2>
 
-	  <p>Another common requirement is to filter (or remove) elements from a collection that don't match a particular condition.</p>
+            <p>Another common requirement is to filter (or remove) elements from a collection that don't match a particular condition.</p>
 
-	  <p>You normally do this either by copying the matching elements to another collection:</p>
+            <p>You normally do this either by copying the matching elements to another collection:</p>
 
-	  <p><code class="java hljs">List&lt;String&gt; words = ...<br />
+            <p><code class="java hljs">List&lt;String&gt; words = ...<br />
 	  List&lt;String&gt; nonEmptyWords = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();<br />
 	  <span class="hljs-keyword">for</span>(String w : words) {<br />
 	  <span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>if</span>(w != <span class="hljs-keyword">null</span> &amp;&amp; !w.isEmpty()) {<br />
@@ -185,9 +185,9 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Or by removing the non-matching elements in the collection itself with an iterator (only if the collection supports removal):</p>
+            <p>Or by removing the non-matching elements in the collection itself with an iterator (only if the collection supports removal):</p>
 
-	  <p><code class="java hljs">List&lt;String&gt; words = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();<br />
+            <p><code class="java hljs">List&lt;String&gt; words = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();<br />
 	  <span class="hljs-comment">// ... (add some strings)<font color="#000000"><br /></font></span><span class="hljs-keyword">for</span> (Iterator&lt;String&gt; it = words.iterator(); it.hasNext();) {<br />
 	  &nbsp; &nbsp; String w = it.next();<br />
 	  <span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>if</span> (w == <span class="hljs-keyword">null</span> || w.isEmpty()) {<br />
@@ -195,40 +195,40 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Now in Java 8, there's a new method on the <code>Collection</code> interface:</p>
+            <p>Now in Java 8, there's a new method on the <code>Collection</code> interface:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">removeIf</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> E&gt; filter)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">removeIf</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> E&gt; filter)</span></span></code></p>
 
-	  <p>That removes all of the elements of the collection that satisfy the given predicate (the default implementation uses the iterator version).</p>
+            <p>That removes all of the elements of the collection that satisfy the given predicate (the default implementation uses the iterator version).</p>
 
-	  <p>This makes the code simpler by using either lambda expressions or method references:</p>
+            <p>This makes the code simpler by using either lambda expressions or method references:</p>
 
-	  <p><code class="java hljs"><span class="hljs-comment">// Using an anonymous class<br /></span>words.removeIf(<span class="hljs-keyword">new</span> Predicate&lt;String&gt;() {<br />
+            <p><code class="java hljs"><span class="hljs-comment">// Using an anonymous class<br /></span>words.removeIf(<span class="hljs-keyword">new</span> Predicate&lt;String&gt;() {<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(String t)</span></span> {<br />
 	  <span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</font>return</span> t == <span class="hljs-keyword">null</span> || t.isEmpty();<br />
 	  &nbsp; &nbsp; }<br />
 	  });<br />
 	  <span class="hljs-comment">// Using a lambda expression<br /></span>words.removeIf(t -&gt; t == <span class="hljs-keyword">null</span> || t.isEmpty());</code></p>
 
-	  <p>For the case where you copy the matching elements to another collection, you have the <code>filter</code> method of the <code>Stream</code> interface:</p>
+            <p>For the case where you copy the matching elements to another collection, you have the <code>filter</code> method of the <code>Stream</code> interface:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">filter</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">filter</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</span></span></code></p>
 
-	  <p>That returns a new stream consisting of the elements that satisfy the given predicate.</p>
+            <p>That returns a new stream consisting of the elements that satisfy the given predicate.</p>
 
-	  <p>Since this method returns a stream, it represents an intermediate operation, which basically means that you can chain any number of filters or other intermediate operations:</p>
+            <p>Since this method returns a stream, it represents an intermediate operation, which basically means that you can chain any number of filters or other intermediate operations:</p>
 
-	  <p><code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-string">"hello"</span>, <span class="hljs-keyword">null</span>, <span class="hljs-string">""</span>);<br />
+            <p><code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-string">"hello"</span>, <span class="hljs-keyword">null</span>, <span class="hljs-string">""</span>);<br />
 	  words.stream()<br />
 	  &nbsp; &nbsp; .filter(t -&gt; t != <span class="hljs-keyword">null</span>) <span class="hljs-comment">// ["hello", ""]<br /></span>&nbsp; &nbsp; .filter(t -&gt; !t.isEmpty()) <span class="hljs-comment">// ["hello"]<br /></span>&nbsp; &nbsp; .forEach(System.out::println);</code></p>
 
-	  <p>Of course, the result of executing this code is:</p>
+            <p>Of course, the result of executing this code is:</p>
 
-	  <p><code class="java hljs">hello</code></p>
+            <p><code class="java hljs">hello</code></p>
 
-	  <p>You can also create a method (or use an existing one) on some class to do it with a method reference, for the sole purpose of clarity:</p>
+            <p>You can also create a method (or use an existing one) on some class to do it with a method reference, for the sole purpose of clarity:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StringUtils</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">StringUtils</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isNotNullOrEmpty</span><span class="hljs-params">(String s)</span></span> {<br />
 	  <span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</font>return</span> s != <span class="hljs-keyword">null</span> &amp;&amp; !s.isEmpty();<br />
 	  &nbsp; &nbsp; }<br />
@@ -248,70 +248,70 @@
 	  &nbsp; &nbsp; .filter(StringUtils::isNotNullOrEmpty)<br />
 	  &nbsp; &nbsp; .forEach(System.out::println);</code></p>
 
-	  <p>The <code>Stream</code> interface also has the <code>distinct</code> method to filter duplicate elements, according to the <code>Object.equals(Object)</code> method.</p>
+            <p>The <code>Stream</code> interface also has the <code>distinct</code> method to filter duplicate elements, according to the <code>Object.equals(Object)</code> method.</p>
 
-	  <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">distinct</span><span class="hljs-params">()</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">distinct</span><span class="hljs-params">()</span></span></code></p>
 
-	  <p>Again, since it returns a new stream, this is an intermediate operation. Because it has to know the values of the elements to find out which ones are duplicates, this operation is also stateful.</p>
+            <p>Again, since it returns a new stream, this is an intermediate operation. Because it has to know the values of the elements to find out which ones are duplicates, this operation is also stateful.</p>
 
-	  <p>Here's an example:</p>
+            <p>Here's an example:</p>
 
-	  <p><code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-string">"hello"</span>, <span class="hljs-keyword">null</span>, <span class="hljs-string">"hello"</span>);<br />
+            <p><code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-string">"hello"</span>, <span class="hljs-keyword">null</span>, <span class="hljs-string">"hello"</span>);<br />
 	  words.stream()<br />
 	  &nbsp; &nbsp; .filter(t -&gt; t != <span class="hljs-keyword">null</span>) <span class="hljs-comment">// ["hello", "hello"]<br /></span>&nbsp; &nbsp; .distinct() <span class="hljs-comment">// ["hello"]<br /></span>&nbsp; &nbsp; .forEach(System.out::println);</code></p>
 
-	  <p>Of course, the result is:</p>
+            <p>Of course, the result is:</p>
 
-	  <p><code class="java hljs">hello</code></p>
+            <p><code class="java hljs">hello</code></p>
 
-	  
 
-	  <h2>Key Points</h2>
 
-	  <ul>
-		<li>Java 8 adds the following method to the <code>Iterable</code> interface as another option to iterate the implementations of this interface (like lists): <code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">forEach</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; action)</span></span></code></li>
+            <h2>Key Points</h2>
 
-		<li>For example: <code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-string">"hello"</span>, <span class="hljs-string">"world"</span>);<br />
+            <ul>
+                <li>Java 8 adds the following method to the <code>Iterable</code> interface as another option to iterate the implementations of this interface (like lists): <code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">forEach</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; action)</span></span></code></li>
+
+                <li>For example: <code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-string">"hello"</span>, <span class="hljs-string">"world"</span>);<br />
 		words.forEach(t -&gt; System.out.println(t));</code></li>
 
-		<li>The <code>Stream</code> interface also has this method: <code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forEach</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; action)</span></span></code></li>
+                <li>The <code>Stream</code> interface also has this method: <code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">forEach</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; action)</span></span></code></li>
 
-		<li>This is a terminal operation. Here's an example: <code class="java hljs">Stream&lt;String&gt; words = Stream.of(<span class="hljs-string">"hello"</span>, <span class="hljs-string">"world"</span>);<br />
+                <li>This is a terminal operation. Here's an example: <code class="java hljs">Stream&lt;String&gt; words = Stream.of(<span class="hljs-string">"hello"</span>, <span class="hljs-string">"world"</span>);<br />
 		words.forEach(t -&gt; System.out:println(t));</code></li>
 
-		<li>Of course, the advantage of using streams is that you can chain operations, for example: <code class="java hljs">words.sorted()<br />
+                <li>Of course, the advantage of using streams is that you can chain operations, for example: <code class="java hljs">words.sorted()<br />
 		&nbsp; &nbsp; .limit(<span class="hljs-number">2</span>)<br />
 		&nbsp; &nbsp; .forEach(System.out::println);</code></li>
 
-		<li>But as a terminal operation, you can't do things like this: <code class="java hljs">words.forEach(t -&gt; System.out.println(t.length()));<br />
+                <li>But as a terminal operation, you can't do things like this: <code class="java hljs">words.forEach(t -&gt; System.out.println(t.length()));<br />
 		words.forEach(System.out::println);</code></li>
 
-		<li>For filtering, on the side of collections, we have a new method: <code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">removeIf</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> E&gt; filter)</span></span></code></li>
+                <li>For filtering, on the side of collections, we have a new method: <code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">removeIf</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> E&gt; filter)</span></span></code></li>
 
-		<li>That removes all of the elements of the collection that satisfy the given predicate.</li>
+                <li>That removes all of the elements of the collection that satisfy the given predicate.</li>
 
-		<li>On the <code>Stream</code> interface, we have: <code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">filter</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</span></span></code></li>
+                <li>On the <code>Stream</code> interface, we have: <code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">filter</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</span></span></code></li>
 
-		<li>That returns a new stream consisting of the elements that satisfy the given predicate.</li>
+                <li>That returns a new stream consisting of the elements that satisfy the given predicate.</li>
 
-		<li>Since this method returns a stream, it represents an intermediate operation, which means that you can chain any number of filters or other intermediate operations: <code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-string">"hello"</span>, <span class="hljs-keyword">null</span>, <span class="hljs-string">""</span>);<br />
+                <li>Since this method returns a stream, it represents an intermediate operation, which means that you can chain any number of filters or other intermediate operations: <code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-string">"hello"</span>, <span class="hljs-keyword">null</span>, <span class="hljs-string">""</span>);<br />
 		words.stream()<br />
 		&nbsp; &nbsp; .filter(t -&gt; t != <span class="hljs-keyword">null</span>) <span class="hljs-comment">// ["hello", ""]<br /></span>&nbsp; &nbsp; .filter(t -&gt; !t.isEmpty()) <span class="hljs-comment">// ["hello"]<br /></span>&nbsp; &nbsp; .forEach(System.out::println);</code></li>
 
-		<li>The <code>Stream</code> interface also has the distinct method to filter duplicate elements, according to the <code>Object.equals(Object)</code> method. <code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">distinct</span><span class="hljs-params">()</span></span></code></li>
+                <li>The <code>Stream</code> interface also has the distinct method to filter duplicate elements, according to the <code>Object.equals(Object)</code> method. <code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">distinct</span><span class="hljs-params">()</span></span></code></li>
 
-		<li>This is an intermediate operation, and because it has to know the values of the elements to find out which ones are duplicates, this operation is also stateful. Here's an example: <code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-string">"hello"</span>, <span class="hljs-keyword">null</span>, <span class="hljs-string">"hello"</span>);<br />
+                <li>This is an intermediate operation, and because it has to know the values of the elements to find out which ones are duplicates, this operation is also stateful. Here's an example: <code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-string">"hello"</span>, <span class="hljs-keyword">null</span>, <span class="hljs-string">"hello"</span>);<br />
 		words.stream()<br />
 		&nbsp; &nbsp; .filter(t -&gt; t != <span class="hljs-keyword">null</span>) <span class="hljs-comment">// ["hello", "hello"]<br /></span>&nbsp; &nbsp; .distinct() <span class="hljs-comment">// ["hello"]<br /></span>&nbsp; &nbsp; .forEach(System.out::println);</code></li>
-	  </ul>
+            </ul>
 
-	  
 
-	  <h2>Self Test</h2>
 
-	  <p>1. Given:</p>
+            <h2>Self Test</h2>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_13_1</span></span> {<br />
+            <p>1. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_13_1</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; List&lt;Integer&gt; l = Arrays.asList(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Stream.of(l)<br />
@@ -319,26 +319,17 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>123456</code><br />
-	  B. <code>012345</code><br />
-	  C. <code>543210</code><br />
-	  D. Compilation error<br />
-	  E. An exception is thrown</p>
+            <p>What is the result?<br /> A. <code>123456</code><br /> B. <code>012345</code><br /> C. <code>543210</code><br /> D. Compilation error<br /> E. An exception is thrown</p>
 
-	  
 
-	  <p>2. Which of the following statements is true?<br />
-	  A. <code>filter</code> is a terminal operation.<br />
-	  B. <code>filter</code> is a stateful operation.<br />
-	  C. <code>Stream.forEach</code> takes an implementation of the <code>Consumer</code> functional interface as an argument.<br />
-	  D. You can chain more than one <code>forEach</code> operation in a stream pipeline.</p>
 
-	  
+            <p>2. Which of the following statements is true?<br /> A. <code>filter</code> is a terminal operation.<br /> B. <code>filter</code> is a stateful operation.<br /> C. <code>Stream.forEach</code> takes an implementation of the <code>Consumer</code> functional interface as an argument.<br /> D. You can chain more than one <code>forEach</code> operation in a stream pipeline.</p>
 
-	  <p>3. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_13_2</span></span> {<br />
+
+            <p>3. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_13_2</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Arrays.asList(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>).stream()<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .filter(i -&gt; i%<span class="hljs-number">2</span> == <span class="hljs-number">0</span>).filter(i -&gt; i &gt; <span class="hljs-number">3</span>)<br />
@@ -346,18 +337,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>246</code><br />
-	  B. <code>46</code><br />
-	  C. <code>1</code><br />
-	  D. <code>5</code><br />
-	  E. Compilation error</p>
+            <p>What is the result?<br /> A. <code>246</code><br /> B. <code>46</code><br /> C. <code>1</code><br /> D. <code>5</code><br /> E. Compilation error</p>
 
-	  
 
-	  <p>4. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_13_3</span></span> {<br />
+            <p>4. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_13_3</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Arrays.asList(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>).stream()<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .filter(i -&gt; i &gt; <span class="hljs-number">1</span>).distinct()<br />
@@ -365,35 +351,31 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>1</code><br />
-	  B. <code>0</code><br />
-	  C. Nothing is printed<br />
-	  D. Compilation error<br />
-	  E. An exception is thrown</p>
+            <p>What is the result?<br /> A. <code>1</code><br /> B. <code>0</code><br /> C. Nothing is printed<br /> D. Compilation error<br /> E. An exception is thrown</p>
 
-  
-    
-		<div class="answers">
-			<a href="ch13a.html" target="_blank">Open answers page</a>
-		</div>
 
-		<div class="book-info"></div>
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch12.html">12. Streams</a>
-			</div>
-			<div class="next">
-				<a href="ch14.html">14. Optional Class</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+            <div class="answers">
+                <a href="ch13a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch12.html">12. Streams</a>
+                </div>
+                <div class="next">
+                    <a href="ch14.html">14. Optional Class</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>

@@ -1,124 +1,112 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter TWENTY-TWO</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter TWENTY-TWO</i><br />
 			  Time Zones and Daylight Savings</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Work with dates and times across time zones and manage changes resulting from daylight savings including Format date and times values.</i><br /></p>
-			  
-			</div>	
-		</div>
-	</div>
+                <p style="text-align: center;"><i>Work with dates and times across time zones and manage changes resulting from daylight savings including Format date and times values.</i><br /></p>
 
-  
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-	  <h2>Answers</h2>
 
-	  <p><b>1. The correct answer is C.</b><br />
-	  Option A is invalid. Method <code>ofHours(int)</code> belongs to <code>ZoneOffset</code>, not to <code>ZoneId</code>.<br />
-	  Option B is invalid. The format of the offset is incorrect. It has to start with a sign (<code>+</code> or <code>-</code>).<br />
-	  Option C is valid for the above reason.<br />
-	  Option D is invalid. The format for zone regions is <i>area/city</i> not <i>area/country</i>. A valid example would be <i>America/Montreal</i>.</p>
+    <div class="container">
 
-	  <p><br/></p>
+        <div class="column">
 
-	  <p><b>2. The correct answer is D.</b><br />
-	  The instantiation of <code>ZoneOffset</code> is valid, <code>Z</code> correspond to UTC, but <code>ChronoField.OFFSET_SECONDS</code> is the only accepted value for the method get, so a runtime exception is thrown.</p>
+            <h2>Answers</h2>
 
-	  <p><br/></p>
+            <p><b>1. The correct answer is C.</b><br /> Option A is invalid. Method <code>ofHours(int)</code> belongs to <code>ZoneOffset</code>, not to <code>ZoneId</code>.<br /> Option B is invalid. The format of the offset is incorrect. It has to start with a sign (<code>+</code> or <code>-</code>).<br /> Option C is valid for the above reason.<br /> Option D is invalid. The format for zone regions is <i>area/city</i> not <i>area/country</i>. A valid example would be <i>America/Montreal</i>.</p>
 
-	  <p><b>3. The correct answer is A.</b><br />
-	  The local time zone has no effect here. From a <code>ZonedDateTime</code>, you can get a <code>LocalDate</code>, a <code>LocalTime</code>, or a <code>LocalDateTime</code> just without the time zone part.</p>
+            <p><br/></p>
 
-	  <p><br/></p>
+            <p><b>2. The correct answer is D.</b><br /> The instantiation of <code>ZoneOffset</code> is valid, <code>Z</code> correspond to UTC, but <code>ChronoField.OFFSET_SECONDS</code> is the only accepted value for the method get, so a runtime exception is thrown.</p>
 
-	  <p><b>4. The correct answer is C.</b><br />
-	  On October, 4, 2015 at 0:00:00, the clock turned forward 1 hour. A <code>ZonedDateTime</code> is created at that time and added one hour, setting it at 1:00, but since the clock is already forwarded, that time becomes 2:00.</p>
+            <p><br/></p>
 
-	  <p><br/></p>
+            <p><b>3. The correct answer is A.</b><br /> The local time zone has no effect here. From a <code>ZonedDateTime</code>, you can get a <code>LocalDate</code>, a <code>LocalTime</code>, or a <code>LocalDateTime</code> just without the time zone part.</p>
 
-	  <p><b>5. The correct answer is B.</b><br />
-	  <code>Period</code> subtracts one conceptual day, making up for any daylight saving variation and leaving the same time. However,</p>
+            <p><br/></p>
 
-	  <p><code class="java hljs">ZonedDateTime zdt =<br />
+            <p><b>4. The correct answer is C.</b><br /> On October, 4, 2015 at 0:00:00, the clock turned forward 1 hour. A <code>ZonedDateTime</code> is created at that time and added one hour, setting it at 1:00, but since the clock is already forwarded, that time becomes 2:00.</p>
+
+            <p><br/></p>
+
+            <p><b>5. The correct answer is B.</b><br />
+                <code>Period</code> subtracts one conceptual day, making up for any daylight saving variation and leaving the same time. However,</p>
+
+            <p><code class="java hljs">ZonedDateTime zdt =<br />
 	  &nbsp; &nbsp; ZonedDateTime.of(<span class="hljs-number">2015</span>,<span class="hljs-number">3</span>,<span class="hljs-number">22</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,ZoneId.of(<span class="hljs-string">"America/Asuncion"</span>))<br />
 	  &nbsp; &nbsp; .minus(Duration.ofDays(<span class="hljs-number">1</span>));<br />
 	  System.out.println(zdt);</code></p>
 
-	  <p>It's different. The result will be:</p>
+            <p>It's different. The result will be:</p>
 
-	  <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">03</span>-<span class="hljs-number">21</span>T01:<span class="hljs-number">00</span>-<span class="hljs-number">03</span>:<span class="hljs-number">00</span>[America/Asuncion]</code></p>
+            <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">03</span>-<span class="hljs-number">21</span>T01:<span class="hljs-number">00</span>-<span class="hljs-number">03</span>:<span class="hljs-number">00</span>[America/Asuncion]</code></p>
 
-	  <p>Because 0:00 it's actually 1:00 (when DST ended at 0:00, the clock was set at 23:00 of the previous day) and <code>Duration</code> subtracts exactly 24 hours.</p>
-	  
-	  <p><br/></p>
+            <p>Because 0:00 it's actually 1:00 (when DST ended at 0:00, the clock was set at 23:00 of the previous day) and <code>Duration</code> subtracts exactly 24 hours.</p>
 
-	  <p><b>6. The correct answers are A and B.</b><br />
-	  Option A is true. <code>java.time.ZoneOffset</code> is a subclass of <code>java.time.ZoneId</code>.<br />
-	  Option B is true. A <code>java.time.Instant</code> instance can be obtained from <code>java.time.ZonedDateTime</code>.<br />
-	  Option C is false. <code>java.time.ZoneOffset</code> cannot manage DST.<br />
-	  Option D is false. <code>java.time.Instance</code> is the one that represents a point in time in the UTC time zone, <code>java.time.OffsetDateTime</code> represents a point in time from UTC.</p>
+            <p><br/></p>
 
-	  <p><br/></p>
-	  
-	  <p><b>7. The correct answer is C.</b><br />
-	  A <code>DateTimeFormatter</code> for time is created with the style <code>FormatStyle.SHORT</code>:</p>
+            <p><b>6. The correct answers are A and B.</b><br /> Option A is true. <code>java.time.ZoneOffset</code> is a subclass of <code>java.time.ZoneId</code>.<br /> Option B is true. A <code>java.time.Instant</code> instance can be obtained from <code>java.time.ZonedDateTime</code>.<br /> Option C is false. <code>java.time.ZoneOffset</code> cannot manage DST.<br /> Option D is false. <code>java.time.Instance</code> is the one that represents a point in time in the UTC time zone, <code>java.time.OffsetDateTime</code> represents a point in time from UTC.</p>
 
-	  <p><code class="java hljs">DateTimeFormatter formatter =<br />
+            <p><br/></p>
+
+            <p><b>7. The correct answer is C.</b><br /> A <code>DateTimeFormatter</code> for time is created with the style <code>FormatStyle.SHORT</code>:</p>
+
+            <p><code class="java hljs">DateTimeFormatter formatter =<br />
 	  &nbsp; &nbsp; DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);</code></p>
 
-	  <p>So only the time part of the <code>LocalDateTime</code> is formatted. Option D is the result of applying <code>FormatStyle.MEDIUM</code>.</p>
-	  
-	  <p><br/></p>
-	  
-	  <p><b>8. The correct answer is D.</b><br />
-	  Option A is false. The pattern is valid:</p>
+            <p>So only the time part of the <code>LocalDateTime</code> is formatted. Option D is the result of applying <code>FormatStyle.MEDIUM</code>.</p>
 
-	  <ul>
-		<li><i>HH</i> represents hours (0-23)</li>
+            <p><br/></p>
 
-		<li><i>mm</i> represents minutes</li>
+            <p><b>8. The correct answer is D.</b><br /> Option A is false. The pattern is valid:</p>
 
-		<li><i>ss</i> represents seconds</li>
+            <ul>
+                <li><i>HH</i> represents hours (0-23)</li>
 
-		<li><i>X</i> represents a zone offset (with support for Z)</li>
-	  </ul>
+                <li><i>mm</i> represents minutes</li>
 
-	  <p>Option B is false. An <code>OffsetDateTime</code> is not created because the string to parse is missing the date part, so an exception is thrown.<br />
-	  Option C is false. <i>Z</i> represents a zero offset (Zulu time, the same as UTC).</p>
+                <li><i>ss</i> represents seconds</li>
 
-	  <p><br/></p>
+                <li><i>X</i> represents a zone offset (with support for Z)</li>
+            </ul>
 
-	  
-  
-	</div>
-  </div>
-		
-  <footer></footer>
-  
+            <p>Option B is false. An <code>OffsetDateTime</code> is not created because the string to parse is missing the date part, so an exception is thrown.<br /> Option C is false. <i>Z</i> represents a zero offset (Zulu time, the same as UTC).</p>
+
+            <p><br/></p>
+
+
+
+        </div>
+    </div>
+
+    <footer></footer>
+
 </body>
+
 </html>

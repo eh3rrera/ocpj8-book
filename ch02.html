@@ -2,59 +2,59 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-				<h1><i class="chapter">Chapter TWO</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter TWO</i><br />
 				Inheritance and Polymorphism</h1>
 
-				<p><br /></p>
+                <p><br /></p>
 
-				<h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-				<p style="text-align: center;"><i>Implement inheritance including visibility modifiers and composition.<br />
+                <p style="text-align: center;"><i>Implement inheritance including visibility modifiers and composition.<br />
 				Implement polymorphism.<br />
 				Develop code that uses abstract classes and methods.</i></p>
-			  
-			</div>	
-		</div>
-	</div>
-	
-	
 
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-		<h2>Inheritance</h2>
 
-	  <p>At the core of an object-oriented language, there's the concept of inheritance.</p>
 
-	  <p>In simple terms, inheritance refers to an&nbsp;<b>IS-A</b> relationship where a class (called superclass) provides common attributes and methods to derived or more specialized classes (called subclass).</p>
+    <div class="container">
 
-	  <p>In Java, a class is only allowed to inherit from a single superclass (singular inheritance). Of course, the only exception is <code>java.lang.Object</code>, which has no superclass. This class is the superclass of all classes.</p>
+        <div class="column">
 
-	  <p>The keyword <code>extends</code> is used to specify this relationship. For example, a hammer <b>IS-A</b> tool, so we can model this as:</p>
+            <h2>Inheritance</h2>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tool</span></span> {<br />
+            <p>At the core of an object-oriented language, there's the concept of inheritance.</p>
+
+            <p>In simple terms, inheritance refers to an&nbsp;<b>IS-A</b> relationship where a class (called superclass) provides common attributes and methods to derived or more specialized classes (called subclass).</p>
+
+            <p>In Java, a class is only allowed to inherit from a single superclass (singular inheritance). Of course, the only exception is <code>java.lang.Object</code>, which has no superclass. This class is the superclass of all classes.</p>
+
+            <p>The keyword <code>extends</code> is used to specify this relationship. For example, a hammer <b>IS-A</b> tool, so we can model this as:</p>
+
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tool</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">int</span> size;<br />
 	  }<br />
 	  <span class="hljs-class"><span class="hljs-keyword"><br />
@@ -62,16 +62,16 @@
 	  <br />
 	  }</code></p>
 
-	  <p>As <code>size</code> is a <code>public</code> attribute, it's inherited by <code>Hammer</code>:</p>
+            <p>As <code>size</code> is a <code>public</code> attribute, it's inherited by <code>Hammer</code>:</p>
 
-	  <p><code class="java hljs">Hammer hammer = <span class="hljs-keyword">new</span> Hammer();<br />
+            <p><code class="java hljs">Hammer hammer = <span class="hljs-keyword">new</span> Hammer();<br />
 	  hammer.size = <span class="hljs-number">10</span>;</code></p>
 
-	  <p>From the previous chapter, we know that only <code>private</code> and members with default visibility when the subclass is defined in a different package than the superclass, are not inherited.</p>
+            <p>From the previous chapter, we know that only <code>private</code> and members with default visibility when the subclass is defined in a different package than the superclass, are not inherited.</p>
 
-	  <p>An attribute or method is inherited with the same visibility level that the one defined in the superclass. However, in the case of methods, you can change them to be more visible, but you cannot make them less visible:</p>
+            <p>An attribute or method is inherited with the same visibility level that the one defined in the superclass. However, in the case of methods, you can change them to be more visible, but you cannot make them less visible:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tool</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tool</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">int</span> size;<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getSize</span><span class="hljs-params">()</span></span> { <span class="hljs-keyword">return</span> size; }<br />
 	  }<br />
@@ -82,43 +82,43 @@
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getSize</span><span class="hljs-params">()</span></span> { <span class="hljs-keyword">return</span> size; }<br />
 	  }</code></p>
 
-	  <p>There's no problem for attribute because we're creating a <b>NEW</b> attribute in Hammer that <b>HIDES</b> the one inherited from <code>Tool</code> when the name is the same.</p>
+            <p>There's no problem for attribute because we're creating a <b>NEW</b> attribute in Hammer that <b>HIDES</b> the one inherited from <code>Tool</code> when the name is the same.</p>
 
-	  <p>Here are the things you can do in a subclass:</p>
+            <p>Here are the things you can do in a subclass:</p>
 
-	  <ul>
-		<li>Inherited attributes can be used directly, just like any other.</li>
+            <ul>
+                <li>Inherited attributes can be used directly, just like any other.</li>
 
-		<li>An attribute can be declared in the subclass with the same name as the one in the superclass, thus hiding it.</li>
+                <li>An attribute can be declared in the subclass with the same name as the one in the superclass, thus hiding it.</li>
 
-		<li>New attributes that are not in the superclass can be declared in the subclass.</li>
+                <li>New attributes that are not in the superclass can be declared in the subclass.</li>
 
-		<li>Inherited methods can be directly used as they are.</li>
+                <li>Inherited methods can be directly used as they are.</li>
 
-		<li>A new instance method can be declared in the subclass that has the same signature as the one in the superclass, thus overriding it.</li>
+                <li>A new instance method can be declared in the subclass that has the same signature as the one in the superclass, thus overriding it.</li>
 
-		<li>A new <code>static</code> method can be declared in the subclass that has the same signature as the one in the superclass, thus hiding it.</li>
+                <li>A new <code>static</code> method can be declared in the subclass that has the same signature as the one in the superclass, thus hiding it.</li>
 
-		<li>New methods that are not in the superclass can be declared in the subclass.</li>
+                <li>New methods that are not in the superclass can be declared in the subclass.</li>
 
-		<li>A constructor can be declared in the subclass that invokes the constructor of the superclass, either implicitly or by using the keyword super.</li>
-	  </ul>
+                <li>A constructor can be declared in the subclass that invokes the constructor of the superclass, either implicitly or by using the keyword super.</li>
+            </ul>
 
-	  <p>So for methods, reducing their visibility is not allowed because they are handled in a different way, in other words, methods are either overridden or overloaded.</p>
+            <p>So for methods, reducing their visibility is not allowed because they are handled in a different way, in other words, methods are either overridden or overloaded.</p>
 
-	  <p>Besides, think about it. Because of encapsulation, attributes are supposed to be hidden, but with methods, if a subclass doesn't have a method of the superclass, the subclass cannot be used wherever the superclass is used. This is called the <i>Liskov substitution principle</i>, which is important in polymorphism, and we'll review after talking about overridden and overloaded methods.</p>
+            <p>Besides, think about it. Because of encapsulation, attributes are supposed to be hidden, but with methods, if a subclass doesn't have a method of the superclass, the subclass cannot be used wherever the superclass is used. This is called the <i>Liskov substitution principle</i>, which is important in polymorphism, and we'll review after talking about overridden and overloaded methods.</p>
 
-	  <p>Implementing an interface is in some ways is a type of inheritance because they have some common characteristics, but by doing it, the relationship becomes&nbsp;<b>HAS-A</b>. We'll talk more about them in Chapter 4.</p>
+            <p>Implementing an interface is in some ways is a type of inheritance because they have some common characteristics, but by doing it, the relationship becomes&nbsp;<b>HAS-A</b>. We'll talk more about them in Chapter 4.</p>
 
-	  <h2>Overloading and Overriding</h2>
+            <h2>Overloading and Overriding</h2>
 
-	  <p>The difference between overloading and overriding has to do a lot with method signatures.</p>
+            <p>The difference between overloading and overriding has to do a lot with method signatures.</p>
 
-	  <p>In a few words, the method signature is the name of the method and the list (types and names included) of its parameters. Note that return types are not included in this definition.</p>
+            <p>In a few words, the method signature is the name of the method and the list (types and names included) of its parameters. Note that return types are not included in this definition.</p>
 
-	  <p>We talk about overloading when a method changes the list of parameters of another one (that might be inherited) while keeping the same name.</p>
+            <p>We talk about overloading when a method changes the list of parameters of another one (that might be inherited) while keeping the same name.</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reserveRoom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> rooms)</span></span> { ... }<br />
 	  }<br />
 	  <span class="hljs-class"><span class="hljs-keyword"><br />
@@ -134,9 +134,9 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Changing just the return type will generate a compile error:</p>
+            <p>Changing just the return type will generate a compile error:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ThreeStarHotel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Hotel</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ThreeStarHotel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Hotel</span></span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // Compile-time error, reserveRoom is seen as duplicated</span><br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reserveRoom</span><span class="hljs-params">(List&lt;Room&gt; rooms)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; ...<br />
@@ -146,9 +146,9 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Exceptions in the <code>throws</code> clause are not considered when overloading, so again, changing just the exception list will throw a compile error:</p>
+            <p>Exceptions in the <code>throws</code> clause are not considered when overloading, so again, changing just the exception list will throw a compile error:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ThreeStarHotel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Hotel</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ThreeStarHotel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Hotel</span></span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // Compile-time error, reserveRoom is seen as duplicated</span><br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reserveRoom</span><span class="hljs-params">(List&lt;Room&gt; rooms)</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; throws</span> RuntimeException</span> {<br />
@@ -160,13 +160,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>When an overloaded method is called, the compiler has to decide which version of the method is going to call. The first obvious candidate is to call the method that exactly matches the number and types of the arguments. But what happens when there isn't an exact match?</p>
+            <p>When an overloaded method is called, the compiler has to decide which version of the method is going to call. The first obvious candidate is to call the method that exactly matches the number and types of the arguments. But what happens when there isn't an exact match?</p>
 
-	  <p>The rule to remember is that Java will look for the <b>CLOSEST</b> match <b>FIRST</b> (this means a larger type, a superclass, an autoboxed type, or the <b>MORE</b> particular type).</p>
+            <p>The rule to remember is that Java will look for the <b>CLOSEST</b> match <b>FIRST</b> (this means a larger type, a superclass, an autoboxed type, or the <b>MORE</b> particular type).</p>
 
-	  <p>For example, when this class is executed:</p>
+            <p>For example, when this class is executed:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Print</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Print</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printType</span><span class="hljs-params">(<span class="hljs-keyword">short</span> param)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"short"</span>);<br />
 	  &nbsp; &nbsp; }<br />
@@ -193,30 +193,30 @@
 	  &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>The output is:</p>
+            <p>The output is:</p>
 
-	  <p><code class="java hljs">short<br />
+            <p><code class="java hljs">short<br />
 	  long<br />
 	  Integer<br />
 	  CharSequence</code></p>
 
-	  <p>In the first method call, the argument type is <code>byte</code>. There's no method taking a <code>byte</code>, so the closest larger type is <code>short</code>.</p>
+            <p>In the first method call, the argument type is <code>byte</code>. There's no method taking a <code>byte</code>, so the closest larger type is <code>short</code>.</p>
 
-	  <p>In the second method call, the argument type is <code>int</code>. There's no method taking a <code>byte</code>, so the closest larger type is <code>long</code> (note that this has higher precedence than <code>Integer</code>).</p>
+            <p>In the second method call, the argument type is <code>int</code>. There's no method taking a <code>byte</code>, so the closest larger type is <code>long</code> (note that this has higher precedence than <code>Integer</code>).</p>
 
-	  <p>In the third method call, the argument type is <code>Integer</code>. There's a method that takes an <code>Integer</code>, so this is called.</p>
+            <p>In the third method call, the argument type is <code>Integer</code>. There's a method that takes an <code>Integer</code>, so this is called.</p>
 
-	  <p>In the last method call, the argument type is <code>String</code>. There's no method taking a <code>String</code>, so the closest superclass is <code>CharSequence</code>.</p>
+            <p>In the last method call, the argument type is <code>String</code>. There's no method taking a <code>String</code>, so the closest superclass is <code>CharSequence</code>.</p>
 
-	  <p>If it can't find a match or if the compiler cannot decide because the call is ambiguous, a compile error is thrown. For example, considering the previous class, the following will cause an error because there isn't a larger type than <code>double</code> and it can't be autoboxed to an <code>Integer</code>:</p>
+            <p>If it can't find a match or if the compiler cannot decide because the call is ambiguous, a compile error is thrown. For example, considering the previous class, the following will cause an error because there isn't a larger type than <code>double</code> and it can't be autoboxed to an <code>Integer</code>:</p>
 
-	  <p><code class="java hljs"><span class="hljs-comment">// Can't find a match</span><br />
+            <p><code class="java hljs"><span class="hljs-comment">// Can't find a match</span><br />
 	  <span class="hljs-keyword">double</span> d = <span class="hljs-number">1.0</span>;<br />
 	  printType(d);</code></p>
 
-	  <p>The following is an example of an ambiguous call, assuming the methods:</p>
+            <p>The following is an example of an ambiguous call, assuming the methods:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printType</span><span class="hljs-params">(<span class="hljs-keyword">float</span> param,&nbsp;<br /></span></span><span class="hljs-function"><span class="hljs-params"><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; double</span> param2)</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printType</span><span class="hljs-params">(<span class="hljs-keyword">float</span> param,&nbsp;<br /></span></span><span class="hljs-function"><span class="hljs-params"><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; double</span> param2)</span></span> {<br />
 	  &nbsp; &nbsp; System.out.println(<span class="hljs-string">"float-double"</span>);<br />
 	  }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printType</span><span class="hljs-params">(<span class="hljs-keyword">double</span> param,<br />
@@ -229,9 +229,9 @@
 	  // Ambiguous call</span><br />
 	  printType(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>);</code></p>
 
-	  <p>Constructors of a class can also be overloaded. In fact, you can call one constructor from another with the <code>this</code> keyword:</p>
+            <p>Constructors of a class can also be overloaded. In fact, you can call one constructor from another with the <code>this</code> keyword:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Print</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Print</span></span> {<br />
 	  &nbsp; &nbsp; Print() {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; this</span>(<span class="hljs-string">"Calling with default argument"</span>);<br />
 	  &nbsp; &nbsp; }<br />
@@ -240,9 +240,9 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>We talk about overriding when the method signature is the same, but for some reason, we want to redefine an <b>INSTANCE</b> method in the subclass.</p>
+            <p>We talk about overriding when the method signature is the same, but for some reason, we want to redefine an <b>INSTANCE</b> method in the subclass.</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reserveRoom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> rooms)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; ...<br />
 	  &nbsp; &nbsp; }<br />
@@ -254,13 +254,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>If a <code>static</code> method with the same signature as a <code>static</code> method in the superclass is defined in the subclass, then the method is <b>HIDDEN</b> instead of overridden.</p>
+            <p>If a <code>static</code> method with the same signature as a <code>static</code> method in the superclass is defined in the subclass, then the method is <b>HIDDEN</b> instead of overridden.</p>
 
-	  <p>There are some rules when overriding a method.</p>
+            <p>There are some rules when overriding a method.</p>
 
-	  <p>The access modifier must be the same or with more visibility:</p>
+            <p>The access modifier must be the same or with more visibility:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reserveRoom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> rooms)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; ...<br />
 	  &nbsp; &nbsp; }<br />
@@ -272,9 +272,9 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>The return type must be the same or a subtype:</p>
+            <p>The return type must be the same or a subtype:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> Integer <span class="hljs-title">reserveRoom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> rooms)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;...<br />
 	  &nbsp; &nbsp; }<br />
@@ -287,9 +287,9 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Exceptions in the <code>throws</code> clause must be the same, less, or subclasses of those exceptions:</p>
+            <p>Exceptions in the <code>throws</code> clause must be the same, less, or subclasses of those exceptions:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reserveRoom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> rooms)</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;throws</span> IOException</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; ...<br />
@@ -303,78 +303,75 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Overriding is a critical concept in polymorphism, but before touching this topic, let's see some important methods from <code>java.lang.Object</code> that most of the time we'll need to override.</p>
+            <p>Overriding is a critical concept in polymorphism, but before touching this topic, let's see some important methods from <code>java.lang.Object</code> that most of the time we'll need to override.</p>
 
-	  <h2>Object class methods</h2>
+            <h2>Object class methods</h2>
 
-	  <p>In Java, all objects inherit from <code>java.lang.Object</code>.</p>
+            <p>In Java, all objects inherit from <code>java.lang.Object</code>.</p>
 
-	  <p>This class has the following methods that can be overridden (redefined):</p>
+            <p>This class has the following methods that can be overridden (redefined):</p>
 
-	  <ul>
-		<li><code class="java">protected Object clone() throws CloneNotSupportedException</code></li>
+            <ul>
+                <li><code class="java">protected Object clone() throws CloneNotSupportedException</code></li>
 
-		<li><code class="java">protected void finalize() throws Throwable</code></li>
+                <li><code class="java">protected void finalize() throws Throwable</code></li>
 
-		<li><code class="java">public int hashCode()</code></li>
+                <li><code class="java">public int hashCode()</code></li>
 
-		<li><code class="java">public boolean equals(Object obj)</code></li>
+                <li><code class="java">public boolean equals(Object obj)</code></li>
 
-		<li><code class="java">public String toString()</code></li>
-	  </ul>
+                <li><code class="java">public String toString()</code></li>
+            </ul>
 
-	  <p>The most significant methods, the ones you almost always would want to redefine are <code>hashCode</code>, <code>equals</code>, and <code>toString</code>.</p>
+            <p>The most significant methods, the ones you almost always would want to redefine are <code>hashCode</code>, <code>equals</code>, and <code>toString</code>.</p>
 
-	  <p><b>public int hashCode()</b><br />
-	  It returns a hash code value for the object. The returned value must have the following contract:</p>
+            <p><b>public int hashCode()</b><br /> It returns a hash code value for the object. The returned value must have the following contract:</p>
 
-	  <ul>
-		<li>Whenever it is invoked on the same object more than once during an execution of a Java application, the <code>hashCode</code> method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.</li>
+            <ul>
+                <li>Whenever it is invoked on the same object more than once during an execution of a Java application, the <code>hashCode</code> method must consistently return the same integer, provided no information used in equals comparisons on the object is modified. This integer need not remain consistent from one execution of an application to another execution of the same application.</li>
 
-		<li>If two objects are equal according to the <code>equals(Object)</code> method, then calling the <code>hashCode</code> method on each of the two objects must produce the same integer result.</li>
+                <li>If two objects are equal according to the <code>equals(Object)</code> method, then calling the <code>hashCode</code> method on each of the two objects must produce the same integer result.</li>
 
-		<li>It is not required that if two objects are not equal according to the equals(<code>java.lang.Object)</code> method, then calling the <code>hashCode</code> method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.</li>
-	  </ul>
+                <li>It is not required that if two objects are not equal according to the equals(<code>java.lang.Object)</code> method, then calling the <code>hashCode</code> method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.</li>
+            </ul>
 
-	  <p><b>public boolean equals(Object obj)</b><br />
-	  Indicates whether another object is equal to the object that calls the method. It's necessary to override the <code>hashCode</code> method whenever this method is overridden since the contract for the <code>hashCode</code> method states that equal objects must have equal hash codes. This method:</p>
+            <p><b>public boolean equals(Object obj)</b><br /> Indicates whether another object is equal to the object that calls the method. It's necessary to override the <code>hashCode</code> method whenever this method is overridden since the contract for the <code>hashCode</code> method states that equal objects must have equal hash codes. This method:</p>
 
-	  <ul>
-		<li>It's reflexive: for any non-<code>null</code> reference value <code>x</code>, <code>x.equals(x)</code> should return <code>true</code>.</li>
+            <ul>
+                <li>It's reflexive: for any non-<code>null</code> reference value <code>x</code>, <code>x.equals(x)</code> should return <code>true</code>.</li>
 
-		<li>It's symmetric: for any non-<code>null</code> reference values <code>x</code> and <code>y</code>, <code>x.equals(y)</code> should return <code>true</code> if and only if <code>y.equals(x)</code> returns <code>true</code>.</li>
+                <li>It's symmetric: for any non-<code>null</code> reference values <code>x</code> and <code>y</code>, <code>x.equals(y)</code> should return <code>true</code> if and only if <code>y.equals(x)</code> returns <code>true</code>.</li>
 
-		<li>It's transitive: for any non-<code>null</code> reference values <code>x</code>, <code>y</code>, and <code>z</code>, if <code>x.equals(y)</code> returns <code>true</code> and <code>y.equals(z)</code> returns <code>true</code>, then <code>x.equals(z)</code> should return <code>true</code>.</li>
+                <li>It's transitive: for any non-<code>null</code> reference values <code>x</code>, <code>y</code>, and <code>z</code>, if <code>x.equals(y)</code> returns <code>true</code> and <code>y.equals(z)</code> returns <code>true</code>, then <code>x.equals(z)</code> should return <code>true</code>.</li>
 
-		<li>It's consistent: for any non-<code>null</code> reference values <code>x</code> and <code>y</code>, multiple invocations of <code>x.equals(y)</code> consistently return true or <code>false</code>, provided no information used in equals comparisons on the objects is modified.</li>
+                <li>It's consistent: for any non-<code>null</code> reference values <code>x</code> and <code>y</code>, multiple invocations of <code>x.equals(y)</code> consistently return true or <code>false</code>, provided no information used in equals comparisons on the objects is modified.</li>
 
-		<li>For any non-<code>null</code> reference value <code>x</code>, <code>x.equals(null)</code> should return <code>false</code>.</li>
-	  </ul>
+                <li>For any non-<code>null</code> reference value <code>x</code>, <code>x.equals(null)</code> should return <code>false</code>.</li>
+            </ul>
 
-	  <p><b>public String toString()</b><br />
-	  It returns a string representation of the object. The <code>toString</code> method for class <code>Object</code> returns a string consisting of the name of the class of which the object is an instance, the at-sign character '@', and the unsigned hexadecimal representation of the hash code of the object.</p>
+            <p><b>public String toString()</b><br /> It returns a string representation of the object. The <code>toString</code> method for class <code>Object</code> returns a string consisting of the name of the class of which the object is an instance, the at-sign character '@', and the unsigned hexadecimal representation of the hash code of the object.</p>
 
-	  <p>To override these methods just follow the general rules for overriding:</p>
+            <p>To override these methods just follow the general rules for overriding:</p>
 
-	  <ul>
-		<li>The access modifier must be the same or more accessible</li>
+            <ul>
+                <li>The access modifier must be the same or more accessible</li>
 
-		<li>The return type must be either the same or a subclass</li>
+                <li>The return type must be either the same or a subclass</li>
 
-		<li>The name must be the same</li>
+                <li>The name must be the same</li>
 
-		<li>The argument list types must be the same</li>
+                <li>The argument list types must be the same</li>
 
-		<li>The same exceptions or their subclasses are allowed to be thrown</li>
-	  </ul>
+                <li>The same exceptions or their subclasses are allowed to be thrown</li>
+            </ul>
 
-	  <p>In a few words, define the method just as it appears in the <code>java.lang.Object</code> class.</p>
+            <p>In a few words, define the method just as it appears in the <code>java.lang.Object</code> class.</p>
 
-	  <h2>Polymorphism</h2>
+            <h2>Polymorphism</h2>
 
-	  <p>Polymorphism is the ability for an object to vary its behavior based on its type. This is best demonstrated with an example:</p>
+            <p>Polymorphism is the ability for an object to vary its behavior based on its type. This is best demonstrated with an example:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HumanBeing</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HumanBeing</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dress</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Dressing a human being"</span>);<br />
 	  &nbsp; &nbsp; }<br />
@@ -397,9 +394,9 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>And now let's create some human beings to see polymorphism in action:</p>
+            <p>And now let's create some human beings to see polymorphism in action:</p>
 
-	  <p><code class="java hljs">HumanBeing[] someHumans = <span class="hljs-keyword">new</span> HumanBeing[<span class="hljs-number">3</span>];<br />
+            <p><code class="java hljs">HumanBeing[] someHumans = <span class="hljs-keyword">new</span> HumanBeing[<span class="hljs-number">3</span>];<br />
 	  someHumans[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> Man();<br />
 	  someHumans[<span class="hljs-number">1</span>] = <span class="hljs-keyword">new</span> Woman();<br />
 	  someHumans[<span class="hljs-number">2</span>] = <span class="hljs-keyword">new</span> Baby();<br />
@@ -408,139 +405,139 @@
 	  &nbsp; &nbsp; System.out.println();<br />
 	  }</code></p>
 
-	  <p>The output:<br />
-	  <code class="java hljs">Put on a shirt<br />
+            <p>The output:<br />
+                <code class="java hljs">Put on a shirt<br />
 	  Put on some jeans<br />
 	  Put on a dress<br />
 	  I don't know how to dress!</code></p>
 
-	  <p>Even though <code>HumanBeing</code> is used, the JVM decides at runtime which method to call based on the type of the object assigned, not the variable's reference type.</p>
+            <p>Even though <code>HumanBeing</code> is used, the JVM decides at runtime which method to call based on the type of the object assigned, not the variable's reference type.</p>
 
-	  <p>This is called <i>virtual method invocation</i>, a fancy name for overriding.</p>
+            <p>This is called <i>virtual method invocation</i>, a fancy name for overriding.</p>
 
-	  <p>Overriding is also known as <i>dynamic polymorphism</i>&nbsp;because the type of the object is decided at <b>RUN</b> time.</p>
+            <p>Overriding is also known as <i>dynamic polymorphism</i>&nbsp;because the type of the object is decided at <b>RUN</b> time.</p>
 
-	  <p>In contrast, overloading is also called&nbsp;<i>static polymorphism</i>&nbsp;because it's resolved at <b>COMPILE</b> time.</p>
+            <p>In contrast, overloading is also called&nbsp;<i>static polymorphism</i>&nbsp;because it's resolved at <b>COMPILE</b> time.</p>
 
-	  <h2>Abstract classes and methods</h2>
+            <h2>Abstract classes and methods</h2>
 
-	  <p>If we examine the previous example, I think we'll agree that the implementation of the <code>dress()</code> method in the class <code>HumanBeing</code> doesn't sound exactly right.</p>
+            <p>If we examine the previous example, I think we'll agree that the implementation of the <code>dress()</code> method in the class <code>HumanBeing</code> doesn't sound exactly right.</p>
 
-	  <p>Most of the time, we'll be working with something more concrete, like a <code>Man</code> or a <code>Woman</code> so there's no need to instantiate the <code>HumanBeing</code> class directly, however, a common abstraction of those classes may be useful. Using an abstract class (or method) is the best option to model these cases.</p>
+            <p>Most of the time, we'll be working with something more concrete, like a <code>Man</code> or a <code>Woman</code> so there's no need to instantiate the <code>HumanBeing</code> class directly, however, a common abstraction of those classes may be useful. Using an abstract class (or method) is the best option to model these cases.</p>
 
-	  <p>Abstract classes <b>CANNOT</b> be instantiated, only subclassed. They are declared with the <code>abstract</code> keyword:</p>
+            <p>Abstract classes <b>CANNOT</b> be instantiated, only subclassed. They are declared with the <code>abstract</code> keyword:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AClass</span></span> { }</code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AClass</span></span> { }</code></p>
 
-	  <p>Abstract methods are declared <b>WITHOUT</b> an implementation (body), like this:</p>
+            <p>Abstract methods are declared <b>WITHOUT</b> an implementation (body), like this:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">AMethod</span><span class="hljs-params">()</span></span>;</code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">AMethod</span><span class="hljs-params">()</span></span>;</code></p>
 
-	  <p>So in the previous example, it's better to model the whole <code>HumanBeing</code> class as <code>abstract</code> so no one can use directly:</p>
+            <p>So in the previous example, it's better to model the whole <code>HumanBeing</code> class as <code>abstract</code> so no one can use directly:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HumanBeing</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HumanBeing</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">dress</span><span class="hljs-params">()</span></span>;<br />
 	  }</code></p>
 
-	  <p>Now, the following would cause a compile error:</p>
+            <p>Now, the following would cause a compile error:</p>
 
-	  <p><code class="java hljs">HumanBeing human = <span class="hljs-keyword">new</span> HumanBeing();</code></p>
+            <p><code class="java hljs">HumanBeing human = <span class="hljs-keyword">new</span> HumanBeing();</code></p>
 
-	  <p>And it makes sense; there can't be no guarantees that an <code>abstract</code> class will have all its methods implemented. Calling an unimplemented method would be an epic fail.</p>
+            <p>And it makes sense; there can't be no guarantees that an <code>abstract</code> class will have all its methods implemented. Calling an unimplemented method would be an epic fail.</p>
 
-	  <p>Here are the rules when working with <code>abstract</code> methods and classes:</p>
+            <p>Here are the rules when working with <code>abstract</code> methods and classes:</p>
 
-	  <p>The <code>abstract</code> keyword can only be applied to classes or non-static methods.</p>
+            <p>The <code>abstract</code> keyword can only be applied to classes or non-static methods.</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AClass</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AClass</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-comment">&nbsp; &nbsp; // Compile-time error<br /></span><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">AMethod</span><span class="hljs-params">()</span></span>;<br />
 	  }</code></p>
 
-	  <p>An <code>abstract</code> class doesn't need to declare abstract methods to be declared abstract.</p>
+            <p>An <code>abstract</code> class doesn't need to declare abstract methods to be declared abstract.</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AClass</span></span> { } <span class="hljs-comment">// No problem</span></code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AClass</span></span> { } <span class="hljs-comment">// No problem</span></code></p>
 
-	  <p>If a class includes <code>abstract</code> methods, then the class itself must be declared abstract.</p>
+            <p>If a class includes <code>abstract</code> methods, then the class itself must be declared abstract.</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AClass</span></span> { <span class="hljs-comment">// Compile-time error</span><br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AClass</span></span> { <span class="hljs-comment">// Compile-time error</span><br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">AMethod</span><span class="hljs-params">()</span></span>;<br />
 	  }</code></p>
 
-	  <p>If the subclass of an <code>abstract</code> class doesn't provide an implementation for all <code>abstract</code> methods, the subclass must also be&nbsp;declared <code>abstract</code>.</p>
+            <p>If the subclass of an <code>abstract</code> class doesn't provide an implementation for all <code>abstract</code> methods, the subclass must also be&nbsp;declared <code>abstract</code>.</p>
 
-	  <p><code class="java hljs"><span class="hljs-comment">// Compile-time error<br /></span><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Man</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HumanBeing</span></span> { }</code></p>
+            <p><code class="java hljs"><span class="hljs-comment">// Compile-time error<br /></span><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Man</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">HumanBeing</span></span> { }</code></p>
 
-	  <p>Methods of an interface are considered abstract, so an <code>abstract</code> class that implements an interface can implement some or none of the interface methods.</p>
+            <p>Methods of an interface are considered abstract, so an <code>abstract</code> class that implements an interface can implement some or none of the interface methods.</p>
 
-	  <p><code class="java hljs"><span class="hljs-comment">// No problem<br /></span><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AClass</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span></span> {}</code></p>
+            <p><code class="java hljs"><span class="hljs-comment">// No problem<br /></span><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AClass</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span></span> {}</code></p>
 
-	  
 
-	  <h2>Key Points</h2>
 
-	  <ul>
-		<li>Inheritance refers to an I<b>S-A</b> relationship where a class (called superclass) provides common attributes and methods to derived or more specialized classes (called subclass).</li>
+            <h2>Key Points</h2>
 
-		<li>Here are the things you can do in a subclass:
+            <ul>
+                <li>Inheritance refers to an I<b>S-A</b> relationship where a class (called superclass) provides common attributes and methods to derived or more specialized classes (called subclass).</li>
 
-		  <ul>
-			<li>Inherited attributes can be used directly, just like any other.</li>
+                <li>Here are the things you can do in a subclass:
 
-			<li>An attribute can be declared in the subclass with the same name as the one in the superclass, thus hiding it.</li>
+                    <ul>
+                        <li>Inherited attributes can be used directly, just like any other.</li>
 
-			<li>New attributes that are not in the superclass can be declared in the subclass.</li>
+                        <li>An attribute can be declared in the subclass with the same name as the one in the superclass, thus hiding it.</li>
 
-			<li>Inherited methods can be used directly as they are.</li>
+                        <li>New attributes that are not in the superclass can be declared in the subclass.</li>
 
-			<li>A new instance method can be declared in the subclass that has the same signature as the one in the superclass, thus overriding it.</li>
+                        <li>Inherited methods can be used directly as they are.</li>
 
-			<li>A new <code>static</code> method can be declared in the subclass that has the same signature as the one in the superclass, thus hiding it.</li>
+                        <li>A new instance method can be declared in the subclass that has the same signature as the one in the superclass, thus overriding it.</li>
 
-			<li>New methods that are not in the superclass can be declared in the subclass.</li>
+                        <li>A new <code>static</code> method can be declared in the subclass that has the same signature as the one in the superclass, thus hiding it.</li>
 
-			<li>A constructor can be declared in the subclass that invokes the constructor of the superclass, either implicitly or by using the keyword super.</li>
-		  </ul>
-		</li>
+                        <li>New methods that are not in the superclass can be declared in the subclass.</li>
 
-		<li>The method signature is the name of the method and the list (types and names included) of its parameters. Return types are not included in this definition.</li>
+                        <li>A constructor can be declared in the subclass that invokes the constructor of the superclass, either implicitly or by using the keyword super.</li>
+                    </ul>
+                </li>
 
-		<li>We talk about overloading when a method changes the list of parameters of another method (that might be inherited) while keeping the same name.</li>
+                <li>The method signature is the name of the method and the list (types and names included) of its parameters. Return types are not included in this definition.</li>
 
-		<li>We talk about overriding when the method signature is the same, but for some reason, we want to redefine an <b>INSTANCE</b> method in the subclass.</li>
+                <li>We talk about overloading when a method changes the list of parameters of another method (that might be inherited) while keeping the same name.</li>
 
-		<li>The most important methods of java.lang.Object that most classes must redefine are:
+                <li>We talk about overriding when the method signature is the same, but for some reason, we want to redefine an <b>INSTANCE</b> method in the subclass.</li>
 
-		  <ul>
-			<li><code>public int hashCode()</code></li>
+                <li>The most important methods of java.lang.Object that most classes must redefine are:
 
-			<li><code>public boolean equals(Object obj)</code></li>
+                    <ul>
+                        <li><code>public int hashCode()</code></li>
 
-			<li><code>public String toString()</code></li>
-		  </ul>
-		</li>
+                        <li><code>public boolean equals(Object obj)</code></li>
 
-		<li>With polymorphism, subclasses can define their own behaviors (different that the ones of the methods of the superclass), and the JVM will call the appropriate method for the object. This behavior is referred to as virtual method invocation.</li>
+                        <li><code>public String toString()</code></li>
+                    </ul>
+                </li>
 
-		<li>Abstract classes <b>CANNOT</b> be instantiated, only subclassed. Abstract methods are declared <b>WITHOUT</b> an implementation (body).</li>
+                <li>With polymorphism, subclasses can define their own behaviors (different that the ones of the methods of the superclass), and the JVM will call the appropriate method for the object. This behavior is referred to as virtual method invocation.</li>
 
-		<li>The <code>abstract</code> keyword can only be applied to classes or non-static methods.</li>
+                <li>Abstract classes <b>CANNOT</b> be instantiated, only subclassed. Abstract methods are declared <b>WITHOUT</b> an implementation (body).</li>
 
-		<li>An <code>abstract</code> class doesn't need to declare <code>abstract</code> methods to be declared <code>abstract</code>.</li>
+                <li>The <code>abstract</code> keyword can only be applied to classes or non-static methods.</li>
 
-		<li>If a class includes <code>abstract</code> methods, then the class itself must be declared <code>abstract</code>.</li>
+                <li>An <code>abstract</code> class doesn't need to declare <code>abstract</code> methods to be declared <code>abstract</code>.</li>
 
-		<li>If the subclass of an <code>abstract</code> class doesn't provide an implementation for all <code>abstract</code> methods, the subclass must also be&nbsp;declared <code>abstract</code>.</li>
+                <li>If a class includes <code>abstract</code> methods, then the class itself must be declared <code>abstract</code>.</li>
 
-		<li>Methods of an interface are considered <code>abstract</code>, so an <code>abstract</code> class that implements an interface can implement some or none of the interface methods.</li>
-	  </ul>
+                <li>If the subclass of an <code>abstract</code> class doesn't provide an implementation for all <code>abstract</code> methods, the subclass must also be&nbsp;declared <code>abstract</code>.</li>
 
-	  
+                <li>Methods of an interface are considered <code>abstract</code>, so an <code>abstract</code> class that implements an interface can implement some or none of the interface methods.</li>
+            </ul>
 
-	  <h2>Self Test</h2>
 
-	  <p>1. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_2_1</span></span> {<br />
+            <h2>Self Test</h2>
+
+            <p>1. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_2_1</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; protected</span> <span class="hljs-keyword">int</span> id;<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; protected</span> String name;<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><br />
@@ -562,25 +559,17 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>true</code><br />
-	  B. <code>false</code><br />
-	  C. Compilation fails<br />
-	  D. An exception occurs at runtime</p>
+            <p>What is the result?<br /> A. <code>true</code><br /> B. <code>false</code><br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
-	  
 
-	  <p>2. Which of the following is a method of <code>java.lang.Object</code> that can be overridden?<br />
-	  A. <code>public String toString(Object obj)</code><br />
-	  B. <code>public int equals(Object obj)</code><br />
-	  C. <code>public int hashCode(Object obj)</code><br />
-	  D. <code>public int hashCode()</code></p>
 
-	  
+            <p>2. Which of the following is a method of <code>java.lang.Object</code> that can be overridden?<br /> A. <code>public String toString(Object obj)</code><br /> B. <code>public int equals(Object obj)</code><br /> C. <code>public int hashCode(Object obj)</code><br /> D. <code>public int hashCode()</code></p>
 
-	  <p>3. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_2_3</span></span> {<br />
+
+            <p>3. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_2_3</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">(Integer i)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Integer"</span>);<br />
 	  &nbsp; &nbsp; }<br />
@@ -592,17 +581,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>Integer</code><br />
-	  B. <code>Object</code><br />
-	  C. Compilation fails<br />
-	  D. An exception occurs at runtime</p>
+            <p>What is the result?<br /> A. <code>Integer</code><br /> B. <code>Object</code><br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
-	  
 
-	  <p>4. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SuperClass</span></span> {<br />
+            <p>4. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SuperClass</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Superclass"</span>);<br />
 	  &nbsp; &nbsp; }<br />
@@ -616,17 +601,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. Superclass<br />
-	  B. Subclass<br />
-	  C. Compilation fails<br />
-	  D. An exception occurs at runtime</p>
+            <p>What is the result?<br /> A. Superclass<br /> B. Subclass<br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
-	  
 
-	  <p>5. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SuperClass2</span></span> {<br />
+            <p>5. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SuperClass2</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Superclass"</span>);<br />
 	  &nbsp; &nbsp; }<br />
@@ -639,18 +620,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>Superclass</code><br />
-	  B. Compilation fails because an <code>abstract</code> class cannot have <code>static</code> methods<br />
-	  C. Compilation fails because <code>Subclass</code> doesn't implement method <code>print()</code><br />
-	  D. Compilation fails because <code>Subclass</code> doesn't have a method <code>print()</code><br />
-	  E. An exception occurs at runtime</p>
+            <p>What is the result?<br /> A. <code>Superclass</code><br /> B. Compilation fails because an <code>abstract</code> class cannot have <code>static</code> methods<br /> C. Compilation fails because <code>Subclass</code> doesn't implement method <code>print()</code><br /> D. Compilation fails because <code>Subclass</code> doesn't have a method <code>print()</code><br /> E. An exception occurs at runtime</p>
 
-	  
 
-	  <p>6. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SuperClass3</span></span> {<br />
+            <p>6. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SuperClass3</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Superclass"</span>);<br />
 	  &nbsp; &nbsp; }<br />
@@ -665,35 +641,32 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>Superclass</code><br />
-	  B. <code>Subclass</code><br />
-	  C. Compilation fails<br />
-	  D. An exception occurs at runtime</p>
+            <p>What is the result?<br /> A. <code>Superclass</code><br /> B. <code>Subclass</code><br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
-  
 
-  
-		<div class="answers">
-			<a href="ch02a.html" target="_blank">Open answers page</a>
-		</div>
 
-		<div class="book-info"></div>
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch01.html">01. Encapsulation and Immutable Classes</a>
-			</div>
-			<div class="next">
-				<a href="ch03.html">03. Inner Classes</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+            <div class="answers">
+                <a href="ch02a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch01.html">01. Encapsulation and Immutable Classes</a>
+                </div>
+                <div class="next">
+                    <a href="ch03.html">03. Inner Classes</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>

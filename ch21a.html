@@ -1,101 +1,90 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter TWENTY-ONE</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter TWENTY-ONE</i><br />
 			  Core Date/Time Classes</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Create and manage date-based and time-based events including a combination of date and time into a single object using LocalDate, LocalTime, LocalDateTime, Instant, Period, and Duration.<br /></i><i>Define and create and manage date-based and time-based events using Instant, Period, Duration, and TemporalUnit.</i></p>
-			  
-			</div>	
-		</div>
-	</div>
+                <p style="text-align: center;"><i>Create and manage date-based and time-based events including a combination of date and time into a single object using LocalDate, LocalTime, LocalDateTime, Instant, Period, and Duration.<br /></i><i>Define and create and manage date-based and time-based events using Instant, Period, Duration, and TemporalUnit.</i></p>
 
-  
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-	  <h2>Answers</h2>
 
-	  <p><b>1. The correct answer is D.</b><br />
-	  Option A is not valid. The method <code>of()</code> takes the year, month and day as arguments.<br />
-	  Option B is not valid. The method <code>with()</code> is not a <code>static</code> method.<br />
-	  Option C is not valid. Valid month values are from <code>1</code> to <code>12</code>.<br />
-	  Option D is valid. The methods <code>now()</code> and <code>plusDays()</code> are valid and can be chained.</p>
+    <div class="container">
 
-	  <p><br/></p>
+        <div class="column">
 
-	  <p><b>2. The correct answer is C.</b><br />
-	  The method <code>atTime()</code> of <code>LocalDate</code> returns a <code>LocalDateTime</code> object with the combined values of the <code>LocalDate</code> instance which calls the method and the time parameters passed.</p>
+            <h2>Answers</h2>
 
-	  <p><br/></p>
+            <p><b>1. The correct answer is D.</b><br /> Option A is not valid. The method <code>of()</code> takes the year, month and day as arguments.<br /> Option B is not valid. The method <code>with()</code> is not a <code>static</code> method.<br /> Option C is not valid. Valid month values are from <code>1</code> to <code>12</code>.<br /> Option D is valid. The methods <code>now()</code> and <code>plusDays()</code> are valid and can be chained.</p>
 
-	  <p><b>3. The correct answers are B and D.</b><br />
-	  <code>LocalTime</code> doesn't store information about years and (complete) days.</p>
+            <p><br/></p>
 
-	  <p><br/></p>
+            <p><b>2. The correct answer is C.</b><br /> The method <code>atTime()</code> of <code>LocalDate</code> returns a <code>LocalDateTime</code> object with the combined values of the <code>LocalDate</code> instance which calls the method and the time parameters passed.</p>
 
-	  <p><b>4. The correct answers are B and C.</b><br />
-	  Option A is incorrect. <code>Period</code> implements <code>TemporalAmount</code>.<br />
-	  Option B is correct. <code>java.time.Instant</code> implements <code>java.time.temporal.Temporal</code>.<br />
-	  Option C is correct. <code>LocalDate</code> and <code>LocalTime</code> are immutable. Therefore, they are thread-safe.<br />
-	  Option D is incorrect. <code>LocalDateTime</code> doesn't store zone time information, it just returns the current date-time of the system.</p>
+            <p><br/></p>
 
-	  <p><br/></p>
+            <p><b>3. The correct answers are B and D.</b><br />
+                <code>LocalTime</code> doesn't store information about years and (complete) days.</p>
 
-	  <p><b>5. The correct answer is A.</b><br />
-	  The valid ways to get the nanoseconds part of an <code>Instant</code> object are:</p>
+            <p><br/></p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span> nanos = i.getNano();</code></p>
+            <p><b>4. The correct answers are B and C.</b><br /> Option A is incorrect. <code>Period</code> implements <code>TemporalAmount</code>.<br /> Option B is correct. <code>java.time.Instant</code> implements <code>java.time.temporal.Temporal</code>.<br /> Option C is correct. <code>LocalDate</code> and <code>LocalTime</code> are immutable. Therefore, they are thread-safe.<br /> Option D is incorrect. <code>LocalDateTime</code> doesn't store zone time information, it just returns the current date-time of the system.</p>
 
-	  <p>Or:</p>
+            <p><br/></p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span> nanos = now.get(ChronoField.NANO_OF_SECOND);</code></p>
+            <p><b>5. The correct answer is A.</b><br /> The valid ways to get the nanoseconds part of an <code>Instant</code> object are:</p>
 
-	  <p><br/></p>
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> nanos = i.getNano();</code></p>
 
-	  <p><b>6. The correct answer is D.</b><br />
-	  Since the first argument is greater than the second, the result is a negative period. A <code>Period</code> counts complete months first, then days.</p>
+            <p>Or:</p>
 
-	  <p><br/></p>
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> nanos = now.get(ChronoField.NANO_OF_SECOND);</code></p>
 
-	  <p><b>7. The correct answer is D.</b><br />
-	  If the parameters types are different, the second parameter is converted to the type of the first parameter. In this case, a <code>LocalTime</code> cannot be converted to a <code>LocalDateTime</code> (it misses the year, month, day part) and an exception is thrown.</p>
+            <p><br/></p>
 
-	  <p><br/></p>
+            <p><b>6. The correct answer is D.</b><br /> Since the first argument is greater than the second, the result is a negative period. A <code>Period</code> counts complete months first, then days.</p>
 
-	  <p><b>8. The correct answers are A and C.</b><br />
-	  A <code>LocalDate</code> stores the year, month, days and related information. It doesn't store hours or milliseconds.</p>
+            <p><br/></p>
 
-	  <p><br/></p>
+            <p><b>7. The correct answer is D.</b><br /> If the parameters types are different, the second parameter is converted to the type of the first parameter. In this case, a <code>LocalTime</code> cannot be converted to a <code>LocalDateTime</code> (it misses the year, month, day part) and an exception is thrown.</p>
 
-	  
-  
-	</div>
-  </div>
-		
-  <footer></footer>
-  
+            <p><br/></p>
+
+            <p><b>8. The correct answers are A and C.</b><br /> A <code>LocalDate</code> stores the year, month, days and related information. It doesn't store hours or milliseconds.</p>
+
+            <p><br/></p>
+
+
+
+        </div>
+    </div>
+
+    <footer></footer>
+
 </body>
+
 </html>

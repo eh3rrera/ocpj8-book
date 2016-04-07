@@ -1,85 +1,80 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter NINETEEN</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter NINETEEN</i><br />
 			  Exceptions</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Use try-catch and throw statements.<br /></i><i>Use catch, multi-catch, and finally clauses.<br /></i><i>Use Autoclose resources with a try-with-resources statement.<br /></i><i>Create custom exceptions and Auto-closeable resources.</i></p>
-			  
-			</div>
-		</div>
-	</div>
+                <p style="text-align: center;"><i>Use try-catch and throw statements.<br /></i><i>Use catch, multi-catch, and finally clauses.<br /></i><i>Use Autoclose resources with a try-with-resources statement.<br /></i><i>Create custom exceptions and Auto-closeable resources.</i></p>
 
-  
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-	  <h2>Answers</h2>
 
-	  <p><b>1. The correct answer is B.</b><br />
-	  The <code>finally</code> block is always executed before the returning of a method, even if the <code>try</code> or the <code>catch</code> blocks also have a <code>return</code> statement.</p>
+    <div class="container">
 
-	  <p><br /></p>
+        <div class="column">
 
-	  <p><b>2. The correct answer is D.</b><br />
-	  The code correctly&nbsp;compiles as it is. In a normal <code>try</code> block, the <code>catch</code> and the <code>finally</code> block are optional but either one of the must be present.</p>
+            <h2>Answers</h2>
 
-	  <p><br /></p>
+            <p><b>1. The correct answer is B.</b><br /> The <code>finally</code> block is always executed before the returning of a method, even if the <code>try</code> or the <code>catch</code> blocks also have a <code>return</code> statement.</p>
 
-	  <p><b>3. The correct answers are C and D.</b><br />
-	  Option A is false. In a <code>try-with-resources</code>, the catch block is not required.<br />
-	  Option B is false. The <code>throws</code> keyword is used to declare which exceptions a method could throw.<br />
-	  Option C is true. In a <code>multi-catch</code> block, if you declare more than one resource, they have to be separated by a semicolon.<br />
-	  Option D is true. If a <code>catch</code> block is defined for an exception that couldn't be thrown by the code in the <code>try</code> block, a compile-time error is generated.</p>
+            <p><br /></p>
 
-	  <p><br /></p>
+            <p><b>2. The correct answer is D.</b><br /> The code correctly&nbsp;compiles as it is. In a normal <code>try</code> block, the <code>catch</code> and the <code>finally</code> block are optional but either one of the must be present.</p>
 
-	  <p><b>4. The correct answer is E.</b><br />
-	  This is the output of the program:</p>
+            <p><br /></p>
 
-	  <p><code>Exception in thread "main" java.lang RuntimeException: RuntimeException<br />
+            <p><b>3. The correct answers are C and D.</b><br /> Option A is false. In a <code>try-with-resources</code>, the catch block is not required.<br /> Option B is false. The <code>throws</code> keyword is used to declare which exceptions a method could throw.<br /> Option C is true. In a <code>multi-catch</code> block, if you declare more than one resource, they have to be separated by a semicolon.<br /> Option D is true. If a <code>catch</code> block is defined for an exception that couldn't be thrown by the code in the <code>try</code> block, a compile-time error is generated.</p>
+
+            <p><br /></p>
+
+            <p><b>4. The correct answer is E.</b><br /> This is the output of the program:</p>
+
+            <p><code>Exception in thread "main" java.lang RuntimeException: RuntimeException<br />
 	  at chapter.twenty.Question_19_4.main(Question_19_4.java:13) Suppressed:<br />
 	  java.io.IOException: Close Exception at<br />
 	  chapter.twenty.Connection.close(Question_19_4.java:7) at<br />
 	  chapter.twenty.Question_19_4.main(Question_19_4.java:15)</code></p>
 
-	  <p>Catching the <code>IOException</code> thrown by the close method of the class <code>Connection</code> is required for the program to compile.</p>
+            <p>Catching the <code>IOException</code> thrown by the close method of the class <code>Connection</code> is required for the program to compile.</p>
 
-	  <p>However, the <code>RuntimeException</code> thrown inside the <code>try</code> block is not caught, so the default exception handler takes care of it.</p>
+            <p>However, the <code>RuntimeException</code> thrown inside the <code>try</code> block is not caught, so the default exception handler takes care of it.</p>
 
-	  <p><br /></p>
+            <p><br /></p>
 
-	  <p><b>5. The correct answers are B and C.</b><br />
-	  <code>java.lang.ArithmeticException</code> and <code>java.lang.ClassCastException</code> are subclasses of <code>java.lang.RuntimeException</code>.</p>
+            <p><b>5. The correct answers are B and C.</b><br />
+                <code>java.lang.ArithmeticException</code> and <code>java.lang.ClassCastException</code> are subclasses of <code>java.lang.RuntimeException</code>.</p>
 
-	  <p><br /></p>
-  
-	</div>
-  </div>
-		
-  <footer></footer>
-  
+            <p><br /></p>
+
+        </div>
+    </div>
+
+    <footer></footer>
+
 </body>
+
 </html>

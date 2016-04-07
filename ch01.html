@@ -2,84 +2,84 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			  <h1><i class="chapter">Part ONE</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+                <h1><i class="chapter">Part ONE</i><br />
 			  Class Design</h1>
-			
-			  <h1><i style="text-align: center;">Chapter ONE</i><br />
+
+                <h1><i style="text-align: center;">Chapter ONE</i><br />
 			  Encapsulation and Immutable Classes</h1>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Implement encapsulation.<br />
+                <p style="text-align: center;"><i>Implement encapsulation.<br />
 			  Override hashCode, equals, and toString methods from Object class.<br />
 			  Create and use singleton classes and immutable classes.<br />
 			  Develop code that uses static keyword on initialize blocks, variables, methods, and classes.<br />
 			  Develop code that uses final keyword.</i><br /></p>
-			  
-			</div>	
-		</div>
-	</div>
-	
-	
 
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-	  <h2>Encapsulation</h2>
 
-	  <p>As we know, Java is an object-oriented language, and all code must be inside a class.</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span></span> {<br />
+    <div class="container">
+
+        <div class="column">
+
+            <h2>Encapsulation</h2>
+
+            <p>As we know, Java is an object-oriented language, and all code must be inside a class.</p>
+
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span></span> {<br />
 	  &nbsp; &nbsp; String myField = <span class="hljs-string">"you"</span>;<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">myMethod</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Hi "</span> + myField);<br />
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Therefore, we have to create an object to use it:</p>
+            <p>Therefore, we have to create an object to use it:</p>
 
-	  <p><code class="java hljs">MyClass myClass = <span class="hljs-keyword">new</span> MyClass();<br />
+            <p><code class="java hljs">MyClass myClass = <span class="hljs-keyword">new</span> MyClass();<br />
 	  myClass.myField = <span class="hljs-string">"James"</span>;<br />
 	  myClass.myMethod();</code></p>
 
-	  <p>One important concept in object-oriented programming languages is encapsulation, the ability to hide or protect an object's data.</p>
+            <p>One important concept in object-oriented programming languages is encapsulation, the ability to hide or protect an object's data.</p>
 
-	  <p>Most of the time, when someone talks about encapsulation most people tend to think about private variables and public getters and setters and how overkilling this is, but actually, encapsulation is more than that, and it's helpful to create high-quality designs.</p>
+            <p>Most of the time, when someone talks about encapsulation most people tend to think about private variables and public getters and setters and how overkilling this is, but actually, encapsulation is more than that, and it's helpful to create high-quality designs.</p>
 
-	  <p>Let's consider the previous example.</p>
+            <p>Let's consider the previous example.</p>
 
-	  <p>First of all, it's good to hide as much as possible the internal implementation of a class. The reason, mitigate the impact of change.</p>
+            <p>First of all, it's good to hide as much as possible the internal implementation of a class. The reason, mitigate the impact of change.</p>
 
-	  <p>For example, what if <code>myField</code> changes its type from <code>String</code> to <code>int</code>?</p>
+            <p>For example, what if <code>myField</code> changes its type from <code>String</code> to <code>int</code>?</p>
 
-	  <p><code class="java hljs">myClass.myField = <span class="hljs-number">1</span>;</code></p>
+            <p><code class="java hljs">myClass.myField = <span class="hljs-number">1</span>;</code></p>
 
-	  <p>If we were using this attribute in fifty classes, we would have to make fifty changes in our program.</p>
+            <p>If we were using this attribute in fifty classes, we would have to make fifty changes in our program.</p>
 
-	  <p>But if we hide the attribute and use a setter method instead, we could avoid the fifty changes:</p>
+            <p>But if we hide the attribute and use a setter method instead, we could avoid the fifty changes:</p>
 
-	  <p><code class="java hljs"><span class="hljs-comment">// Hiding the attr to the outside world with the private keyword</span><br />
+            <p><code class="java hljs"><span class="hljs-comment">// Hiding the attr to the outside world with the private keyword</span><br />
 	  <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> myField = <span class="hljs-number">0</span>;<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><br />
 	  void</span> <span class="hljs-title">setMyField</span><span class="hljs-params">(String val)</span></span> { <span class="hljs-comment">// Still accepting a String</span><br />
@@ -90,116 +90,116 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>You make this hiding by using access modifiers.</p>
+            <p>You make this hiding by using access modifiers.</p>
 
-	  <p>Java supports four access modifiers:</p>
+            <p>Java supports four access modifiers:</p>
 
-	  <ul>
-		<li><b>public</b></li>
+            <ul>
+                <li><b>public</b></li>
 
-		<li><b>private</b></li>
+                <li><b>private</b></li>
 
-		<li><b>protected</b></li>
+                <li><b>protected</b></li>
 
-		<li><b>default</b> (when no modifier is specified)</li>
-	  </ul>
+                <li><b>default</b> (when no modifier is specified)</li>
+            </ul>
 
-	  <p>You can apply these modifiers to classes, attributes and methods according to the following table:</p>
+            <p>You can apply these modifiers to classes, attributes and methods according to the following table:</p>
 
-	  <table border="1" width="100%">
-		<tr>
-		  <td></td>
+            <table border="1" width="100%">
+                <tr>
+                    <td></td>
 
-		  <td rowspan="2" style="text-align: center;"><b>Class/<br />
+                    <td rowspan="2" style="text-align: center;"><b>Class/<br />
 		  Interface</b></td>
 
-		  <td colspan="2" style="text-align: center;"><b>Class</b></td>
+                    <td colspan="2" style="text-align: center;"><b>Class</b></td>
 
-		  <td colspan="2" style="text-align: center;"><b>Interface</b></td>
-		</tr>
+                    <td colspan="2" style="text-align: center;"><b>Interface</b></td>
+                </tr>
 
-		<tr>
-		  <td></td>
+                <tr>
+                    <td></td>
 
-		  <td style="text-align: center;"><b>Attrib</b></td>
+                    <td style="text-align: center;"><b>Attrib</b></td>
 
-		  <td style="text-align: center;"><b>Method</b></td>
+                    <td style="text-align: center;"><b>Method</b></td>
 
-		  <td style="text-align: center;"><b>Attrib</b></td>
+                    <td style="text-align: center;"><b>Attrib</b></td>
 
-		  <td style="text-align: center;"><b>Method</b></td>
-		</tr>
+                    <td style="text-align: center;"><b>Method</b></td>
+                </tr>
 
-		<tr>
-		  <td><b>public</b></td>
+                <tr>
+                    <td><b>public</b></td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
-		</tr>
+                    <td style="text-align: center;">X</td>
+                </tr>
 
-		<tr>
-		  <td><b>private</b></td>
+                <tr>
+                    <td><b>private</b></td>
 
-		  <td></td>
+                    <td></td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td></td>
+                    <td></td>
 
-		  <td></td>
-		</tr>
+                    <td></td>
+                </tr>
 
-		<tr>
-		  <td><b>protected</b></td>
+                <tr>
+                    <td><b>protected</b></td>
 
-		  <td></td>
+                    <td></td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td></td>
+                    <td></td>
 
-		  <td></td>
-		</tr>
+                    <td></td>
+                </tr>
 
-		<tr>
-		  <td><b>default</b></td>
+                <tr>
+                    <td><b>default</b></td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
-		</tr>
-	  </table>
+                    <td style="text-align: center;">X</td>
+                </tr>
+            </table>
 
-	  <p>As you can see, all the access modifiers can be applied to attributes and methods of a class but not to their interface counterparts. Classes and interfaces can only have a <code>public</code> or default modifier. Why? Let's define first these access modifiers.</p>
+            <p>As you can see, all the access modifiers can be applied to attributes and methods of a class but not to their interface counterparts. Classes and interfaces can only have a <code>public</code> or default modifier. Why? Let's define first these access modifiers.</p>
 
-	  <p>If something is declared as <code>public</code>, it can be accessed from any other class of our application, regardless of the package or the module it is defined.</p>
+            <p>If something is declared as <code>public</code>, it can be accessed from any other class of our application, regardless of the package or the module it is defined.</p>
 
-	  <p>If something is defined as <code>private</code>, it can only be accessed inside the class that defines it, not from other classes in the same packages and not from classes that inherit the class. <code>private</code> is the most restrictive access modifier.</p>
+            <p>If something is defined as <code>private</code>, it can only be accessed inside the class that defines it, not from other classes in the same packages and not from classes that inherit the class. <code>private</code> is the most restrictive access modifier.</p>
 
-	  <p>If something is defined as <code>protected</code>, it can be only accessed by the class that defines it, its subclasses and classes of the same package. It doesn't matter if the subclass is in another package, which makes this modifier less restrictive than <code>private</code>.</p>
+            <p>If something is defined as <code>protected</code>, it can be only accessed by the class that defines it, its subclasses and classes of the same package. It doesn't matter if the subclass is in another package, which makes this modifier less restrictive than <code>private</code>.</p>
 
-	  <p>If something doesn't have a modifier, it has default access also known as package access, because it can only be accessed by classes within the same package. If a subclass is defined in another package, it cannot see it, that's the only difference with the <code>protected</code> modifier, which makes it more restrictive.</p>
+            <p>If something doesn't have a modifier, it has default access also known as package access, because it can only be accessed by classes within the same package. If a subclass is defined in another package, it cannot see it, that's the only difference with the <code>protected</code> modifier, which makes it more restrictive.</p>
 
-	  <p>A code example may explain this better:</p>
+            <p>A code example may explain this better:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">package</span> street21;<br />
+            <p><code class="java hljs"><span class="hljs-keyword">package</span> street21;<br />
 	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">House</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; protected</span> <span class="hljs-keyword">int</span> number;<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> String reference;<br />
@@ -232,137 +232,137 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <ul>
-		<li><code>h.number</code> compiles because this attribute is <code>protected</code> and <code>GenericHouse</code> can access it because it extends <code>House</code>.</li>
+            <ul>
+                <li><code>h.number</code> compiles because this attribute is <code>protected</code> and <code>GenericHouse</code> can access it because it extends <code>House</code>.</li>
 
-		<li><code>h.reference</code> doesn't compile because this attribute is <code>private</code>.</li>
+                <li><code>h.reference</code> doesn't compile because this attribute is <code>private</code>.</li>
 
-		<li><code>h.printNumber()</code> doesn't compile because this method has default (package) access.</li>
+                <li><code>h.printNumber()</code> doesn't compile because this method has default (package) access.</li>
 
-		<li><code>h.printInformation()</code> compiles because this method is <code>public</code>.</li>
+                <li><code>h.printInformation()</code> compiles because this method is <code>public</code>.</li>
 
-		<li><code>BlueHouse bh = new BlueHouse()</code> doesn't compile because the class has default (package) access.</li>
+                <li><code>BlueHouse bh = new BlueHouse()</code> doesn't compile because the class has default (package) access.</li>
 
-		<li><code>bh.getColor()</code> doesn't compile because although the method is <code>public</code>, the class that contains is not.</li>
-	  </ul>
+                <li><code>bh.getColor()</code> doesn't compile because although the method is <code>public</code>, the class that contains is not.</li>
+            </ul>
 
-	  <p>Now, can you see why some modifiers apply to certain elements, and others don't?</p>
+            <p>Now, can you see why some modifiers apply to certain elements, and others don't?</p>
 
-	  <p>Would a <code>private</code> or <code>protected</code> class make sense in an object-oriented language?</p>
+            <p>Would a <code>private</code> or <code>protected</code> class make sense in an object-oriented language?</p>
 
-	  <p>A <code>private</code> method makes sense inside an interface where most, if not all methods, have no implementation?</p>
+            <p>A <code>private</code> method makes sense inside an interface where most, if not all methods, have no implementation?</p>
 
-	  <p>Think about it.</p>
+            <p>Think about it.</p>
 
-	  <p>Here's a summary of the rules:</p>
+            <p>Here's a summary of the rules:</p>
 
-	  <table border="1" width="100%">
-		<tr>
-		  <td></td>
+            <table border="1" width="100%">
+                <tr>
+                    <td></td>
 
-		  <td style="text-align: center;"><b>Members same class</b></td>
+                    <td style="text-align: center;"><b>Members same class</b></td>
 
-		  <td style="text-align: center;"><b>Subclass same package</b></td>
+                    <td style="text-align: center;"><b>Subclass same package</b></td>
 
-		  <td style="text-align: center;"><b>Subclass different package</b></td>
+                    <td style="text-align: center;"><b>Subclass different package</b></td>
 
-		  <td style="text-align: center;"><b>Another class same package</b></td>
+                    <td style="text-align: center;"><b>Another class same package</b></td>
 
-		  <td style="text-align: center;"><b>Another class different package</b></td>
-		</tr>
+                    <td style="text-align: center;"><b>Another class different package</b></td>
+                </tr>
 
-		<tr>
-		  <td><b>public</b></td>
+                <tr>
+                    <td><b>public</b></td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
-		</tr>
+                    <td style="text-align: center;">X</td>
+                </tr>
 
-		<tr>
-		  <td><b>private</b></td>
+                <tr>
+                    <td><b>private</b></td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;"></td>
+                    <td style="text-align: center;"></td>
 
-		  <td style="text-align: center;"></td>
+                    <td style="text-align: center;"></td>
 
-		  <td style="text-align: center;"></td>
+                    <td style="text-align: center;"></td>
 
-		  <td style="text-align: center;"></td>
-		</tr>
+                    <td style="text-align: center;"></td>
+                </tr>
 
-		<tr>
-		  <td><b>protected</b></td>
+                <tr>
+                    <td><b>protected</b></td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;"></td>
-		</tr>
+                    <td style="text-align: center;"></td>
+                </tr>
 
-		<tr>
-		  <td><b>default</b></td>
+                <tr>
+                    <td><b>default</b></td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;"></td>
+                    <td style="text-align: center;"></td>
 
-		  <td style="text-align: center;">X</td>
+                    <td style="text-align: center;">X</td>
 
-		  <td style="text-align: center;"></td>
-		</tr>
-	  </table>
+                    <td style="text-align: center;"></td>
+                </tr>
+            </table>
 
-	  <h2>What is a Singleton?</h2>
+            <h2>What is a Singleton?</h2>
 
-	  <p>There will be times when you might want to have only one instance for a particular class. Such a class is a <i>singleton</i> class and is a design pattern.</p>
+            <p>There will be times when you might want to have only one instance for a particular class. Such a class is a <i>singleton</i> class and is a design pattern.</p>
 
-	  <p>There are some classes of Java that are written using the singleton pattern, for example:</p>
+            <p>There are some classes of Java that are written using the singleton pattern, for example:</p>
 
-	  <ul>
-		<li><code>java.lang.Runtime</code></li>
+            <ul>
+                <li><code>java.lang.Runtime</code></li>
 
-		<li><code>java.awt.Toolkit</code></li>
+                <li><code>java.awt.Toolkit</code></li>
 
-		<li><code>java.awt.Desktop</code></li>
-	  </ul>
+                <li><code>java.awt.Desktop</code></li>
+            </ul>
 
-	  <p>In Java, broadly speaking, there are two ways to implement a singleton class:</p>
+            <p>In Java, broadly speaking, there are two ways to implement a singleton class:</p>
 
-	  <ul>
-		<li>With a <code>private</code> constructor and a <code>static</code> factory method</li>
+            <ul>
+                <li>With a <code>private</code> constructor and a <code>static</code> factory method</li>
 
-		<li>As an enum</li>
-	  </ul>
+                <li>As an enum</li>
+            </ul>
 
-	  <p>Let's start with the private constructor way. Although it might seem simple at first, it poses many challenges, all of them related to keeping only one instance of a singleton class through all the application life cycle.</p>
+            <p>Let's start with the private constructor way. Although it might seem simple at first, it poses many challenges, all of them related to keeping only one instance of a singleton class through all the application life cycle.</p>
 
-	  <p>By having a <code>private</code> constructor, the singleton class makes sure that no other class creates an instance of it. A <code>private</code> method (or in this case, the constructor) can only be used inside the class that defines it.</p>
+            <p>By having a <code>private</code> constructor, the singleton class makes sure that no other class creates an instance of it. A <code>private</code> method (or in this case, the constructor) can only be used inside the class that defines it.</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
 	  }</code></p>
 
-	  <p>So the instance has to be created inside of the class itself.</p>
+            <p>So the instance has to be created inside of the class itself.</p>
 
-	  <p>This can be done in two ways. Using a <code>private static</code> attribute and a method to get it:</p>
+            <p>This can be done in two ways. Using a <code>private static</code> attribute and a method to get it:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span>&nbsp;Singleton instance = <span class="hljs-keyword">new</span> Singleton();<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span>&nbsp;<span class="hljs-keyword">static</span> Singleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span> {<br />
@@ -370,15 +370,15 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>The attribute has to be <code>private</code> so no other class can use it, only through its getter.</p>
+            <p>The attribute has to be <code>private</code> so no other class can use it, only through its getter.</p>
 
-	  <p>It has to be <code>static</code> so the instance can be created when the class is loaded before anyone can use it and because <code>static</code> members belong to the class and not to a particular instance.</p>
+            <p>It has to be <code>static</code> so the instance can be created when the class is loaded before anyone can use it and because <code>static</code> members belong to the class and not to a particular instance.</p>
 
-	  <p>And it has to be <code>final</code> so a new instance cannot be created later.</p>
+            <p>And it has to be <code>final</code> so a new instance cannot be created later.</p>
 
-	  <p>A variation of this implementation is to use a <code>static</code> inner class (we will review the on Chapter 3):</p>
+            <p>A variation of this implementation is to use a <code>static</code> inner class (we will review the on Chapter 3):</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Holder</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> Singleton instance&nbsp;=<br />
@@ -389,11 +389,11 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>The advantage of this is that the instance won't be created until the inner class is referenced for the first time.</p>
+            <p>The advantage of this is that the instance won't be created until the inner class is referenced for the first time.</p>
 
-	  <p>However, there will times when for example, creating the object is not as simple as calling <code>new</code>, so the other way is to create the instance inside the <code>get</code> method:</p>
+            <p>However, there will times when for example, creating the object is not as simple as calling <code>new</code>, so the other way is to create the instance inside the <code>get</code> method:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> instance = <span class="hljs-keyword">new</span> Singleton();<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span>&nbsp;<span class="hljs-keyword">static</span> Singleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span> {<br />
@@ -405,11 +405,11 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>The first time this method is called, the instance will be created. But with this approach, we face another problem. In a multithreading environment, if two or more threads are executing this method in parallel, there's a significant risk of ending up with multiple instances of the class.</p>
+            <p>The first time this method is called, the instance will be created. But with this approach, we face another problem. In a multithreading environment, if two or more threads are executing this method in parallel, there's a significant risk of ending up with multiple instances of the class.</p>
 
-	  <p>One solution is to synchronize the method so only one thread at a time can access it.</p>
+            <p>One solution is to synchronize the method so only one thread at a time can access it.</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> instance = <span class="hljs-keyword">new</span> Singleton();<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span>&nbsp;<span class="hljs-keyword">static</span> <span class="hljs-keyword">synchronized</span> Singleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span> {<br />
@@ -420,13 +420,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>The problem with this is that strictly speaking, is not very efficient. We only need synchronization the first time, when the instance is created, not every single time the method is called.</p>
+            <p>The problem with this is that strictly speaking, is not very efficient. We only need synchronization the first time, when the instance is created, not every single time the method is called.</p>
 
-	  <p>An improvement is to lock only the portion of the code that creates the instance. For this to work properly, we have to double check if the instance is <code>null</code>, one without locking (to check if the instance is already created), and then another one inside a <code>synchronized</code> block (to safely create the instance).</p>
+            <p>An improvement is to lock only the portion of the code that creates the instance. For this to work properly, we have to double check if the instance is <code>null</code>, one without locking (to check if the instance is already created), and then another one inside a <code>synchronized</code> block (to safely create the instance).</p>
 
-	  <p>Here's how this look:</p>
+            <p>Here's how this look:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> instance = <span class="hljs-keyword">new</span> Singleton();<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span>&nbsp;<span class="hljs-keyword">static</span> Singleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span> {<br />
@@ -441,11 +441,11 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>But again, this implementation is not perfect yet. This time, the problem is at the Java Virtual Machine (JVM) level. The JVM, or sometimes the compiler, can optimize the code by reordering or caching the value of variables (and not making the updates visible).</p>
+            <p>But again, this implementation is not perfect yet. This time, the problem is at the Java Virtual Machine (JVM) level. The JVM, or sometimes the compiler, can optimize the code by reordering or caching the value of variables (and not making the updates visible).</p>
 
-	  <p>The solution is to use the <code>volatile</code> keyword, which guarantees that any read/write operation of a variable shared by many threads would be atomic and not cached.</p>
+            <p>The solution is to use the <code>volatile</code> keyword, which guarantees that any read/write operation of a variable shared by many threads would be atomic and not cached.</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">volatile</span> instance =<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new</span> Singleton();<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
@@ -461,53 +461,53 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>As you can see, it was a lot of trouble to implement a singleton correctly when you want or have to defer the instantiation of the class until you first use it (also called lazy initialization). And we are not going to cover serialization and how to keep a singleton in a cluster.</p>
+            <p>As you can see, it was a lot of trouble to implement a singleton correctly when you want or have to defer the instantiation of the class until you first use it (also called lazy initialization). And we are not going to cover serialization and how to keep a singleton in a cluster.</p>
 
-	  <p>So if you don't need it, either use the first two methods (create the instance when declaring the variable or use the holder inner class) or the easier (and recommended) way, an enumeration (enum).</p>
+            <p>So if you don't need it, either use the first two methods (create the instance when declaring the variable or use the holder inner class) or the easier (and recommended) way, an enumeration (enum).</p>
 
-	  <p>We'll review enums in Chapter 5, for now, just knowing that enums are singletons is enough.</p>
+            <p>We'll review enums in Chapter 5, for now, just knowing that enums are singletons is enough.</p>
 
-	  <h2>Immutable Objects</h2>
+            <h2>Immutable Objects</h2>
 
-	  <p>There will be other times when you might not want to modify the values or state of an object when used by multiple classes. Such an object will be an <i>immutable</i> object.</p>
+            <p>There will be other times when you might not want to modify the values or state of an object when used by multiple classes. Such an object will be an <i>immutable</i> object.</p>
 
-	  <p>There are some immutable classes in the Java JDK, for example:</p>
+            <p>There are some immutable classes in the Java JDK, for example:</p>
 
-	  <ul>
-		<li><code>java.lang.String</code></li>
+            <ul>
+                <li><code>java.lang.String</code></li>
 
-		<li>Wrappers classes (like <code>Integer</code>)</li>
-	  </ul>
+                <li>Wrappers classes (like <code>Integer</code>)</li>
+            </ul>
 
-	  <p>Immutable objects cannot change after they are created. This means that they cannot have setter methods or <code>public</code> variables, so the only way to set its properties is through the constructor.</p>
+            <p>Immutable objects cannot change after they are created. This means that they cannot have setter methods or <code>public</code> variables, so the only way to set its properties is through the constructor.</p>
 
-	  <p>Immutability also means that if a method has to change the properties of the object, as the object or its values cannot change, it has to return a copy of the object with the new values (this is just how the <code>String</code> class works).</p>
+            <p>Immutability also means that if a method has to change the properties of the object, as the object or its values cannot change, it has to return a copy of the object with the new values (this is just how the <code>String</code> class works).</p>
 
-	  <p>Another point to consider is inheritance. If the immutable class can be inherited, the subclass can change the methods to modify the instances of the class, so an immutable class cannot allow this.</p>
+            <p>Another point to consider is inheritance. If the immutable class can be inherited, the subclass can change the methods to modify the instances of the class, so an immutable class cannot allow this.</p>
 
-	  <p>In summary, an immutable object:</p>
+            <p>In summary, an immutable object:</p>
 
-	  <ul>
-		<li>Set all its properties through a constructor</li>
+            <ul>
+                <li>Set all its properties through a constructor</li>
 
-		<li>Doesn't define setter methods</li>
+                <li>Doesn't define setter methods</li>
 
-		<li>All its attributes are <code>private</code> (and sometimes <code>final</code>)</li>
+                <li>All its attributes are <code>private</code> (and sometimes <code>final</code>)</li>
 
-		<li>The class is declared <code>final</code> to prevent inheritance</li>
+                <li>The class is declared <code>final</code> to prevent inheritance</li>
 
-		<li>If it has mutable types (for example a <code>List</code>), either the reference cannot be accessible outside the object or a copy must be returned (the same applies if the object's content must change)</li>
-	  </ul>
+                <li>If it has mutable types (for example a <code>List</code>), either the reference cannot be accessible outside the object or a copy must be returned (the same applies if the object's content must change)</li>
+            </ul>
 
-	  <h2>The static Keyword</h2>
+            <h2>The static Keyword</h2>
 
-	  <p>Think of something <code>static</code> as something belonging to the class and not to a particular instance of that class.</p>
+            <p>Think of something <code>static</code> as something belonging to the class and not to a particular instance of that class.</p>
 
-	  <p>If we are talking about attributes, a <code>static</code> attribute is shared across all instances of the class (because, again, it doesn't belong to an instance).</p>
+            <p>If we are talking about attributes, a <code>static</code> attribute is shared across all instances of the class (because, again, it doesn't belong to an instance).</p>
 
-	  <p>Compare the output of this code:</p>
+            <p>Compare the output of this code:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">int</span> attr = <span class="hljs-number">0</span>;<br />
 	  <br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printAttr</span><span class="hljs-params">()</span></span> {<br />
@@ -523,14 +523,14 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Output:</p>
+            <p>Output:</p>
 
-	  <p><code class="java hljs"><span class="hljs-number">10</span><br />
+            <p><code class="java hljs"><span class="hljs-number">10</span><br />
 	  <span class="hljs-number">0</span></code></p>
 
-	  <p>To the output of the code that uses a <code>static</code> variable:</p>
+            <p>To the output of the code that uses a <code>static</code> variable:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> attr = <span class="hljs-number">0</span>;<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><br />
 	  &nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printAttr</span><span class="hljs-params">()</span></span> {<br />
@@ -546,16 +546,16 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Output:</p>
+            <p>Output:</p>
 
-	  <p><code class="java hljs"><span class="hljs-number">10</span><br />
+            <p><code class="java hljs"><span class="hljs-number">10</span><br />
 	  <span class="hljs-number">10</span></code></p>
 
-	  <p>As you can see, the value is retained when another instance uses the <code>static</code> variable.</p>
+            <p>As you can see, the value is retained when another instance uses the <code>static</code> variable.</p>
 
-	  <p>When talking about methods, the method belongs to the class, which means that we don't need an instance to call it (the same applies to attributes, by the way.</p>
+            <p>When talking about methods, the method belongs to the class, which means that we don't need an instance to call it (the same applies to attributes, by the way.</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span></span> {<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> attr = <span class="hljs-number">0</span>;<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printAttr</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(attr);<br />
@@ -568,22 +568,22 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Output:</p>
+            <p>Output:</p>
 
-	  <p><code class="java hljs"><span class="hljs-number">10</span><br />
+            <p><code class="java hljs"><span class="hljs-number">10</span><br />
 	  <span class="hljs-number">10</span></code></p>
 
-	  <p>However, if you look closely, <code>printAttr</code> uses a <code>static</code> attribute, and that's the catch with <code>static</code> methods, they can't use instance variables, just <code>static</code> ones.</p>
+            <p>However, if you look closely, <code>printAttr</code> uses a <code>static</code> attribute, and that's the catch with <code>static</code> methods, they can't use instance variables, just <code>static</code> ones.</p>
 
-	  <p>This makes perfect sense, if you can access a <code>static</code> method with just the class, there's no guarantee an instance exists, and even if it does, how do you link an attribute with its instance when you only have the class name?</p>
+            <p>This makes perfect sense, if you can access a <code>static</code> method with just the class, there's no guarantee an instance exists, and even if it does, how do you link an attribute with its instance when you only have the class name?</p>
 
-	  <p>Using the same logic, the keywords <code>super</code> and <code>this</code>, cannot be used either.</p>
+            <p>Using the same logic, the keywords <code>super</code> and <code>this</code>, cannot be used either.</p>
 
-	  <p>Static classes will be covered in Chapter 3, but there's another construct that can be marked as <code>static</code>, an initializer block.</p>
+            <p>Static classes will be covered in Chapter 3, but there's another construct that can be marked as <code>static</code>, an initializer block.</p>
 
-	  <p>A <code>static</code> (initializer) block looks like this:</p>
+            <p>A <code>static</code> (initializer) block looks like this:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> number;<br />
 	  <span class="hljs-keyword"><br />
 	  &nbsp; &nbsp; static</span> {<br />
@@ -592,19 +592,19 @@
 	  &nbsp; &nbsp; ...<br />
 	  }</code></p>
 
-	  <p>A block is executed when the class is initialized and in the order they are declared (if there's more than one).</p>
+            <p>A block is executed when the class is initialized and in the order they are declared (if there's more than one).</p>
 
-	  <p>Just like <code>static</code> methods, they cannot reference instance attributes, keywords this and super.</p>
+            <p>Just like <code>static</code> methods, they cannot reference instance attributes, keywords this and super.</p>
 
-	  <p>In addition to that, <code>static</code> blocks cannot contain a <code>return</code> statement, and it's a compile-time error if the block cannot complete normally (for example, due to an uncaught exception).</p>
+            <p>In addition to that, <code>static</code> blocks cannot contain a <code>return</code> statement, and it's a compile-time error if the block cannot complete normally (for example, due to an uncaught exception).</p>
 
-	  <h2>Final Keyword</h2>
+            <h2>Final Keyword</h2>
 
-	  <p>The <code>final</code> keyword can be applied to variables, methods, and classes.</p>
+            <p>The <code>final</code> keyword can be applied to variables, methods, and classes.</p>
 
-	  <p>When <code>final</code> is applied to variables, you cannot change the value of the variable after its initialization. These variables can be attributes (static and non-static) or parameters. Final attributes can be initialized either when declared, inside a constructor, or inside an initializer block.</p>
+            <p>When <code>final</code> is applied to variables, you cannot change the value of the variable after its initialization. These variables can be attributes (static and non-static) or parameters. Final attributes can be initialized either when declared, inside a constructor, or inside an initializer block.</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span></span> {<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> number = <span class="hljs-number">0</span>;<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String name;<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> total;<br />
@@ -624,9 +624,9 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>When <code>final</code> is applied to a method, this cannot be overridden.</p>
+            <p>When <code>final</code> is applied to a method, this cannot be overridden.</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Human</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Human</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; final</span> <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">talk</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">eat</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sleep</span><span class="hljs-params">()</span></span> { }<br />
@@ -638,9 +638,9 @@
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sleep</span><span class="hljs-params">()</span></span> { }<br />
 	  }</code></p>
 
-	  <p>In turn, when <code>final</code> is applied to a class, you cannot subclass it. This is used when you don't want someone to change the behavior of a class by subclassing it. Two examples in the JDK are <code>java.lang.String</code> and <code>java.lang.Number</code>.</p>
+            <p>In turn, when <code>final</code> is applied to a class, you cannot subclass it. This is used when you don't want someone to change the behavior of a class by subclassing it. Two examples in the JDK are <code>java.lang.String</code> and <code>java.lang.Number</code>.</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Human</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Human</span></span> {<br />
 	  &nbsp; &nbsp; ...<br />
 	  }<br />
 	  ...<br />
@@ -648,60 +648,60 @@
 	  &nbsp; &nbsp; ...<br />
 	  }</code></p>
 
-	  <p>In summary:</p>
+            <p>In summary:</p>
 
-	  <ul>
-		<li>A <code>final</code> variable can only be initialized once and cannot change its value after that.</li>
+            <ul>
+                <li>A <code>final</code> variable can only be initialized once and cannot change its value after that.</li>
 
-		<li>A <code>final</code> method cannot be overridden by subclasses.</li>
+                <li>A <code>final</code> method cannot be overridden by subclasses.</li>
 
-		<li>A <code>final</code> class cannot be subclassed.</li>
-	  </ul>
+                <li>A <code>final</code> class cannot be subclassed.</li>
+            </ul>
 
-	  
 
-	  <h2>Key Points</h2>
 
-	  <ul>
-		<li>Encapsulation is the ability to hide or protect an object's data. Java supports four access modifiers: <code>public</code>, <code>private</code>, <code>protected</code>, default (when nothing is specified, also called package-level).</li>
+            <h2>Key Points</h2>
 
-		<li>If something is declared as <code>public</code>, it can be accessed from any other class of our application. Any class, regardless of the package or the module it is defined.</li>
+            <ul>
+                <li>Encapsulation is the ability to hide or protect an object's data. Java supports four access modifiers: <code>public</code>, <code>private</code>, <code>protected</code>, default (when nothing is specified, also called package-level).</li>
 
-		<li>If something is defined as <code>private</code>, it can only be accessed inside the class that defines it. Not from other classes in the same packages and not from classes that inherit the class. <code>private</code> is the most restrictive access modifier.</li>
+                <li>If something is declared as <code>public</code>, it can be accessed from any other class of our application. Any class, regardless of the package or the module it is defined.</li>
 
-		<li>If something is defined as <code>protected</code>, it can be only accessed by the class that defines it, its subclasses and classes of the same package. It doesn't matter if the subclass is in another package, which makes this modifier, less restrictive than <code>private</code>.</li>
+                <li>If something is defined as <code>private</code>, it can only be accessed inside the class that defines it. Not from other classes in the same packages and not from classes that inherit the class. <code>private</code> is the most restrictive access modifier.</li>
 
-		<li>If something doesn't have a modifier, it has default access also known as package access, because it can only be accessed by classes within the same package. If a subclass is defined in another package, it cannot see it, that's the only difference with the <code>protected</code> modifier, making it more restrictive.</li>
+                <li>If something is defined as <code>protected</code>, it can be only accessed by the class that defines it, its subclasses and classes of the same package. It doesn't matter if the subclass is in another package, which makes this modifier, less restrictive than <code>private</code>.</li>
 
-		<li>A singleton class guarantees that there's only one instance of the class during the lifetime of the application.</li>
+                <li>If something doesn't have a modifier, it has default access also known as package access, because it can only be accessed by classes within the same package. If a subclass is defined in another package, it cannot see it, that's the only difference with the <code>protected</code> modifier, making it more restrictive.</li>
 
-		<li>An immutable object cannot change its values after it is created and it can be made by:
+                <li>A singleton class guarantees that there's only one instance of the class during the lifetime of the application.</li>
 
-		  <ul>
-			<li>Setting all its properties through a constructor</li>
+                <li>An immutable object cannot change its values after it is created and it can be made by:
 
-			<li>Don't defining setter methods</li>
+                    <ul>
+                        <li>Setting all its properties through a constructor</li>
 
-			<li>Declaring all its attributes as private</li>
+                        <li>Don't defining setter methods</li>
 
-			<li>Declaring the class as <code>final</code></li>
+                        <li>Declaring all its attributes as private</li>
 
-			<li>If it has mutable types (for example a <code>List</code>), either the reference cannot be accessible outside the object or a copy must be returned (the same applies if the object's content must change)</li>
-		  </ul>
-		</li>
+                        <li>Declaring the class as <code>final</code></li>
 
-		<li>The <code>static</code> keyword can be applied to attributes, methods, blocks and classes. A <code>static</code> member belongs to the class where is declared, not to a particular instance.</li>
+                        <li>If it has mutable types (for example a <code>List</code>), either the reference cannot be accessible outside the object or a copy must be returned (the same applies if the object's content must change)</li>
+                    </ul>
+                </li>
 
-		<li>The <code>final</code> keyword can be applied to variables (so they cannot change their value after initialized), methods (so they cannot be overridden), and classes (so they cannot be subclassed).</li>
-	  </ul>
+                <li>The <code>static</code> keyword can be applied to attributes, methods, blocks and classes. A <code>static</code> member belongs to the class where is declared, not to a particular instance.</li>
 
-	  
+                <li>The <code>final</code> keyword can be applied to variables (so they cannot change their value after initialized), methods (so they cannot be overridden), and classes (so they cannot be subclassed).</li>
+            </ul>
 
-	  <h2>Self Test</h2>
 
-	  <p>1. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_1_1</span></span> {<br />
+            <h2>Self Test</h2>
+
+            <p>1. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_1_1</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> a; <span class="hljs-comment">// 1</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> b = <span class="hljs-number">1</span>; <span class="hljs-comment">// 2</span><br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-title">Question_1_1</span><span class="hljs-params">()</span></span> {<br />
@@ -710,42 +710,29 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>01</code><br />
-	  B. Compilation fails on the line marked as <code>// 1</code><br />
-	  C. Compilation fails on the line marked as <code>// 2</code><br />
-	  D. Compilation fails on the line marked as <code>// 3</code><br />
-	  E. Compilation fails on the line marked as <code>// 4</code></p>
+            <p>What is the result?<br /> A. <code>01</code><br /> B. Compilation fails on the line marked as <code>// 1</code><br /> C. Compilation fails on the line marked as <code>// 2</code><br /> D. Compilation fails on the line marked as <code>// 3</code><br /> E. Compilation fails on the line marked as <code>// 4</code></p>
 
-	  
 
-	  <p>2. Which of the following state the correct order from the more restricted modifier to the more unrestricted?<br />
-	  A. <code>private</code>, default, <code>public</code>, <code>protected</code><br />
-	  B. <code>protected</code>, <code>private</code>, default, <code>public</code><br />
-	  C. default, <code>protected</code>, <code>private</code>, <code>public</code><br />
-	  D. <code>private</code>, default, <code>protected</code>, <code>public</code></p>
 
-	  
+            <p>2. Which of the following state the correct order from the more restricted modifier to the more unrestricted?<br /> A. <code>private</code>, default, <code>public</code>, <code>protected</code><br /> B. <code>protected</code>, <code>private</code>, default, <code>public</code><br /> C. default, <code>protected</code>, <code>private</code>, <code>public</code><br /> D. <code>private</code>, default, <code>protected</code>, <code>public</code></p>
 
-	  <p>3. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_1_3</span></span> {<br />
+
+            <p>3. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_1_3</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> n;<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-title">Question_1_3</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setN</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span></span> {&nbsp;<span class="hljs-keyword">this</span>.n = n;&nbsp;}<br />
 	  }</code></p>
 
-	  <p>Which of the following is true?<br />
-	  A. The class is immutable<br />
-	  B. The class is not immutable<br />
-	  C. Compilation fails<br />
-	  D. An exception occurs at runtime</p>
+            <p>Which of the following is true?<br /> A. The class is immutable<br /> B. The class is not immutable<br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
-	  
 
-	  <p>4. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_1_4</span></span> {<br />
+            <p>4. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_1_4</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">final</span> List&lt;Integer&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(List&lt;Integer&gt; list)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; list.add(<span class="hljs-number">0</span>);<br />
@@ -756,17 +743,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Which of the following is true?<br />
-	  A. Attribute <code>list</code> contains one element after main is executed<br />
-	  B. The class is immutable<br />
-	  C. Compilation fails<br />
-	  D. An exception occurs at runtime</p>
+            <p>Which of the following is true?<br /> A. Attribute <code>list</code> contains one element after main is executed<br /> B. The class is immutable<br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
-	  
 
-	  <p>5. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_1_5</span></span> {<br />
+            <p>5. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_1_5</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> String s = <span class="hljs-string">"Hi"</span>;<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Question_1_5 q = <span class="hljs-keyword">new</span> Question_1_5();<br />
@@ -775,17 +758,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>Hi</code><br />
-	  B. <code>Bye</code><br />
-	  C. Compilation fails on the declaration marked as <code>// 1</code><br />
-	  D. Compilation fails on the declaration marked as <code>// 2</code></p>
+            <p>What is the result?<br /> A. <code>Hi</code><br /> B. <code>Bye</code><br /> C. Compilation fails on the declaration marked as <code>// 1</code><br /> D. Compilation fails on the declaration marked as <code>// 2</code></p>
 
-	  
 
-	  <p>6. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_1_6</span></span> {<br />
+            <p>6. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_1_6</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> a;<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">int</span> b;<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; static</span> {<br />
@@ -800,32 +779,29 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>0</code><br />
-	  B. <code>3</code><br />
-	  C. <code>2</code><br />
-	  D. Compilation fails</p>
-  
-		<div class="answers">
-			<a href="ch01a.html" target="_blank">Open answers page</a>
-		</div>
-	  
-		<div class="book-info"></div>
+            <p>What is the result?<br /> A. <code>0</code><br /> B. <code>3</code><br /> C. <code>2</code><br /> D. Compilation fails</p>
 
-		<div class="linkbox">
-			<div class="previous">
-				&nbsp;
-			</div>
-			<div class="next">
-				<a href="ch02.html">02. Inheritance and Polymorphism</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-		
-  <footer></footer>
-	
+            <div class="answers">
+                <a href="ch01a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    &nbsp;
+                </div>
+                <div class="next">
+                    <a href="ch02.html">02. Inheritance and Polymorphism</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer></footer>
+
 </body>
+
 </html>

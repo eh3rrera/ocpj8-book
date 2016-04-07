@@ -1,83 +1,73 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter FIVE</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter FIVE</i><br />
 			  Enumerations</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Use enumerated types including methods, and constructors in an enum type.</i></p>
-			  
-			</div>	
-		</div>
-	</div>
+                <p style="text-align: center;"><i>Use enumerated types including methods, and constructors in an enum type.</i></p>
 
-  
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-	  <h2>Answers</h2>
 
-	  <p><b>1. The correct answer is C.</b><br />
-	  An <code>enum</code> is implicitly <code>static</code>. This makes the <code>printValue()</code> method executing in a <code>static</code> context, so the reference to value, a non-static variable, is invalid.</p>
+    <div class="container">
 
-	  <p><br /></p>
+        <div class="column">
 
-	  <p><b>2. The correct answer is A.</b><br />
-	  There's nothing wrong with the code. Since <code>values()</code> returns an array of enums in the same order in which they were declared, <code>Blue</code> is returned, and <code>1</code> is printed.</p>
+            <h2>Answers</h2>
 
-	  <p><br /></p>
+            <p><b>1. The correct answer is C.</b><br /> An <code>enum</code> is implicitly <code>static</code>. This makes the <code>printValue()</code> method executing in a <code>static</code> context, so the reference to value, a non-static variable, is invalid.</p>
 
-	  <p><b>3. The correct answer is A.</b><br />
-	  Option A is true. Enums are thread-safe.<br />
-	  Option B is false. Enums can't extend from a class, but they can implement an interface.<br />
-	  Option C is false. Enums can define <code>private</code> constructors.<br />
-	  Option D is false. Enums can have setter methods.</p>
+            <p><br /></p>
 
-	  <p><br /></p>
+            <p><b>2. The correct answer is A.</b><br /> There's nothing wrong with the code. Since <code>values()</code> returns an array of enums in the same order in which they were declared, <code>Blue</code> is returned, and <code>1</code> is printed.</p>
 
-	  <p><b>4. The correct answer is C.</b><br />
-	  Enums are created just in time, the first time they are referenced. When variable <code>l1</code> is created, the enum <code>Level</code> is also created, calling the constructor of <code>HIGH</code> and <code>LOW</code> and printing <code>100</code> and <code>10</code>.</p>
+            <p><br /></p>
 
-	  <p><br /></p>
+            <p><b>3. The correct answer is A.</b><br /> Option A is true. Enums are thread-safe.<br /> Option B is false. Enums can't extend from a class, but they can implement an interface.<br /> Option C is false. Enums can define <code>private</code> constructors.<br /> Option D is false. Enums can have setter methods.</p>
 
-	  <p><b>5. The correct answer is B.</b><br />
-	  Enums constants from different enumerations are not equal, even if the share the same name.</p>
+            <p><br /></p>
 
-	  <p><br /></p>
+            <p><b>4. The correct answer is C.</b><br /> Enums are created just in time, the first time they are referenced. When variable <code>l1</code> is created, the enum <code>Level</code> is also created, calling the constructor of <code>HIGH</code> and <code>LOW</code> and printing <code>100</code> and <code>10</code>.</p>
 
-	  <p><b>6. The correct answers are A and B.</b><br />
-	  Option A is true. You can compare two enumerations using the <code>==</code> operator.<br />
-	  Option B is true. Enums implicitly inherit from <code>java.lang.Enum</code>.<br />
-	  Option C is false. You can use the new operator inside an <code>enum</code>, but you cannot use the <code>new</code> operator to create a reference to an <code>enum</code>.<br />
-	  Option D is false. You can have abstract methods inside an <code>enum</code>, but all <code>enum</code> constants must provide an implementation.</p>
+            <p><br /></p>
 
-	  <p><br /></p>
-  
-	</div>
-  </div>
-		
-  <footer></footer>
-  
+            <p><b>5. The correct answer is B.</b><br /> Enums constants from different enumerations are not equal, even if the share the same name.</p>
+
+            <p><br /></p>
+
+            <p><b>6. The correct answers are A and B.</b><br /> Option A is true. You can compare two enumerations using the <code>==</code> operator.<br /> Option B is true. Enums implicitly inherit from <code>java.lang.Enum</code>.<br /> Option C is false. You can use the new operator inside an <code>enum</code>, but you cannot use the <code>new</code> operator to create a reference to an <code>enum</code>.<br /> Option D is false. You can have abstract methods inside an <code>enum</code>, but all <code>enum</code> constants must provide an implementation.</p>
+
+            <p><br /></p>
+
+        </div>
+    </div>
+
+    <footer></footer>
+
 </body>
+
 </html>

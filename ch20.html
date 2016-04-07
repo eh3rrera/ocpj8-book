@@ -2,248 +2,236 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter TWENTY</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter TWENTY</i><br />
 			  Assertions</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Test invariants by using assertions.</i><br /></p>
-			  
-			</div>
-		</div>
-	</div>
-	
-	
+                <p style="text-align: center;"><i>Test invariants by using assertions.</i><br /></p>
 
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-		<h2>Using assertions</h2>
 
-	  <p>An assertion is a statement used to check if something is true and helps you to detect errors in a program.</p>
 
-	  <p>An assert statement has the following syntax:</p>
+    <div class="container">
 
-	  <p><code class="java hljs"><span class="hljs-keyword">assert</span> booleanExpression;</code></p>
+        <div class="column">
 
-	  <p>If <code>booleanExpression</code> evaluates to <b>FALSE</b>, an exception of type <code>java.lang.AssertionError</code> (a subclass of <code>Error</code>) is thrown.</p>
+            <h2>Using assertions</h2>
 
-	  <p>In other words, the above statement is equivalent to:</p>
+            <p>An assertion is a statement used to check if something is true and helps you to detect errors in a program.</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">if</span>(booleanExpressionIsFalse) {<br />
+            <p>An assert statement has the following syntax:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">assert</span> booleanExpression;</code></p>
+
+            <p>If <code>booleanExpression</code> evaluates to <b>FALSE</b>, an exception of type <code>java.lang.AssertionError</code> (a subclass of <code>Error</code>) is thrown.</p>
+
+            <p>In other words, the above statement is equivalent to:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">if</span>(booleanExpressionIsFalse) {<br />
 	  &nbsp;<span class="hljs-keyword"><font color="#000000">&nbsp;&nbsp;&nbsp;&nbsp;</font>throw</span> <span class="hljs-keyword">new</span> AssertionError();<br />
 	  }</code></p>
 
-	  <p>This is because, as said before, an assertion has to be true. If it's not, an error has to be thrown.</p>
+            <p>This is because, as said before, an assertion has to be true. If it's not, an error has to be thrown.</p>
 
-	  <p>An assert statement can also take a <code>String</code> as a message:</p>
+            <p>An assert statement can also take a <code>String</code> as a message:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">assert</span> booleanExpression: <span class="hljs-string">"Message about the error"</span>;</code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">assert</span> booleanExpression: <span class="hljs-string">"Message about the error"</span>;</code></p>
 
-	  <p>Which is equivalent to:</p>
+            <p>Which is equivalent to:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">if</span>(booleanExpressionIsFalse) {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">if</span>(booleanExpressionIsFalse) {<br />
 	  &nbsp;<span class="hljs-keyword">&nbsp;&nbsp;&nbsp;&nbsp;throw</span> <span class="hljs-keyword">new</span> AssertionError(<span class="hljs-string">"Message about the error"</span>);<br />
 	  }</code></p>
 
-	  <p>The thing is, assertions are <b>NOT</b> enabled by default.</p>
+            <p>The thing is, assertions are <b>NOT</b> enabled by default.</p>
 
-	  <p>You can have assertion all over you code, but if they are disabled, Java will skip them all.</p>
+            <p>You can have assertion all over you code, but if they are disabled, Java will skip them all.</p>
 
-	  <p>In summary:</p>
+            <p>In summary:</p>
 
-	  <ul>
-		<li>If assertions are enabled and the <code>boolean</code> expression is true, nothing happens.</li>
+            <ul>
+                <li>If assertions are enabled and the <code>boolean</code> expression is true, nothing happens.</li>
 
-		<li>If assertions are enabled and the <code>boolea</code>n expression is false, an <code>AssertionError</code> is thrown.</li>
+                <li>If assertions are enabled and the <code>boolea</code>n expression is false, an <code>AssertionError</code> is thrown.</li>
 
-		<li>If assertions are disabled, no matter the outcome of the <code>boolean</code> expression, assertions are ignored.</li>
-	  </ul>
+                <li>If assertions are disabled, no matter the outcome of the <code>boolean</code> expression, assertions are ignored.</li>
+            </ul>
 
-	  <p>Assertions are enabled in the command-line with either:</p>
+            <p>Assertions are enabled in the command-line with either:</p>
 
-	  <p><code class="java hljs">java –ea MainClass</code></p>
+            <p><code class="java hljs">java –ea MainClass</code></p>
 
-	  <p>Or</p>
+            <p>Or</p>
 
-	  <p><code class="java hljs">java –enableassertions MainClass</code></p>
+            <p><code class="java hljs">java –enableassertions MainClass</code></p>
 
-	  <p>This would enable assertions in all the classes of our program except for the classes of Java (or system classes).</p>
+            <p>This would enable assertions in all the classes of our program except for the classes of Java (or system classes).</p>
 
-	  <p>For example, if we have this class:</p>
+            <p>For example, if we have this class:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> TestAssertion {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> TestAssertion {<br />
 	  &nbsp;<span class="hljs-function"><span class="hljs-keyword">&nbsp;&nbsp;&nbsp;&nbsp;public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp;<span class="hljs-comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Parentheses are optional<br /></span> <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; assert</span> (args.length &gt; <span class="hljs-number">0</span>) :<br />
 	  &nbsp;<span class="hljs-string">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"At least one argument is required"</span>; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(args[<span class="hljs-number">0</span>]); &nbsp;&nbsp;&nbsp;&nbsp;}<br />
 	  }</code></p>
 
-	  <p>And we run it this way:</p>
+            <p>And we run it this way:</p>
 
-	  <p><code class="java hljs">java –ea TestAssertion</code></p>
+            <p><code class="java hljs">java –ea TestAssertion</code></p>
 
-	  <p>The output will be:</p>
+            <p>The output will be:</p>
 
-	  <p><code class="java hljs">Exception in thread <span class="">"main"</span> java.lang.AssertionError: At least one argument is required at com.example.TestAssertion.main(TestAssertion.java:<span class="hljs-number">7</span>)</code></p>
+            <p><code class="java hljs">Exception in thread <span class="">"main"</span> java.lang.AssertionError: At least one argument is required at com.example.TestAssertion.main(TestAssertion.java:<span class="hljs-number">7</span>)</code></p>
 
-	  <p>If we run it this way:</p>
+            <p>If we run it this way:</p>
 
-	  <p><code class="java hljs">java –ea TestAssertion Hi</code></p>
+            <p><code class="java hljs">java –ea TestAssertion Hi</code></p>
 
-	  <p>The output will be:</p>
+            <p>The output will be:</p>
 
-	  <p><code class="java hljs">Hi</code></p>
+            <p><code class="java hljs">Hi</code></p>
 
-	  <p>If we run it this way:</p>
+            <p>If we run it this way:</p>
 
-	  <p><code class="java hljs">java TestAssertion</code></p>
+            <p><code class="java hljs">java TestAssertion</code></p>
 
-	  <p>The output will be:</p>
+            <p>The output will be:</p>
 
-	  <p><code class="java hljs">Exception in thread <span class="">"main"</span> java.lang.ArrayIndexOutOfBoundsException: <span class="hljs-number">0</span> at com.example.TestAssertion.main(TestAssertion.java:<span class="hljs-number">8</span>)</code></p>
+            <p><code class="java hljs">Exception in thread <span class="">"main"</span> java.lang.ArrayIndexOutOfBoundsException: <span class="hljs-number">0</span> at com.example.TestAssertion.main(TestAssertion.java:<span class="hljs-number">8</span>)</code></p>
 
-	  <p>As you can see, assertions can help us catch some errors derived from assumptions we make in our program. Just be aware that they are not enabled by default. They are not designed to be run in production, for that, it's better to use regular exceptions.</p>
+            <p>As you can see, assertions can help us catch some errors derived from assumptions we make in our program. Just be aware that they are not enabled by default. They are not designed to be run in production, for that, it's better to use regular exceptions.</p>
 
-	  <p>Assertions are better used to validate parameters, properties, preconditions, postconditions, application flow of control (for points of the code that should never be reached), and in general, error checking that otherwise, you would have to comment or disabled when the code is ready for production.</p>
+            <p>Assertions are better used to validate parameters, properties, preconditions, postconditions, application flow of control (for points of the code that should never be reached), and in general, error checking that otherwise, you would have to comment or disabled when the code is ready for production.</p>
 
-	  <p>Assertions can also be enabled for one class:</p>
+            <p>Assertions can also be enabled for one class:</p>
 
-	  <p><code class="java hljs">java –ea:ClassName MainClass</code></p>
+            <p><code class="java hljs">java –ea:ClassName MainClass</code></p>
 
-	  <p>Or for all classes in a package:</p>
+            <p>Or for all classes in a package:</p>
 
-	  <p><code class="java hljs">java –ea:com.example MainClass</code></p>
+            <p><code class="java hljs">java –ea:com.example MainClass</code></p>
 
-	  <p>For enabling assertions in the unnamed package (when you don't use a package statement):</p>
+            <p>For enabling assertions in the unnamed package (when you don't use a package statement):</p>
 
-	  <p><code class="java hljs">java –ea:... MainClass</code></p>
+            <p><code class="java hljs">java –ea:... MainClass</code></p>
 
-	  <p>Or in the rare case you'd want to enable assertions for the system classes:</p>
+            <p>Or in the rare case you'd want to enable assertions for the system classes:</p>
 
-	  <p><code class="java hljs">java –esa MainClass</code></p>
+            <p><code class="java hljs">java –esa MainClass</code></p>
 
-	  <p>Or</p>
+            <p>Or</p>
 
-	  <p><code class="java hljs">java –enablesystemsassertions MainClass</code></p>
+            <p><code class="java hljs">java –enablesystemsassertions MainClass</code></p>
 
-	  <p>There's also a command to disable assertions:</p>
+            <p>There's also a command to disable assertions:</p>
 
-	  <p><code class="java hljs">java –da MainClass</code></p>
+            <p><code class="java hljs">java –da MainClass</code></p>
 
-	  <p>Or</p>
+            <p>Or</p>
 
-	  <p><code class="java hljs">java –disableassertions MainClass</code></p>
+            <p><code class="java hljs">java –disableassertions MainClass</code></p>
 
-	  <p>With the same options that <code>-ea</code>. To disable for one class:</p>
+            <p>With the same options that <code>-ea</code>. To disable for one class:</p>
 
-	  <p><code class="java hljs">java –da:ClassName MainClass</code></p>
+            <p><code class="java hljs">java –da:ClassName MainClass</code></p>
 
-	  <p>For disabling assertions in a package:</p>
+            <p>For disabling assertions in a package:</p>
 
-	  <p><code class="java hljs">java –da:com.example MainClass</code></p>
+            <p><code class="java hljs">java –da:com.example MainClass</code></p>
 
-	  <p>For enabling assertion in the unnamed package:</p>
+            <p>For enabling assertion in the unnamed package:</p>
 
-	  <p><code class="java hljs">java –ea:... MainClass</code></p>
+            <p><code class="java hljs">java –ea:... MainClass</code></p>
 
-	  <p>For the system classes:</p>
+            <p>For the system classes:</p>
 
-	  <p><code class="java hljs">java –dsa MainClass</code></p>
+            <p><code class="java hljs">java –dsa MainClass</code></p>
 
-	  <p>Or</p>
+            <p>Or</p>
 
-	  <p><code class="java hljs">java –disablesystemassertions MainClass</code></p>
+            <p><code class="java hljs">java –disablesystemassertions MainClass</code></p>
 
-	  <p>This option exists because there will be times when you want to use commands like:</p>
+            <p>This option exists because there will be times when you want to use commands like:</p>
 
-	  <p><code class="java hljs">java –ea -da:ClassOne MainClass</code></p>
+            <p><code class="java hljs">java –ea -da:ClassOne MainClass</code></p>
 
-	  <p>To enable assertions in all the program classes except for <code>Class1</code>.</p>
+            <p>To enable assertions in all the program classes except for <code>Class1</code>.</p>
 
-	  
 
-	  <h2>Key Points</h2>
 
-	  <ul>
-		<li>An assertion is a statement used to check if something is true and helps you to detect errors in a program.</li>
+            <h2>Key Points</h2>
 
-		<li>An assert statement has the following syntax:<br />
-		<code class="java hljs"><span class="hljs-keyword">assert</span> booleanExpression;<br />
+            <ul>
+                <li>An assertion is a statement used to check if something is true and helps you to detect errors in a program.</li>
+
+                <li>An assert statement has the following syntax:<br />
+                    <code class="java hljs"><span class="hljs-keyword">assert</span> booleanExpression;<br />
 		<span class="hljs-keyword">assert</span> booleanExpression: <span class="hljs-string">"Message about the error"</span>;</code></li>
 
-		<li>If the <code>boolean</code> expression of the assert statement evaluates to <code>false</code>, the program will throw a <code>java.lang.AssertionError</code> and terminate.</li>
+                <li>If the <code>boolean</code> expression of the assert statement evaluates to <code>false</code>, the program will throw a <code>java.lang.AssertionError</code> and terminate.</li>
 
-		<li>By default, assertions are disabled. You can use the command-line arguments <code>–ea</code> (for enabling assertions) and <code>–da</code> (for disabling assertions) with other options for classes, packages, and system classes when running the program.</li>
-	  </ul>
+                <li>By default, assertions are disabled. You can use the command-line arguments <code>–ea</code> (for enabling assertions) and <code>–da</code> (for disabling assertions) with other options for classes, packages, and system classes when running the program.</li>
+            </ul>
 
-	  
 
-	  <h2>Self Test</h2>
 
-	  <p>1. Given:</p>
+            <h2>Self Test</h2>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_20_1</span></span> {<br />
+            <p>1. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_20_1</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">int</span> x = 0;<br />
 	  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">assert</span> ++x &gt; 0 : x;<br />
 	  &nbsp;&nbsp;&nbsp;&nbsp;}<br />
 	  }</code></p>
 
-	  <p>What is the result when this program is executed with assertions enabled?<br />
-	  A. <code>0</code><br />
-	  B. <code>1</code><br />
-	  C. Nothing is printed<br />
-	  D. An exception is thrown at runtime</p>
+            <p>What is the result when this program is executed with assertions enabled?<br /> A. <code>0</code><br /> B. <code>1</code><br /> C. Nothing is printed<br /> D. An exception is thrown at runtime</p>
 
-	  
 
-	  <p>2. Which of the following statements is true?<br />
-	  A. You can disable assertion at the command-line.<br />
-	  B. Assertions are enabled by default in system classes.<br />
-	  C. Even if assertions are disabled, if the <code>boolean</code> expression evaluates to false, a runtime error is thrown.<br />
-	  D. Depending on the syntax, assertions can throw either a checked or a runtime exception.</p>
 
-	  
+            <p>2. Which of the following statements is true?<br /> A. You can disable assertion at the command-line.<br /> B. Assertions are enabled by default in system classes.<br /> C. Even if assertions are disabled, if the <code>boolean</code> expression evaluates to false, a runtime error is thrown.<br /> D. Depending on the syntax, assertions can throw either a checked or a runtime exception.</p>
 
-	  <p>3. Given:</p>
 
-	  <p><code>java -esa -ea:com.example MainClass</code></p>
 
-	  <p>Which of the following statements is true?<br />
-	  A. This command enables assertions in all classes of our program.<br />
-	  B. This command enables assertions in system classes in all classes of our program.<br />
-	  C. This command enables assertions in system classes in just <code>MainClass</code>.<br />
-	  D. This command enables assertions in system classes of the packages <code>com.example</code>.</p>
+            <p>3. Given:</p>
 
-	  
+            <p><code>java -esa -ea:com.example MainClass</code></p>
 
-	  <p>4. Given:</p>
+            <p>Which of the following statements is true?<br /> A. This command enables assertions in all classes of our program.<br /> B. This command enables assertions in system classes in all classes of our program.<br /> C. This command enables assertions in system classes in just <code>MainClass</code>.<br /> D. This command enables assertions in system classes of the packages <code>com.example</code>.</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_20_4</span></span> {<br />
+
+
+            <p>4. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_20_4</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; <span class="hljs-keyword">assert</span> isValid();<br />
 	  &nbsp; &nbsp; }<br />
@@ -252,47 +240,41 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result when this program is executed with assertions enabled?<br />
-	  A. <code>false</code><br />
-	  B. Nothing is printed<br />
-	  C. A compile time error<br />
-	  D. An <code>AssertionError</code> is thrown at runtime</p>
+            <p>What is the result when this program is executed with assertions enabled?<br /> A. <code>false</code><br /> B. Nothing is printed<br /> C. A compile time error<br /> D. An <code>AssertionError</code> is thrown at runtime</p>
 
-	  
 
-	  <p>5. Which of the following statements is equivalent to:</p>
 
-	  <p><code class="hljs">assert false : "Assertion is false";</code></p>
+            <p>5. Which of the following statements is equivalent to:</p>
 
-	  <p>A. <code>throw new Assertion("Asssertion is false");</code><br />
-	  B. <code>throw new AssertionError("Asssertion is false");</code><br />
-	  C. <code>if(false) throw new AssertionError("Asssertion is false");</code><br />
-	  D. <code>if(false) throw new RuntimeException("Asssertion is false");</code></p>
+            <p><code class="hljs">assert false : "Assertion is false";</code></p>
 
-	  
+            <p>A. <code>throw new Assertion("Asssertion is false");</code><br /> B. <code>throw new AssertionError("Asssertion is false");</code><br /> C. <code>if(false) throw new AssertionError("Asssertion is false");</code><br /> D. <code>if(false) throw new RuntimeException("Asssertion is false");</code></p>
 
-	  
-    
-		<div class="answers">
-			<a href="ch20a.html" target="_blank">Open answers page</a>
-		</div>
 
-		<div class="book-info"></div>
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch19.html">19. Exceptions</a>
-			</div>
-			<div class="next">
-				<a href="ch21.html">21. Core Date/Time Classes</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+
+
+            <div class="answers">
+                <a href="ch20a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch19.html">19. Exceptions</a>
+                </div>
+                <div class="next">
+                    <a href="ch21.html">21. Core Date/Time Classes</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>
