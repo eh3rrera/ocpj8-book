@@ -2,65 +2,65 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-				<h1><i class="chapter">Chapter THREE</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter THREE</i><br />
 				Inner Classes</h1>
 
-				<p><br /></p>
+                <p><br /></p>
 
-				<h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-				<p style="text-align: center;"><i>Create inner classes including static inner class, local class, nested class, and anonymous inner class.</i><br /></p>
-			  
-			</div>	
-		</div>
-	</div>
-	
-	
+                <p style="text-align: center;"><i>Create inner classes including static inner class, local class, nested class, and anonymous inner class.</i><br /></p>
 
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-		<h2>Classes</h2>
 
-	  <p>In Java we have classes:</p>
 
-	  <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer&nbsp;</span></span>{<br />
+    <div class="container">
+
+        <div class="column">
+
+            <h2>Classes</h2>
+
+            <p>In Java we have classes:</p>
+
+            <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer&nbsp;</span></span>{<br />
 	  <br />
 	  }</code></p>
 
-	  <p>Classes have two types of members, attributes (or fields) and methods (or functions):<br /></p>
+            <p>Classes have two types of members, attributes (or fields) and methods (or functions):<br /></p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">int</span> serialNumber;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">executeCommand</span>()</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Do something<br /></span>&nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>This way, our programs are a collection of classes.<br /></p>
+            <p>This way, our programs are a collection of classes.<br /></p>
 
-	  <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
+            <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Here goes the definition of the class<br /></span>}<br />
 	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Desktop</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Here goes the definition of the class<br /></span>}<br />
@@ -69,24 +69,24 @@
 	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Programmer</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Here goes the definition of the class<br /></span>}</code></p>
 
-	  <h2>Inner classes<br /></h2>
+            <h2>Inner classes<br /></h2>
 
-	  <p>Java gives us flexibility in the way we can design our classes.</p>
+            <p>Java gives us flexibility in the way we can design our classes.</p>
 
-	  <p>For this, there's a third type of member a class can have, an <b>INNER CLASS</b>.<br /></p>
+            <p>For this, there's a third type of member a class can have, an <b>INNER CLASS</b>.<br /></p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
 	  &nbsp; &nbsp; &nbsp;String serialNumber;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">executeCommand</span>()</span> { }<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">Processor</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Here goes the definition of the class<br /></span>&nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>Inner classes are also known as nested classes. In theory, you could have many levels of classes.</p>
+            <p>Inner classes are also known as nested classes. In theory, you could have many levels of classes.</p>
 
-	  <p>I have a hard time thinking about what would be the benefit of having more than one level of inner classes.</p>
+            <p>I have a hard time thinking about what would be the benefit of having more than one level of inner classes.</p>
 
-	  <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LevelOne</span></span> {<br />
+            <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LevelOne</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LevelTwo</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LevelThree</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LevelFour</span></span> {<br />
@@ -95,60 +95,60 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>Another thing. We always talk about inner <b>CLASSES</b>, but actually, we can have inner <b>ABSTRACT CLASSES</b>, inner <b>INTERFACES</b>, and inner <b>ENUMS</b>.</p>
+            <p>Another thing. We always talk about inner <b>CLASSES</b>, but actually, we can have inner <b>ABSTRACT CLASSES</b>, inner <b>INTERFACES</b>, and inner <b>ENUMS</b>.</p>
 
-	  <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Processor</span> {</span> }<br />
+            <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Processor</span> {</span> }<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Pluggable</span> {</span> }<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">PORTS</span> {<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;USB2, USB3, ESATA, HDMI<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>But we are going to focus on simple inner classes. There are four types of them:</p>
+            <p>But we are going to focus on simple inner classes. There are four types of them:</p>
 
-	  <ul>
-		<li><b>STATIC</b> inner classes<br /></li>
+            <ul>
+                <li><b>STATIC</b> inner classes<br /></li>
 
-		<li><b>NON-STATIC</b> inner classes<br /></li>
+                <li><b>NON-STATIC</b> inner classes<br /></li>
 
-		<li><b>LOCAL</b> classes<br /></li>
+                <li><b>LOCAL</b> classes<br /></li>
 
-		<li><b>ANONYMOUS</b> classes</li>
-	  </ul>
-	  <hr />
+                <li><b>ANONYMOUS</b> classes</li>
+            </ul>
+            <hr />
 
-	  <h4><i>Defining a static inner class</i></h4>
+            <h4><i>Defining a static inner class</i></h4>
 
-	  <p><i><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
+            <p><i><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Mouse</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></i></p>
 
-	  <h4><i>Using a static inner class</i></h4>
+            <h4><i>Using a static inner class</i></h4>
 
-	  <p><i><code class="hljs"><span class="hljs-type">Computer</span>.<span class="hljs-type">Mouse</span> m = <span class="hljs-keyword">new</span> <span class="hljs-type">Computer</span>.<span class="hljs-type">Mouse</span><span class="hljs-literal">()</span>;</code></i></p>
+            <p><i><code class="hljs"><span class="hljs-type">Computer</span>.<span class="hljs-type">Mouse</span> m = <span class="hljs-keyword">new</span> <span class="hljs-type">Computer</span>.<span class="hljs-type">Mouse</span><span class="hljs-literal">()</span>;</code></i></p>
 
-	  <p><i>Static inner classes are accessed through their enclosing class</i></p>
-	  <hr />
+            <p><i>Static inner classes are accessed through their enclosing class</i></p>
+            <hr />
 
-	  <p>Static classes are <b>INDEPENDENT</b> of their enclosing class. They are like ordinary classes, only that they just happen to be inside another class.</p>
+            <p>Static classes are <b>INDEPENDENT</b> of their enclosing class. They are like ordinary classes, only that they just happen to be inside another class.</p>
 
-	  <p>In fact, you can think of the enclosing class as a kind of a package. You can import the name of the enclosing class and use the static inner class like a normal class. Just remember that the inner static class must be a <code>public</code> member so that it can be accessed from another package.</p>
+            <p>In fact, you can think of the enclosing class as a kind of a package. You can import the name of the enclosing class and use the static inner class like a normal class. Just remember that the inner static class must be a <code>public</code> member so that it can be accessed from another package.</p>
 
-	  <p><code class="hljs"><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> com.example.Computer.*;<br /></span> <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+            <p><code class="hljs"><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> com.example.Computer.*;<br /></span> <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; Mouse m = <span class="hljs-keyword">new</span> Mouse();<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-comment">/** Rest of the definition */<br /></span>}</code></p>
 
-	  <p>And they can also be&nbsp;marked as <code>private</code>, <code>protected</code> or without a modifier, so they are accessible only in the package (default accessibility).</p>
+            <p>And they can also be&nbsp;marked as <code>private</code>, <code>protected</code> or without a modifier, so they are accessible only in the package (default accessibility).</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Component</span></span> { }<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">protected</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MotherBoard</span></span> { }<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Slot</span></span> { }<br />
 	  }</code></p>
 
-	  <p>Of course, by being a member of a class, the static inner class have access to the other members of the enclosing class, but only if they are <b>STATIC</b>.</p>
+            <p>Of course, by being a member of a class, the static inner class have access to the other members of the enclosing class, but only if they are <b>STATIC</b>.</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String serialNumber = <span class="hljs-string">"1234X"</span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Mouse</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printSN</span>()</span> {<br />
@@ -157,61 +157,61 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>Why?</p>
+            <p>Why?</p>
 
-	  <p>Think about it, if the static class is independent of its enclosing class, it doesn't need an instance of this, so only the static members could be used because they are associated with the class, not to a particular instance.</p>
+            <p>Think about it, if the static class is independent of its enclosing class, it doesn't need an instance of this, so only the static members could be used because they are associated with the class, not to a particular instance.</p>
 
-	  <p>For that reason, a static inner class is often used as a utility class that contains common methods shared by all the objects of a class.</p>
+            <p>For that reason, a static inner class is often used as a utility class that contains common methods shared by all the objects of a class.</p>
 
-	  <p>If you use the static inner class inside the class that defines it, you can use it in any method, block or constructor, no matter if it's static or not, since the inner class is not tied to a particular instance.</p>
-	  <hr />
+            <p>If you use the static inner class inside the class that defines it, you can use it in any method, block or constructor, no matter if it's static or not, since the inner class is not tied to a particular instance.</p>
+            <hr />
 
-	  <h4><i>Defining a non-static inner class</i></h4>
+            <h4><i>Defining a non-static inner class</i></h4>
 
-	  <p><i><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
+            <p><i><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HardDrive</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></i></p>
 
-	  <h4><i>Using a non-static inner class</i></h4>
+            <h4><i>Using a non-static inner class</i></h4>
 
-	  <p><i>NON-Static inner classes are accessed through An instance of their enclosing class</i></p>
+            <p><i>NON-Static inner classes are accessed through An instance of their enclosing class</i></p>
 
-	  <p><i><code class="hljs"><span class="hljs-type">Computer</span> c = <span class="hljs-keyword">new</span> <span class="hljs-type">Computer</span><span class="hljs-literal">()</span>;<br />
+            <p><i><code class="hljs"><span class="hljs-type">Computer</span> c = <span class="hljs-keyword">new</span> <span class="hljs-type">Computer</span><span class="hljs-literal">()</span>;<br />
 	  <span class="hljs-type">Computer</span>.<span class="hljs-type">HardDrive</span> hd = c.<span class="hljs-keyword">new</span> <span class="hljs-type">HardDrive</span><span class="hljs-literal">()</span>;</code></i></p>
 
-	  <p><i>Check out the type of the inner class and how the new operator is used</i></p>
-	  <hr />
+            <p><i>Check out the type of the inner class and how the new operator is used</i></p>
+            <hr />
 
-	  <p>Non-static inner classes are just called inner classes.</p>
+            <p>Non-static inner classes are just called inner classes.</p>
 
-	  <p>Instances of an inner class only exist <b>WITHIN</b> an instance of the enclosing class. It's the same that when you want to use a method of a class, you <b>FIRST</b> need an instance of that class.</p>
+            <p>Instances of an inner class only exist <b>WITHIN</b> an instance of the enclosing class. It's the same that when you want to use a method of a class, you <b>FIRST</b> need an instance of that class.</p>
 
-	  <p>Once you have an instance of the enclosing class, you use the new operator in a (weird) different way you typically use it.</p>
+            <p>Once you have an instance of the enclosing class, you use the new operator in a (weird) different way you typically use it.</p>
 
-	  <p><code class="hljs"><span class="hljs-type">Computer</span> computer = <span class="hljs-keyword">new</span> <span class="hljs-type">Computer</span><span class="hljs-literal">()</span>;<br />
+            <p><code class="hljs"><span class="hljs-type">Computer</span> computer = <span class="hljs-keyword">new</span> <span class="hljs-type">Computer</span><span class="hljs-literal">()</span>;<br />
 	  <span class="hljs-type">Computer</span>.<span class="hljs-type">HardDrive</span> hardDrive = computer.<span class="hljs-keyword">new</span> <span class="hljs-type">HardDrive</span><span class="hljs-literal">()</span>;</code></p>
 
-	  <p>You can also use the import trick to writing less, but you still need to create the inner class as always.</p>
+            <p>You can also use the import trick to writing less, but you still need to create the inner class as always.</p>
 
-	  <p><code class="hljs"><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> com.example.Computer.*;<br /></span> <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+            <p><code class="hljs"><span class="hljs-preprocessor"><span class="hljs-keyword">import</span> com.example.Computer.*;<br /></span> <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Computer computer = <span class="hljs-keyword">new</span> Computer();<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;HardDrive hd = computer.<span class="hljs-keyword">new</span> HardDrive();<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">/** Rest of the definition */</span><br />
 	  }</code></p>
 
-	  <p>Another way to get an instance of an inner class is to use a method of the enclosing class to create it, avoiding that weird syntax.</p>
+            <p>Another way to get an instance of an inner class is to use a method of the enclosing class to create it, avoiding that weird syntax.</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">HardDrive</span> { }<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> HardDrive <span class="hljs-title">getHardDrive</span>()</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> HardDrive();<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>By being a member of a class, the inner class has access to the other members of the enclosing class, but this time, it <b>DOESN'T</b> matter if they are static or not.</p>
+            <p>By being a member of a class, the inner class has access to the other members of the enclosing class, but this time, it <b>DOESN'T</b> matter if they are static or not.</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> String brand = <span class="hljs-string">"XXX"</span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> String serialNumber = <span class="hljs-string">"1234X"</span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">HardDrive</span> {<br />
@@ -223,21 +223,21 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>Why?</p>
+            <p>Why?</p>
 
-	  <p>Because to use the inner class, an instance of the enclosing class is required, ensuring that the non-static members exist (static members can be accessed anyway).</p>
+            <p>Because to use the inner class, an instance of the enclosing class is required, ensuring that the non-static members exist (static members can be accessed anyway).</p>
 
-	  <p>Inner classes can also be marked as <code>private</code>, <code>protected</code> or without a modifier, so they are accessible only in the package. But most of the time, since they depend on the enclosing class, they are marked as <code>private</code>.</p>
+            <p>Inner classes can also be marked as <code>private</code>, <code>protected</code> or without a modifier, so they are accessible only in the package. But most of the time, since they depend on the enclosing class, they are marked as <code>private</code>.</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Component</span></span> { }<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">protected</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MotherBoard</span></span> { }<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Slot</span></span> { }<br />
 	  }</code></p>
 
-	  <p>Another rule is that inner classes <b>CANNOT</b> contain <code>static</code> members.</p>
+            <p>Another rule is that inner classes <b>CANNOT</b> contain <code>static</code> members.</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">HardDrive</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Compile-time error here<br /></span><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;static</span> <span class="hljs-keyword">int</span> capacity;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-comment">// Compile-time error here<br /></span><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printInfo</span>()</span> {<br />
@@ -245,13 +245,13 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>Static code is executed during class initialization, but you cannot initialize a non-static inner class without having an instance of the enclosing class.</p>
+            <p>Static code is executed during class initialization, but you cannot initialize a non-static inner class without having an instance of the enclosing class.</p>
 
-	  <p>Because an inner class belongs to <b>ONE</b> instance of the enclosing class. Having a <code>static</code> member means it can be shared across instances because the member belongs to the class, but since we are talking about an inner class that cannot be shared by many instances of the enclosing class, that is not possible.</p>
+            <p>Because an inner class belongs to <b>ONE</b> instance of the enclosing class. Having a <code>static</code> member means it can be shared across instances because the member belongs to the class, but since we are talking about an inner class that cannot be shared by many instances of the enclosing class, that is not possible.</p>
 
-	  <p>The only exception is when you define a <code>final static</code> attribute. The <code>final</code> keyword makes all the difference; it makes a constant expression, but it only works with <b>ATTRIBUTES</b> and when assigning an&nbsp;<b>NON-NULL</b> value.</p>
+            <p>The only exception is when you define a <code>final static</code> attribute. The <code>final</code> keyword makes all the difference; it makes a constant expression, but it only works with <b>ATTRIBUTES</b> and when assigning an&nbsp;<b>NON-NULL</b> value.</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HardDrive</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> capacity = <span class="hljs-number">120</span>; <span class="hljs-comment">// It does compile!</span><br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Compile-time error here<br /></span><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;final</span> <span class="hljs-keyword">static</span> String brand = <span class="hljs-keyword">null</span>;<br />
@@ -259,30 +259,30 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Definition goes here<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
-	  <hr />
+            <hr />
 
-	  <h4><i>Defining a local class</i></h4>
+            <h4><i>Defining a local class</i></h4>
 
-	  <p><i><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
+            <p><i><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span>()</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">Processor</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></i></p>
 
-	  <h4><i>Using a local class</i></h4>
+            <h4><i>Using a local class</i></h4>
 
-	  <p><i>Local classes can only be used inside the method or block that defines them</i></p>
+            <p><i>Local classes can only be used inside the method or block that defines them</i></p>
 
-	  <p><i><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span>()</span> {<br />
+            <p><i><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span>()</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">Core</span> { }<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Core core = <span class="hljs-keyword">new</span> Core();<br />
 	  }</code></i></p>
-	  <hr />
+            <hr />
 
-	  <p>Local classes are local because they can only be used in the method or block where they are declared. Blocks are practically anything between curly braces.</p>
+            <p>Local classes are local because they can only be used in the method or block where they are declared. Blocks are practically anything between curly braces.</p>
 
-	  <p><code class="hljs">void <span class="hljs-function"><span class="hljs-keyword">method</span><span class="hljs-params">()</span> {<br />
+            <p><code class="hljs">void <span class="hljs-function"><span class="hljs-keyword">method</span><span class="hljs-params">()</span> {<br />
 	  &nbsp; &nbsp; class MethodLocalClass { }<br />
 	  &nbsp; &nbsp; MethodLocalClass mlc = <span class="hljs-keyword">new</span> MethodLocalClass<span class="hljs-params">()</span>;<br /></span>&nbsp; &nbsp; <span class="hljs-keyword">if</span> ( <span class="hljs-number">1</span> == <span class="hljs-number">1</span> ) {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> IfLocalClass { }<br />
@@ -294,13 +294,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>Also, notice where the instances of the local classes are created. The local class has to be used <b>BELOW</b> its definition. Otherwise, the compiler won't be able to find it.</p>
+            <p>Also, notice where the instances of the local classes are created. The local class has to be used <b>BELOW</b> its definition. Otherwise, the compiler won't be able to find it.</p>
 
-	  <p>Because a local inner class is not a member of a class, it <b>CANNOT</b> be declared with an access level, and it wouldn't make sense anyway since they are only accessible where they are declared. However, a local class can be declared as abstract or final (but not at the same time).</p>
+            <p>Because a local inner class is not a member of a class, it <b>CANNOT</b> be declared with an access level, and it wouldn't make sense anyway since they are only accessible where they are declared. However, a local class can be declared as abstract or final (but not at the same time).</p>
 
-	  <p>Local classes require an instance of their enclosing class so the method or block in which they are defined can be executed. For this reason, they can access the members of the enclosing class, but they cannot declare static members (only static final attributes), just like inner classes.</p>
+            <p>Local classes require an instance of their enclosing class so the method or block in which they are defined can be executed. For this reason, they can access the members of the enclosing class, but they cannot declare static members (only static final attributes), just like inner classes.</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> String serialNumber = <span class="hljs-string">"1234XX"</span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span>()</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">Processor</span> {<br />
@@ -314,17 +314,17 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>If the local class is declared inside a method, it can access the variables and parameters of the method <b>ONLY</b> if they are declared final or are effectively final.</p>
+            <p>If the local class is declared inside a method, it can access the variables and parameters of the method <b>ONLY</b> if they are declared final or are effectively final.</p>
 
-	  <p><i>Effectively final</i> is a term that means that a variable or parameter is not changed after it's initialized, even if there is not declared as final.</p>
+            <p><i>Effectively final</i> is a term that means that a variable or parameter is not changed after it's initialized, even if there is not declared as final.</p>
 
-	  <p>Why?</p>
+            <p>Why?</p>
 
-	  <p>Because an instance of a local class can be alive even after the method or block in which is defined has finished its execution (for example, if a reference is saved in an object with greater scope). For this reason, the local class must keep an internal copy of the variables it uses, and the only way to ensure that both copies always hold the same value it's by making the variable <code>final</code>.</p>
+            <p>Because an instance of a local class can be alive even after the method or block in which is defined has finished its execution (for example, if a reference is saved in an object with greater scope). For this reason, the local class must keep an internal copy of the variables it uses, and the only way to ensure that both copies always hold the same value it's by making the variable <code>final</code>.</p>
 
-	  <p>So, the following code is valid because <code>taskName</code> is declared final while n doesn't change and it's considered <i>effectively final</i>.</p>
+            <p>So, the following code is valid because <code>taskName</code> is declared final while n doesn't change and it's considered <i>effectively final</i>.</p>
 
-	  <p><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> n</span>)</span> {<br />
+            <p><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> n</span>)</span> {<br />
 	  &nbsp; &nbsp; &nbsp;final String taskName = <span class="hljs-string">"Task #1"</span>;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">Processor</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Processor() {<br />
@@ -336,9 +336,9 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>But if we modify the value of <code>n</code> somewhere, an error will be generated.</p>
+            <p>But if we modify the value of <code>n</code> somewhere, an error will be generated.</p>
 
-	  <p><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> n</span>)</span> {<br />
+            <p><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> n</span>)</span> {<br />
 	  &nbsp; &nbsp; &nbsp;final String taskName = <span class="hljs-string">"Task #1"</span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">Processor</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Processor() {<br />
@@ -350,9 +350,9 @@
 	  &nbsp; &nbsp; &nbsp;n = <span class="hljs-number">4</span>;<br />
 	  }</code></p>
 
-	  <p><i>Effectively final</i> is only concerned with references, not objects or their content, because at the end of the day, we are referencing the same object.</p>
+            <p><i>Effectively final</i> is only concerned with references, not objects or their content, because at the end of the day, we are referencing the same object.</p>
 
-	  <p><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> n</span>)</span> {<br />
+            <p><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> n</span>)</span> {<br />
 	  &nbsp; &nbsp; &nbsp;StringBuffer taskName = <span class="hljs-keyword">new</span> StringBuffer(<span class="hljs-string">"Task #1"</span>);<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">Processor</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Processor() {<br />
@@ -363,44 +363,44 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  &nbsp; &nbsp; &nbsp;taskName.append(<span class="hljs-string">"1"</span>); <span class="hljs-comment">// This is valid!<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-comment">//Uncommenting the following line will generate an error<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-comment">//taskName = new StringBuffer("Task #2");<br /></span>&nbsp;}</code></p>
 
-	  <p>If you're still not sure about a declaration being <i>effectively final</i>, try adding the <code>final</code> modifier to it. If the program continues to behave in the same way, then the declaration is <i>effectively final</i>.</p>
+            <p>If you're still not sure about a declaration being <i>effectively final</i>, try adding the <code>final</code> modifier to it. If the program continues to behave in the same way, then the declaration is <i>effectively final</i>.</p>
 
-	  <p>If the class is declared in a static method, static rules also apply, meaning that the local class only has access to the static members of the enclosing class.</p>
-	  <hr />
+            <p>If the class is declared in a static method, static rules also apply, meaning that the local class only has access to the static members of the enclosing class.</p>
+            <hr />
 
-	  <h4><i>Defining an anonymous class</i></h4>
+            <h4><i>Defining an anonymous class</i></h4>
 
-	  <p><i>The new operator is followed by the name of an interface or a class and the arguments to a constructor (or empty parentheses if it's an interface)</i></p>
+            <p><i>The new operator is followed by the name of an interface or a class and the arguments to a constructor (or empty parentheses if it's an interface)</i></p>
 
-	  <p><i><code class="hljs">Computer comp = <span class="hljs-keyword">new</span> Computer() {<br />
+            <p><i><code class="hljs">Computer comp = <span class="hljs-keyword">new</span> Computer() {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Here goes the definition<br /></span>&nbsp; &nbsp; &nbsp;}<br />
 	  };</code></i></p>
 
-	  <p><i>Look how it ends with a semicolon, like any other Statement in java</i></p>
+            <p><i>Look how it ends with a semicolon, like any other Statement in java</i></p>
 
-	  <p><i>The body of the class implements the interface or extends the class referenced</i></p>
-	  <hr />
+            <p><i>The body of the class implements the interface or extends the class referenced</i></p>
+            <hr />
 
-	  <p>An anonymous class is called that way because it doesn't have a name. However, an anonymous class expression doesn't declare a new class. It either <b>IMPLEMENTS</b> an existing interface or <b>EXTENDS</b> an existing class. So</p>
+            <p>An anonymous class is called that way because it doesn't have a name. However, an anonymous class expression doesn't declare a new class. It either <b>IMPLEMENTS</b> an existing interface or <b>EXTENDS</b> an existing class. So</p>
 
-	  <p><code class="hljs"><span class="hljs-tag">new</span> <span class="hljs-tag">Computer</span>() { }</code></p>
+            <p><code class="hljs"><span class="hljs-tag">new</span> <span class="hljs-tag">Computer</span>() { }</code></p>
 
-	  <p>It's like writing</p>
+            <p>It's like writing</p>
 
-	  <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> [<span class="hljs-title">NO_NAME_CLASS</span>] <span class="hljs-keyword">extends</span> <span class="hljs-title">Computer</span></span> { }</code></p>
+            <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> [<span class="hljs-title">NO_NAME_CLASS</span>] <span class="hljs-keyword">extends</span> <span class="hljs-title">Computer</span></span> { }</code></p>
 
-	  <p>And if we're working with an interface</p>
+            <p>And if we're working with an interface</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">new</span> Runnable() { }</code></p>
+            <p><code class="hljs"><span class="hljs-keyword">new</span> Runnable() { }</code></p>
 
-	  <p>It's like writing</p>
+            <p>It's like writing</p>
 
-	  <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> [<span class="hljs-title">NO_NAME_CLASS</span>] <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span></span> { }</code></p>
+            <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> [<span class="hljs-title">NO_NAME_CLASS</span>] <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span></span> { }</code></p>
 
-	  <p>Also, an anonymous class can be used in a declaration or a method call.</p>
+            <p>Also, an anonymous class can be used in a declaration or a method call.</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Program</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Program</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">start</span>(<span class="hljs-params">Computer c</span>)</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Definition goes here<br /></span>&nbsp; &nbsp; &nbsp;}<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span>(<span class="hljs-params">String args[]</span>)</span> {<br />
@@ -411,37 +411,37 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>Since they don't have a name (well, actually the compiler gives them a random name when it creates the <code>.class</code> file), anonymous classes can't have <b>CONSTRUCTORS</b>. If you want to run some initializing code, you have to do it with an initializer block.</p>
+            <p>Since they don't have a name (well, actually the compiler gives them a random name when it creates the <code>.class</code> file), anonymous classes can't have <b>CONSTRUCTORS</b>. If you want to run some initializing code, you have to do it with an initializer block.</p>
 
-	  <p><code class="hljs">Computer t = <span class="hljs-keyword">new</span> Computer() {<br />
+            <p><code class="hljs">Computer t = <span class="hljs-keyword">new</span> Computer() {<br />
 	  &nbsp; &nbsp; &nbsp;{<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Initializing code<br /></span>&nbsp; &nbsp; &nbsp;}<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span><span class="hljs-params">()</span></span> { <span class="hljs-comment">/** Redefinition goes here */</span> }<br />
 	  };</code></p>
 
-	  <p>Because anonymous classes are a type of local classes, they have the same rules:</p>
+            <p>Because anonymous classes are a type of local classes, they have the same rules:</p>
 
-	  <ul>
-		<li style="list-style: none">&nbsp;&nbsp;&nbsp;&nbsp;</li>
+            <ul>
+                <li style="list-style: none">&nbsp;&nbsp;&nbsp;&nbsp;</li>
 
-		<li>They can access the members of its enclosing class<br /></li>
+                <li>They can access the members of its enclosing class<br /></li>
 
-		<li style="list-style: none">&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li style="list-style: none">&nbsp;&nbsp;&nbsp;&nbsp;</li>
 
-		<li>They cannot declare <code>static</code> members (only if they are <code>final</code> <code>static</code> variables)<br /></li>
+                <li>They cannot declare <code>static</code> members (only if they are <code>final</code> <code>static</code> variables)<br /></li>
 
-		<li style="list-style: none">&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                <li style="list-style: none">&nbsp;&nbsp;&nbsp;&nbsp;</li>
 
-		<li>They can only access local variables (variables or parameters defined in a method) if they are final or <i>effectively final</i>.<br /></li>
-	  </ul>
+                <li>They can only access local variables (variables or parameters defined in a method) if they are final or <i>effectively final</i>.<br /></li>
+            </ul>
 
-	  <p>But one thing you have to be careful is inheritance.</p>
+            <p>But one thing you have to be careful is inheritance.</p>
 
-	  <p>When you use an anonymous class (a subclass object), you're using a superclass reference. With this reference, you can use the attributes and methods declared in that type.</p>
+            <p>When you use an anonymous class (a subclass object), you're using a superclass reference. With this reference, you can use the attributes and methods declared in that type.</p>
 
-	  <p>But what happens when you declare a new method on the anonymous class?</p>
+            <p>But what happens when you declare a new method on the anonymous class?</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-keyword">Task</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-keyword">Task</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">void</span> doIt() {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">/** Here goes the definition */<br /></span>&nbsp; &nbsp; &nbsp;}<br />
 	  }<br />
@@ -454,24 +454,24 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">task</span>.doIt();&nbsp;<span class="hljs-comment">// It's OK<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">task</span>.redoIt(); <span class="hljs-comment">// Compile-time error!<br /></span>&nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>The program will fail. The reference doesn't know about the method <code>redoIt()</code> because it's not defined in the superclass.</p>
+            <p>The program will fail. The reference doesn't know about the method <code>redoIt()</code> because it's not defined in the superclass.</p>
 
-	  <p>Typically, you would cast the type to the subclass where the new method is defined.</p>
+            <p>Typically, you would cast the type to the subclass where the new method is defined.</p>
 
-	  <p><code class="hljs"><span class="hljs-type">SubClass</span> <span class="hljs-class"><span class="hljs-keyword">object</span> =</span> (<span class="hljs-type">Subclass</span>) objectWithSuperClassReference;<br />
+            <p><code class="hljs"><span class="hljs-type">SubClass</span> <span class="hljs-class"><span class="hljs-keyword">object</span> =</span> (<span class="hljs-type">Subclass</span>) objectWithSuperClassReference;<br />
 	  <span class="hljs-class"><span class="hljs-keyword">object</span>.<span class="hljs-title">methodOnlyDefinedInTheSubclass</span>(</span>);</code></p>
 
-	  <p>But with an anonymous class, how does the cast is done?</p>
+            <p>But with an anonymous class, how does the cast is done?</p>
 
-	  <p>It can't be done; the class has no name, so there is no way we can use the methods defined in the declaration of the anonymous class. We can only use the methods defined in the <b>SUPERCLASS</b> (be it an interface or class).</p>
+            <p>It can't be done; the class has no name, so there is no way we can use the methods defined in the declaration of the anonymous class. We can only use the methods defined in the <b>SUPERCLASS</b> (be it an interface or class).</p>
 
-	  <p>Using an anonymous class is mostly about style. If the class has a short body, it only implements one interface (if we're working with interfaces), it doesn't declare new members, and the syntax makes your code clearer, you should consider using it instead of a local or an inner class.</p>
+            <p>Using an anonymous class is mostly about style. If the class has a short body, it only implements one interface (if we're working with interfaces), it doesn't declare new members, and the syntax makes your code clearer, you should consider using it instead of a local or an inner class.</p>
 
-	  <h2>Shadowing</h2>
+            <h2>Shadowing</h2>
 
-	  <p>An important concept to take into account when working with inner classes (of any type) is what happens with a member of the inner class has the same name of a member of the enclosing class.</p>
+            <p>An important concept to take into account when working with inner classes (of any type) is what happens with a member of the inner class has the same name of a member of the enclosing class.</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">class</span> Computer {<br />
+            <p><code class="hljs"><span class="hljs-keyword">class</span> Computer {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> String serialNumber = <span class="hljs-string">"1234XXX"</span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> HardDrive {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> String serialNumber = <span class="hljs-string">"1234DDD"</span>;<br />
@@ -481,17 +481,17 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>In this case, the parameter <code>serialNumber</code> shadows the instance variable <code>serialNumber</code> of <code>HardDrive</code> that in turn, shadows the <code>serialNumber</code> of <code>Computer</code>.</p>
+            <p>In this case, the parameter <code>serialNumber</code> shadows the instance variable <code>serialNumber</code> of <code>HardDrive</code> that in turn, shadows the <code>serialNumber</code> of <code>Computer</code>.</p>
 
-	  <p>As it's coded, the method <code>printSN()</code> will print its argument. A shadowed declaration needs something else to be properly referred.</p>
+            <p>As it's coded, the method <code>printSN()</code> will print its argument. A shadowed declaration needs something else to be properly referred.</p>
 
-	  <p>We know that when an object wants to refer to itself, we need to use the keyword <code>this</code>.</p>
+            <p>We know that when an object wants to refer to itself, we need to use the keyword <code>this</code>.</p>
 
-	  <p>So, if we use this inside an inner class, it will refer to the inner class itself.</p>
+            <p>So, if we use this inside an inner class, it will refer to the inner class itself.</p>
 
-	  <p>If we need to reference the enclosing class, inside the inner class we can also use this, but in this way <code>NameOfTheEnclosingClass.this</code>.</p>
+            <p>If we need to reference the enclosing class, inside the inner class we can also use this, but in this way <code>NameOfTheEnclosingClass.this</code>.</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> String serialNumber = <span class="hljs-string">"1234XXX"</span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">HardDrive</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> String serialNumber = <span class="hljs-string">"1234DDD"</span>;<br />
@@ -510,59 +510,59 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>Since it may cause confusion, it's better to avoid it and use descriptive variable names.</p>
+            <p>Since it may cause confusion, it's better to avoid it and use descriptive variable names.</p>
 
-	  <div style="page-break-after:always;"></div>
+            <div style="page-break-after:always;"></div>
 
-	  <h2>Key Points</h2>
+            <h2>Key Points</h2>
 
-	  <ul>
-		<li>Inner classes are declared inside another class. There are four types of them: static, non-static, local and anonymous classes.<br /></li>
+            <ul>
+                <li>Inner classes are declared inside another class. There are four types of them: static, non-static, local and anonymous classes.<br /></li>
 
-		<li>Static classes are just inner classes marked with the <code>static</code> keyword. However, it behaves more like a top-level class than an inner class.<br /></li>
+                <li>Static classes are just inner classes marked with the <code>static</code> keyword. However, it behaves more like a top-level class than an inner class.<br /></li>
 
-		<li>You don't need an instance of the enclosing class to instantiate a static class:<br />
-		<code class="hljs"><span class="hljs-type">EnclosingClass</span>.<span class="hljs-type">StaticClass</span> sc = <span class="hljs-keyword">new</span> <span class="hljs-type">EnclosingClass</span>.<span class="hljs-type">StaticClass</span><span class="hljs-literal">()</span>;</code></li>
+                <li>You don't need an instance of the enclosing class to instantiate a static class:<br />
+                    <code class="hljs"><span class="hljs-type">EnclosingClass</span>.<span class="hljs-type">StaticClass</span> sc = <span class="hljs-keyword">new</span> <span class="hljs-type">EnclosingClass</span>.<span class="hljs-type">StaticClass</span><span class="hljs-literal">()</span>;</code></li>
 
-		<li>A static class cannot access non-static members of the enclosing class since it doesn't require having an instance of the enclosing class to using it.<br /></li>
+                <li>A static class cannot access non-static members of the enclosing class since it doesn't require having an instance of the enclosing class to using it.<br /></li>
 
-		<li>A (non-static) inner class is like any other member of the enclosing class so that it can be marked with any access modifier.<br /></li>
+                <li>A (non-static) inner class is like any other member of the enclosing class so that it can be marked with any access modifier.<br /></li>
 
-		<li>Outside the enclosing class' instance methods or blocks, to instantiate an inner class, you must first create an instance of the enclosing class and then:<br />
-		<code class="hljs"><span class="hljs-type">EnclosingClass</span> ec = <span class="hljs-keyword">new</span> <span class="hljs-type">EnclosingClass</span><span class="hljs-literal">()</span>;<br />
+                <li>Outside the enclosing class' instance methods or blocks, to instantiate an inner class, you must first create an instance of the enclosing class and then:<br />
+                    <code class="hljs"><span class="hljs-type">EnclosingClass</span> ec = <span class="hljs-keyword">new</span> <span class="hljs-type">EnclosingClass</span><span class="hljs-literal">()</span>;<br />
 		<span class="hljs-type">EnclosingClass</span>.<span class="hljs-type">InnerClass</span> ic = ec.<span class="hljs-keyword">new</span> <span class="hljs-type">InnerClass</span><span class="hljs-literal">()</span>;</code></li>
 
-		<li>A local class is defined within a method or block of the enclosing class.<br /></li>
+                <li>A local class is defined within a method or block of the enclosing class.<br /></li>
 
-		<li>The only modifiers that apply to a local class are abstract and final (but not at the same time).<br /></li>
+                <li>The only modifiers that apply to a local class are abstract and final (but not at the same time).<br /></li>
 
-		<li>You can only use a local class in the method or block where you define it, but only after its declaration.<br /></li>
+                <li>You can only use a local class in the method or block where you define it, but only after its declaration.<br /></li>
 
-		<li>A local class can access the members of a class just like any other member of the class (static rules still apply).<br /></li>
+                <li>A local class can access the members of a class just like any other member of the class (static rules still apply).<br /></li>
 
-		<li>However, a local class can only access the parameters and local variables of a method if they are final or <i>effectively final</i>.<br /></li>
+                <li>However, a local class can only access the parameters and local variables of a method if they are final or <i>effectively final</i>.<br /></li>
 
-		<li><i>Effectively final</i> means that a variable cannot be modified after its initialization, even if it's not explicitly marked as <code>final</code>.<br /></li>
+                <li><i>Effectively final</i> means that a variable cannot be modified after its initialization, even if it's not explicitly marked as <code>final</code>.<br /></li>
 
-		<li>Anonymous classes have no name, and they either extend an existing class or implement an interface:<br />
-		<code class="hljs">ExistingClass ac = <span class="hljs-keyword">new</span> ExistingClass() {<br />
+                <li>Anonymous classes have no name, and they either extend an existing class or implement an interface:<br />
+                    <code class="hljs">ExistingClass ac = <span class="hljs-keyword">new</span> ExistingClass() {<br />
 		<span class="hljs-comment">&nbsp; &nbsp;// Definition goes here</span><br />
 		};</code></li>
 
-		<li>Anonymous classes cannot have constructors.<br /></li>
+                <li>Anonymous classes cannot have constructors.<br /></li>
 
-		<li>Anonymous classes have the same rules than local classes regarding accessing members of the enclosing class and local variables of a method.<br /></li>
+                <li>Anonymous classes have the same rules than local classes regarding accessing members of the enclosing class and local variables of a method.<br /></li>
 
-		<li>The only methods you can call on an anonymous class are those defined in the reference type (the superclass or the interface), even though anonymous class can define their own methods.<br /></li>
-	  </ul>
+                <li>The only methods you can call on an anonymous class are those defined in the reference type (the superclass or the interface), even though anonymous class can define their own methods.<br /></li>
+            </ul>
 
-	  <div style="page-break-after:always;"></div>
+            <div style="page-break-after:always;"></div>
 
-	  <h2>Self Test</h2>
+            <h2>Self Test</h2>
 
-	  <p>1. Given:</p>
+            <p>1. Given:</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Question_3_1</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Question_3_1</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">interface</span> <span class="hljs-title">ITest</span> { <span class="hljs-comment">// 1<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m</span>()</span>;<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span>(<span class="hljs-params">String args[]</span>)</span> {<br />
@@ -574,17 +574,13 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>m()</code><br />
-	  B. Compilation fails on the declaration marked as <code>// 1</code><br />
-	  C. Compilation fails on the declaration marked as <code>// 2</code><br />
-	  D. An exception occurs at runtime</p>
+            <p>What is the result?<br /> A. <code>m()</code><br /> B. Compilation fails on the declaration marked as <code>// 1</code><br /> C. Compilation fails on the declaration marked as <code>// 2</code><br /> D. An exception occurs at runtime</p>
 
-	  <div style="page-break-after:always;"></div>
+            <div style="page-break-after:always;"></div>
 
-	  <p>2. Given:</p>
+            <p>2. Given:</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-type">Question_3_2</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-type">Question_3_2</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">void</span> main(<span class="hljs-type">String</span> args[]) {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-type">Question_3_2</span> q = new <span class="hljs-type">Question_3_2</span>();<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>;<br />
@@ -601,17 +597,13 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. Compilation fails<br />
-	  B. <code>2</code><br />
-	  C. <code>4</code><br />
-	  D. An exception occurs at runtime</p>
+            <p>What is the result?<br /> A. Compilation fails<br /> B. <code>2</code><br /> C. <code>4</code><br /> D. An exception occurs at runtime</p>
 
-	  <div style="page-break-after:always;"></div>
+            <div style="page-break-after:always;"></div>
 
-	  <p>3. Given:</p>
+            <p>3. Given:</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> Question_3_3 {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> Question_3_3 {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Question_3_3 q = <span class="hljs-keyword">new</span> Question_3_3() {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">sum</span><span class="hljs-params">(<span class="hljs-keyword">int</span> a, <span class="hljs-keyword">int</span> b)</span></span> { <span class="hljs-comment">// 1<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> a + b;<br />
@@ -620,17 +612,13 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;q.sum(<span class="hljs-number">2</span>,<span class="hljs-number">6</span>); <span class="hljs-comment">// 2<br /></span>&nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. Compilation fails on the declaration marked as <code>// 1</code><br />
-	  B. Compilation fails on the line marked as <code>// 2</code><br />
-	  C. <code>8</code><br />
-	  D. Nothing is printed</p>
+            <p>What is the result?<br /> A. Compilation fails on the declaration marked as <code>// 1</code><br /> B. Compilation fails on the line marked as <code>// 2</code><br /> C. <code>8</code><br /> D. Nothing is printed</p>
 
-	  <div style="page-break-after:always;"></div>
+            <div style="page-break-after:always;"></div>
 
-	  <p>4. Given:</p>
+            <p>4. Given:</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Question_3_4</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Question_3_4</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Inner</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doIt</span>()</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.<span class="hljs-keyword">out</span>.println(<span class="hljs-string">"doIt()"</span>);<br />
@@ -642,17 +630,13 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. Compilation fails because an inner class cannot be <code>static</code>.<br />
-	  B. Compilation fails because the <code>Inner</code> class is instantiated incorrectly inside method <code>main</code>.<br />
-	  C. Compilation fails because the method <code>doIt</code> cannot be called in main because it is declared as <code>private</code><br />
-	  D. The program prints <code>doIt()</code></p>
+            <p>What is the result?<br /> A. Compilation fails because an inner class cannot be <code>static</code>.<br /> B. Compilation fails because the <code>Inner</code> class is instantiated incorrectly inside method <code>main</code>.<br /> C. Compilation fails because the method <code>doIt</code> cannot be called in main because it is declared as <code>private</code><br /> D. The program prints <code>doIt()</code></p>
 
-	  <div style="page-break-after:always;"></div>
+            <div style="page-break-after:always;"></div>
 
-	  <p>5. Given:</p>
+            <p>5. Given:</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">B</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> <span class="hljs-title">C</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">go</span>()</span> {<br />
@@ -667,17 +651,13 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;A.B b = a.new A.B(); <span class="hljs-comment">// 1<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;B.C c = b.new C(); <span class="hljs-comment">// 2<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;c.go(); <span class="hljs-comment">// 3<br /></span>&nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. Compilation first fails on the line <code>// 1</code><br />
-	  B. Compilation first fails on the line <code>// 2</code><br />
-	  C. Compilation fails on the line <code>// 3</code><br />
-	  D. <code>go!</code> is printed</p>
+            <p>What is the result?<br /> A. Compilation first fails on the line <code>// 1</code><br /> B. Compilation first fails on the line <code>// 2</code><br /> C. Compilation fails on the line <code>// 3</code><br /> D. <code>go!</code> is printed</p>
 
-	  <div style="page-break-after:always;"></div>
+            <div style="page-break-after:always;"></div>
 
-	  <p>6. Given:</p>
+            <p>6. Given:</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Question_3_6</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Question_3_6</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> <span class="hljs-keyword">class</span> <span class="hljs-title">A</span> { <span class="hljs-comment">// 1<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">plusTwo</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> n</span>)</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> n + <span class="hljs-number">2</span>;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
@@ -687,17 +667,13 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. Compilation fails on the line <code>// 1</code><br />
-	  B. Compilation fails on the line <code>// 2</code><br />
-	  C. <code>5</code><br />
-	  D. An exception occurs at runtime</p>
+            <p>What is the result?<br /> A. Compilation fails on the line <code>// 1</code><br /> B. Compilation fails on the line <code>// 2</code><br /> C. <code>5</code><br /> D. An exception occurs at runtime</p>
 
-	  <div style="page-break-after:always;"></div>
+            <div style="page-break-after:always;"></div>
 
-	  <p>7. Given:</p>
+            <p>7. Given:</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_3_7</span></span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_3_7</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">A</span></span> { <span class="hljs-comment">// 1<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">m</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"m()"</span>);<br />
@@ -706,17 +682,13 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AA</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">A</span></span> { } <span class="hljs-comment">// 2<br /></span>&nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What change would make this code compile?<br />
-	  A. Remove the <code>abstract</code> keyword on the line <code>// 1</code><br />
-	  B. Add the <code>public</code> keyword on the line <code>// 1</code><br />
-	  C. Remove the <code>public</code> keyword on the line <code>// 2</code><br />
-	  D. None. This code compiles correctly</p>
+            <p>What change would make this code compile?<br /> A. Remove the <code>abstract</code> keyword on the line <code>// 1</code><br /> B. Add the <code>public</code> keyword on the line <code>// 1</code><br /> C. Remove the <code>public</code> keyword on the line <code>// 2</code><br /> D. None. This code compiles correctly</p>
 
-	  <div style="page-break-after:always;"></div>
+            <div style="page-break-after:always;"></div>
 
-	  <p>8. Given:</p>
+            <p>8. Given:</p>
 
-	  <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Question_3_8</span> {<br />
+            <p><code class="hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">Question_3_8</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">int</span> i = <span class="hljs-number">2</span>;<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">interface</span> <span class="hljs-title">A</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">add</span>()</span>;<br />
@@ -734,32 +706,29 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>6</code><br />
-	  B. <code>12</code><br />
-	  C. Compilation fails<br />
-	  D. An exception occurs at runtime</p>
-    
-		<div class="answers">
-			<a href="ch03a.html" target="_blank">Open answers page</a>
-		</div>
+            <p>What is the result?<br /> A. <code>6</code><br /> B. <code>12</code><br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
-		<div class="book-info"></div>
+            <div class="answers">
+                <a href="ch03a.html" target="_blank">Open answers page</a>
+            </div>
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch02.html">02. Inheritance and Polymorphism</a>
-			</div>
-			<div class="next">
-				<a href="ch04.html">04. Interfaces</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch02.html">02. Inheritance and Polymorphism</a>
+                </div>
+                <div class="next">
+                    <a href="ch04.html">04. Interfaces</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>

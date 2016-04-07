@@ -2,77 +2,77 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter SEVENTEEN</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter SEVENTEEN</i><br />
 			  Peeking, Mapping, Reducing and Collecting</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Develop code to extract data from an object using peek() and map() methods including primitive versions of the map() method.<br /></i><i>Save results to a collection using the collect method and group/partition data using the Collectors class.<br /></i><i>Use of merge() and flatMap() methods of the Stream API.</i></p>
-			  
-			</div>
-		</div>
-	</div>
-	
-	
+                <p style="text-align: center;"><i>Develop code to extract data from an object using peek() and map() methods including primitive versions of the map() method.<br /></i><i>Save results to a collection using the collect method and group/partition data using the Collectors class.<br /></i><i>Use of merge() and flatMap() methods of the Stream API.</i></p>
 
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-		<h2>peek()</h2>
 
-	  <p><code>peek()</code> is a simple method:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">peek</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; action)</span></span></code></p>
+    <div class="container">
 
-	  <p>It just executes the provided <code>Consumer</code> and returns a new stream with the same elements of the original one.</p>
+        <div class="column">
 
-	  <p>Most of the time, this method is used with <code>System.out.println()</code> for debugging purposes (to see what's on the stream):</p>
+            <h2>peek()</h2>
 
-	  <p><code class="java hljs">System.out.format(<span class="hljs-string">"\n%d"</span>,<br />
+            <p><code>peek()</code> is a simple method:</p>
+
+            <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">peek</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; action)</span></span></code></p>
+
+            <p>It just executes the provided <code>Consumer</code> and returns a new stream with the same elements of the original one.</p>
+
+            <p>Most of the time, this method is used with <code>System.out.println()</code> for debugging purposes (to see what's on the stream):</p>
+
+            <p><code class="java hljs">System.out.format(<span class="hljs-string">"\n%d"</span>,<br />
 	  &nbsp; &nbsp; IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .limit(<span class="hljs-number">3</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .peek( i -&gt;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.format(<span class="hljs-string">"%d "</span>, i) )<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .sum() );</code></p>
 
-	  <p>The output:</p>
+            <p>The output:</p>
 
-	  <p><code class="java hljs">1 2 3<br />
+            <p><code class="java hljs">1 2 3<br />
 	  6</code></p>
 
-	  <p>Notice <code>peek()</code> is an intermediate operation. In the example, we can't use something like <code>forEach()</code> to print the values returned by <code>limit()</code> because <code>forEach()</code> is a terminal operation (and we couldn't call <code>sum()</code> anymore).</p>
+            <p>Notice <code>peek()</code> is an intermediate operation. In the example, we can't use something like <code>forEach()</code> to print the values returned by <code>limit()</code> because <code>forEach()</code> is a terminal operation (and we couldn't call <code>sum()</code> anymore).</p>
 
-	  <p>It's important to emphasize that <code>peek()</code> is intended to see the elements of a stream in a particular point of the pipeline, it's considered bad practice to change the stream in any way. If you want to do that, use the following method.</p>
+            <p>It's important to emphasize that <code>peek()</code> is intended to see the elements of a stream in a particular point of the pipeline, it's considered bad practice to change the stream in any way. If you want to do that, use the following method.</p>
 
-	  <h2>map()</h2>
+            <h2>map()</h2>
 
-	  <p><code>map()</code> is used to transform the value or the type of the elements of a stream:</p>
+            <p><code>map()</code> is used to transform the value or the type of the elements of a stream:</p>
 
-	  <p><code class="java hljs">&lt;R&gt; <span class="hljs-function">Stream&lt;R&gt; <span class="hljs-title">map</span><span class="hljs-params">(Function&lt;? <span class="hljs-keyword">super</span> T,? extends R&gt; mapper)</span><br />
+            <p><code class="java hljs">&lt;R&gt; <span class="hljs-function">Stream&lt;R&gt; <span class="hljs-title">map</span><span class="hljs-params">(Function&lt;? <span class="hljs-keyword">super</span> T,? extends R&gt; mapper)</span><br />
 	  <br />
 	  IntStream <span class="hljs-title">mapToInt</span><span class="hljs-params">(ToIntFunction&lt;? <span class="hljs-keyword">super</span> T&gt; mapper)</span><br />
 	  <br />
@@ -80,31 +80,31 @@
 	  <br />
 	  DoubleStream <span class="hljs-title">mapToDouble</span><span class="hljs-params">(ToDoubleFunction&lt;? <span class="hljs-keyword">super</span> T&gt; mapper)</span></span></code></p>
 
-	  <p>As you can see, <code>map()</code> takes a <code>Function</code> to convert the elements of a stream of type <code>T</code> to type <code>R</code>, returning a stream of that type <code>R</code>:</p>
+            <p>As you can see, <code>map()</code> takes a <code>Function</code> to convert the elements of a stream of type <code>T</code> to type <code>R</code>, returning a stream of that type <code>R</code>:</p>
 
-	  <p><code class="java hljs">Stream.of(<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'e'</span>)<br />
+            <p><code class="java hljs">Stream.of(<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>, <span class="hljs-string">'e'</span>)<br />
 	  &nbsp; &nbsp; .map(c -&gt; (<span class="hljs-keyword">int</span>)c)<br />
 	  &nbsp; &nbsp; .forEach(i -&gt; System.out.format(<span class="hljs-string">"%d "</span>, i));</code></p>
 
-	  <p>The output:</p>
+            <p>The output:</p>
 
-	  <p><code class="java hljs">97 98 99 100 101</code></p>
+            <p><code class="java hljs">97 98 99 100 101</code></p>
 
-	  <p>There are versions for transforming to primitive types, for example:</p>
+            <p>There are versions for transforming to primitive types, for example:</p>
 
-	  <p><code class="java hljs">IntStream.of(<span class="hljs-number">100</span>, <span class="hljs-number">110</span>, <span class="hljs-number">120</span>, <span class="hljs-number">130</span> ,<span class="hljs-number">140</span>)<br />
+            <p><code class="java hljs">IntStream.of(<span class="hljs-number">100</span>, <span class="hljs-number">110</span>, <span class="hljs-number">120</span>, <span class="hljs-number">130</span> ,<span class="hljs-number">140</span>)<br />
 	  &nbsp; &nbsp; .mapToDouble(i -&gt; i/<span class="hljs-number">3.0</span>)<br />
 	  &nbsp; &nbsp; .forEach(i -&gt; System.out.format(<span class="hljs-string">"%.2f "</span>, i));</code></p>
 
-	  <p>Will output:</p>
+            <p>Will output:</p>
 
-	  <p><code class="java hljs">33.33 36.67 40.00 43.33 46.67</code></p>
+            <p><code class="java hljs">33.33 36.67 40.00 43.33 46.67</code></p>
 
-	  <h2>flatMap()</h2>
+            <h2>flatMap()</h2>
 
-	  <p><code>flatMap()</code> is used to "flatten" (or combine) the elements of a stream into one (new) stream:</p>
+            <p><code>flatMap()</code> is used to "flatten" (or combine) the elements of a stream into one (new) stream:</p>
 
-	  <p><code class="java hljs">&lt;R&gt; <span class="hljs-function">Stream&lt;R&gt; <span class="hljs-title">flatMap</span><span class="hljs-params">(Function&lt;? <span class="hljs-keyword">super</span> T,<br />
+            <p><code class="java hljs">&lt;R&gt; <span class="hljs-function">Stream&lt;R&gt; <span class="hljs-title">flatMap</span><span class="hljs-params">(Function&lt;? <span class="hljs-keyword">super</span> T,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;? extends Stream&lt;? extends R&gt;&gt; mapper)</span><br />
 	  <br />
 	  DoubleStream <span class="hljs-title">flatMapToDouble</span><span class="hljs-params">(Function&lt;? <span class="hljs-keyword">super</span> T,<br />
@@ -116,76 +116,76 @@
 	  LongStream <span class="hljs-title">flatMapToLong</span><span class="hljs-params">(Function&lt;? <span class="hljs-keyword">super</span> T,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;? extends LongStream&gt; mapper)</span></span></code></p>
 
-	  <p>From its signature (and their primitive versions' signature) we can see that in contrast to <code>map()</code> (that returns a single value), <code>flatMap()</code> must return a <code>Stream</code>. If <code>flatMap()</code> returns <code>null</code>, an empty stream is returned instead.</p>
+            <p>From its signature (and their primitive versions' signature) we can see that in contrast to <code>map()</code> (that returns a single value), <code>flatMap()</code> must return a <code>Stream</code>. If <code>flatMap()</code> returns <code>null</code>, an empty stream is returned instead.</p>
 
-	  <p>Let's see how this work. If we have a stream of lists of characters:</p>
+            <p>Let's see how this work. If we have a stream of lists of characters:</p>
 
-	  <p><code class="java hljs">List&lt;Character&gt; aToD = Arrays.asList(<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>);<br />
+            <p><code class="java hljs">List&lt;Character&gt; aToD = Arrays.asList(<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>, <span class="hljs-string">'c'</span>, <span class="hljs-string">'d'</span>);<br />
 	  List&lt;Character&gt; eToG = Arrays.asList(<span class="hljs-string">'e'</span>, <span class="hljs-string">'f'</span>, <span class="hljs-string">'g'</span>);<br />
 	  Stream&lt;List&lt;Character&gt;&gt; stream = Stream.of(aToD, eToG);</code></p>
 
-	  <p>And we want to convert all the characters to their <code>int</code> representation, we can't use <code>map()</code> anymore:</p>
+            <p>And we want to convert all the characters to their <code>int</code> representation, we can't use <code>map()</code> anymore:</p>
 
-	  <p><code class="java hljs">stream .map(c -&gt; (<span class="hljs-keyword">int</span>)c)</code></p>
+            <p><code class="java hljs">stream .map(c -&gt; (<span class="hljs-keyword">int</span>)c)</code></p>
 
-	  <p>Because (as each element of the stream is passed to map) <code>c</code> represents an object of type <code>List&lt;Character&gt;</code>, not <code>Character</code>.</p>
+            <p>Because (as each element of the stream is passed to map) <code>c</code> represents an object of type <code>List&lt;Character&gt;</code>, not <code>Character</code>.</p>
 
-	  <p>What we need to do is to get the elements of the lists into one stream and then convert each character to an <code>int</code>. Fortunately, the "combining" part is exactly what <code>flatMap()</code> does:</p>
+            <p>What we need to do is to get the elements of the lists into one stream and then convert each character to an <code>int</code>. Fortunately, the "combining" part is exactly what <code>flatMap()</code> does:</p>
 
-	  <p><code class="java hljs">stream<br />
+            <p><code class="java hljs">stream<br />
 	  &nbsp; &nbsp; .flatMap(l -&gt; l.stream())<br />
 	  &nbsp; &nbsp; .map(c -&gt; (<span class="hljs-keyword">int</span>)c)<br />
 	  &nbsp; &nbsp; .forEach(i -&gt; System.out.format(<span class="hljs-string">"%d "</span>, i));</code></p>
 
-	  <p>So this code can output:</p>
+            <p>So this code can output:</p>
 
-	  <p><code class="java hljs">97 98 99 100 101 102 103</code></p>
+            <p><code class="java hljs">97 98 99 100 101 102 103</code></p>
 
-	  <p>Using <code>peek()</code> after <code>flatMap()</code> may clarify how the elements are processed:</p>
+            <p>Using <code>peek()</code> after <code>flatMap()</code> may clarify how the elements are processed:</p>
 
-	  <p><code class="java hljs">stream<br />
+            <p><code class="java hljs">stream<br />
 	  &nbsp; &nbsp; .flatMap(l -&gt; l.stream())<br />
 	  &nbsp; &nbsp; .peek(System.out::print)<br />
 	  &nbsp; &nbsp; .map(c -&gt; (<span class="hljs-keyword">int</span>)c)<br />
 	  &nbsp; &nbsp; .forEach(i -&gt; System.out.format(<span class="hljs-string">"%d "</span>, i));</code></p>
 
-	  <p>As you can see from the output, the stream returned from <code>flatMap()</code> is passed through the pipeline, as if we were working with a stream of single elements and not with a stream of lists of elements:</p>
+            <p>As you can see from the output, the stream returned from <code>flatMap()</code> is passed through the pipeline, as if we were working with a stream of single elements and not with a stream of lists of elements:</p>
 
-	  <p><code class="java hljs">a97 b98 c99 d100 e101 f102 g103</code></p>
+            <p><code class="java hljs">a97 b98 c99 d100 e101 f102 g103</code></p>
 
-	  <p>This way, with <code>flatMap()</code> you can convert a <code>Stream&lt;List&lt;Object&gt;&gt;</code> to <code>Stream&lt;Object&gt;</code>. However, the important concept is that this method returns a stream and not a single element (as <code>map()</code> does).</p>
+            <p>This way, with <code>flatMap()</code> you can convert a <code>Stream&lt;List&lt;Object&gt;&gt;</code> to <code>Stream&lt;Object&gt;</code>. However, the important concept is that this method returns a stream and not a single element (as <code>map()</code> does).</p>
 
-	  <h2>Reduction</h2>
+            <h2>Reduction</h2>
 
-	  <p>A reduction is an operation that takes many elements and combines them (o <i>reduce</i> them) into a single value or object, and it is done by applying an operation multiple times.</p>
+            <p>A reduction is an operation that takes many elements and combines them (o <i>reduce</i> them) into a single value or object, and it is done by applying an operation multiple times.</p>
 
-	  <p>Some examples of reductions are summing <code>N</code> elements, finding the maximum element of <code>N</code> numbers, or counting elements.</p>
+            <p>Some examples of reductions are summing <code>N</code> elements, finding the maximum element of <code>N</code> numbers, or counting elements.</p>
 
-	  <p>Like in the following example, where using a <code>for</code> loop, we reduce an array of numbers to their sum:</p>
+            <p>Like in the following example, where using a <code>for</code> loop, we reduce an array of numbers to their sum:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span>[] numbers = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>};<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] numbers = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>};<br />
 	  <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;<br />
 	  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> n : numbers) {<br />
 	  &nbsp; &nbsp; sum += n;<br />
 	  }</code></p>
 
-	  <p>Of course, making reductions with streams instead of loops has more benefits, like easier parallelization and improved readability.</p>
+            <p>Of course, making reductions with streams instead of loops has more benefits, like easier parallelization and improved readability.</p>
 
-	  <p>The Stream interface has two methods for reduction:</p>
+            <p>The Stream interface has two methods for reduction:</p>
 
-	  <ul>
-		<li><code>reduce()</code></li>
+            <ul>
+                <li><code>reduce()</code></li>
 
-		<li><code>collect()</code></li>
-	  </ul>
+                <li><code>collect()</code></li>
+            </ul>
 
-	  <p>We can implement reductions with both methods, but <code>collect()</code> help us to implement a type of reduction called <i>mutable reduction</i>, where a container (like a <code>Collection</code>) is used to accumulate the result of the operation.</p>
+            <p>We can implement reductions with both methods, but <code>collect()</code> help us to implement a type of reduction called <i>mutable reduction</i>, where a container (like a <code>Collection</code>) is used to accumulate the result of the operation.</p>
 
-	  <h2>reduce()</h2>
+            <h2>reduce()</h2>
 
-	  <p>This method has three versions:</p>
+            <p>This method has three versions:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function">Optional&lt;T&gt; <span class="hljs-title">reduce</span><span class="hljs-params">(BinaryOperator&lt;T&gt; accumulator)<br /></span><br />
+            <p><code class="java hljs"><span class="hljs-function">Optional&lt;T&gt; <span class="hljs-title">reduce</span><span class="hljs-params">(BinaryOperator&lt;T&gt; accumulator)<br /></span><br />
 	  T <span class="hljs-title">reduce</span><span class="hljs-params">(T identity,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BinaryOperator&lt;T&gt; accumulator)</span><br />
 	  <br />
@@ -193,11 +193,11 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BiFunction&lt;U,? <span class="hljs-keyword">super</span> T,U&gt; accumulator,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BinaryOperator&lt;U&gt; combiner)</span></span></code></p>
 
-	  <p>Remember that a <code>BinaryOperator&lt;T&gt;</code> is equivalent to a <code>BiFunction&lt;T, T, T&gt;</code>, where the two arguments and the return type are all of the same types.</p>
+            <p>Remember that a <code>BinaryOperator&lt;T&gt;</code> is equivalent to a <code>BiFunction&lt;T, T, T&gt;</code>, where the two arguments and the return type are all of the same types.</p>
 
-	  <p>Let's start with the version that takes one argument. This is equivalent to:</p>
+            <p>Let's start with the version that takes one argument. This is equivalent to:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">boolean</span> elementsFound = <span class="hljs-keyword">false</span>;<br />
+            <p><code class="java hljs"><span class="hljs-keyword">boolean</span> elementsFound = <span class="hljs-keyword">false</span>;<br />
 	  T result = <span class="hljs-keyword">null</span>;<br />
 	  <span class="hljs-keyword">for</span> (T element : stream) {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; if</span> (!elementsFound) {<br />
@@ -209,95 +209,90 @@
 	  <span class="hljs-keyword">return</span> elementsFound ? Optional.of(result)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;: Optional.empty();</code></p>
 
-	  <p>This code just applies a function for each element, accumulating the result and returning an <code>Optional</code> wrapping that result, or an empty <code>Optional</code> if there were no elements.</p>
+            <p>This code just applies a function for each element, accumulating the result and returning an <code>Optional</code> wrapping that result, or an empty <code>Optional</code> if there were no elements.</p>
 
-	  <p>Let's see a concrete example. We just see how a sum is a reduce operation:</p>
+            <p>Let's see a concrete example. We just see how a sum is a reduce operation:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span>[] numbers = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>};<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] numbers = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>};<br />
 	  <span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;<br />
 	  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> n : numbers) {<br />
 	  &nbsp; &nbsp; sum += n;<br />
 	  }</code></p>
 
-	  <p>Here, the accumulator operation is:</p>
+            <p>Here, the accumulator operation is:</p>
 
-	  <p><code class="java hljs">sum += n;</code></p>
+            <p><code class="java hljs">sum += n;</code></p>
 
-	  <p>Or:</p>
+            <p>Or:</p>
 
-	  <p><code class="java hljs">sum = sum + n;</code></p>
+            <p><code class="java hljs">sum = sum + n;</code></p>
 
-	  <p>Which translate to:</p>
+            <p>Which translate to:</p>
 
-	  <p><code class="java hljs">OptionalInt total = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
+            <p><code class="java hljs">OptionalInt total = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .reduce( (sum, n) -&gt; sum + n );</code></p>
 
-	  <p>(Notice how the primitive version of stream uses the primitive version of <code>Optional</code>).</p>
+            <p>(Notice how the primitive version of stream uses the primitive version of <code>Optional</code>).</p>
 
-	  <p>This is what happens step by step:</p>
+            <p>This is what happens step by step:</p>
 
-	  <p>1. An internal variable that accumulates the result is set to the first element of a stream (<code>1</code>).<br />
-	  2. This accumulator and the second element of the stream (<code>2</code>) are passed as arguments to the <code>BinaryOperator</code> represented by the lambda expression <code>(sum, n) -&gt; sum + x</code>.<br />
-	  3. The result (<code>3</code>) is assigned to the accumulator.<br />
-	  4. The accumulator (<code>3</code>) and the third element of the stream (<code>3</code>) are passed as arguments to the <code>BinaryOperator</code>.<br />
-	  5. The result (<code>6</code>) is assigned to the accumulator.<br />
-	  6. Steps 4 and 5 are repeated for the next elements of the stream until there are no more elements.</p>
+            <p>1. An internal variable that accumulates the result is set to the first element of a stream (<code>1</code>).<br /> 2. This accumulator and the second element of the stream (<code>2</code>) are passed as arguments to the <code>BinaryOperator</code> represented by the lambda expression <code>(sum, n) -&gt; sum + x</code>.<br /> 3. The result (<code>3</code>) is assigned to the accumulator.<br /> 4. The accumulator (<code>3</code>) and the third element of the stream (<code>3</code>) are passed as arguments to the <code>BinaryOperator</code>.<br /> 5. The result (<code>6</code>) is assigned to the accumulator.<br /> 6. Steps 4 and 5 are repeated for the next elements of the stream until there are no more elements.</p>
 
-	  <p>However, what if you need to have an initial value? For cases like that, we have the version that takes two arguments:</p>
+            <p>However, what if you need to have an initial value? For cases like that, we have the version that takes two arguments:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function">T <span class="hljs-title">reduce</span><span class="hljs-params">(T identity, BinaryOperator&lt;T&gt; accumulator)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function">T <span class="hljs-title">reduce</span><span class="hljs-params">(T identity, BinaryOperator&lt;T&gt; accumulator)</span></span></code></p>
 
-	  <p>The first argument is the initial value, and it is called identity because strictly speaking, this value must be an identity for the accumulator function, in other words, for each value <code>v</code>, <code>accumulator.apply(identity, v)</code> must be equal to <code>v</code>.</p>
+            <p>The first argument is the initial value, and it is called identity because strictly speaking, this value must be an identity for the accumulator function, in other words, for each value <code>v</code>, <code>accumulator.apply(identity, v)</code> must be equal to <code>v</code>.</p>
 
-	  <p>This version of <code>reduce()</code> is equivalent to:</p>
+            <p>This version of <code>reduce()</code> is equivalent to:</p>
 
-	  <p><code class="java hljs">T result = identity;<br />
+            <p><code class="java hljs">T result = identity;<br />
 	  <span class="hljs-keyword">for</span> (T element : stream) &nbsp;{<br />
 	  &nbsp; &nbsp; result = accumulator.apply(result, element);<br />
 	  }&nbsp;<br />
 	  <span class="hljs-keyword">return</span> result;</code></p>
 
-	  <p>Notice that this version does not return an <code>Optional</code> object because if the stream empty, the identity value is returned.</p>
+            <p>Notice that this version does not return an <code>Optional</code> object because if the stream empty, the identity value is returned.</p>
 
-	  <p>For example, the sum example can be rewritten as:</p>
+            <p>For example, the sum example can be rewritten as:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span> total = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> total = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.reduce( <span class="hljs-number">0</span>,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(sum, n) -&gt; sum + n ); <span class="hljs-comment">// 21</span></code></p>
 
-	  <p>Or using a different initial value:</p>
+            <p>Or using a different initial value:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span> total = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> total = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .reduce( <span class="hljs-number">4</span>,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (sum, n) -&gt; sum + n ); <span class="hljs-comment">// 25</span></code></p>
 
-	  <p>However, notice that in the last example, the first value cannot be considered an identity (as in the first example) since, for instance, <code>4 + 1</code> is not equal to <code>4</code>.</p>
+            <p>However, notice that in the last example, the first value cannot be considered an identity (as in the first example) since, for instance, <code>4 + 1</code> is not equal to <code>4</code>.</p>
 
-	  <p>This can bring some problems when working with parallel streams, which we'll review in the next chapter.</p>
+            <p>This can bring some problems when working with parallel streams, which we'll review in the next chapter.</p>
 
-	  <p>Now, notice that with these versions, you take elements of type <code>T</code> and return a reduced value of type <code>T</code> also.</p>
+            <p>Now, notice that with these versions, you take elements of type <code>T</code> and return a reduced value of type <code>T</code> also.</p>
 
-	  <p>However, if you want to return a reduced value of a different type, you have to use the three arguments version of <code>reduce()</code>:</p>
+            <p>However, if you want to return a reduced value of a different type, you have to use the three arguments version of <code>reduce()</code>:</p>
 
-	  <p><code class="java hljs">&lt;U&gt; <span class="hljs-function">U <span class="hljs-title">reduce</span><span class="hljs-params">(U identity,<br />
+            <p><code class="java hljs">&lt;U&gt; <span class="hljs-function">U <span class="hljs-title">reduce</span><span class="hljs-params">(U identity,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BiFunction&lt;U,? <span class="hljs-keyword">super</span> T, U&gt; accumulator,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BinaryOperator&lt;U&gt; combiner)</span></span></code></p>
 
-	  <p>(Notice the use of types <code>T</code> and <code>U</code>)</p>
+            <p>(Notice the use of types <code>T</code> and <code>U</code>)</p>
 
-	  <p>This version is equivalent to:&nbsp;</p>
+            <p>This version is equivalent to:&nbsp;</p>
 
-	  <p><code class="java hljs">U result = identity;<br />
+            <p><code class="java hljs">U result = identity;<br />
 	  <span class="hljs-keyword">for</span> (T element : stream) {<br />
 	  &nbsp; &nbsp; result = accumulator.apply(result, element)&nbsp;<br />
 	  }<br />
 	  <span class="hljs-keyword">return</span> result;</code></p>
 
-	  <p>Consider for example that we want to get the sum of the length of all strings of a stream, so we are getting strings (type <code>T</code>), and we want an integer result (type <code>U</code>).</p>
+            <p>Consider for example that we want to get the sum of the length of all strings of a stream, so we are getting strings (type <code>T</code>), and we want an integer result (type <code>U</code>).</p>
 
-	  <p>In that case, we use <code>reduce()</code> like this:</p>
+            <p>In that case, we use <code>reduce()</code> like this:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span> length =<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> length =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-string">"Parallel"</span>, <span class="hljs-string">"streams"</span>, <span class="hljs-string">"are"</span>, <span class="hljs-string">"great"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .reduce(<span class="hljs-number">0</span>,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (accumInt, str) -&gt;<br />
@@ -305,9 +300,9 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (accumInt1, accumInt2) -&gt;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;accumInt1 + accumInt2);<span class="hljs-comment">//combiner</span></code></p>
 
-	  <p>We can make it clearer by adding the argument types:</p>
+            <p>We can make it clearer by adding the argument types:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span> length =<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> length =<br />
 	  &nbsp; Stream.of(<span class="hljs-string">"Parallel"</span>, <span class="hljs-string">"streams"</span>, <span class="hljs-string">"are"</span>, <span class="hljs-string">"great"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; .reduce(<span class="hljs-number">0</span>,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (Integer accumInt, String str) -&gt;<br />
@@ -315,78 +310,78 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (Integer accumInt1, Integer accumInt2) -&gt;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;accumInt1 + accumInt2);<span class="hljs-comment">//combiner</span></code></p>
 
-	  <p>As the accumulator function adds a mapping (transformation) step to the accumulator function, this version of the <code>reduce()</code> can be written as a combination of <code>map()</code> and the other versions of the <code>reduce()</code> method (you may know this as the <i>map-reduce</i> pattern):</p>
+            <p>As the accumulator function adds a mapping (transformation) step to the accumulator function, this version of the <code>reduce()</code> can be written as a combination of <code>map()</code> and the other versions of the <code>reduce()</code> method (you may know this as the <i>map-reduce</i> pattern):</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span> length =<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> length =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-string">"Parallel"</span>, <span class="hljs-string">"streams"</span>, <span class="hljs-string">"are"</span>, <span class="hljs-string">"great"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .mapToInt(s -&gt; s.length())<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .reduce(<span class="hljs-number">0</span>,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(sum, strLength) -&gt;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;sum + strLength);</code></p>
 
-	  <p>Or simply:</p>
+            <p>Or simply:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span> length = Stream.of(<span class="hljs-string">"Parallel"</span>, <span class="hljs-string">"streams"</span>, <span class="hljs-string">"are"</span>, <span class="hljs-string">"great"</span>)<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> length = Stream.of(<span class="hljs-string">"Parallel"</span>, <span class="hljs-string">"streams"</span>, <span class="hljs-string">"are"</span>, <span class="hljs-string">"great"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .mapToInt(s -&gt; s.length())<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .sum();</code></p>
 
-	  <p>Because, in fact, the calculation operations that we learned about in the last chapter are implemented as reduce operations under the hood:</p>
+            <p>Because, in fact, the calculation operations that we learned about in the last chapter are implemented as reduce operations under the hood:</p>
 
-	  <ul>
-		<li><code>average</code></li>
+            <ul>
+                <li><code>average</code></li>
 
-		<li><code>count</code></li>
+                <li><code>count</code></li>
 
-		<li><code>max</code></li>
+                <li><code>max</code></li>
 
-		<li><code>min</code></li>
+                <li><code>min</code></li>
 
-		<li><code>sum</code></li>
-	  </ul>
+                <li><code>sum</code></li>
+            </ul>
 
-	  <p>Also, notice that if return a value of the same type, the combiner function is no longer necessary (it turns out that this function is the same as the accumulator function) so, in this case, it's better to use the two argument version.</p>
+            <p>Also, notice that if return a value of the same type, the combiner function is no longer necessary (it turns out that this function is the same as the accumulator function) so, in this case, it's better to use the two argument version.</p>
 
-	  <p>It's recommended to use the three version <code>reduce()</code> method when:</p>
+            <p>It's recommended to use the three version <code>reduce()</code> method when:</p>
 
-	  <ul>
-		<li>Working with parallel streams (more of this in the next chapter)</li>
+            <ul>
+                <li>Working with parallel streams (more of this in the next chapter)</li>
 
-		<li>Having one function as a mapper and accumulator is more efficient than having separate mapping and reduction functions.</li>
-	  </ul>
+                <li>Having one function as a mapper and accumulator is more efficient than having separate mapping and reduction functions.</li>
+            </ul>
 
-	  <h2>collect()</h2>
+            <h2>collect()</h2>
 
-	  <p>This method has two versions:</p>
+            <p>This method has two versions:</p>
 
-	  <p><code class="java hljs">&lt;R,A&gt; <span class="hljs-function">R <span class="hljs-title">collect</span><span class="hljs-params">(Collector&lt;? <span class="hljs-keyword">super</span> T,A,R&gt; collector)</span><br />
+            <p><code class="java hljs">&lt;R,A&gt; <span class="hljs-function">R <span class="hljs-title">collect</span><span class="hljs-params">(Collector&lt;? <span class="hljs-keyword">super</span> T,A,R&gt; collector)</span><br />
 	  <br />
 	  &lt;R&gt; R <span class="hljs-title">collect</span><span class="hljs-params">(Supplier&lt;R&gt; supplier,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; BiConsumer&lt;R,? <span class="hljs-keyword">super</span> T&gt; accumulator,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; BiConsumer&lt;R,R&gt; combiner)</span></span></code></p>
 
-	  <p>The first version uses predefined collectors from the <code>Collectors</code> class while the second one allows you to create your own collectors. Primitive streams (like <code>IntStream</code>), only have this last version of <code>collect()</code>.</p>
+            <p>The first version uses predefined collectors from the <code>Collectors</code> class while the second one allows you to create your own collectors. Primitive streams (like <code>IntStream</code>), only have this last version of <code>collect()</code>.</p>
 
-	  <p>Remember that <code>collect()</code> performs a mutable reduction on the elements of a stream, which means that it uses a mutable object for accumulating, like a <code>Collection</code> or a <code>StringBuilder</code>. In contrast, <code>reduce()</code> combines two elements to produce a new one and represents an immutable reduction.</p>
+            <p>Remember that <code>collect()</code> performs a mutable reduction on the elements of a stream, which means that it uses a mutable object for accumulating, like a <code>Collection</code> or a <code>StringBuilder</code>. In contrast, <code>reduce()</code> combines two elements to produce a new one and represents an immutable reduction.</p>
 
-	  <p>However, let's start with the version that takes three arguments, as it's similar to the <code>reduce()</code> version that also takes three arguments.</p>
+            <p>However, let's start with the version that takes three arguments, as it's similar to the <code>reduce()</code> version that also takes three arguments.</p>
 
-	  <p>As you can see from its signature, first, it takes a <code>Supplier</code> that returns the object that will be used as a container (accumulator) and returned at the end.</p>
+            <p>As you can see from its signature, first, it takes a <code>Supplier</code> that returns the object that will be used as a container (accumulator) and returned at the end.</p>
 
-	  <p>The second parameter is an accumulator function, which takes the container and the element to be added to it.</p>
+            <p>The second parameter is an accumulator function, which takes the container and the element to be added to it.</p>
 
-	  <p>The third parameter is the combiner function, which merges the intermediate results into the final one (useful when working with parallel streams).</p>
+            <p>The third parameter is the combiner function, which merges the intermediate results into the final one (useful when working with parallel streams).</p>
 
-	  <p>This version of <code>collect()</code> is equivalent to:</p>
+            <p>This version of <code>collect()</code> is equivalent to:</p>
 
-	  <p><code class="java hljs">R result = supplier.get();<br />
+            <p><code class="java hljs">R result = supplier.get();<br />
 	  <span class="hljs-keyword">for</span> (T element : stream) {<br />
 	  &nbsp; &nbsp; accumulator.accept(result, element);<br />
 	  }&nbsp;<br />
 	  <span class="hljs-keyword">return</span> result;</code></p>
 
-	  <p>For example, if we want to "reduce" or "collect" all the elements of a stream into a <code>List</code>, we can do it this way:</p>
+            <p>For example, if we want to "reduce" or "collect" all the elements of a stream into a <code>List</code>, we can do it this way:</p>
 
-	  <p><code class="java hljs">List&lt;Integer&gt; list =<br />
+            <p><code class="java hljs">List&lt;Integer&gt; list =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;() -&gt; <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(),<span class="hljs-comment">// Creating the container</span><br />
@@ -394,9 +389,9 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(l1, l2) -&gt; l1.addAll(l2) <span class="hljs-comment">// Combining elements</span><br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; );</code></p>
 
-	  <p>We can make it clearer by adding the argument types:</p>
+            <p>We can make it clearer by adding the argument types:</p>
 
-	  <p><code class="java hljs">List&lt;Integer&gt; list =<br />
+            <p><code class="java hljs">List&lt;Integer&gt; list =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;() -&gt; <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(),<br />
@@ -404,9 +399,9 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(l1, l2) -&gt; l1.addAll(l2)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; );</code></p>
 
-	  <p>Or we can also use method references:</p>
+            <p>Or we can also use method references:</p>
 
-	  <p><code class="java hljs">List&lt;Integer&gt; list =<br />
+            <p><code class="java hljs">List&lt;Integer&gt; list =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ArrayList::<span class="hljs-keyword">new</span>,<br />
@@ -414,141 +409,141 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ArrayList::addAll<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; );</code></p>
 
-	  <h2>Collectors</h2>
+            <h2>Collectors</h2>
 
-	  <p>The previous version of <code>collect()</code> is useful to learn how collectors work, but in practice, it's better to use the other version.</p>
+            <p>The previous version of <code>collect()</code> is useful to learn how collectors work, but in practice, it's better to use the other version.</p>
 
-	  <p>Some common collectors of the <code>Collectors</code> class are:</p>
+            <p>Some common collectors of the <code>Collectors</code> class are:</p>
 
-	  <table border="1" width="100%">
-		<tr>
-		  <td><b>Method</b></td>
+            <table border="1" width="100%">
+                <tr>
+                    <td><b>Method</b></td>
 
-		  <td><b>Returned value<br />
+                    <td><b>Returned value<br />
 		  from collect()</b></td>
 
-		  <td><b>Description</b></td>
-		</tr>
+                    <td><b>Description</b></td>
+                </tr>
 
-		<tr>
-		  <td><code>toList</code></td>
+                <tr>
+                    <td><code>toList</code></td>
 
-		  <td><code>List</code></td>
+                    <td><code>List</code></td>
 
-		  <td>Accumulates elements into a <code>List</code>.</td>
-		</tr>
+                    <td>Accumulates elements into a <code>List</code>.</td>
+                </tr>
 
-		<tr>
-		  <td><code>toSet</code></td>
+                <tr>
+                    <td><code>toSet</code></td>
 
-		  <td><code>Set</code></td>
+                    <td><code>Set</code></td>
 
-		  <td>Accumulates elements into a <code>Set</code>.</td>
-		</tr>
+                    <td>Accumulates elements into a <code>Set</code>.</td>
+                </tr>
 
-		<tr>
-		  <td><code>toCollection</code></td>
+                <tr>
+                    <td><code>toCollection</code></td>
 
-		  <td><code>Collection</code></td>
+                    <td><code>Collection</code></td>
 
-		  <td>Accumulates elements into a <code>Collection</code> implementation.</td>
-		</tr>
+                    <td>Accumulates elements into a <code>Collection</code> implementation.</td>
+                </tr>
 
-		<tr>
-		  <td><code>toMap</code></td>
+                <tr>
+                    <td><code>toMap</code></td>
 
-		  <td><code>Map</code></td>
+                    <td><code>Map</code></td>
 
-		  <td>Accumulates elements into a <code>Map</code>.</td>
-		</tr>
+                    <td>Accumulates elements into a <code>Map</code>.</td>
+                </tr>
 
-		<tr>
-		  <td><code>joining</code></td>
+                <tr>
+                    <td><code>joining</code></td>
 
-		  <td><code>String</code></td>
+                    <td><code>String</code></td>
 
-		  <td>Concatenates elements into a <code>String</code>.</td>
-		</tr>
+                    <td>Concatenates elements into a <code>String</code>.</td>
+                </tr>
 
-		<tr>
-		  <td><code>groupingBy</code></td>
+                <tr>
+                    <td><code>groupingBy</code></td>
 
-		  <td><code>Map&lt;K, List&lt;T&gt;&gt;</code></td>
+                    <td><code>Map&lt;K, List&lt;T&gt;&gt;</code></td>
 
-		  <td>Groups elements of type <code>T</code> in lists according to a classification function, into a map with keys of type <code>K</code>.</td>
-		</tr>
+                    <td>Groups elements of type <code>T</code> in lists according to a classification function, into a map with keys of type <code>K</code>.</td>
+                </tr>
 
-		<tr>
-		  <td><code>partitioningBy</code></td>
+                <tr>
+                    <td><code>partitioningBy</code></td>
 
-		  <td><code>Map&lt;Boolean, List&lt;T&gt;&gt;</code></td>
+                    <td><code>Map&lt;Boolean, List&lt;T&gt;&gt;</code></td>
 
-		  <td>Partitions elements of type <code>T</code> in lists according to a predicate, into a map.</td>
-		</tr>
-	  </table>
+                    <td>Partitions elements of type <code>T</code> in lists according to a predicate, into a map.</td>
+                </tr>
+            </table>
 
-	  <p>Since calculation methods can be implementing as reductions, the <code>Collectors</code> class also provides them as collectors:</p>
+            <p>Since calculation methods can be implementing as reductions, the <code>Collectors</code> class also provides them as collectors:</p>
 
-	  <table border="1" width="100%">
-		<tr>
-		  <td><b>Method</b></td>
+            <table border="1" width="100%">
+                <tr>
+                    <td><b>Method</b></td>
 
-		  <td><b>Returned value<br />
+                    <td><b>Returned value<br />
 		  from collect()</b></td>
 
-		  <td><b>Description</b></td>
-		</tr>
+                    <td><b>Description</b></td>
+                </tr>
 
-		<tr>
-		  <td><code>averagingInt<br />
+                <tr>
+                    <td><code>averagingInt<br />
 		  averagingLong<br />
 		  averagingDouble<br /></code></td>
 
-		  <td><code>Double</code></td>
+                    <td><code>Double</code></td>
 
-		  <td>Returns the average of the input elements.</td>
-		</tr>
+                    <td>Returns the average of the input elements.</td>
+                </tr>
 
-		<tr>
-		  <td><code>counting</code></td>
+                <tr>
+                    <td><code>counting</code></td>
 
-		  <td><code>Long</code></td>
+                    <td><code>Long</code></td>
 
-		  <td>Counts the elements of input elements.</td>
-		</tr>
+                    <td>Counts the elements of input elements.</td>
+                </tr>
 
-		<tr>
-		  <td><code>maxBy</code></td>
+                <tr>
+                    <td><code>maxBy</code></td>
 
-		  <td><code>Optional&lt;T&gt;</code></td>
+                    <td><code>Optional&lt;T&gt;</code></td>
 
-		  <td>Returns the maximum element according to a given <code>Comparator</code>.</td>
-		</tr>
+                    <td>Returns the maximum element according to a given <code>Comparator</code>.</td>
+                </tr>
 
-		<tr>
-		  <td><code>minBy</code></td>
+                <tr>
+                    <td><code>minBy</code></td>
 
-		  <td><code>Optional&lt;T&gt;</code></td>
+                    <td><code>Optional&lt;T&gt;</code></td>
 
-		  <td>Returns the minimum element according to a given <code>Comparator</code>.</td>
-		</tr>
+                    <td>Returns the minimum element according to a given <code>Comparator</code>.</td>
+                </tr>
 
-		<tr>
-		  <td><code>summingInt<br />
+                <tr>
+                    <td><code>summingInt<br />
 		  summingLong<br />
 		  summingDouble</code></td>
 
-		  <td><code>Integer<br />
+                    <td><code>Integer<br />
 		  Long<br />
 		  Double</code></td>
 
-		  <td>Returns the sum of the input elements.</td>
-		</tr>
-	  </table>
+                    <td>Returns the sum of the input elements.</td>
+                </tr>
+            </table>
 
-	  <p>This way, we can rewrite our previous example:</p>
+            <p>This way, we can rewrite our previous example:</p>
 
-	  <p><code class="java hljs">List&lt;Integer&gt; list =<br />
+            <p><code class="java hljs">List&lt;Integer&gt; list =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ArrayList::<span class="hljs-keyword">new</span>,<br />
@@ -556,61 +551,61 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ArrayList::addAll<br />
 	  &nbsp; &nbsp; );</code></p>
 
-	  <p>As:</p>
+            <p>As:</p>
 
-	  <p><code class="java hljs">List&lt;Integer&gt; list =<br />
+            <p><code class="java hljs">List&lt;Integer&gt; list =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(Collectors.toList()); <span class="hljs-comment">// [1, 2, 3, 4, 5]</span></code></p>
 
-	  <p>Since all these methods are static, we can use <code>static</code> imports:</p>
+            <p>Since all these methods are static, we can use <code>static</code> imports:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> java.util.stream.Collectors.*;<br />
+            <p><code class="java hljs"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> java.util.stream.Collectors.*;<br />
 	  ...<br />
 	  List&lt;Integer&gt; list =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(toList()); <span class="hljs-comment">// [1, 2, 3, 4, 5]</span></code></p>
 
-	  <p>If we want to collect the elements into a <code>Set</code>:</p>
+            <p>If we want to collect the elements into a <code>Set</code>:</p>
 
-	  <p><code class="java hljs">Set&lt;Integer&gt; set =<br />
+            <p><code class="java hljs">Set&lt;Integer&gt; set =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(toSet()); <span class="hljs-comment">// [1, 2]</span></code></p>
 
-	  <p>If we want to create another <code>Collection</code> implementation:</p>
+            <p>If we want to create another <code>Collection</code> implementation:</p>
 
-	  <p><code class="java hljs">Deque&lt;Integer&gt; deque =<br />
+            <p><code class="java hljs">Deque&lt;Integer&gt; deque =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; toCollection(ArrayDeque::<span class="hljs-keyword">new</span>)<br />
 	  &nbsp; &nbsp; ); <span class="hljs-comment">// [1, 2, 3,]</span></code></p>
 
-	  <p>If we are working with streams of <code>String</code>s, we can join all the elements into one <code>String</code> with:</p>
+            <p>If we are working with streams of <code>String</code>s, we can join all the elements into one <code>String</code> with:</p>
 
-	  <p><code class="java hljs">String s = Stream.of(<span class="hljs-string">"a"</span>, <span class="hljs-string">"simple"</span>, <span class="hljs-string">"string"</span>)<br />
+            <p><code class="java hljs">String s = Stream.of(<span class="hljs-string">"a"</span>, <span class="hljs-string">"simple"</span>, <span class="hljs-string">"string"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.collect(joining()); <span class="hljs-comment">// "asimplestring"</span></code></p>
 
-	  <p>We can also pass a separator:</p>
+            <p>We can also pass a separator:</p>
 
-	  <p><code class="java hljs">String s = Stream.of(<span class="hljs-string">"a"</span>, <span class="hljs-string">"simple"</span>, <span class="hljs-string">"string"</span>)<br />
+            <p><code class="java hljs">String s = Stream.of(<span class="hljs-string">"a"</span>, <span class="hljs-string">"simple"</span>, <span class="hljs-string">"string"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .collect(joining(<span class="hljs-string">" "</span>)); <span class="hljs-comment">// " a simple string"</span></code></p>
 
-	  <p>And a prefix and a suffix:</p>
+            <p>And a prefix and a suffix:</p>
 
-	  <p><code class="java hljs">String s = Stream.of(<span class="hljs-string">"a"</span>, <span class="hljs-string">"simple"</span>, <span class="hljs-string">"string"</span>)<br />
+            <p><code class="java hljs">String s = Stream.of(<span class="hljs-string">"a"</span>, <span class="hljs-string">"simple"</span>, <span class="hljs-string">"string"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.collect(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;joining(<span class="hljs-string">" "</span>, <span class="hljs-string">"This is "</span>, <span class="hljs-string">"."</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;); <span class="hljs-comment">// "This is a simple string."</span></code></p>
 
-	  <p>In the case of maps, things get a little more complicated, because depending on our needs, we have three options.</p>
+            <p>In the case of maps, things get a little more complicated, because depending on our needs, we have three options.</p>
 
-	  <p>In the first option, <code>toMap()</code> takes two arguments (I'm not showing the return types because they are hard to read and don't provide much value anyway):</p>
+            <p>In the first option, <code>toMap()</code> takes two arguments (I'm not showing the return types because they are hard to read and don't provide much value anyway):</p>
 
-	  <p><code class="java hljs">toMap(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; keyMapper,<br />
+            <p><code class="java hljs">toMap(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; keyMapper,<br />
 	  &nbsp; &nbsp; &nbsp; Function&lt;? <span class="hljs-keyword">super</span> T,? extends U&gt; valueMapper)</code></p>
 
-	  <p>Both <code>Functions</code> take an element of the stream as an argument and return the key or the value of an entry of the <code>Map</code>, for example:</p>
+            <p>Both <code>Functions</code> take an element of the stream as an argument and return the key or the value of an entry of the <code>Map</code>, for example:</p>
 
-	  <p><code class="java hljs">Map&lt;Integer, Integer&gt; map =<br />
+            <p><code class="java hljs">Map&lt;Integer, Integer&gt; map =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; toMap(i -&gt; i, <span class="hljs-comment">// Key</span><br />
@@ -618,11 +613,11 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; );</code></p>
 
-	  <p>Here, we're using the element (like <code>1</code>) as the key, and the element multiplied by two as the value (like <code>2</code>).</p>
+            <p>Here, we're using the element (like <code>1</code>) as the key, and the element multiplied by two as the value (like <code>2</code>).</p>
 
-	  <p>We can also write <code>i -&gt; i</code> as <code>Function.identity()</code>:</p>
+            <p>We can also write <code>i -&gt; i</code> as <code>Function.identity()</code>:</p>
 
-	  <p><code class="java hljs">Map&lt;Integer, Integer&gt; map =<br />
+            <p><code class="java hljs">Map&lt;Integer, Integer&gt; map =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; toMap(Function.identity(), <span class="hljs-comment">// Key</span><br />
@@ -630,34 +625,34 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; );</code></p>
 
-	  <p><code>java.util.function.Function.identity()</code> returns a function that always returns its input argument, in other words, it's equivalent to <code>t -&gt; t</code>.</p>
+            <p><code>java.util.function.Function.identity()</code> returns a function that always returns its input argument, in other words, it's equivalent to <code>t -&gt; t</code>.</p>
 
-	  <p>But what happens if more than one element is mapped to the same key, like in:</p>
+            <p>But what happens if more than one element is mapped to the same key, like in:</p>
 
-	  <p><code class="java hljs">Map&lt;Integer, Integer&gt; map =<br />
+            <p><code class="java hljs">Map&lt;Integer, Integer&gt; map =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(toMap(i -&gt; i % <span class="hljs-number">2</span>, <span class="hljs-comment">// Key</span><br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; i -&gt; i <span class="hljs-comment">// Value</span><br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; );</code></p>
 
-	  <p>Java won't know what to do, so an exception will be thrown:</p>
+            <p>Java won't know what to do, so an exception will be thrown:</p>
 
-	  <p><code class="java hljs">Exception in thread "main" java.lang.IllegalStateException: Duplicate key 1<br />
+            <p><code class="java hljs">Exception in thread "main" java.lang.IllegalStateException: Duplicate key 1<br />
 	  &nbsp; &nbsp;at java.util.stream.Collectors.lambda$throwingMerger$113(Collectors.java:133)<br />
 	  &nbsp; &nbsp;at java.util.stream.Collectors$$Lambda$3/303563356.apply(Unknown Source)<br />
 	  &nbsp; &nbsp;at java.util.HashMap.merge(HashMap.java:1245)<br />
 	  &nbsp; &nbsp;at java.util.stream.Collectors.lambda$toMap$171(Collectors.java:1320)</code></p>
 
-	  <p>For those cases, we use the version that takes three arguments:</p>
+            <p>For those cases, we use the version that takes three arguments:</p>
 
-	  <p><code class="java hljs">toMap(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; keyMapper,<br />
+            <p><code class="java hljs">toMap(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; keyMapper,<br />
 	  &nbsp; &nbsp; &nbsp; Function&lt;? <span class="hljs-keyword">super</span> T,? extends U&gt; valueMapper,<br />
 	  &nbsp; &nbsp; &nbsp; BinaryOperator&lt;U&gt; mergeFunction)</code></p>
 
-	  <p>The third argument is a function that defines what to do when there's a duplicate key. For example, we can create a <code>List</code> to append values:</p>
+            <p>The third argument is a function that defines what to do when there's a duplicate key. For example, we can create a <code>List</code> to append values:</p>
 
-	  <p><code class="java hljs">Map&lt;Integer, List&lt;Integer&gt;&gt; map =<br />
+            <p><code class="java hljs">Map&lt;Integer, List&lt;Integer&gt;&gt; map =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(toMap(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; i -&gt; i % <span class="hljs-number">2</span>,<br />
@@ -669,20 +664,20 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;);</code></p>
 
-	  <p>This will return the following map:</p>
+            <p>This will return the following map:</p>
 
-	  <p><code class="java hljs">{0=[2, 4, 6], 1=[1, 3, 5]}</code></p>
+            <p><code class="java hljs">{0=[2, 4, 6], 1=[1, 3, 5]}</code></p>
 
-	  <p>The third version of <code>toMap()</code> takes all these arguments plus one that returns a new, empty <code>Map</code> into which the results will be inserted:</p>
+            <p>The third version of <code>toMap()</code> takes all these arguments plus one that returns a new, empty <code>Map</code> into which the results will be inserted:</p>
 
-	  <p><code class="java hljs">toMap(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; keyMapper,<br />
+            <p><code class="java hljs">toMap(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; keyMapper,<br />
 	  &nbsp; &nbsp; &nbsp; Function&lt;? <span class="hljs-keyword">super</span> T,? extends U&gt; valueMapper,<br />
 	  &nbsp; &nbsp; &nbsp; BinaryOperator&lt;U&gt; mergeFunction,<br />
 	  &nbsp; &nbsp; &nbsp; Supplier&lt;M&gt; mapSupplier)</code></p>
 
-	  <p>So we can change the default implementation (<code>HashMap</code>) to <code>ConcurrentHashMap</code> for example:</p>
+            <p>So we can change the default implementation (<code>HashMap</code>) to <code>ConcurrentHashMap</code> for example:</p>
 
-	  <p><code class="java hljs">Map&lt;Integer, List&lt;Integer&gt;&gt; map =<br />
+            <p><code class="java hljs">Map&lt;Integer, List&lt;Integer&gt;&gt; map =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(toMap(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;i -&gt; i % <span class="hljs-number">2</span>,<br />
@@ -695,9 +690,9 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; );</code></p>
 
-	  <p>About the calculation methods, they are easy to use. Except for <code>counting()</code>, they either take a <code>Function</code> to produce a value to apply the operation, or (in the case of <code>maxBy</code> and <code>minBy</code>) they take a <code>Comparator</code> to produce the result:</p>
+            <p>About the calculation methods, they are easy to use. Except for <code>counting()</code>, they either take a <code>Function</code> to produce a value to apply the operation, or (in the case of <code>maxBy</code> and <code>minBy</code>) they take a <code>Comparator</code> to produce the result:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">double</span> avg = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br />
+            <p><code class="java hljs"><span class="hljs-keyword">double</span> avg = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .collect(averagingInt(i -&gt; i * <span class="hljs-number">2</span>)); <span class="hljs-comment">// 4.0</span><br />
 	  <span class="hljs-keyword"><br />
 	  long</span> count = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br />
@@ -710,25 +705,25 @@
 	  Integer sum = Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>)<br />
 	  &nbsp; &nbsp; .collect(summingInt(i -&gt; i)); <span class="hljs-comment">// 6</span></code></p>
 
-	  <h2>groupingBy()</h2>
+            <h2>groupingBy()</h2>
 
-	  <p>The <code>Collectors</code> class provides two functions to group the elements of a stream into a list, in a kind of an&nbsp;<code>SQL GROUP BY</code> style.</p>
+            <p>The <code>Collectors</code> class provides two functions to group the elements of a stream into a list, in a kind of an&nbsp;<code>SQL GROUP BY</code> style.</p>
 
-	  <p>The first method is <code>groupingBy()</code> and it has three versions. This is the first one:</p>
+            <p>The first method is <code>groupingBy()</code> and it has three versions. This is the first one:</p>
 
-	  <p><code class="java hljs">groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; classifier)</code></p>
+            <p><code class="java hljs">groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; classifier)</code></p>
 
-	  <p>It takes a <code>Function</code> that classifies elements of type <code>T</code>, groups them into a list and returns the result in a <code>Map</code> where the keys (of type <code>K</code>) are the <code>Function</code> returned values.</p>
+            <p>It takes a <code>Function</code> that classifies elements of type <code>T</code>, groups them into a list and returns the result in a <code>Map</code> where the keys (of type <code>K</code>) are the <code>Function</code> returned values.</p>
 
-	  <p>For example, if we want to group a stream of numbers by the range they belong (tens, twenties, etc.), we can do it with something like this:</p>
+            <p>For example, if we want to group a stream of numbers by the range they belong (tens, twenties, etc.), we can do it with something like this:</p>
 
-	  <p><code class="java hljs">Map&lt;Integer, List&lt;Integer&gt;&gt; map =<br />
+            <p><code class="java hljs">Map&lt;Integer, List&lt;Integer&gt;&gt; map =<br />
 	  &nbsp; &nbsp;Stream.of(<span class="hljs-number">2</span>, <span class="hljs-number">34</span>, <span class="hljs-number">54</span>, <span class="hljs-number">23</span>, <span class="hljs-number">33</span>, <span class="hljs-number">20</span>, <span class="hljs-number">59</span>, <span class="hljs-number">11</span>, <span class="hljs-number">19</span>, <span class="hljs-number">37</span>)<br />
 	  &nbsp; &nbsp; &nbsp; .collect( groupingBy (i -&gt; i/<span class="hljs-number">10</span> * <span class="hljs-number">10</span> ) );</code></p>
 
-	  <p>The moment you compare this code with the traditional way to it (with a <code>for</code> loop), it's when you realize the power of streams:</p>
+            <p>The moment you compare this code with the traditional way to it (with a <code>for</code> loop), it's when you realize the power of streams:</p>
 
-	  <p><code class="java hljs">List&lt;Integer&gt; stream =<br />
+            <p><code class="java hljs">List&lt;Integer&gt; stream =<br />
 	  &nbsp; &nbsp; Arrays.asList(<span class="hljs-number">2</span>,<span class="hljs-number">34</span>,<span class="hljs-number">54</span>,<span class="hljs-number">23</span>,<span class="hljs-number">33</span>,<span class="hljs-number">20</span>,<span class="hljs-number">59</span>,<span class="hljs-number">11</span>,<span class="hljs-number">19</span>,<span class="hljs-number">37</span>);<br />
 	  Map&lt;Integer, List&lt;Integer&gt;&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br />
 	  <span class="hljs-keyword"><br />
@@ -743,20 +738,20 @@
 	  &nbsp; &nbsp; list.add(i);<br />
 	  }</code></p>
 
-	  <p>Either way, those will return the following map:</p>
+            <p>Either way, those will return the following map:</p>
 
-	  <p><code class="java hljs">{0=[2], 50=[54,59], 20=[23,20], 10=[11,19], 30=[34,33,37]}</code></p>
+            <p><code class="java hljs">{0=[2], 50=[54,59], 20=[23,20], 10=[11,19], 30=[34,33,37]}</code></p>
 
-	  <p>The second version takes a <i>downstream collector</i> as an additional argument:</p>
+            <p>The second version takes a <i>downstream collector</i> as an additional argument:</p>
 
-	  <p><code class="java hljs">groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; classifier,<br />
+            <p><code class="java hljs">groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; classifier,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Collector&lt;? <span class="hljs-keyword">super</span> T,A,D&gt; downstream)</code></p>
 
-	  <p>A d<i>ownstream collector</i> is a collector that is applied to the results of another collector.</p>
+            <p>A d<i>ownstream collector</i> is a collector that is applied to the results of another collector.</p>
 
-	  <p>We can use any collector here, for instance, to count the elements in each group of the previous example:</p>
+            <p>We can use any collector here, for instance, to count the elements in each group of the previous example:</p>
 
-	  <p><code class="java hljs">Map&lt;Integer, Long&gt; map =<br />
+            <p><code class="java hljs">Map&lt;Integer, Long&gt; map =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">2</span>, <span class="hljs-number">34</span>, <span class="hljs-number">54</span>, <span class="hljs-number">23</span>, <span class="hljs-number">33</span>, <span class="hljs-number">20</span>, <span class="hljs-number">59</span>, <span class="hljs-number">11</span>, <span class="hljs-number">19</span>, <span class="hljs-number">37</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; groupingBy(i -&gt; i/<span class="hljs-number">10</span> * <span class="hljs-number">10</span>,<br />
@@ -764,15 +759,15 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; );</code></p>
 
-	  <p>(Notice how the type of the values of the <code>Map</code> change to reflect the type returned by the downstream collector, <code>counting()</code>)</p>
+            <p>(Notice how the type of the values of the <code>Map</code> change to reflect the type returned by the downstream collector, <code>counting()</code>)</p>
 
-	  <p>This will return the following map:</p>
+            <p>This will return the following map:</p>
 
-	  <p><code class="java hljs">{0=1, 50=2, 20=2, 10=2, 30=3}</code></p>
+            <p><code class="java hljs">{0=1, 50=2, 20=2, 10=2, 30=3}</code></p>
 
-	  <p>We can even use another <code>groupingBy()</code> to classify the elements in a second level. For instance, instead of counting, we can further classify the elements in even or odd:</p>
+            <p>We can even use another <code>groupingBy()</code> to classify the elements in a second level. For instance, instead of counting, we can further classify the elements in even or odd:</p>
 
-	  <p><code class="java hljs">Map&lt;Integer, Map&lt;String, List&lt;Integer&gt;&gt;&gt; map =<br />
+            <p><code class="java hljs">Map&lt;Integer, Map&lt;String, List&lt;Integer&gt;&gt;&gt; map =<br />
 	  &nbsp; &nbsp;Stream.of(<span class="hljs-number">2</span>,<span class="hljs-number">34</span>,<span class="hljs-number">54</span>,<span class="hljs-number">23</span>,<span class="hljs-number">33</span>,<span class="hljs-number">20</span>,<span class="hljs-number">59</span>,<span class="hljs-number">11</span>,<span class="hljs-number">19</span>,<span class="hljs-number">37</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;.collect(groupingBy(i -&gt; i/<span class="hljs-number">10</span> * <span class="hljs-number">10</span>,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; groupingBy(i -&gt;<br />
@@ -780,9 +775,9 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;);</code></p>
 
-	  <p>This will return the following map (with a little formatting):</p>
+            <p>This will return the following map (with a little formatting):</p>
 
-	  <p><code class="java hljs">{<br />
+            <p><code class="java hljs">{<br />
 	  &nbsp; &nbsp; 0 = {EVEN=[2]},<br />
 	  &nbsp; &nbsp;50 = {EVEN=[54], ODD=[59]},<br />
 	  &nbsp; &nbsp;20 = {EVEN=[20], ODD=[23]},<br />
@@ -790,23 +785,23 @@
 	  &nbsp; &nbsp;30 = {EVEN=[34], ODD=[33, 37]}<br />
 	  }</code></p>
 
-	  <p>The key of the high-level map is an Integer because the first <code>groupingBy()</code> returns an <code>Integer</code>.</p>
+            <p>The key of the high-level map is an Integer because the first <code>groupingBy()</code> returns an <code>Integer</code>.</p>
 
-	  <p>The type of the values of the high-level map changed (again) to reflect the type returned by the downstream collector, <code>groupingBy()</code>.</p>
+            <p>The type of the values of the high-level map changed (again) to reflect the type returned by the downstream collector, <code>groupingBy()</code>.</p>
 
-	  <p>In this case, a <code>String</code> is returned so this will be the type of the keys of the second-level map, and since we are working with a stream of Integers, the values have a type of <code>List&lt;Integer&gt;</code>.</p>
+            <p>In this case, a <code>String</code> is returned so this will be the type of the keys of the second-level map, and since we are working with a stream of Integers, the values have a type of <code>List&lt;Integer&gt;</code>.</p>
 
-	  <p>Seeing the output of these examples, you may be wondering, is there a way to have the result ordered?</p>
+            <p>Seeing the output of these examples, you may be wondering, is there a way to have the result ordered?</p>
 
-	  <p>Well, <code>TreeMap</code> is the only implementation of <code>Map</code> that is ordered. Fortunately, the third version of <code>groupingBy()</code> add a <code>Supplier</code> argument that let us choose the type of the resulting <code>Map</code>:</p>
+            <p>Well, <code>TreeMap</code> is the only implementation of <code>Map</code> that is ordered. Fortunately, the third version of <code>groupingBy()</code> add a <code>Supplier</code> argument that let us choose the type of the resulting <code>Map</code>:</p>
 
-	  <p><code class="java hljs">groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; classifier,<br />
+            <p><code class="java hljs">groupingBy(Function&lt;? <span class="hljs-keyword">super</span> T,? extends K&gt; classifier,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Supplier&lt;M&gt; mapFactory,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Collector&lt;? <span class="hljs-keyword">super</span> T,A,D&gt; downstream)</code></p>
 
-	  <p>This way, if we pass an instance of <code>TreeMap</code>:</p>
+            <p>This way, if we pass an instance of <code>TreeMap</code>:</p>
 
-	  <p><code class="java hljs">Map&lt;Integer, Map&lt;String, List&lt;Integer&gt;&gt;&gt; map =<br />
+            <p><code class="java hljs">Map&lt;Integer, Map&lt;String, List&lt;Integer&gt;&gt;&gt; map =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">2</span>,<span class="hljs-number">34</span>,<span class="hljs-number">54</span>,<span class="hljs-number">23</span>,<span class="hljs-number">33</span>,<span class="hljs-number">20</span>,<span class="hljs-number">59</span>,<span class="hljs-number">11</span>,<span class="hljs-number">19</span>,<span class="hljs-number">37</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;.collect( groupingBy(i -&gt; i/<span class="hljs-number">10</span> * <span class="hljs-number">10</span>,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;TreeMap::<span class="hljs-keyword">new</span>,<br />
@@ -814,9 +809,9 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;);</code></p>
 
-	  <p>This will return the following map:</p>
+            <p>This will return the following map:</p>
 
-	  <p><code class="java hljs">{<br />
+            <p><code class="java hljs">{<br />
 	  &nbsp; &nbsp; 0 = {EVEN=[2]},<br />
 	  &nbsp; &nbsp;10 = {ODD=[11, 19]},<br />
 	  &nbsp; &nbsp;20 = {EVEN=[20], ODD=[23]},<br />
@@ -824,35 +819,35 @@
 	  &nbsp; &nbsp;50 = {EVEN=[54], ODD=[59]}<br />
 	  }</code></p>
 
-	  <h2>partitioningBy()</h2>
+            <h2>partitioningBy()</h2>
 
-	  <p>The second method for grouping is <code>partitioningBy()</code>.</p>
+            <p>The second method for grouping is <code>partitioningBy()</code>.</p>
 
-	  <p>The difference with <code>groupingBy()</code> is that <code>partitioningBy()</code> will return a <code>Map</code> with a <code>Boolean</code> as the key type, which means there are only two groups, one for true and one for <code>false</code>.</p>
+            <p>The difference with <code>groupingBy()</code> is that <code>partitioningBy()</code> will return a <code>Map</code> with a <code>Boolean</code> as the key type, which means there are only two groups, one for true and one for <code>false</code>.</p>
 
-	  <p>There are two versions of this method. The first one is:</p>
+            <p>There are two versions of this method. The first one is:</p>
 
-	  <p><code class="java hljs">partitioningBy(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</code></p>
+            <p><code class="java hljs">partitioningBy(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</code></p>
 
-	  <p>It partitions the elements according to a <code>Predicate</code>&nbsp;and organizes them into a <code>Map&lt;Boolean, List&lt;T&gt;&gt;</code>.</p>
+            <p>It partitions the elements according to a <code>Predicate</code>&nbsp;and organizes them into a <code>Map&lt;Boolean, List&lt;T&gt;&gt;</code>.</p>
 
-	  <p>For example, if we want to partition a stream of numbers by the ones that are less than <code>50</code> and the ones that don't, we can do it this way:</p>
+            <p>For example, if we want to partition a stream of numbers by the ones that are less than <code>50</code> and the ones that don't, we can do it this way:</p>
 
-	  <p><code class="java hljs">Map&lt;Boolean, List&lt;Integer&gt;&gt; map =<br />
+            <p><code class="java hljs">Map&lt;Boolean, List&lt;Integer&gt;&gt; map =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">45</span>, <span class="hljs-number">9</span>, <span class="hljs-number">65</span>, <span class="hljs-number">77</span>, <span class="hljs-number">12</span>, <span class="hljs-number">89</span>, <span class="hljs-number">31</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(partitioningBy(i -&gt; i &lt; <span class="hljs-number">50</span>));</code></p>
 
-	  <p>This will return the following map:</p>
+            <p>This will return the following map:</p>
 
-	  <p><code class="java hljs">{false=[65, 77, 89], true=[45, 9, 12, 31, 12]}</code></p>
+            <p><code class="java hljs">{false=[65, 77, 89], true=[45, 9, 12, 31, 12]}</code></p>
 
-	  <p>As you can see, because of the <code>Predicate</code>, the map will always have two elements.</p>
+            <p>As you can see, because of the <code>Predicate</code>, the map will always have two elements.</p>
 
-	  <p>And like <code>groupingBy()</code>, this method has a second version that takes a downstream collector.</p>
+            <p>And like <code>groupingBy()</code>, this method has a second version that takes a downstream collector.</p>
 
-	  <p>For example, if we want to remove duplicates, we just have to collect the elements into a <code>Set</code> like this:</p>
+            <p>For example, if we want to remove duplicates, we just have to collect the elements into a <code>Set</code> like this:</p>
 
-	  <p><code class="java hljs">Map&lt;Boolean, Set&lt;Integer&gt;&gt; map =<br />
+            <p><code class="java hljs">Map&lt;Boolean, Set&lt;Integer&gt;&gt; map =<br />
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">45</span>, <span class="hljs-number">9</span>, <span class="hljs-number">65</span>, <span class="hljs-number">77</span>, <span class="hljs-number">12</span>, <span class="hljs-number">89</span>, <span class="hljs-number">31</span>, <span class="hljs-number">12</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; partitioningBy(i -&gt; i &lt; <span class="hljs-number">50</span>,<br />
@@ -860,46 +855,46 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; );</code></p>
 
-	  <p>This will produce the following <code>Map</code>:</p>
+            <p>This will produce the following <code>Map</code>:</p>
 
-	  <p><code class="java hljs">{false=[65, 89, 77], true=[9, 12, 45, 31]}</code></p>
+            <p><code class="java hljs">{false=[65, 89, 77], true=[9, 12, 45, 31]}</code></p>
 
-	  <p>However, unlike <code>groupingBy()</code>, there's no version that allows us to change the type of the <code>Map</code> returned. But it doesn't matter, you only have two keys that you can get with:</p>
+            <p>However, unlike <code>groupingBy()</code>, there's no version that allows us to change the type of the <code>Map</code> returned. But it doesn't matter, you only have two keys that you can get with:</p>
 
-	  <p><code class="java hljs">Set&lt;Integer&gt; lessThan50 = map.get(<span class="hljs-keyword">true</span>);<br />
+            <p><code class="java hljs">Set&lt;Integer&gt; lessThan50 = map.get(<span class="hljs-keyword">true</span>);<br />
 	  Set&lt;Integer&gt; moreThan50 = map.get(<span class="hljs-keyword">false</span>);</code></p>
 
-	  
 
-	  <h2>Key Points</h2>
 
-	  <ul>
-		<li><code>peek()</code> executes the provided <code>Consumer</code> and returns a new stream with the same elements of the original one. Most of the time, this method is used for debugging purposes.</li>
+            <h2>Key Points</h2>
 
-		<li><code>map()</code> is used to transform the value or the type of the elements of a stream through a provided <code>Function</code>.</li>
+            <ul>
+                <li><code>peek()</code> executes the provided <code>Consumer</code> and returns a new stream with the same elements of the original one. Most of the time, this method is used for debugging purposes.</li>
 
-		<li><code>flatMap()</code> is used to "flatten" (or combine) the elements of a stream into one (new) stream. In contrast to <code>map()</code> (that returns a single value), <code>flatMap()</code> must return a <code>Stream</code>.</li>
+                <li><code>map()</code> is used to transform the value or the type of the elements of a stream through a provided <code>Function</code>.</li>
 
-		<li>A reduction is an operation that takes many elements and combines them (o reduce them) into a single value or object.</li>
+                <li><code>flatMap()</code> is used to "flatten" (or combine) the elements of a stream into one (new) stream. In contrast to <code>map()</code> (that returns a single value), <code>flatMap()</code> must return a <code>Stream</code>.</li>
 
-		<li><code>reduce()</code> performs a reduction on the elements of a stream using an accumulation function, an optional identity, and an also optional combiner function.</li>
+                <li>A reduction is an operation that takes many elements and combines them (o reduce them) into a single value or object.</li>
 
-		<li><code>collect()</code> implements a type of reduction called <i>mutable reduction</i>, where a container (like a <code>Collection</code>) is used to accumulate the result of the operation.</li>
+                <li><code>reduce()</code> performs a reduction on the elements of a stream using an accumulation function, an optional identity, and an also optional combiner function.</li>
 
-		<li>The <code>Collectors</code> class provides static methods such as <code>toList()</code> and <code>toMap()</code> to create a collection or a map from a stream and some calculation methods like <code>averagingInt()</code>.</li>
+                <li><code>collect()</code> implements a type of reduction called <i>mutable reduction</i>, where a container (like a <code>Collection</code>) is used to accumulate the result of the operation.</li>
 
-		<li><code>Collectors.groupingBy()</code> groups the elements of a stream using a given <code>Function</code> as a classifier. It can also receive a <i>downstream collector</i> to create another level of classification.</li>
+                <li>The <code>Collectors</code> class provides static methods such as <code>toList()</code> and <code>toMap()</code> to create a collection or a map from a stream and some calculation methods like <code>averagingInt()</code>.</li>
 
-		<li>You can also group (or partition) the elements in a stream based on a condition (<code>Predicate</code>) using the <code>Collectors.partitioningBy()</code> method.</li>
-	  </ul>
+                <li><code>Collectors.groupingBy()</code> groups the elements of a stream using a given <code>Function</code> as a classifier. It can also receive a <i>downstream collector</i> to create another level of classification.</li>
 
-	  
+                <li>You can also group (or partition) the elements in a stream based on a condition (<code>Predicate</code>) using the <code>Collectors.partitioningBy()</code> method.</li>
+            </ul>
 
-	  <h2>Self Test</h2>
 
-	  <p>1. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_17_1</span></span> {<br />
+            <h2>Self Test</h2>
+
+            <p>1. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_17_1</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Map&lt;Boolean, List&lt;Integer&gt;&gt; map =<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>)<br />
@@ -908,29 +903,21 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>{true=[1,2, 3, 4]}</code><br />
-	  B. <code>{false=[], true=[1, 2, 3, 4]}</code><br />
-	  C. <code>{false=[1,2, 3, 4]}</code><br />
-	  D. <code>{false=[1, 2, 3, 4], true=[]}</code></p>
+            <p>What is the result?<br /> A. <code>{true=[1,2, 3, 4]}</code><br /> B. <code>{false=[], true=[1, 2, 3, 4]}</code><br /> C. <code>{false=[1,2, 3, 4]}</code><br /> D. <code>{false=[1, 2, 3, 4], true=[]}</code></p>
 
-	  
 
-	  <p>2. Given:</p>
 
-	  <p><code class="java hljs">groupingBy(i -&gt; i%<span class="hljs-number">3</span>, toList())</code></p>
+            <p>2. Given:</p>
 
-	  <p>Which of the following is equivalent?<br />
-	  A. <code>partitioningBy(i -&gt; i%3 == 0, toList())</code><br />
-	  B. <code>partitioningBy(i -&gt; i%3, toList())</code><br />
-	  C. <code>groupingBy(i -&gt; i%3 == 0)</code><br />
-	  D. <code>groupingBy(i -&gt; i%3)</code></p>
+            <p><code class="java hljs">groupingBy(i -&gt; i%<span class="hljs-number">3</span>, toList())</code></p>
 
-	  
+            <p>Which of the following is equivalent?<br /> A. <code>partitioningBy(i -&gt; i%3 == 0, toList())</code><br /> B. <code>partitioningBy(i -&gt; i%3, toList())</code><br /> C. <code>groupingBy(i -&gt; i%3 == 0)</code><br /> D. <code>groupingBy(i -&gt; i%3)</code></p>
 
-	  <p>3. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_17_3</span></span> {<br />
+
+            <p>3. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_17_3</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Stream.of(<span class="hljs-string">"aaaaa"</span>, <span class="hljs-string">"bbbb"</span>, <span class="hljs-string">"ccc"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.map(s -&gt; s.split(<span class="hljs-string">""</span>))<br />
@@ -939,17 +926,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>aaaaa</code><br />
-	  B. <code>abc</code><br />
-	  C. <code>a</code><br />
-	  D. None of the above</p>
+            <p>What is the result?<br /> A. <code>aaaaa</code><br /> B. <code>abc</code><br /> C. <code>a</code><br /> D. None of the above</p>
 
-	  
 
-	  <p>4. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_17_4</span></span> {<br />
+            <p>4. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_17_4</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Stream.of(<span class="hljs-string">"a"</span>, <span class="hljs-string">"b"</span>, <span class="hljs-string">"c"</span>)<br />
@@ -959,37 +942,25 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>[a, a, a, b, b, b, c, c, c]</code><br />
-	  B. <code>[a, a, a]</code><br />
-	  C. <code>[a, b, c]</code><br />
-	  D. Compilation fails</p>
+            <p>What is the result?<br /> A. <code>[a, a, a, b, b, b, c, c, c]</code><br /> B. <code>[a, a, a]</code><br /> C. <code>[a, b, c]</code><br /> D. Compilation fails</p>
 
-	  
 
-	  <p>5. Which of the following is the right way to implement <code>OptionalInt min()</code> with a reduce operation?<br />
-	  A. <code>reduce((a,b) -&gt; a &gt; b)</code><br />
-	  B. <code>reduce(Math::min)</code><br />
-	  C. <code>reduce(Integer.MIN_VALUE, Math:min)</code><br />
-	  D. <code>collect(Collectors.minBy())</code></p>
 
-	  
+            <p>5. Which of the following is the right way to implement <code>OptionalInt min()</code> with a reduce operation?<br /> A. <code>reduce((a,b) -&gt; a &gt; b)</code><br /> B. <code>reduce(Math::min)</code><br /> C. <code>reduce(Integer.MIN_VALUE, Math:min)</code><br /> D. <code>collect(Collectors.minBy())</code></p>
 
-	  <p>6. Which of the following is a correct overload of the <code>reduce()</code> method?<br />
-	  A. <code class="hljs">T reduce(BinaryOperator&lt;T&gt; accumulator)</code><br />
-	  B. <code class="hljs">Optional&lt;T&gt; reduce(T identity,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BinaryOperator&lt;T&gt; accumulator)</code><br />
-	  C. <code class="hljs">&lt;U&gt; U reduce(BinaryOperator&lt;T&gt; accumulator,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BinaryOperator&lt;U&gt; combiner)</code><br />
-	  D. <code class="hljs">&lt;U&gt; U reduce(U identity,<br />
+
+
+            <p>6. Which of the following is a correct overload of the <code>reduce()</code> method?<br /> A. <code class="hljs">T reduce(BinaryOperator&lt;T&gt; accumulator)</code><br /> B. <code class="hljs">Optional&lt;T&gt; reduce(T identity,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BinaryOperator&lt;T&gt; accumulator)</code><br /> C. <code class="hljs">&lt;U&gt; U reduce(BinaryOperator&lt;T&gt; accumulator,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BinaryOperator&lt;U&gt; combiner)</code><br /> D. <code class="hljs">&lt;U&gt; U reduce(U identity,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BiFunction&lt;U,? super T,U&gt; accumulator,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BinaryOperator&lt;U&gt; combiner)</code></p>
 
-	  
 
-	  <p>7. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_17_7</span></span> {<br />
+            <p>7. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_17_7</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Map&lt;Integer, Map&lt;String, List&lt;Integer&gt;&gt;&gt; map =<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Stream.of(<span class="hljs-number">56</span>, <span class="hljs-number">54</span>, <span class="hljs-number">1</span>, <span class="hljs-number">31</span>, <span class="hljs-number">98</span>, <span class="hljs-number">98</span>, <span class="hljs-number">16</span>)<br />
@@ -1003,54 +974,51 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code class="hljs">{<br />
+            <p>What is the result?<br /> A. <code class="hljs">{<br />
 	  &nbsp; &nbsp;6={false=[], true=[56, 16]},<br />
 	  &nbsp; &nbsp;4={false=[], true=[54]},<br />
 	  &nbsp; &nbsp;1={false=[1], true=[31]},<br />
 	  &nbsp; &nbsp;8={false=[], true=[98]}<br />
-	  }</code><br />
-	  B. <code class="hljs">{<br />
+	  }</code><br /> B. <code class="hljs">{<br />
 	  &nbsp; &nbsp;1={false=[1], true=[31]},<br />
 	  &nbsp; &nbsp;4={false=[], true=[54]},<br />
 	  &nbsp; &nbsp;6={false=[], true=[56, 16]},<br />
 	  &nbsp; &nbsp;8={false=[], true=[98]}<br />
-	  }</code><br />
-	  C. <code class="hljs">{<br />
+	  }</code><br /> C. <code class="hljs">{<br />
 	  &nbsp; &nbsp;1={false=[1], true=[31]},<br />
 	  &nbsp; &nbsp;4={false=[], true=[54]},<br />
 	  &nbsp; &nbsp;6={false=[], true=[56, 16]},<br />
 	  &nbsp; &nbsp;8={false=[], true=[98, 98]}<br />
-	  }</code><br />
-	  D. <code class="hljs">{<br />
+	  }</code><br /> D. <code class="hljs">{<br />
 	  &nbsp; &nbsp;1={false=[1], true=[31]},<br />
 	  &nbsp; &nbsp;4={false=[], true=[54]}<br />
 	  }</code></p>
 
-  
 
 
-    
-		<div class="answers">
-			<a href="ch17a.html" target="_blank">Open answers page</a>
-		</div>
 
-		<div class="book-info"></div>
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch16.html">16. Stream Operations on Collections</a>
-			</div>
-			<div class="next">
-				<a href="ch18.html">18. Parallel Streams</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+            <div class="answers">
+                <a href="ch17a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch16.html">16. Stream Operations on Collections</a>
+                </div>
+                <div class="next">
+                    <a href="ch18.html">18. Parallel Streams</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>

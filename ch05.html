@@ -2,151 +2,151 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			
-			  <h1><i class="chapter">Chapter FIVE</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+
+                <h1><i class="chapter">Chapter FIVE</i><br />
 			  Enumerations</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Use enumerated types including methods, and constructors in an enum type.</i></p>
-			  
-			  
-			  
-			</div>	
-		</div>
-	</div>
-	
-	
+                <p style="text-align: center;"><i>Use enumerated types including methods, and constructors in an enum type.</i></p>
 
-  <div class="container">
-  
-	<div class="column">
 
-		<h2>Enumerations</h2>
 
-	  <p>Let's say our application uses three states or values for the volume of playing a song: high, medium, low. We typically model this with some "constants", like this:</p>
+            </div>
+        </div>
+    </div>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Volume</span></span> {<br />
+
+
+    <div class="container">
+
+        <div class="column">
+
+            <h2>Enumerations</h2>
+
+            <p>Let's say our application uses three states or values for the volume of playing a song: high, medium, low. We typically model this with some "constants", like this:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Volume</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> HIGH = <span class="hljs-number">100</span>;<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> MEDIUM = <span class="hljs-number">50</span>;<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> LOW = <span class="hljs-number">20</span>;<br />
 	  }</code></p>
 
-	  <p>However, this is not a good implementation. Consider a method to change the volume:</p>
+            <p>However, this is not a good implementation. Consider a method to change the volume:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">changeVolumen</span><span class="hljs-params">(<span class="hljs-keyword">int</span> volume)</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">changeVolumen</span><span class="hljs-params">(<span class="hljs-keyword">int</span> volume)</span></span> {<br />
 	  &nbsp; &nbsp; ...<br />
 	  }<br />
 	  ...<br />
 	  app.changeVolumen(Volume.HIGH);</code></p>
 
-	  <p>What is stopping someone to call this method with an arbitrary value like:</p>
+            <p>What is stopping someone to call this method with an arbitrary value like:</p>
 
-	  <p><code class="java hljs">app.changeVolume(<span class="hljs-number">10000</span>);</code></p>
+            <p><code class="java hljs">app.changeVolume(<span class="hljs-number">10000</span>);</code></p>
 
-	  <p>Of course, we can implement some checks, but this just makes the problem more complicated. Luckily, enumerations (or enums for short) provide a nice solution to this issue.</p>
+            <p>Of course, we can implement some checks, but this just makes the problem more complicated. Luckily, enumerations (or enums for short) provide a nice solution to this issue.</p>
 
-	  <p>An <i>enum</i> is a type (like a class or an interface) that represents a <b>FIXED</b> list of values (you can think of these as constants).</p>
+            <p>An <i>enum</i> is a type (like a class or an interface) that represents a <b>FIXED</b> list of values (you can think of these as constants).</p>
 
-	  <p>So we can use an enum to represent the volume of a sound in our application (notice the use of <code>enum</code> instead of <code>interface</code>):</p>
+            <p>So we can use an enum to represent the volume of a sound in our application (notice the use of <code>enum</code> instead of <code>interface</code>):</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Volume {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Volume {<br />
 	  &nbsp; &nbsp; HIGH, MEDIUM, LOW<br />
 	  }</code></p>
 
-	  <p>Notice that since the values are "constants" (they are implicitly <code>public</code>, <code>static</code>, and <code>final</code>) the convention of using all caps is followed.</p>
+            <p>Notice that since the values are "constants" (they are implicitly <code>public</code>, <code>static</code>, and <code>final</code>) the convention of using all caps is followed.</p>
 
-	  <p>Also, notice that the values are comma-separated and because the <code>enum</code> only contains a list of values, the semicolon is optional after the last one.</p>
+            <p>Also, notice that the values are comma-separated and because the <code>enum</code> only contains a list of values, the semicolon is optional after the last one.</p>
 
-	  <p>This way, we can define the <code>changeVolume</code> method as:</p>
+            <p>This way, we can define the <code>changeVolume</code> method as:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">changeVolumen</span><span class="hljs-params">(Volume volume)</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">changeVolumen</span><span class="hljs-params">(Volume volume)</span></span> {<br />
 	  &nbsp; &nbsp; ...<br />
 	  }</code></p>
 
-	  <p>Passing any other object that is not a <code>Volume</code>, will generate a compile-time error:</p>
+            <p>Passing any other object that is not a <code>Volume</code>, will generate a compile-time error:</p>
 
-	  <p><code class="java hljs">changeVolume(Volume.HIGH); <span class="hljs-comment">// All good</span><br />
+            <p><code class="java hljs">changeVolume(Volume.HIGH); <span class="hljs-comment">// All good</span><br />
 	  changeVolume(-<span class="hljs-number">1</span>); <span class="hljs-comment">// Compile-time error</span></code></p>
 
-	  <p>The method is now type-safe, meaning that we can't assign invalid values.</p>
+            <p>The method is now type-safe, meaning that we can't assign invalid values.</p>
 
-	  <p>By the way, because of something we review later, you cannot use the new operator to get a reference of an enum, so we just get the reference directly:</p>
+            <p>By the way, because of something we review later, you cannot use the new operator to get a reference of an enum, so we just get the reference directly:</p>
 
-	  <p><code class="java hljs">Volume level = Volume.LOW;</code></p>
+            <p><code class="java hljs">Volume level = Volume.LOW;</code></p>
 
-	  <p>You can also get an enum from a string, for example:</p>
+            <p>You can also get an enum from a string, for example:</p>
 
-	  <p><code class="java hljs">Volume level = Volume.valueOf(<span class="hljs-string">"LOW"</span>);</code></p>
+            <p><code class="java hljs">Volume level = Volume.valueOf(<span class="hljs-string">"LOW"</span>);</code></p>
 
-	  <p>Just be careful, this method is case sensitive:</p>
+            <p>Just be careful, this method is case sensitive:</p>
 
-	  <p><code class="java hljs">Volume level = Volume.valueOf(<span class="hljs-string">"Low"</span>); <span class="hljs-comment">// Run-time exception</span></code></p>
+            <p><code class="java hljs">Volume level = Volume.valueOf(<span class="hljs-string">"Low"</span>); <span class="hljs-comment">// Run-time exception</span></code></p>
 
-	  <p>To get all the enums of a particular type use the method <code>values()</code>, that returns an array of enums in the same order in which they were declared and that pairs great with a <code>for-each</code> statement:</p>
+            <p>To get all the enums of a particular type use the method <code>values()</code>, that returns an array of enums in the same order in which they were declared and that pairs great with a <code>for-each</code> statement:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">for</span>(Volume v: Volume.values()) {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">for</span>(Volume v: Volume.values()) {<br />
 	  &nbsp; &nbsp;System.out.print(v.name() + <span class="hljs-string">", "</span>);<br />
 	  }</code></p>
 
-	  <p>The output:</p>
+            <p>The output:</p>
 
-	  <p><code class="java hljs">HIGH, MEDIUM, LOW,</code></p>
+            <p><code class="java hljs">HIGH, MEDIUM, LOW,</code></p>
 
-	  <h2>Working with Enums</h2>
+            <h2>Working with Enums</h2>
 
-	  <p>In the first example, <code>HIGH</code> was equal to <code>100</code>. But now that we are using enums, what is the value of <code>HIGH</code>?</p>
+            <p>In the first example, <code>HIGH</code> was equal to <code>100</code>. But now that we are using enums, what is the value of <code>HIGH</code>?</p>
 
-	  <p>If we print its value:</p>
+            <p>If we print its value:</p>
 
-	  <p><code class="java hljs">System.out.println(Volume.HIGH);</code></p>
+            <p><code class="java hljs">System.out.println(Volume.HIGH);</code></p>
 
-	  <p>The output will be the name of the enum:</p>
+            <p>The output will be the name of the enum:</p>
 
-	  <p><code>HIGH</code></p>
+            <p><code>HIGH</code></p>
 
-	  <p>This is equivalent to invoke the <code>name()</code> method that all enums have:</p>
+            <p>This is equivalent to invoke the <code>name()</code> method that all enums have:</p>
 
-	  <p><code class="java hljs">System.out.println(Volume.HIGH.name());</code></p>
+            <p><code class="java hljs">System.out.println(Volume.HIGH.name());</code></p>
 
-	  <p>In other words, the <code>toString()</code> implementation of an enum calls the <code>name()</code> method.</p>
+            <p>In other words, the <code>toString()</code> implementation of an enum calls the <code>name()</code> method.</p>
 
-	  <p>Enums also have a zero-based value that corresponds to the order in which they're declared. You can get it with the <code>ordinal()</code> method:</p>
+            <p>Enums also have a zero-based value that corresponds to the order in which they're declared. You can get it with the <code>ordinal()</code> method:</p>
 
-	  <p><code class="java hljs">System.out.println(Volume.HIGH.ordinal());<br />
+            <p><code class="java hljs">System.out.println(Volume.HIGH.ordinal());<br />
 	  System.out.println(Volume.LOW.ordinal());</code></p>
 
-	  <p>The output will be:</p>
+            <p>The output will be:</p>
 
-	  <p><code class="hljs">0<br />
+            <p><code class="hljs">0<br />
 	  2</code></p>
 
-	  <p>But this might not be enough for all cases (like in our example). So we can define a constructor (that is called the first time the <code>enum</code> is used) that accepts a parameter that will be stored in an instance variable:</p>
+            <p>But this might not be enough for all cases (like in our example). So we can define a constructor (that is called the first time the <code>enum</code> is used) that accepts a parameter that will be stored in an instance variable:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Volume {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Volume {<br />
 	  &nbsp; &nbsp; HIGH(<span class="hljs-number">100</span>), MEDIUM(<span class="hljs-number">50</span>), LOW(<span class="hljs-number">20</span>);<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">int</span> value;<br />
 	  <br />
@@ -158,15 +158,15 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>The only restriction is the constructor must be <code>private</code>. Otherwise, the compiler will throw an error. Notice that a getter method was also added.</p>
+            <p>The only restriction is the constructor must be <code>private</code>. Otherwise, the compiler will throw an error. Notice that a getter method was also added.</p>
 
-	  <p>We can add a setter method also, but generally, is not need it, since enums work more like constants. However, keep in mind that changing the value of the instance variable is allowed, while reassigning the <code>enum</code> is not because they are implicitly <code>final</code> and cannot be changed after its creation:</p>
+            <p>We can add a setter method also, but generally, is not need it, since enums work more like constants. However, keep in mind that changing the value of the instance variable is allowed, while reassigning the <code>enum</code> is not because they are implicitly <code>final</code> and cannot be changed after its creation:</p>
 
-	  <p><code class="java hljs"><span class="hljs-comment">// Compile-time error<br /></span>Volume.HIGH = Volume.MEDIUM;</code></p>
+            <p><code class="java hljs"><span class="hljs-comment">// Compile-time error<br /></span>Volume.HIGH = Volume.MEDIUM;</code></p>
 
-	  <p>Talking about compile-time errors, the following statements will also generate one:</p>
+            <p>Talking about compile-time errors, the following statements will also generate one:</p>
 
-	  <p><code class="java hljs"><span class="hljs-comment">// Use Volume.HIGH.ordinal()<br /></span><span class="hljs-keyword">if</span>(Volume.HIGH == <span class="hljs-number">0</span>) {<br />
+            <p><code class="java hljs"><span class="hljs-comment">// Use Volume.HIGH.ordinal()<br /></span><span class="hljs-keyword">if</span>(Volume.HIGH == <span class="hljs-number">0</span>) {<br />
 	  &nbsp; &nbsp; ...<br />
 	  }<br />
 	  <span class="hljs-comment">// Use Volume.HIGH.getValue()<br /></span><span class="hljs-keyword">if</span>(Volume.HIGH == <span class="hljs-number">100</span>) {<br />
@@ -175,9 +175,9 @@
 	  <span class="hljs-comment">// A enum can't extend a class</span><br />
 	  <span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Volume extends AClass { ... }</code></p>
 
-	  <p>To compare the value of an <code>enum</code> you can use the either the ordinal or name methods, in addition to any other custom method. You can also compare an <code>enum</code> to another <code>enum</code> with either the <code>==</code> operator (because enums are <code>final</code>), the equals method, or by using a <code>switch</code> statement:</p>
+            <p>To compare the value of an <code>enum</code> you can use the either the ordinal or name methods, in addition to any other custom method. You can also compare an <code>enum</code> to another <code>enum</code> with either the <code>==</code> operator (because enums are <code>final</code>), the equals method, or by using a <code>switch</code> statement:</p>
 
-	  <p><code class="java hljs">Volume level = Volume.HIGH;<br />
+            <p><code class="java hljs">Volume level = Volume.HIGH;<br />
 	  ...<br />
 	  <span class="hljs-comment">// Or Volume.HIGH.equals(level)<br /></span><span class="hljs-keyword">if</span>(Volume.HIGH == level) {<br />
 	  &nbsp; &nbsp; ...<br />
@@ -190,13 +190,13 @@
 	  <span class="hljs-keyword">&nbsp; &nbsp; case</span> LOW: ...<br />
 	  }</code></p>
 
-	  <p>An <code>enum</code> type <b>CANNOT</b> extend from a class because implicitly, all enums extend from <code>java.lang.Enum</code>. What you <b>CAN</b> do is implement interfaces:</p>
+            <p>An <code>enum</code> type <b>CANNOT</b> extend from a class because implicitly, all enums extend from <code>java.lang.Enum</code>. What you <b>CAN</b> do is implement interfaces:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Volume implements AnInterface { ... }</code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Volume implements AnInterface { ... }</code></p>
 
-	  <p>The closer we can go to extending a class when working with enums is overriding methods and implementing abstract methods. For example:</p>
+            <p>The closer we can go to extending a class when working with enums is overriding methods and implementing abstract methods. For example:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Volume {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Volume {<br />
 	  &nbsp; &nbsp; HIGH(<span class="hljs-number">100</span>) {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printValue</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"** Highest value**"</span>);<br />
@@ -225,59 +225,59 @@
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printDescription</span><span class="hljs-params">()</span></span>;<br />
 	  }</code></p>
 
-	  <p>In the case of <code>printValue()</code>, <code>MEDIUM</code> and <code>LOW</code> will use the version that just print the value while <code>HIGH</code> will use its own version. If the method is abstract, every <code>enum</code> has to implement it. Otherwise, a compile-time error will be thrown.</p>
+            <p>In the case of <code>printValue()</code>, <code>MEDIUM</code> and <code>LOW</code> will use the version that just print the value while <code>HIGH</code> will use its own version. If the method is abstract, every <code>enum</code> has to implement it. Otherwise, a compile-time error will be thrown.</p>
 
-	  <h2>Enums as Singletons</h2>
+            <h2>Enums as Singletons</h2>
 
-	  <p>Remember back in Chapter 1 when I mention that enums are singletons? Do you know why now?</p>
+            <p>Remember back in Chapter 1 when I mention that enums are singletons? Do you know why now?</p>
 
-	  <ul>
-		<li>You cannot create an instance of an enum by using the new operator (because the constructor is <code>private</code>).</li>
+            <ul>
+                <li>You cannot create an instance of an enum by using the new operator (because the constructor is <code>private</code>).</li>
 
-		<li>An instance of an enum is created when the enum is first referenced.</li>
+                <li>An instance of an enum is created when the enum is first referenced.</li>
 
-		<li>An enum can't be reassigned.</li>
+                <li>An enum can't be reassigned.</li>
 
-		<li>I didn't mention it before, but enums are thread-safe by default (meaning that you don't need to do double checks when creating them).</li>
+                <li>I didn't mention it before, but enums are thread-safe by default (meaning that you don't need to do double checks when creating them).</li>
 
-		<li>In Chapter 1, the impact of serialization on singletons wasn't really explored, but if you serialize a singleton, when you get it back with the default implementation of <code>readObject()</code>, this method will always return a new instance, so the singleton is not really one anymore. However, when serializing an <code>enum</code>, this won't happen.</li>
-	  </ul>
+                <li>In Chapter 1, the impact of serialization on singletons wasn't really explored, but if you serialize a singleton, when you get it back with the default implementation of <code>readObject()</code>, this method will always return a new instance, so the singleton is not really one anymore. However, when serializing an <code>enum</code>, this won't happen.</li>
+            </ul>
 
-	  <p>Given those reasons, most people believe that most of the time, enums are the best way to implement the singleton design pattern in Java.</p>
+            <p>Given those reasons, most people believe that most of the time, enums are the best way to implement the singleton design pattern in Java.</p>
 
-	  
 
-	  <h2>Key Points</h2>
 
-	  <ul>
-		<li>An <i>enum</i> is a type that represents a <b>FIXED</b> list of values (you can think of these as constants) providing type safety.</li>
+            <h2>Key Points</h2>
 
-		<li>Enums can define constructors, but they must be <code>private</code>. Otherwise, a compile-time error will be thrown.</li>
+            <ul>
+                <li>An <i>enum</i> is a type that represents a <b>FIXED</b> list of values (you can think of these as constants) providing type safety.</li>
 
-		<li>Enums are implicitly <code>public</code>, <code>static</code> and <code>final</code>.</li>
+                <li>Enums can define constructors, but they must be <code>private</code>. Otherwise, a compile-time error will be thrown.</li>
 
-		<li>An <code>enum</code> can be created from a String using the <code>valueOf()</code> method.</li>
+                <li>Enums are implicitly <code>public</code>, <code>static</code> and <code>final</code>.</li>
 
-		<li>To get all the enums of a certain type use the method <code>values()</code>, that returns an array of enums in the same order in which they were declared.</li>
+                <li>An <code>enum</code> can be created from a String using the <code>valueOf()</code> method.</li>
 
-		<li>When the <code>toString()</code> method is invoked, it prints the name of the enumeration.</li>
+                <li>To get all the enums of a certain type use the method <code>values()</code>, that returns an array of enums in the same order in which they were declared.</li>
 
-		<li>Enums can be compared against other enums using the <code>==</code> operator and the <code>equals()</code> method.</li>
+                <li>When the <code>toString()</code> method is invoked, it prints the name of the enumeration.</li>
 
-		<li>Enums can be used in <code>switch</code> statements.</li>
+                <li>Enums can be compared against other enums using the <code>==</code> operator and the <code>equals()</code> method.</li>
 
-		<li>Enums can implement interfaces, but they cannot extend from a class since they implicitly extend from <code>java.lang.Enum</code>.</li>
+                <li>Enums can be used in <code>switch</code> statements.</li>
 
-		<li>Enums are the easiest way to implement singletons.</li>
-	  </ul>
+                <li>Enums can implement interfaces, but they cannot extend from a class since they implicitly extend from <code>java.lang.Enum</code>.</li>
 
-	  
+                <li>Enums are the easiest way to implement singletons.</li>
+            </ul>
 
-	  <h2>Self Test</h2>
 
-	  <p>1. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Question_5_1 {<br />
+            <h2>Self Test</h2>
+
+            <p>1. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Question_5_1 {<br />
 	  &nbsp; &nbsp; UP(<span class="hljs-number">1</span>) {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printValue</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(value);<br />
@@ -290,17 +290,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result of executing <code>Question_5_1.UP.printValue()</code>?<br />
-	  A. <code>1</code><br />
-	  B. <code>0</code><br />
-	  C. Compile-time error<br />
-	  D. Run-time error</p>
+            <p>What is the result of executing <code>Question_5_1.UP.printValue()</code>?<br /> A. <code>1</code><br /> B. <code>0</code><br /> C. Compile-time error<br /> D. Run-time error</p>
 
-	  
 
-	  <p>2. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">enum</span> Color {<br />
+            <p>2. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">enum</span> Color {<br />
 	  &nbsp; &nbsp; Blue, Green, Black<br />
 	  }<br />
 	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_5_2</span></span> {<br />
@@ -314,26 +310,17 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result of executing <code>Question_5_2</code>?<br />
-	  A. <code>1</code><br />
-	  B. <code>2</code><br />
-	  C. <code>3</code><br />
-	  D. Compile-time error<br />
-	  E. Run-time error</p>
+            <p>What is the result of executing <code>Question_5_2</code>?<br /> A. <code>1</code><br /> B. <code>2</code><br /> C. <code>3</code><br /> D. Compile-time error<br /> E. Run-time error</p>
 
-	  
 
-	  <p>3. Which of the following statements is true?<br />
-	  A. Enums are thread-safe.<br />
-	  B. Enums can't neither extend from a class nor implement an interface.<br />
-	  C. Enums cannot define constructors.<br />
-	  D. Enums cannot have setter methods.</p>
 
-	  
+            <p>3. Which of the following statements is true?<br /> A. Enums are thread-safe.<br /> B. Enums can't neither extend from a class nor implement an interface.<br /> C. Enums cannot define constructors.<br /> D. Enums cannot have setter methods.</p>
 
-	  <p>4. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">enum</span> Level {<br />
+
+            <p>4. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">enum</span> Level {<br />
 	  &nbsp; &nbsp; HIGH(<span class="hljs-number">100</span>), LOW(<span class="hljs-number">10</span>);<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">int</span> value;<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-title">Level</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span></span> {<br />
@@ -348,20 +335,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result of executing class <code>Question_5_4</code>?<br />
-	  A. <code>100</code><br />
-	  B. <code>100</code><br />
-	  &nbsp; &nbsp; &nbsp;&nbsp;<code>100</code><br />
-	  C. <code>100</code><br />
-	  &nbsp; &nbsp; &nbsp;&nbsp;<code>10</code><br />
-	  D. Compile-time error<br />
-	  E. Nothing is printed</p>
+            <p>What is the result of executing class <code>Question_5_4</code>?<br /> A. <code>100</code><br /> B. <code>100</code><br /> &nbsp; &nbsp; &nbsp;&nbsp;<code>100</code><br /> C. <code>100</code><br /> &nbsp; &nbsp; &nbsp;&nbsp;<code>10</code><br /> D. Compile-time error<br /> E. Nothing is printed</p>
 
-	  
 
-	  <p>5. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">enum</span> Color1 {<br />
+            <p>5. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">enum</span> Color1 {<br />
 	  &nbsp; &nbsp; RED, YELLOW<br />
 	  }<br />
 	  <span class="hljs-keyword">enum</span> Color2 {<br />
@@ -377,44 +357,37 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result of executing <code>Question_5_5</code>?<br />
-	  A. <code>1</code><br />
-	  B. <code>0</code><br />
-	  D. Compile-time error<br />
-	  E. Run-time error</p>
+            <p>What is the result of executing <code>Question_5_5</code>?<br /> A. <code>1</code><br /> B. <code>0</code><br /> D. Compile-time error<br /> E. Run-time error</p>
 
-	  
 
-	  <p>6. Which of the following statements are true?<br />
-	  A. You can compare two enumerations using the <code>==</code> operator.<br />
-	  B. Enums implicitly inherit from <code>java.lang.Enum</code>.<br />
-	  C. You can't use the <code>new</code> operator inside an <code>enum</code>.<br />
-	  D. You can't have <code>abstract</code> methods inside an <code>enum</code>.</p>
 
-  
+            <p>6. Which of the following statements are true?<br /> A. You can compare two enumerations using the <code>==</code> operator.<br /> B. Enums implicitly inherit from <code>java.lang.Enum</code>.<br /> C. You can't use the <code>new</code> operator inside an <code>enum</code>.<br /> D. You can't have <code>abstract</code> methods inside an <code>enum</code>.</p>
 
-  
-    
-		<div class="answers">
-			<a href="ch05a.html" target="_blank">Open answers page</a>
-		</div>
 
-		<div class="book-info"></div>
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch04.html">04. Interfaces</a>
-			</div>
-			<div class="next">
-				<a href="ch06.html">06. Generics</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+
+
+            <div class="answers">
+                <a href="ch05a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch04.html">04. Interfaces</a>
+                </div>
+                <div class="next">
+                    <a href="ch06.html">06. Generics</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>

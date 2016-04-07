@@ -1,46 +1,437 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js">
+    </script>
+    <script src="js/common-sections.js">
+    </script>
 </head>
 
 <body>
-
-	<div class="nav"></div>
-
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
+    <div class="nav"></div>
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+                <h1>From Java 6 to Java 8</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="column intro-text">
+            <a href="#java7">Upgrade Java SE 7
+											to Java SE 8 OCP Programmer</a>
+            <br>
+            <a href="#java6">Upgrade to Java SE 8 OCP (Java SE 6 and all prior
+												versions)</a>
+            <p>&nbsp;</p>
+            <h2 id="java7">Upgrade Java SE 7 to Java SE 8 OCP Programmer</h2>
+            <p>Although this book has been written to cover all the objectives of the OCP Java 8 exam (1Z0&dash;809), you can use it to prepare the Upgrade Java SE 7 to Java SE 8 OCP exam (1Z0&dash;810).
+            </p>
+            <p>These are the chapters you have to review for this exam:</p>
+            <ul style="text-align:left;">
+			    <li><a href="ch03.html" target="_blank">03. Inner Classes</a></li>
+				<li><a href="ch04.html" target="_blank">04. Interfaces</a></li>
+                <li><a href="ch08.html" target="_blank">08. Functional Interfaces</a></li>
+				<li><a href="ch09.html" target="_blank">09. Lambda Expressions</a></li>
+				<li><a href="ch10.html" target="_blank">10. Java Built-In Lambda Interfaces</a></li>
+				<li><a href="ch11.html" target="_blank">11. Method References</a></li>
+				<li><a href="ch12.html" target="_blank">12. Streams</a></li>
+				<li><a href="ch13.html" target="_blank">13. Iterating and Filtering Collections</a></li>
+				<li><a href="ch14.html" target="_blank">14. Optional Class</a></li>
+				<li><a href="ch15.html" target="_blank">15. Data Search</a></li>
+				<li><a href="ch16.html" target="_blank">16. Stream Operations on Collections</a></li>
+				<li><a href="ch17.html" target="_blank">17. Peeking, Mapping, Reducing and Collecting</a></li>
+				<li><a href="ch18.html" target="_blank">18. Parallel Streams</a></li>
+				<li><a href="ch21.html" target="_blank">21. Core Date/Time Classes</a></li>
+				<li><a href="ch22.html" target="_blank">22. Time Zones and Daylight Savings</a></li>
+				<li><a href="ch23.html" target="_blank">23. Files and Streams</a></li>
+				<li><a href="ch31.html" target="_blank">A1. From Java 6/7 to Java 8</a></li>
+            </ul>
+            <p>This table shows the objectives of the exam and the chapter where it's covered:</p>
+            <table width="100%" border="1">
+                <tr>
+                    <th>Objective</th>
+                    <th>Chapter</th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Lambda Expressions</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Describe and develop code that uses Java inner classes, including nested class, static class, local class, and anonymous classes
+                    </td>
+                    <td><a href="ch03.html" target="_blank">03. Inner Classes</a></td>
+                </tr>
+                <tr>
+                    <td>Describe and write functional interfaces</td>
+                    <td><a href="ch08.html" target="_blank">08. Functional Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td>Describe a lambda expression; refactor the code that uses an anonymous inner class to use a lambda expression; describe type inference and target typing</td>
+                    <td><a href="ch09.html" target="_blank">09. Lambda Expressions</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Using Built-in Lambda Types</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Describe the interfaces of the java.util.function package</td>
+                    <td><a href="ch10.html" target="_blank">10. Java Built-In Lambda Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses the Function interface</td>
+                    <td><a href="ch10.html" target="_blank">10. Java Built-In Lambda Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses the Consumer interface</td>
+                    <td><a href="ch10.html" target="_blank">10. Java Built-In Lambda Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses the Supplier interface</td>
+                    <td><a href="ch10.html" target="_blank">10. Java Built-In Lambda Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses the UnaryOperator interface</td>
+                    <td><a href="ch10.html" target="_blank">10. Java Built-In Lambda Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses the Predicate interface</td>
+                    <td><a href="ch10.html" target="_blank">10. Java Built-In Lambda Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses the primitive and binary variations of the base interfaces of the java.util.function package</td>
+                    <td><a href="ch10.html" target="_blank">10. Java Built-In Lambda Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses a method reference, including refactoring a lambda expression to a method reference</td>
+                    <td><a href="ch11.html" target="_blank">11. Method References</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Java Collections and Streams with
+															Lambdas</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Develop code that iterates a collection by using the forEach() method and method chaining</td>
+                    <td><a href="ch13.html" target="_blank">13. Iterating and Filtering Collections</a></td>
+                </tr>
+                <tr>
+                    <td>Describe the Stream interface and pipelines</td>
+                    <td><a href="ch12.html" target="_blank">12. Streams</a></td>
+                </tr>
+                <tr>
+                    <td>Filter a collection by using lambda expressions</td>
+                    <td><a href="ch13.html" target="_blank">13. Iterating and Filtering Collections</a></td>
+                </tr>
+                <tr>
+                    <td>Identify the operations, on stream, that are lazy</td>
+                    <td><a href="ch12.html" target="_blank">12. Streams</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Collection Operations with Lambda</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Develop code to extract data from an object by using the map() method
+                    </td>
+                    <td><a href="ch17.html" target="_blank">17. Peeking, Mapping, Reducing and Collecting</a></td>
+                </tr>
+                <tr>
+                    <td>Search for data by using methods such as findFirst(), findAny(), anyMatch(), allMatch(), and noneMatch()</td>
+                    <td><a href="ch15.html" target="_blank">15. Data Search</a></td>
+                </tr>
+                <tr>
+                    <td>Describe the unique characteristics of the Optional class</td>
+                    <td><a href="ch14.html" target="_blank">14. Optional Class</a></td>
+                </tr>
+                <tr>
+                    <td>Perform calculations by using Java Stream methods, such as count(), max(), min(), average(), and sum()</td>
+                    <td><a href="ch15.html" target="_blank">15. Data Search</a></td>
+                </tr>
+                <tr>
+                    <td>Sort a collection by using lambda expressions</td>
+                    <td><a href="ch16.html" target="_blank">16. Stream Operations on Collections</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses the Stream.collect() method and Collectors class methods, such as averagingDouble(), groupingBy(), joining(), and partitioningBy()</td>
+                    <td><a href="ch17.html" target="_blank">17. Peeking, Mapping, Reducing and Collecting</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses parallel streams</td>
+                    <td><a href="ch18.html" target="_blank">18. Parallel Streams</a></td>
+                </tr>
+                <tr>
+                    <td>Implement decomposition and reduction in streams</td>
+                    <td><a href="ch17.html" target="_blank">17. Peeking, Mapping, Reducing and Collecting</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Lambda Cookbook</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses Java SE 8 collection improvements, including Collection.removeIf(), List.replaceAll(), Map.computeIfAbsent(), and Map.computeIfPresent() methods</td>
+                    <td><a href="ch31.html" target="_blank">A1. From Java 6/7 to Java 8</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses Java SE 8 I/O improvements, including Files.find(), Files.walk(), and lines() methods</td>
+                    <td><a href="ch23.html" target="_blank">23. Files and Streams</a></td>
+                </tr>
+                <tr>
+                    <td>Use flatMap() methods in the Stream API</td>
+                    <td><a href="ch17.html" target="_blank">17. Peeking, Mapping, Reducing and Collecting</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that creates a stream by using the Arrays.stream() and IntStream.range() methods</td>
+                    <td><a href="ch12.html" target="_blank">12. Streams</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Method Enhancements</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Add static methods to interfaces</td>
+                    <td><a href="ch04.html" target="_blank">04. Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td>Define and use a default method of an interface and describe the inheritance rules for the default method</td>
+                    <td><a href="ch04.html" target="_blank">04. Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Use Java SE 8 Date/Time API</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Create and manage date- and time-based events, including a combination of date and time in a single object, by using LocalDate, LocalTime, LocalDateTime, Instant, Period, and Duration
+                    </td>
+                    <td><a href="ch21.html" target="_blank">21. Core Date/Time Classes</a></td>
+                </tr>
+                <tr>
+                    <td>Work with dates and times across time zones and manage changes resulting from daylight savings, including Format date and times values
+                    </td>
+                    <td><a href="ch22.html" target="_blank">22. Time Zones and Daylight Savings</a></td>
+                </tr>
+                <tr>
+                    <td>Define, create, and manage date&dash;and time&dash;based events using Instant, Period, Duration, and TemporalUnit</td>
+                    <td><a href="ch21.html" target="_blank">21. Core Date/Time Classes</a></td>
+                </tr>
+            </table>
+            
+			<p>&nbsp;</p>
 			
-			  <h1>From Java 6 to Java 8</h1>
-
-			</div>
-		</div>
-	</div>
+			<h2 id="java6">Upgrade to Java SE 8 OCP (Java SE 6 and all prior versions)</h2>
+            <p>Just as the Java 7 upgrade exam, you can use this book to prepare the Upgrade to Java SE 8 OCP from Java SE 6 and all prior versions exam (1Z0&dash;813).</p>
+            <p>These are the chapters you have to review for this exam:</p>
+            <ul style="text-align:left;">
+			    <li><a href="ch04.html" target="_blank">04. Interfaces</a></li>
+				<li><a href="ch06.html" target="_blank">06. Generics</a></li>
+				<li><a href="ch08.html" target="_blank">08. Functional Interfaces</a></li>
+				<li><a href="ch09.html" target="_blank">09. Lambda Expressions</a></li>
+				<li><a href="ch10.html" target="_blank">10. Java Built-In Lambda Interfaces</a></li>
+				<li><a href="ch11.html" target="_blank">11. Method References</a></li>
+				<li><a href="ch12.html" target="_blank">12. Streams</a></li>
+				<li><a href="ch13.html" target="_blank">13. Iterating and Filtering Collections</a></li>
+				<li><a href="ch15.html" target="_blank">15. Data Search</a></li>
+				<li><a href="ch17.html" target="_blank">17. Peeking, Mapping, Reducing and Collecting</a></li>
+				<li><a href="ch18.html" target="_blank">18. Parallel Streams</a></li>
+				<li><a href="ch19.html" target="_blank">19. Exceptions</a></li>
+				<li><a href="ch21.html" target="_blank">21. Core Date/Time Classes</a></li>
+				<li><a href="ch22.html" target="_blank">22. Time Zones and Daylight Savings</a></li>
+				<li><a href="ch24.html" target="_blank">24. NIO.2</a></li>
+				<li><a href="ch25.html" target="_blank">25. Files and Streams</a></li>
+				<li><a href="ch26.html" target="_blank">26. Thread Basics</a></li>
+				<li><a href="ch27.html" target="_blank">27. Concurrency</a></li>
+				<li><a href="ch28.html" target="_blank">28. Fork/Join Framework</a></li>
+				<li><a href="ch30.html" target="_blank">30. Localization</a></li>
+				<li><a href="ch31.html" target="_blank">A1. From Java 6/7 to Java 8</a></li>
+			</ul>
+            <p>This table shows the objectives of the exam and the chapter where it's covered:</p>
+            <table width="100%" border="1">
+                <tr>
+                    <th>Objective</th>
+                    <th>Chapter</th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Language Enhancements</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses String objects in the switch statement, binary literals, and numeric literals, including underscores in literals
+                    </td>
+                    <td><a href="ch31.html" target="_blank">A1. From Java 6/7 to Java 8</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses try-with-resources statements, including using classes that implement the AutoCloseable interface</td>
+                    <td><a href="ch19.html" target="_blank">19. Exceptions</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that handles multiple Exception types in a single catch block</td>
+                    <td><a href="ch19.html" target="_blank">19. Exceptions</a></td>
+                </tr>
+                <tr>
+                    <td>Use static and default methods of an interface including inheritance rules for a default method</td>
+                    <td><a href="ch04.html" target="_blank">04. Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Concurrency</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Use classes from the java.util.concurrent package including CyclicBarrier and CopyOnWriteArrayList with a focus on the advantages over and differences from the traditional java.util collections
+                    </td>
+                    <td><a href="ch27.html" target="_blank">27. Concurrency</a></td>
+                </tr>
+                <tr>
+                    <td>Use Lock, ReadWriteLock, and ReentrantLock classes in the java.util.concurrent.locks and java.util.concurrent.atomic packages to support lock-free thread-safe programming on single variables
+                    </td>
+                    <td><a href="ch31.html" target="_blank">A1. From Java 6/7 to Java 8</a><br/><a href="ch27.html" target="_blank">27. Concurrency</a></td>
+                </tr>
+                <tr>
+                    <td>Use Executor, ExecutorService, Executors, Callable, and Future to execute tasks using thread pools</td>
+                    <td><a href="ch26.html" target="_blank">26. Thread Basics</a></td>
+                </tr>
+                <tr>
+                    <td>Use the parallel Fork/Join Framework</td>
+                    <td><a href="ch28.html" target="_blank">28. Fork/Join Framework</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Localization</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Describe the advantages of localizing an application and developing code that defines, reads, and sets the locale with a Locale object</td>
+                    <td><a href="ch30.html" target="_blank">30. Localization</a></td>
+                </tr>
+                <tr>
+                    <td>Build a resource bundle for a locale and call a resource bundle from an application</td>
+                    <td><a href="ch30.html" target="_blank">30. Localization</a></td>
+                </tr>
+                <tr>
+                    <td>Create and manage date&dash;and time&dash;based events by using LocalDate, LocalTime, LocalDateTime, Instant, Period, and Duration, including a combination of date and time in a single object
+                    </td>
+                    <td><a href="ch21.html" target="_blank">21. Core Date/Time Classes</a></td>
+                </tr>
+                <tr>
+                    <td>Format dates, numbers, and currency values for localization with the NumberFormat and DateFormat classes, including number and date format patterns</td>
+                    <td><a href="ch31.html" target="_blank">A1. From Java 6/7 to Java 8</a></td>
+                </tr>
+                <tr>
+                    <td>Work with dates and times across time zones and manage changes resulting from daylight savings</td>
+                    <td><a href="ch22.html" target="_blank">22. Time Zones and Daylight Savings</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Java File I/O (NIO.2)</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Operate on file and directory paths by using the Paths class
+                    </td>
+                    <td><a href="ch24.html" target="_blank">24. NIO.2</a></td>
+                </tr>
+                <tr>
+                    <td>Check, delete, copy, or move a file or directory by using the Files class</td>
+                    <td><a href="ch24.html" target="_blank">24. NIO.2</a></td>
+                </tr>
+                <tr>
+                    <td>Recursively access a directory tree by using the DirectoryStream and FileVisitor interfaces</td>
+                    <td><a href="ch31.html" target="_blank">A1. From Java 6/7 to Java 8</a></td>
+                </tr>
+                <tr>
+                    <td>Find a file by using the PathMatcher interface, and use Java SE 8 I/O improvements, including Files.find(), Files.walk(), and lines() methods</td>
+                    <td><a href="ch31.html" target="_blank">A1. From Java 6/7 to Java 8</a><br/><a href="ch25.html" target="_blank">25. Files and Streams</a></td>
+                </tr>
+                <tr>
+                    <td>Observe the changes in a directory by using the WatchService interface
+                    </td>
+                    <td><a href="ch31.html" target="_blank">A1. From Java 6/7 to Java 8</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Lambda</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Define and write functional interfaces and describe the interfaces of the java.util.function package</td>
+                    <td><a href="ch08.html" target="_blank">08. Functional Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td>Describe a lambda expression; refactor the code that uses an anonymous inner class to use a lambda expression; describe type inference and target typing</td>
+                    <td><a href="ch09.html" target="_blank">09. Lambda Expressions</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses the built-in interfaces included in the java.util.function package, such as Function, Consumer, Supplier, UnaryOperator, Predicate, and Optional APIs, including the primitive and binary variations of the interfaces</td>
+                    <td><a href="ch10.html" target="_blank">10. Java Built-In Lambda Interfaces</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses a method reference, including refactoring a lambda expression to a method reference</td>
+                    <td><a href="ch11.html" target="_blank">11. Method References</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Java Collections</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses diamond with generic declarations</td>
+                    <td><a href="ch06.html" target="_blank">06. Generics</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that iterates a collection, filters a collection, and sorts a collection by using lambda expressions</td>
+                    <td><a href="ch13.html" target="_blank">13. Iterating and Filtering Collections</a></td>
+                </tr>
+                <tr>
+                    <td>Search for data by using methods, such as findFirst(), findAny(), anyMatch(), allMatch(), and noneMatch()</td>
+                    <td><a href="ch15.html" target="_blank">15. Data Search</a></td>
+                </tr>
+                <tr>
+                    <td>Perform calculations on Java Streams by using count, max, min, average, and sum methods and save results to a collection by using the collect method and Collector class, including the averagingDouble, groupingBy, joining, partitioningBy methods</td>
+                    <td><a href="ch17.html" target="_blank">17. Peeking, Mapping, Reducing and Collecting</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses Java SE 8 collection improvements, including the Collection.removeIf(), List.replaceAll(), Map.computeIfAbsent(), and Map.computeIfPresent() methods</td>
+                    <td><a href="ch31.html" target="_blank">A1. From Java 6/7 to Java 8</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses the merge(), flatMap(), and map() methods on Java Streams</td>
+                    <td><a href="ch17.html" target="_blank">17. Peeking, Mapping, Reducing and Collecting</a></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <b>Java Streams</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Describe the Stream interface and pipelines; create a stream by using the Arrays.stream() and IntStream.range() methods; identify the lambda operations that are lazy</td>
+					<td><a href="ch12.html" target="_blank">12. Streams</a></td>
+                </tr>
+                <tr>
+                    <td>Develop code that uses parallel streams, including decomposition operation and reduction operation in streams</td>
+                    <td><a href="ch18.html" target="_blank">18. Parallel Streams</a></td>
+                </tr>
+            </table>
+			
+			<p>&nbsp;</p>
+        </div>
+    </div>
 	
-	
-
-  <div class="container">
-  
-	<div class="column intro-text">
-		<p>Soon...</p>
-	</div>
-	
-  </div>
-		
-  <footer></footer>
-  
+	<footer></footer>
 </body>
-
 </html>

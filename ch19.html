@@ -2,94 +2,91 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Part FIVE</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Part FIVE</i><br />
 			  Exceptions and Assertions</h1>
 
-			  
 
-			  <h1><i class="chapter">Chapter NINETEEN</i><br />
+
+                <h1><i class="chapter">Chapter NINETEEN</i><br />
 			  Exceptions</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Use try-catch and throw statements.<br /></i><i>Use catch, multi-catch, and finally clauses.<br /></i><i>Use Autoclose resources with a try-with-resources statement.<br /></i><i>Create custom exceptions and Auto-closeable resources.</i></p>
-			  
-			</div>
-		</div>
-	</div>
-	
-	
+                <p style="text-align: center;"><i>Use try-catch and throw statements.<br /></i><i>Use catch, multi-catch, and finally clauses.<br /></i><i>Use Autoclose resources with a try-with-resources statement.<br /></i><i>Create custom exceptions and Auto-closeable resources.</i></p>
 
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-		<h2>Exception</h2>
 
-	  <p>Errors can (and will) happen in any program. In Java, errors are represented by exceptions.</p>
 
-	  <p>Basically, in Java there are three types of exception:</p>
+    <div class="container">
 
-	  <p><b><code>java.lang.Exception</code></b><br />
-	  Extends from <code>java.lang.Throwable</code> and represents errors that are expected. In some cases, the program can recover itself from them. Some examples are: <code>IOException</code>, <code>ParseException</code>, <code>SQLException</code></p>
+        <div class="column">
 
-	  <p><b><code>java.lang.RuntimeException</code></b><br />
-	  Extends from <code>java.lang.Exception</code> and represents unexpected errors generated at runtime. In most cases, the program cannot recover itself from them. Some examples are: <code>ArithmeticException</code>, <code>ClassCastException</code>, <code>NullPointerException</code></p>
+            <h2>Exception</h2>
 
-	  <p><b><code>java.lang.Error</code></b><br />
-	  Extends from <code>java.lang.Throwable</code> and represents serious problems or abnormal conditions that a program should not deal with. Some examples are: <code>AssertionError</code>, <code>IOError</code>, <code>LinkageError</code>, <code>VirtualMachineError</code></p>
+            <p>Errors can (and will) happen in any program. In Java, errors are represented by exceptions.</p>
 
-	  <p><code>RuntimeException</code> and its subclasses are not required to be caught since they're not expected all the time. They're also called unchecked.</p>
+            <p>Basically, in Java there are three types of exception:</p>
 
-	  <p>Exception and its subclasses (except for <code>RuntimeException</code>) are known as checked exceptions because they have to be caught at some point by a <code>try-catch</code> statement.</p>
-	  <hr />
+            <p><b><code>java.lang.Exception</code></b><br /> Extends from <code>java.lang.Throwable</code> and represents errors that are expected. In some cases, the program can recover itself from them. Some examples are: <code>IOException</code>, <code>ParseException</code>, <code>SQLException</code></p>
 
-	  <h4><i>Try-Catch Block</i></h4>
+            <p><b><code>java.lang.RuntimeException</code></b><br /> Extends from <code>java.lang.Exception</code> and represents unexpected errors generated at runtime. In most cases, the program cannot recover itself from them. Some examples are: <code>ArithmeticException</code>, <code>ClassCastException</code>, <code>NullPointerException</code></p>
 
-	  <p><i>There's only one try block</i></p>
+            <p><b><code>java.lang.Error</code></b><br /> Extends from <code>java.lang.Throwable</code> and represents serious problems or abnormal conditions that a program should not deal with. Some examples are: <code>AssertionError</code>, <code>IOError</code>, <code>LinkageError</code>, <code>VirtualMachineError</code></p>
 
-	  <p><i><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><code>RuntimeException</code> and its subclasses are not required to be caught since they're not expected all the time. They're also called unchecked.</p>
+
+            <p>Exception and its subclasses (except for <code>RuntimeException</code>) are known as checked exceptions because they have to be caught at some point by a <code>try-catch</code> statement.</p>
+            <hr />
+
+            <h4><i>Try-Catch Block</i></h4>
+
+            <p><i>There's only one try block</i></p>
+
+            <p><i><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp;<span class="hljs-comment">// Code that may throw an exception</span><br />
 	  } <span class="hljs-keyword">catch</span>(Exception e) {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp;// Do something with the exception using</span><br />
 	  <span class="hljs-comment">&nbsp; &nbsp;// reference e</span><br />
 	  }</code></i></p>
 
-	  <p><i>There can be more than one catch block (one for each exception to catch)</i></p>
-	  <hr />
+            <p><i>There can be more than one catch block (one for each exception to catch)</i></p>
+            <hr />
 
-	  <h2>Try-Catch Block</h2>
+            <h2>Try-Catch Block</h2>
 
-	  <p>A <code>try</code> block is used to enclose code that might throw an exception, it doesn't matter if it's a checked or an unchecked one.</p>
+            <p>A <code>try</code> block is used to enclose code that might throw an exception, it doesn't matter if it's a checked or an unchecked one.</p>
 
-	  <p>A <code>catch</code> block is used to handle an exception. It defines the type of the exception and a reference to it.</p>
+            <p>A <code>catch</code> block is used to handle an exception. It defines the type of the exception and a reference to it.</p>
 
-	  <p>Let's see an example:</p>
+            <p>Let's see an example:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">3</span>];<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt;= arr.length; i++) {<br />
@@ -99,20 +96,17 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>There's an error in the above program, can you see it?</p>
+            <p>There's an error in the above program, can you see it?</p>
 
-	  <p>In the last iteration of the loop, <code>i</code> will be <code>3</code>, and since arrays have zero-based indexes, an exception will be thrown at runtime:</p>
+            <p>In the last iteration of the loop, <code>i</code> will be <code>3</code>, and since arrays have zero-based indexes, an exception will be thrown at runtime:</p>
 
-	  <p><code class="java hljs">Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: <span class="hljs-number">3</span> at com.example.Test.main(TestException.java:<span class="hljs-number">8</span>)</code></p>
+            <p><code class="java hljs">Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: <span class="hljs-number">3</span> at com.example.Test.main(TestException.java:<span class="hljs-number">8</span>)</code></p>
 
-	  <p>If an exception is not handled, the JVM provides a default exception handler that performs the following tasks:<br />
-	  1. It prints out exception description.<br />
-	  2. It prints the stack trace (hierarchy of methods where the exception occurred).<br />
-	  3. It causes the program to terminate.</p>
+            <p>If an exception is not handled, the JVM provides a default exception handler that performs the following tasks:<br /> 1. It prints out exception description.<br /> 2. It prints the stack trace (hierarchy of methods where the exception occurred).<br /> 3. It causes the program to terminate.</p>
 
-	  <p>However, if the exception is handled by in a <code>try-catch</code> block, the normal flow of the application is maintained and rest of the code is executed.</p>
+            <p>However, if the exception is handled by in a <code>try-catch</code> block, the normal flow of the application is maintained and rest of the code is executed.</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">3</span>];<br />
@@ -126,22 +120,22 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>The output:</p>
+            <p>The output:</p>
 
-	  <p><code class="java hljs">Exception caught<br />
+            <p><code class="java hljs">Exception caught<br />
 	  Done</code></p>
 
-	  <p>This is an example of an unchecked exception. Again, they don't have to be caught, but catching them is certainly useful.</p>
+            <p>This is an example of an unchecked exception. Again, they don't have to be caught, but catching them is certainly useful.</p>
 
-	  <p>On the other hand, we have checked exceptions, which need to be surrounded by a <code>try</code> block if you don't want the compiler to complain. So this piece of code:</p>
+            <p>On the other hand, we have checked exceptions, which need to be surrounded by a <code>try</code> block if you don't want the compiler to complain. So this piece of code:</p>
 
-	  <p><code class="java hljs">SimpleDateFormat sdf = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">"MM/dd"</span>);<br />
+            <p><code class="java hljs">SimpleDateFormat sdf = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">"MM/dd"</span>);<br />
 	  Date date = sdf.parse(<span class="hljs-string">"01-10"</span>); <span class="hljs-comment">// Compile-time error</span><br />
 	  System.out.println(date);</code></p>
 
-	  <p>Becomes this:</p>
+            <p>Becomes this:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp; SimpleDateFormat sdf = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">"MM/dd"</span>);<br />
 	  &nbsp; &nbsp; Date date = sdf.parse(<span class="hljs-string">"01-10"</span>);<br />
 	  &nbsp; &nbsp; System.out.println(date);<br />
@@ -149,34 +143,34 @@
 	  &nbsp; &nbsp; System.out.println(<span class="hljs-string">"ParseException caught"</span>);<br />
 	  }</code></p>
 
-	  <p>Since, according to its signature, the parse method throws a <code>java.text.ParseException</code> (that extends directly from <code>java.lang.Exception</code>):</p>
+            <p>Since, according to its signature, the parse method throws a <code>java.text.ParseException</code> (that extends directly from <code>java.lang.Exception</code>):</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> Date <span class="hljs-title">parse</span><span class="hljs-params">(String source)</span> <span class="hljs-keyword">throws</span> ParseException</span></code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> Date <span class="hljs-title">parse</span><span class="hljs-params">(String source)</span> <span class="hljs-keyword">throws</span> ParseException</span></code></p>
 
-	  <p>The <code>throws</code> keyword indicates the exceptions that a method can throw. Only checked exceptions are required to be declared this way.</p>
+            <p>The <code>throws</code> keyword indicates the exceptions that a method can throw. Only checked exceptions are required to be declared this way.</p>
 
-	  <p>Now, remember not to confuse <code>throws</code> with <code>throw</code>. The latter will actually throw an exception:</p>
+            <p>Now, remember not to confuse <code>throws</code> with <code>throw</code>. The latter will actually throw an exception:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">myMethod</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> SQLException</span> {<br />
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">myMethod</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> SQLException</span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // Exceptions are created with the new operator<br />
 	  &nbsp; &nbsp; // like any Java class</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; throw</span> <span class="hljs-keyword">new</span> SQLException();<br />
 	  }</code></p>
 
-	  <p>We can also catch the superclass directly:</p>
+            <p>We can also catch the superclass directly:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp; SimpleDateFormat sdf = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">"MM/dd"</span>);<br />
 	  &nbsp; &nbsp; Date date = sdf.parse(<span class="hljs-string">"01-10"</span>); System.out.println(date);<br />
 	  } <span class="hljs-keyword">catch</span> (Exception e) {<br />
 	  &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Exception caught"</span>);<br />
 	  }</code></p>
 
-	  <p>Although this is not recommended, since the above catch block will catch every exception (checked or unchecked) that could be possibly thrown by the code.</p>
+            <p>Although this is not recommended, since the above catch block will catch every exception (checked or unchecked) that could be possibly thrown by the code.</p>
 
-	  <p>So it's better to catch both in this way:</p>
+            <p>So it's better to catch both in this way:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp; SimpleDateFormat sdf = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">"MM/dd"</span>);<br />
 	  &nbsp; &nbsp; Date date = sdf.parse(<span class="hljs-string">"01-10"</span>);<br />
 	  &nbsp; &nbsp; System.out.println(date);<br />
@@ -185,11 +179,11 @@
 	  } <span class="hljs-keyword">catch</span> (Exception e) {<span class="hljs-number"><br /></span>&nbsp; &nbsp; System.out.println(<span class="hljs-string">"Exception caught"</span>);<br />
 	  }</code></p>
 
-	  <p>If an exception can be caught in more than one block, the exception will be caught in the first block defined.</p>
+            <p>If an exception can be caught in more than one block, the exception will be caught in the first block defined.</p>
 
-	  <p>However, we have to respect the hierarchy of the classes, if a superclass is defined before a subclass, a compile-time error is generated:</p>
+            <p>However, we have to respect the hierarchy of the classes, if a superclass is defined before a subclass, a compile-time error is generated:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp; SimpleDateFormat sdf = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">"MM/dd"</span>);<br />
 	  &nbsp; &nbsp; Date date = sdf.parse(<span class="hljs-string">"01-10"</span>);<br />
 	  &nbsp; &nbsp; System.out.println(date);<br />
@@ -199,24 +193,24 @@
 	  &nbsp; &nbsp;</font> System.out.println(<span class="hljs-string">"ParseException caught"</span>);<br />
 	  }</code></p>
 
-	  <p>An error is also generated if a <code>catch</code> block is defined for an exception that couldn't be thrown by the code in the <code>try</code> block:</p>
+            <p>An error is also generated if a <code>catch</code> block is defined for an exception that couldn't be thrown by the code in the <code>try</code> block:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp; SimpleDateFormat sdf = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">"MM/dd"</span>);<br />
 	  &nbsp; &nbsp; Date date = sdf.parse(<span class="hljs-string">"01-10"</span>);<br />
 	  &nbsp; &nbsp; System.out.println(date);<br />
 	  } <span class="hljs-keyword">catch</span> (SQLException e) { <span class="hljs-comment">// Compile-time error<br /></span>&nbsp; &nbsp; System.out.println(<span class="hljs-string">"ParseException caught"</span>);<br />
 	  }</code></p>
 
-	  <p>The reason of these two errors is that the code of both <code>catch</code> blocks will never be executed (it's unreachable, as the compiler says).</p>
+            <p>The reason of these two errors is that the code of both <code>catch</code> blocks will never be executed (it's unreachable, as the compiler says).</p>
 
-	  <p>In one case, the <code>catch</code> block with the superclass will be executed for all exceptions that belong to that type and in the other case, the exception can never be possible thrown and the <code>catch</code> block can never be possible executed.</p>
+            <p>In one case, the <code>catch</code> block with the superclass will be executed for all exceptions that belong to that type and in the other case, the exception can never be possible thrown and the <code>catch</code> block can never be possible executed.</p>
 
-	  <p>Finally, if the code that throws a checked exception is not inside a <code>try-catch</code> block, the method that contains that code must declare the exception in the <code>throws</code> clause.</p>
+            <p>Finally, if the code that throws a checked exception is not inside a <code>try-catch</code> block, the method that contains that code must declare the exception in the <code>throws</code> clause.</p>
 
-	  <p>In this case, the caller of the method must either catch the exception or also declare it in the <code>throws</code> clause and so on until the main method of the program is reached:</p>
+            <p>In this case, the caller of the method must either catch the exception or also declare it in the <code>throws</code> clause and so on until the main method of the program is reached:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)<font color="#000000"><br /></font></span><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</font>throws</span> ParseException</span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; m1();<br />
 	  &nbsp; &nbsp; }<br />
@@ -236,11 +230,11 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(date);<br />
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
-	  <hr />
+            <hr />
 
-	  <h4><i>Multi-Catch</i></h4>
+            <h4><i>Multi-Catch</i></h4>
 
-	  <p><i><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><i><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // Code that may throw one or</span><br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // two exceptions</span><br />
 	  } <span class="hljs-keyword">catch</span>(Exception1 | Exception2 e) {<br />
@@ -248,27 +242,27 @@
 	  <span class="hljs-comment">&nbsp; &nbsp; // exception using reference e</span><br />
 	  }</code></i></p>
 
-	  <p><i>Catch either Exception1 or Exception2</i></p>
+            <p><i>Catch either Exception1 or Exception2</i></p>
 
-	  <h4><i>Finally</i></h4>
+            <h4><i>Finally</i></h4>
 
-	  <p><i><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><i><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // Code that may throw an</span><br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // exception</span> }<br />
 	  <span class="hljs-keyword">finally</span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // Block that is always executed</span><br />
 	  }</code></i></p>
 
-	  <p><i>The catch block is optional. You can have both or either a catch block or a finally block</i></p>
+            <p><i>The catch block is optional. You can have both or either a catch block or a finally block</i></p>
 
-	  <p><i>The finally block is always executed, no matter if an exception is thrown in the try block, re-thrown inside the catch block, or not caught at all</i></p>
-	  <hr />
+            <p><i>The finally block is always executed, no matter if an exception is thrown in the try block, re-thrown inside the catch block, or not caught at all</i></p>
+            <hr />
 
-	  <h2>Multi-Catch and Finally</h2>
+            <h2>Multi-Catch and Finally</h2>
 
-	  <p>Consider something like the following code:</p>
+            <p>Consider something like the following code:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br />
 	  <span class="hljs-keyword">try</span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">2</span>];<br />
 	  &nbsp; &nbsp; res = (arr[<span class="hljs-number">1</span>] != <span class="hljs-number">0</span>) ? <span class="hljs-number">10</span> / arr[<span class="hljs-number">1</span>] : <span class="hljs-number">10</span> * arr[<span class="hljs-number">2</span>];<br />
@@ -281,18 +275,18 @@
 	  }<br />
 	  <span class="hljs-keyword">return</span> res;</code></p>
 
-	  <p>Isn't that ugly? I mean to have two catch blocks with the same code. Fortunately, the <code>multi-catch</code> block allows us to catch two or more exception with a single <code>catch</code> block:</p>
+            <p>Isn't that ugly? I mean to have two catch blocks with the same code. Fortunately, the <code>multi-catch</code> block allows us to catch two or more exception with a single <code>catch</code> block:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp; ...<br />
 	  } <span class="hljs-keyword">catch</span> (ArithmeticException | IndexOutOfBoundsException e) {<br />
 	  &nbsp; &nbsp; e.printStackTrace();<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; return</span> res;<br />
 	  }</code></p>
 
-	  <p>Think of the pipe character as an <b>OR</b> operator. Also, notice there's only one variable at the end of the <code>catch</code> clause for all the exceptions declared. If you want to differentiate between exceptions, you can use the <code>instanceof</code> operator:</p>
+            <p>Think of the pipe character as an <b>OR</b> operator. Also, notice there's only one variable at the end of the <code>catch</code> clause for all the exceptions declared. If you want to differentiate between exceptions, you can use the <code>instanceof</code> operator:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp;...<br />
 	  } <span class="hljs-keyword">catch</span> (ArithmeticException | IndexOutOfBoundsException e) {<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">if</span>(e <span class="hljs-keyword">instanceof</span> ArithmeticException) {<br />
@@ -303,9 +297,9 @@
 	  <span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>return</span> res;<br />
 	  }</code></p>
 
-	  <p>Also, the variable is treated as final, which means that you can't reassign (why would you want anyway?):</p>
+            <p>Also, the variable is treated as final, which means that you can't reassign (why would you want anyway?):</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp; ...<br />
 	  } <span class="hljs-keyword">catch</span> (ArithmeticException | IndexOutOfBoundsException e) {<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">if</span>(e <span class="hljs-keyword">instanceof</span> ArithmeticException) {<br />
@@ -317,9 +311,9 @@
 	  <span class="hljs-keyword">&nbsp; &nbsp; throw</span> e;<br />
 	  }</code></p>
 
-	  <p>One last rule. You can only combine exceptions in a <code>multi-catch</code> block that are not directly related (regarding inheritance):</p>
+            <p>One last rule. You can only combine exceptions in a <code>multi-catch</code> block that are not directly related (regarding inheritance):</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp; ...<br />
 	  } <span class="hljs-keyword">catch</span> (ArithmeticException | RuntimeException e) {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // The above line generates a compile-time error</span><br />
@@ -327,11 +321,11 @@
 	  <span class="hljs-keyword">&nbsp; &nbsp; return</span> res;<br />
 	  }</code></p>
 
-	  <p>This is similar to the case when a superclass is declared in a <code>catch</code> block before the subclass. The code is redundant, the superclass will always catch the exception. Only use the <code>multi-catch</code> block for exceptions that are not related.</p>
+            <p>This is similar to the case when a superclass is declared in a <code>catch</code> block before the subclass. The code is redundant, the superclass will always catch the exception. Only use the <code>multi-catch</code> block for exceptions that are not related.</p>
 
-	  <p>Back to this piece of code:</p>
+            <p>Back to this piece of code:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> res = <span class="hljs-number">0</span>;<br />
 	  <span class="hljs-keyword">try</span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; int</span>[] arr = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">2</span>];<br />
 	  &nbsp; &nbsp; res = (arr[<span class="hljs-number">1</span>] != <span class="hljs-number">0</span>) ? <span class="hljs-number">10</span> / arr[<span class="hljs-number">1</span>] : <span class="hljs-number">10</span> * arr[<span class="hljs-number">2</span>];<br />
@@ -341,9 +335,9 @@
 	  }<br />
 	  <span class="hljs-keyword">return</span> res;</code></p>
 
-	  <p>Since the value of <code>res</code> is always returned, we can use a <code>finally</code> block:</p>
+            <p>Since the value of <code>res</code> is always returned, we can use a <code>finally</code> block:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp; ...<br />
 	  } <span class="hljs-keyword">catch</span> (ArithmeticException | IndexOutOfBoundsException e) {<br />
 	  &nbsp; &nbsp; e.printStackTrace();<br />
@@ -351,16 +345,16 @@
 	  <span class="hljs-keyword">&nbsp; &nbsp; return</span> res;<br />
 	  }</code></p>
 
-	  <p>The <code>finally</code> block is <b>ALWAYS</b> executed, even when an exception is caught or when either the <code>try</code> or <code>catch</code> block contains a return statement. For that reason, it's commonly used to close resources like database connections or file handlers.</p>
+            <p>The <code>finally</code> block is <b>ALWAYS</b> executed, even when an exception is caught or when either the <code>try</code> or <code>catch</code> block contains a return statement. For that reason, it's commonly used to close resources like database connections or file handlers.</p>
 
-	  <p>There's only one exception to this rule. If you call <code>System.exit()</code>, the program will terminate abnormally without executing the <code>finally</code> block. However, as it's considered bad practice to call <code>System.exit()</code>, this rarely happens.</p>
-	  <hr />
+            <p>There's only one exception to this rule. If you call <code>System.exit()</code>, the program will terminate abnormally without executing the <code>finally</code> block. However, as it's considered bad practice to call <code>System.exit()</code>, this rarely happens.</p>
+            <hr />
 
-	  <h4><i>Try-With-Resources</i></h4>
+            <h4><i>Try-With-Resources</i></h4>
 
-	  <p><i>Resource that is closed&nbsp;automatically</i></p>
+            <p><i>Resource that is closed&nbsp;automatically</i></p>
 
-	  <p><i><code class="java hljs"><span class="hljs-keyword">try</span> (AutoCloseableResource r = <span class="hljs-keyword">new</span> AutoCloseableResource()) {<br />
+            <p><i><code class="java hljs"><span class="hljs-keyword">try</span> (AutoCloseableResource r = <span class="hljs-keyword">new</span> AutoCloseableResource()) {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // Code that may thrown an exception</span><br />
 	  } <span class="hljs-keyword">catch</span>(Exception e) {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // Handle exception</span><br />
@@ -368,16 +362,16 @@
 	  <span class="hljs-comment">&nbsp; &nbsp; // Always executes</span><br />
 	  }</code></i></p>
 
-	  <p><i>Resource is closed after the try block finishes</i></p>
+            <p><i>Resource is closed after the try block finishes</i></p>
 
-	  <p><i>Catch and finally blocks are both optional in a try-with-resources</i></p>
-	  <hr />
+            <p><i>Catch and finally blocks are both optional in a try-with-resources</i></p>
+            <hr />
 
-	  <h2>try-with-resources</h2>
+            <h2>try-with-resources</h2>
 
-	  <p>As we said before, the <code>finally</code> block is generally used to close resources. Since Java 7, we have the <code>try-with-resources</code> block, in which the <code>try</code> block, one or more resources are declared so they can be closed without doing it explicitly in a <code>finally</code> block:</p>
+            <p>As we said before, the <code>finally</code> block is generally used to close resources. Since Java 7, we have the <code>try-with-resources</code> block, in which the <code>try</code> block, one or more resources are declared so they can be closed without doing it explicitly in a <code>finally</code> block:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> (BufferedReader br =<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> (BufferedReader br =<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp;new</span> BufferedReader(<span class="hljs-keyword">new</span> FileReader("/file.txt"))) {<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">int</span> value = <span class="hljs-number">0</span>;<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; while</span>((value = br.read()) != -<span class="hljs-number">1</span>) {<br />
@@ -387,9 +381,9 @@
 	  &nbsp; &nbsp; e.printStackTrace();<br />
 	  }</code></p>
 
-	  <p>In the example, the <code>BufferedReader</code> is closed after the <code>try</code> block finishes its execution. This would be equivalent to:</p>
+            <p>In the example, the <code>BufferedReader</code> is closed after the <code>try</code> block finishes its execution. This would be equivalent to:</p>
 
-	  <p><code class="java hljs">BufferedReader br = <span class="hljs-keyword">null</span>;<br />
+            <p><code class="java hljs">BufferedReader br = <span class="hljs-keyword">null</span>;<br />
 	  <span class="hljs-keyword">try</span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; int</span> value = <span class="hljs-number">0</span>;<br />
 	  &nbsp; &nbsp; br = <span class="hljs-keyword">new</span> BufferedReader(<span class="hljs-keyword">new</span> FileReader("/file.txt"));<br />
@@ -406,24 +400,24 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>If you declare more than one resource, they have to be separated by a semicolon:</p>
+            <p>If you declare more than one resource, they have to be separated by a semicolon:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> (FileReader fr = <span class="hljs-keyword">new</span> FileReader("/file.txt");<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> (FileReader fr = <span class="hljs-keyword">new</span> FileReader("/file.txt");<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; BufferedReader br = <span class="hljs-keyword">new</span> BufferedReader(fr)) {<br />
 	  &nbsp; &nbsp; ...<br />
 	  }</code></p>
 
-	  <p>Also, resources declared inside a <code>try-with-resources</code> cannot be used outside this block (first reason, they're out of scope, second reason, they're closed after the <code>try</code> block ends):</p>
+            <p>Also, resources declared inside a <code>try-with-resources</code> cannot be used outside this block (first reason, they're out of scope, second reason, they're closed after the <code>try</code> block ends):</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> (BufferedReader br =&nbsp;<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> (BufferedReader br =&nbsp;<br />
 	  <span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</font>new</span> BufferedReader(<span class="hljs-keyword">new</span> FileReader("/file.txt"))) {<br />
 	  &nbsp; &nbsp; ...<br />
 	  }<br />
 	  String line = br.readLine(); <span class="hljs-comment">// Compile-time error</span></code></p>
 
-	  <p>Now, don't think any class will work in a <code>try-with-resources</code>.</p>
+            <p>Now, don't think any class will work in a <code>try-with-resources</code>.</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span>&nbsp;<span class="hljs-title">MyResource</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span>&nbsp;<span class="hljs-title">MyResource</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">useResource</span><span class="hljs-params">()</span></span> { }<br />
 	  }<br />
 	  ...<br />
@@ -431,25 +425,25 @@
 	  &nbsp; &nbsp; r.useResource()<br />
 	  }</code></p>
 
-	  <p>The class(es) used in a <code>try-with-resources</code> block must implement one of the following interfaces:</p>
+            <p>The class(es) used in a <code>try-with-resources</code> block must implement one of the following interfaces:</p>
 
-	  <ul>
-		<li><code>java.lang.AutoClosable</code></li>
+            <ul>
+                <li><code>java.lang.AutoClosable</code></li>
 
-		<li><code>java.io.Closable</code></li>
-	  </ul>
+                <li><code>java.io.Closable</code></li>
+            </ul>
 
-	  <p>They both declare a <code>close()</code> method, and the only practical difference between these two interfaces is that the close method of the <code>Closeable</code> interface only throws exceptions of type <code>IOException</code>:</p>
+            <p>They both declare a <code>close()</code> method, and the only practical difference between these two interfaces is that the close method of the <code>Closeable</code> interface only throws exceptions of type <code>IOException</code>:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">close</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException</span>;</code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">close</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException</span>;</code></p>
 
-	  <p>While the <code>close()</code> method of the <code>AutoCloseable</code> interface throws exceptions of type <code>Exception</code> (in other words, it can throw almost any kind of exception):</p>
+            <p>While the <code>close()</code> method of the <code>AutoCloseable</code> interface throws exceptions of type <code>Exception</code> (in other words, it can throw almost any kind of exception):</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">close</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception</span>;</code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">close</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception</span>;</code></p>
 
-	  <p>So the <code>close()</code> method is called automatically, and if this method actually throws and exception, we can catch it in the <code>catch</code> block.</p>
+            <p>So the <code>close()</code> method is called automatically, and if this method actually throws and exception, we can catch it in the <code>catch</code> block.</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyResource</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AutoCloseable</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyResource</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AutoCloseable</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">close</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception</span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; int</span> x = <span class="hljs-number">0</span>;<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; //...</span><br />
@@ -464,13 +458,13 @@
 	  &nbsp; &nbsp; e.printStackTrace();<br />
 	  }</code></p>
 
-	  <p>But what happens if the <code>try</code> block also throws an exception?</p>
+            <p>But what happens if the <code>try</code> block also throws an exception?</p>
 
-	  <p>Well, the result is that the exception from the <code>try</code> block "wins" and the exceptions from the <code>close()</code> method are "suppressed".</p>
+            <p>Well, the result is that the exception from the <code>try</code> block "wins" and the exceptions from the <code>close()</code> method are "suppressed".</p>
 
-	  <p>In fact, you can retrieve these suppressed exceptions by calling the <code>Throwable[] java.lang.Throwable.getSuppressed()</code> method from the exception thrown by the <code>try</code> block.</p>
+            <p>In fact, you can retrieve these suppressed exceptions by calling the <code>Throwable[] java.lang.Throwable.getSuppressed()</code> method from the exception thrown by the <code>try</code> block.</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">try</span> (Resource r = <span class="hljs-keyword">new</span> Resource()) {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> (Resource r = <span class="hljs-keyword">new</span> Resource()) {<br />
 	  &nbsp; &nbsp; r.useResource();<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; throw</span> <span class="hljs-keyword">new</span> Exception(<span class="hljs-string">"Exception inside try"</span>);<br />
 	  } <span class="hljs-keyword">catch</span> (Exception e) {<br />
@@ -479,128 +473,128 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; .forEach(t -&gt; System.out.println(t.getMessage()));<br />
 	  }</code></p>
 
-	  <p>The output (assuming the <code>close()</code> method throws an exception):</p>
+            <p>The output (assuming the <code>close()</code> method throws an exception):</p>
 
-	  <p><code class="java hljs">Exception inside try<br />
+            <p><code class="java hljs">Exception inside try<br />
 	  Close Exception</code></p>
 
-	  <h2>Custom exceptions</h2>
+            <h2>Custom exceptions</h2>
 
-	  <p>Since exceptions are classes, we can just extend any exception of the language to create our own exceptions.</p>
+            <p>Since exceptions are classes, we can just extend any exception of the language to create our own exceptions.</p>
 
-	  <p>If you want to force the catching of your exception, extend from <code>Exception</code> or one of its subclasses. If you don't want to force it, extend from <code>RuntimeException</code> or one of its subclasses.</p>
+            <p>If you want to force the catching of your exception, extend from <code>Exception</code> or one of its subclasses. If you don't want to force it, extend from <code>RuntimeException</code> or one of its subclasses.</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TooHardException</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Exception</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TooHardException</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Exception</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-title">TooHardException</span><span class="hljs-params">(Exception e)</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; super</span>(e);<br />
 	  &nbsp; &nbsp; }<br />
 	  }<br />
 	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TooEasyException</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">RuntimeException</span></span> { }</code></p>
 
-	  <p>As you can see, it's a convention to add <code>Exception</code> to your classes' name. The <code>Error</code> and <code>Throwable</code> classes are not actually used for custom exceptions.</p>
+            <p>As you can see, it's a convention to add <code>Exception</code> to your classes' name. The <code>Error</code> and <code>Throwable</code> classes are not actually used for custom exceptions.</p>
 
-	  <p>The main members of the <code>Exception</code> class that you'd want to know are:</p>
+            <p>The main members of the <code>Exception</code> class that you'd want to know are:</p>
 
-	  <table border="1" width="100%">
-		<tr>
-		  <td><b>Description</b></td>
+            <table border="1" width="100%">
+                <tr>
+                    <td><b>Description</b></td>
 
-		  <td><b>Constructor/Method</b></td>
-		</tr>
+                    <td><b>Constructor/Method</b></td>
+                </tr>
 
-		<tr>
-		  <td>Default constructor</td>
+                <tr>
+                    <td>Default constructor</td>
 
-		  <td><code>Exception()</code></td>
-		</tr>
+                    <td><code>Exception()</code></td>
+                </tr>
 
-		<tr>
-		  <td>Constructor that takes a message</td>
+                <tr>
+                    <td>Constructor that takes a message</td>
 
-		  <td><code>Exception(String)</code></td>
-		</tr>
+                    <td><code>Exception(String)</code></td>
+                </tr>
 
-		<tr>
-		  <td>Constructor that takes another exception (that represents the cause)</td>
+                <tr>
+                    <td>Constructor that takes another exception (that represents the cause)</td>
 
-		  <td><code>Exception(Throwable)</code></td>
-		</tr>
+                    <td><code>Exception(Throwable)</code></td>
+                </tr>
 
-		<tr>
-		  <td>Returns exception's message</td>
+                <tr>
+                    <td>Returns exception's message</td>
 
-		  <td><code>String getMessage()</code></td>
-		</tr>
+                    <td><code>String getMessage()</code></td>
+                </tr>
 
-		<tr>
-		  <td>Returns (if any) the exception's cause</td>
+                <tr>
+                    <td>Returns (if any) the exception's cause</td>
 
-		  <td><code>Throwable getCause()</code></td>
-		</tr>
+                    <td><code>Throwable getCause()</code></td>
+                </tr>
 
-		<tr>
-		  <td>Returns the list of suppressed exceptions</td>
+                <tr>
+                    <td>Returns the list of suppressed exceptions</td>
 
-		  <td><code>Throwable[] getSuppressed()</code></td>
-		</tr>
+                    <td><code>Throwable[] getSuppressed()</code></td>
+                </tr>
 
-		<tr>
-		  <td>Prints the stack trace (cause and suppressed exceptions included)</td>
+                <tr>
+                    <td>Prints the stack trace (cause and suppressed exceptions included)</td>
 
-		  <td><code>void printStackTrace()</code></td>
-		</tr>
-	  </table>
+                    <td><code>void printStackTrace()</code></td>
+                </tr>
+            </table>
 
-	  
 
-	  <h2>Key Points</h2>
 
-	  <ul>
-		<li>In Java, there are three types of exception
+            <h2>Key Points</h2>
 
-		  <ul>
-			<li><code>java.lang.Exception</code></li>
+            <ul>
+                <li>In Java, there are three types of exception
 
-			<li><code>java.lang.RuntimeException</code></li>
+                    <ul>
+                        <li><code>java.lang.Exception</code></li>
 
-			<li><code>java.lang.Error</code></li>
-		  </ul>
-		</li>
+                        <li><code>java.lang.RuntimeException</code></li>
 
-		<li><code>RuntimeException</code> and its subclasses are not required to be caught since they're not expected all the time. They're also called unchecked.</li>
+                        <li><code>java.lang.Error</code></li>
+                    </ul>
+                </li>
 
-		<li><code>Exception</code> and its subclasses (except for <code>RuntimeException</code>) are known as checked exceptions because they have to be caught at some point by a <code>try-catch</code> statement.</li>
+                <li><code>RuntimeException</code> and its subclasses are not required to be caught since they're not expected all the time. They're also called unchecked.</li>
 
-		<li>If an exception can be caught in more than one block, the exception will be caught in the first block defined.</li>
+                <li><code>Exception</code> and its subclasses (except for <code>RuntimeException</code>) are known as checked exceptions because they have to be caught at some point by a <code>try-catch</code> statement.</li>
 
-		<li>However, we have to respect the hierarchy of the classes, if a superclass is defined before a subclass, a compile-time error is generated.</li>
+                <li>If an exception can be caught in more than one block, the exception will be caught in the first block defined.</li>
 
-		<li>If the code that throws a checked exception is not inside a <code>try-catch</code> block, the method that contains that code must declare the exception in the <code>throws</code> clause.</li>
+                <li>However, we have to respect the hierarchy of the classes, if a superclass is defined before a subclass, a compile-time error is generated.</li>
 
-		<li>In this case, the caller of the method must either catch the exception or also declare it in the <code>throws</code> clause and so on until the main method of the program is reached.</li>
+                <li>If the code that throws a checked exception is not inside a <code>try-catch</code> block, the method that contains that code must declare the exception in the <code>throws</code> clause.</li>
 
-		<li>The <code>multi-catch</code> block allows us to catch two or more unrelated exception with a single <code>catch</code> block: <code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+                <li>In this case, the caller of the method must either catch the exception or also declare it in the <code>throws</code> clause and so on until the main method of the program is reached.</li>
+
+                <li>The <code>multi-catch</code> block allows us to catch two or more unrelated exception with a single <code>catch</code> block: <code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 		<span class="hljs-comment">&nbsp; &nbsp; // ...</span><br />
 		} <span class="hljs-keyword">catch</span>(Exception1 | Exception2 e) {<br />
 		<span class="hljs-comment">&nbsp; &nbsp; // ...</span><br />
 		}</code></li>
 
-		<li>The finally block is <b>ALWAYS</b> executed, even when an exception is caught or when either the try or catch block contains a <code>return</code> statement.</li>
+                <li>The finally block is <b>ALWAYS</b> executed, even when an exception is caught or when either the try or catch block contains a <code>return</code> statement.</li>
 
-		<li>In a <code>try-with-resources</code> block, one or more resources are declared so they can be closed automatically after the <code>try</code> block ends just by implementing <code>java.lang.AutoCloseable</code> or <code>java.io.Closeable</code>: <code class="java hljs"><span class="hljs-keyword">try</span> (Resource r = <span class="hljs-keyword">new</span> Resource()) {<br />
+                <li>In a <code>try-with-resources</code> block, one or more resources are declared so they can be closed automatically after the <code>try</code> block ends just by implementing <code>java.lang.AutoCloseable</code> or <code>java.io.Closeable</code>: <code class="java hljs"><span class="hljs-keyword">try</span> (Resource r = <span class="hljs-keyword">new</span> Resource()) {<br />
 		<span class="hljs-comment">&nbsp; &nbsp; //...</span><br />
 		} <span class="hljs-keyword">catch</span>(Exception e) { }</code></li>
 
-		<li>When using a <code>try-with-resources</code> block, <code>catch</code> and <code>finally</code> are optional. You can create your own exceptions just by extending from <code>java.lang.Exception</code> (for checked exceptions) or <code>java.lang.RuntimeException</code> (for unchecked exceptions).</li>
-	  </ul>
+                <li>When using a <code>try-with-resources</code> block, <code>catch</code> and <code>finally</code> are optional. You can create your own exceptions just by extending from <code>java.lang.Exception</code> (for checked exceptions) or <code>java.lang.RuntimeException</code> (for unchecked exceptions).</li>
+            </ul>
 
-	  
 
-	  <h2>Self Test</h2>
 
-	  <p>1. Given:</p>
+            <h2>Self Test</h2>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_19_1</span></span> {<br />
+            <p>1. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_19_1</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; protected</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">m1</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">try</span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throw</span> <span class="hljs-keyword">new</span> RuntimeException();<br />
@@ -615,17 +609,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>1</code><br />
-	  B. <code>2</code><br />
-	  C. Compilation fails<br />
-	  D. An exception occurs at runtime</p>
+            <p>What is the result?<br /> A. <code>1</code><br /> B. <code>2</code><br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
-	  
 
-	  <p>2. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_19_2</span></span> {<br />
+            <p>2. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_19_2</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; try</span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Do nothing</span><br />
@@ -635,25 +625,17 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What of the following is true?<br />
-	  A. The code doesn't compile correctly<br />
-	  B. The code would compile correctly if we add a <code>catch</code> block<br />
-	  C. The code would compile correctly if we remove the <code>finally</code> block<br />
-	  D. The code compiles correctly as it is</p>
+            <p>What of the following is true?<br /> A. The code doesn't compile correctly<br /> B. The code would compile correctly if we add a <code>catch</code> block<br /> C. The code would compile correctly if we remove the <code>finally</code> block<br /> D. The code compiles correctly as it is</p>
 
-	  
 
-	  <p>3. Which of the following statements are true?<br />
-	  A. In a <code>try-with-resources</code>, the <code>catch</code> block is required.<br />
-	  B. The <code>throw</code>s keyword is used to throw an exception.<br />
-	  C. In a <code>multi-catch</code> block, if you declare more than one resource, they have to be separated by a semicolon.<br />
-	  D. If a <code>catch</code> block is defined for an exception that couldn't be thrown by the code in the <code>try</code> block, a compile-time error is generated.</p>
 
-	  
+            <p>3. Which of the following statements are true?<br /> A. In a <code>try-with-resources</code>, the <code>catch</code> block is required.<br /> B. The <code>throw</code>s keyword is used to throw an exception.<br /> C. In a <code>multi-catch</code> block, if you declare more than one resource, they have to be separated by a semicolon.<br /> D. If a <code>catch</code> block is defined for an exception that couldn't be thrown by the code in the <code>try</code> block, a compile-time error is generated.</p>
 
-	  <p>4. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Connection</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Closeable</span></span> {<br />
+
+            <p>4. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Connection</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">java</span>.<span class="hljs-title">io</span>.<span class="hljs-title">Closeable</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">close</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException</span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; throw</span> <span class="hljs-keyword">new</span> IOException(<span class="hljs-string">"Close Exception"</span>);<br />
 	  &nbsp; &nbsp; }<br />
@@ -669,46 +651,38 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. Close <code>Exception</code><br />
-	  B. <code>RuntimeException</code><br />
-	  C. <code>RuntimeException</code> and then <code>CloseException</code><br />
-	  D. Compilation fails<br />
-	  E. The stack trace of an uncaught exception is printed</p>
+            <p>What is the result?<br /> A. Close <code>Exception</code><br /> B. <code>RuntimeException</code><br /> C. <code>RuntimeException</code> and then <code>CloseException</code><br /> D. Compilation fails<br /> E. The stack trace of an uncaught exception is printed</p>
 
-	  
 
-	  <p>5. Which of the following exceptions are direct subclasses of <code>RuntimeException</code>?<br />
-	  A. <code>java.io.FileNotFoundException</code><br />
-	  B. <code>java.lang.ArithmeticException</code><br />
-	  C. <code>java.lang.ClassCastException</code><br />
-	  D. <code>java.lang.InterruptedException</code></p>
 
-  
+            <p>5. Which of the following exceptions are direct subclasses of <code>RuntimeException</code>?<br /> A. <code>java.io.FileNotFoundException</code><br /> B. <code>java.lang.ArithmeticException</code><br /> C. <code>java.lang.ClassCastException</code><br /> D. <code>java.lang.InterruptedException</code></p>
 
-  
 
-    
-		<div class="answers">
-			<a href="ch19a.html" target="_blank">Open answers page</a>
-		</div>
 
-		<div class="book-info"></div>
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch018.html">18. Parallel Streams</a>
-			</div>
-			<div class="next">
-				<a href="ch20.html">20. Assertions</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+
+
+            <div class="answers">
+                <a href="ch19a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch018.html">18. Parallel Streams</a>
+                </div>
+                <div class="next">
+                    <a href="ch20.html">20. Assertions</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>

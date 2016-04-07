@@ -1,72 +1,68 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter SIXTEEN</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter SIXTEEN</i><br />
 			  Stream Operations on Collections</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Develop code that uses Stream data methods and calculation methods.<br /></i><i>Use java.util.Comparator and java.lang.Comparable interfaces.<br /></i><i>Sort a collection using Stream API.</i></p>
-			  
-			</div>
-		</div>
-	</div>
+                <p style="text-align: center;"><i>Develop code that uses Stream data methods and calculation methods.<br /></i><i>Use java.util.Comparator and java.lang.Comparable interfaces.<br /></i><i>Sort a collection using Stream API.</i></p>
 
-  
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-	  <h2>Answers</h2>
 
-	  <p><b>1. The correct answer is A.</b><br />
-	  <code>String::compareTo</code> is a valid method reference. Since <code>compareTo</code> sorts in natural order (<code>A</code>, <code>B</code>, <code>C</code>, etc.), <code>"Collections"</code> becomes the first element of the <code>List</code>.</p>
+    <div class="container">
 
-	  <p><br /></p>
+        <div class="column">
 
-	  <p><b>2. The correct answer is D.</b><br />
-	  Option A is invalid. <code>Comparator</code> takes two arguments.<br />
-	  Option B is invalid. <code>reversed()</code> is not a <code>static</code> method.<br />
-	  Option C is invalid. <code>thenComparing</code> is not a <code>static</code> method.<br />
-	  Option D is valid. The <code>static</code> method <code>Comparator.comparing</code> takes a lambda expression with one argument that represents a <code>Function</code> that returns the property on which a <code>Comparator</code> is created.</p>
+            <h2>Answers</h2>
 
-	  <p><br /></p>
+            <p><b>1. The correct answer is A.</b><br />
+                <code>String::compareTo</code> is a valid method reference. Since <code>compareTo</code> sorts in natural order (<code>A</code>, <code>B</code>, <code>C</code>, etc.), <code>"Collections"</code> becomes the first element of the <code>List</code>.</p>
 
-	  <p><b>3. The correct answer is C.</b><br />
-	  The <code>max</code> method of the <code>Stream</code> interface takes a <code>Comparator</code> as an argument. It's not like the <code>max</code> method of the primitive streams that know how to calculate the maximum element.</p>
+            <p><br /></p>
 
-	  <p><br /></p>
+            <p><b>2. The correct answer is D.</b><br /> Option A is invalid. <code>Comparator</code> takes two arguments.<br /> Option B is invalid. <code>reversed()</code> is not a <code>static</code> method.<br /> Option C is invalid. <code>thenComparing</code> is not a <code>static</code> method.<br /> Option D is valid. The <code>static</code> method <code>Comparator.comparing</code> takes a lambda expression with one argument that represents a <code>Function</code> that returns the property on which a <code>Comparator</code> is created.</p>
 
-	  <p><b>4. The correct answer is C.</b><br />
-	  The <code>static</code> method <code>Comparator.comparing</code> takes a lambda expression with one argument that represents a <code>Function</code>. Taking two arguments would require a <code>BiFunction</code>.</p>
+            <p><br /></p>
 
-	  <p><br /></p>
+            <p><b>3. The correct answer is C.</b><br /> The <code>max</code> method of the <code>Stream</code> interface takes a <code>Comparator</code> as an argument. It's not like the <code>max</code> method of the primitive streams that know how to calculate the maximum element.</p>
 
-	  
-  
-	</div>
-  </div>
-		
-  <footer></footer>
-  
+            <p><br /></p>
+
+            <p><b>4. The correct answer is C.</b><br /> The <code>static</code> method <code>Comparator.comparing</code> takes a lambda expression with one argument that represents a <code>Function</code>. Taking two arguments would require a <code>BiFunction</code>.</p>
+
+            <p><br /></p>
+
+
+
+        </div>
+    </div>
+
+    <footer></footer>
+
 </body>
+
 </html>

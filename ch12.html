@@ -2,58 +2,58 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-				<h1><i class="chapter">Part FOUR</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Part FOUR</i><br />
 			  Streams and Collections</h1>
 
-			  
 
-			  <h1><i class="chapter">Chapter TWELVE</i><br />
+
+                <h1><i class="chapter">Chapter TWELVE</i><br />
 			  Streams</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Describe Stream interface and Stream pipeline.<br /></i><i>Use method references with Streams.</i></p>
-			  
-			</div>	
-		</div>
-	</div>
-	
-	
+                <p style="text-align: center;"><i>Describe Stream interface and Stream pipeline.<br /></i><i>Use method references with Streams.</i></p>
 
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-		<h2>A simple example</h2>
 
-	  <p>Suppose you have a list of students and the requirements are to extract the students with a score of <code>90.0</code> or greater and sort them by score in ascending order.</p>
 
-	  <p>One way to do it would be:</p>
+    <div class="container">
 
-	  <p><code class="java hljs">List&lt;Student&gt; studentsScore = <span class="hljs-keyword">new</span> ArrayList&lt;Student&gt;();<br />
+        <div class="column">
+
+            <h2>A simple example</h2>
+
+            <p>Suppose you have a list of students and the requirements are to extract the students with a score of <code>90.0</code> or greater and sort them by score in ascending order.</p>
+
+            <p>One way to do it would be:</p>
+
+            <p><code class="java hljs">List&lt;Student&gt; studentsScore = <span class="hljs-keyword">new</span> ArrayList&lt;Student&gt;();<br />
 	  <span class="hljs-keyword">for</span>(Student s : students) {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp;&nbsp;if</span>(s.getScore() &gt; <span class="hljs-number">90.0</span>) {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; studentsScore.add(s);<br />
@@ -66,474 +66,467 @@
 	  &nbsp; &nbsp; }<br />
 	  });</code></p>
 
-	  <p>Very verbose when we compare it with the Java 8 implementation using streams:</p>
+            <p>Very verbose when we compare it with the Java 8 implementation using streams:</p>
 
-	  <p><code class="java hljs">List&lt;Student&gt; studentsScore = students<br />
+            <p><code class="java hljs">List&lt;Student&gt; studentsScore = students<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .stream()<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .filter(s -&gt; s.getScore() &gt;= <span class="hljs-number">90.0</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .sorted(Comparator.comparing(Student::getScore))<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(Collectors.toList());</code></p>
 
-	  <p>Don't worry if you don't fully understand the code; we'll see what it means later.</p>
+            <p>Don't worry if you don't fully understand the code; we'll see what it means later.</p>
 
-	  <h2>What are streams?</h2>
+            <h2>What are streams?</h2>
 
-	  <p>First, streams are <b>NOT</b> collections.</p>
+            <p>First, streams are <b>NOT</b> collections.</p>
 
-	  <p>A simple definition is that streams are <b>WRAPPERS</b> for collections and arrays. They wrap an <b>EXISTING</b> collection (or another data source) to support operations expressed with <b>LAMBDAS</b>, so you specify what you want to do, not how to do it. You already saw it.</p>
+            <p>A simple definition is that streams are <b>WRAPPERS</b> for collections and arrays. They wrap an <b>EXISTING</b> collection (or another data source) to support operations expressed with <b>LAMBDAS</b>, so you specify what you want to do, not how to do it. You already saw it.</p>
 
-	  <p>These are the characteristics of a stream:</p>
+            <p>These are the characteristics of a stream:</p>
 
-	  <p><b>Streams work perfectly with lambdas.</b><br />
-	  All streams operations take functional interfaces as arguments, so you can simplify the code with lambda expressions (and method references).</p>
+            <p><b>Streams work perfectly with lambdas.</b><br /> All streams operations take functional interfaces as arguments, so you can simplify the code with lambda expressions (and method references).</p>
 
-	  <p><b>Streams don't store its elements.</b><br />
-	  The elements are stored in a collection or generated on the fly. They are only carried from the source through a pipeline of operations.</p>
+            <p><b>Streams don't store its elements.</b><br /> The elements are stored in a collection or generated on the fly. They are only carried from the source through a pipeline of operations.</p>
 
-	  <p><b>Streams are immutable.</b><br />
-	  Streams don't mutate their underlying source of elements. If, for example, an element is removed from the stream, a new stream with this element removed is created.</p>
+            <p><b>Streams are immutable.</b><br /> Streams don't mutate their underlying source of elements. If, for example, an element is removed from the stream, a new stream with this element removed is created.</p>
 
-	  <p><b>Streams are not reusable.</b><br />
-	  Streams can be traversed only once. After a terminal operation is executed (we'll see what this means in a moment), you have to create another stream from the source to further process it.</p>
+            <p><b>Streams are not reusable.</b><br /> Streams can be traversed only once. After a terminal operation is executed (we'll see what this means in a moment), you have to create another stream from the source to further process it.</p>
 
-	  <p><b>Streams don't support indexed access to their elements.</b><br />
-	  Again, streams are not collections or arrays. The most you can do is get their first element.</p>
+            <p><b>Streams don't support indexed access to their elements.</b><br /> Again, streams are not collections or arrays. The most you can do is get their first element.</p>
 
-	  <p><b>Streams are easily parallelizable.</b><br />
-	  With the call of a method (and following certain rules), you can make a stream execute its operations concurrently, without having to write any multithreading code.</p>
+            <p><b>Streams are easily parallelizable.</b><br /> With the call of a method (and following certain rules), you can make a stream execute its operations concurrently, without having to write any multithreading code.</p>
 
-	  <p><b>Stream operations are lazy when possible.</b><br />
-	  Streams defer the execution of their operations either until the results are needed or until it's known how much data is needed.</p>
+            <p><b>Stream operations are lazy when possible.</b><br /> Streams defer the execution of their operations either until the results are needed or until it's known how much data is needed.</p>
 
-	  <p>One thing that allows this laziness is the way their operations are designed. Most of them return a new stream, allowing operations to be chained and form a pipeline that enables this kind of optimizations.</p>
+            <p>One thing that allows this laziness is the way their operations are designed. Most of them return a new stream, allowing operations to be chained and form a pipeline that enables this kind of optimizations.</p>
 
-	  <p>To set up this pipeline you:</p>
+            <p>To set up this pipeline you:</p>
 
-	  <ol>
-		<li>Create the stream.</li>
+            <ol>
+                <li>Create the stream.</li>
 
-		<li>Apply zero or more intermediate operations to transform the initial stream into new streams.</li>
+                <li>Apply zero or more intermediate operations to transform the initial stream into new streams.</li>
 
-		<li>Apply a terminal operation to generate a result or a "side-effect".</li>
-	  </ol>
+                <li>Apply a terminal operation to generate a result or a "side-effect".</li>
+            </ol>
 
-	  <p>We're going to explain these steps and finally, we'll talk about more about laziness. In subsequent chapters, we'll go through all the operations supported by streams.</p>
+            <p>We're going to explain these steps and finally, we'll talk about more about laziness. In subsequent chapters, we'll go through all the operations supported by streams.</p>
 
-	  <h2>Creating streams</h2>
+            <h2>Creating streams</h2>
 
-	  <p>A stream is represented by the <code>java.util.stream.Stream&lt;T&gt;</code> interface. This works with objects only.</p>
+            <p>A stream is represented by the <code>java.util.stream.Stream&lt;T&gt;</code> interface. This works with objects only.</p>
 
-	  <p>There are also specializations to work with primitive types, such as <code>IntStream</code>, <code>LongStream</code>, and <code>DoubleStream</code>.</p>
+            <p>There are also specializations to work with primitive types, such as <code>IntStream</code>, <code>LongStream</code>, and <code>DoubleStream</code>.</p>
 
-	  <p>There are many ways to create a stream. Let's start with the most popular three.</p>
+            <p>There are many ways to create a stream. Let's start with the most popular three.</p>
 
-	  <p>The first one is creating a stream from a <code>java.util.Collection</code> implementation using the <code>stream()</code> method:</p>
+            <p>The first one is creating a stream from a <code>java.util.Collection</code> implementation using the <code>stream()</code> method:</p>
 
-	  <p><code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-keyword">new</span> String[]{<span class="hljs-string">"hello"</span>, <span class="hljs-string">"hola"</span>, <span class="hljs-string">"hallo"</span>, <span class="hljs-string">"ciao"</span>});<br />
+            <p><code class="java hljs">List&lt;String&gt; words = Arrays.asList(<span class="hljs-keyword">new</span> String[]{<span class="hljs-string">"hello"</span>, <span class="hljs-string">"hola"</span>, <span class="hljs-string">"hallo"</span>, <span class="hljs-string">"ciao"</span>});<br />
 	  Stream&lt;String&gt; stream = words.stream();</code></p>
 
-	  <p>The second one is creating a stream from individual values:</p>
+            <p>The second one is creating a stream from individual values:</p>
 
-	  <p><code class="java hljs">Stream&lt;String&gt; stream = Stream.of(<span class="hljs-string">"hello"</span>,<span class="hljs-string">"hola"</span>, <span class="hljs-string">"hallo"</span>, <span class="hljs-string">"ciao"</span>);</code></p>
+            <p><code class="java hljs">Stream&lt;String&gt; stream = Stream.of(<span class="hljs-string">"hello"</span>,<span class="hljs-string">"hola"</span>, <span class="hljs-string">"hallo"</span>, <span class="hljs-string">"ciao"</span>);</code></p>
 
-	  <p>The third one is creating a stream from an array:</p>
+            <p>The third one is creating a stream from an array:</p>
 
-	  <p><code class="java hljs">String[] words = {<span class="hljs-string">"hello"</span>, <span class="hljs-string">"hola"</span>, <span class="hljs-string">"hallo"</span>, <span class="hljs-string">"ciao"</span>};<br />
+            <p><code class="java hljs">String[] words = {<span class="hljs-string">"hello"</span>, <span class="hljs-string">"hola"</span>, <span class="hljs-string">"hallo"</span>, <span class="hljs-string">"ciao"</span>};<br />
 	  Stream&lt;String&gt; stream = Stream.of(words);</code></p>
 
-	  <p>However, you have to be careful with this last method when working with primitives.</p>
+            <p>However, you have to be careful with this last method when working with primitives.</p>
 
-	  <p>Here's why. Assume an <code>int</code> array:</p>
+            <p>Here's why. Assume an <code>int</code> array:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span>[] nums = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>};</code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] nums = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>};</code></p>
 
-	  <p>When we create a stream from this array like this:</p>
+            <p>When we create a stream from this array like this:</p>
 
-	  <p><code class="java hljs">Stream.of(num)</code></p>
+            <p><code class="java hljs">Stream.of(num)</code></p>
 
-	  <p>We are not creating a stream of <code>Integer</code>s (<code>Stream&lt;Integer&gt;</code>), but a stream of <code>int</code> arrays (<code>Stream&lt;int[]&gt;</code>). This means that instead of having a stream with five elements we have a stream of one element:</p>
+            <p>We are not creating a stream of <code>Integer</code>s (<code>Stream&lt;Integer&gt;</code>), but a stream of <code>int</code> arrays (<code>Stream&lt;int[]&gt;</code>). This means that instead of having a stream with five elements we have a stream of one element:</p>
 
-	  <p><code class="java hljs">System.out.println(Stream.of(nums).count()); <span class="hljs-comment">// It prints 1!</span></code></p>
+            <p><code class="java hljs">System.out.println(Stream.of(nums).count()); <span class="hljs-comment">// It prints 1!</span></code></p>
 
-	  <p>The reason is the signatures of the of method:</p>
+            <p>The reason is the signatures of the of method:</p>
 
-	  <p><code class="java hljs"><span class="hljs-comment">// returns a stream of one element</span><br />
+            <p><code class="java hljs"><span class="hljs-comment">// returns a stream of one element</span><br />
 	  <span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">of</span><span class="hljs-params">(T t)<br /></span><span class="hljs-comment">// returns a stream whose elements are the specified values</span><br />
 	  <span class="hljs-keyword">static</span> &lt;T&gt; Stream&lt;T&gt; <span class="hljs-title">of</span><span class="hljs-params">(T... values)</span></span></code></p>
 
-	  <p>Since an int is not an object, but <code>int[]</code> is, the method chosen to create the stream is the first (<code>Stream.of(T t)</code>), not the one with the vargs, so a stream of <code>int[]</code> is created, but since only one array is passed, the result is a stream of one element.</p>
+            <p>Since an int is not an object, but <code>int[]</code> is, the method chosen to create the stream is the first (<code>Stream.of(T t)</code>), not the one with the vargs, so a stream of <code>int[]</code> is created, but since only one array is passed, the result is a stream of one element.</p>
 
-	  <p>To solve this, we can force Java to choose the vargs version by creating an array of objects (with <code>Integer</code>):</p>
+            <p>To solve this, we can force Java to choose the vargs version by creating an array of objects (with <code>Integer</code>):</p>
 
-	  <p><code class="java hljs">Integer[] nums = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>};<br />
+            <p><code class="java hljs">Integer[] nums = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>};<br />
 	  <span class="hljs-comment">// It prints 5!<br /></span>System.out.println(Stream.of(nums).count());</code></p>
 
-	  <p>Or use a fourth way to create a stream (that it's in fact used inside <code>Stream.of(T... values)</code>):</p>
+            <p>Or use a fourth way to create a stream (that it's in fact used inside <code>Stream.of(T... values)</code>):</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span>[] nums = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>};<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] nums = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>};<br />
 	  <span class="hljs-comment">// It also prints 5!<br /></span>System.out.println(Arrays.stream(nums).count());</code></p>
 
-	  <p>Or use the primitive version <code>IntStream</code>:</p>
+            <p>Or use the primitive version <code>IntStream</code>:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span>[] nums = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>};<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] nums = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>};<br />
 	  <span class="hljs-comment">// It also prints 5!<br /></span>System.out.println(IntStream.of(nums).count());</code></p>
 
-	  <p>Lesson learned: Don't use <code>Stream&lt;T&gt;.of()</code> when working with primitives.</p>
+            <p>Lesson learned: Don't use <code>Stream&lt;T&gt;.of()</code> when working with primitives.</p>
 
-	  <p>Here are other ways to create streams.</p>
+            <p>Here are other ways to create streams.</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">generate</span><span class="hljs-params">(Supplier&lt;T&gt; s)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">generate</span><span class="hljs-params">(Supplier&lt;T&gt; s)</span></span></code></p>
 
-	  <p>This method returns an "infinite" stream where each element is generated by the provided <code>Supplier</code>, and it's generally used with the method:</p>
+            <p>This method returns an "infinite" stream where each element is generated by the provided <code>Supplier</code>, and it's generally used with the method:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">limit</span><span class="hljs-params">(<span class="hljs-keyword">long</span> maxSize)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">limit</span><span class="hljs-params">(<span class="hljs-keyword">long</span> maxSize)</span></span></code></p>
 
-	  <p>That truncates the stream to be no longer than <code>maxSize</code> in length.</p>
+            <p>That truncates the stream to be no longer than <code>maxSize</code> in length.</p>
 
-	  <p>For example:</p>
+            <p>For example:</p>
 
-	  <p><code class="java hljs">Stream&lt;Double&gt; s = Stream.generate(<span class="hljs-keyword">new</span> Supplier&lt;Double&gt;() {<br />
+            <p><code class="java hljs">Stream&lt;Double&gt; s = Stream.generate(<span class="hljs-keyword">new</span> Supplier&lt;Double&gt;() {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;&nbsp;public</span> Double <span class="hljs-title">get</span><span class="hljs-params">()</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;return</span> Math.random();<br />
 	  &nbsp; &nbsp; }<br />
 	  }).limit(<span class="hljs-number">5</span>);</code></p>
 
-	  <p>Or:</p>
+            <p>Or:</p>
 
-	  <p><code class="java hljs">Stream&lt;Double&gt; s = Stream.generate(() -&gt; Math.random()).limit(<span class="hljs-number">5</span>);</code></p>
+            <p><code class="java hljs">Stream&lt;Double&gt; s = Stream.generate(() -&gt; Math.random()).limit(<span class="hljs-number">5</span>);</code></p>
 
-	  <p>Or just:</p>
+            <p>Or just:</p>
 
-	  <p><code class="java hljs">Stream&lt;Double&gt; s = Stream.generate(Math::random).limit(<span class="hljs-number">5</span>);</code></p>
+            <p><code class="java hljs">Stream&lt;Double&gt; s = Stream.generate(Math::random).limit(<span class="hljs-number">5</span>);</code></p>
 
-	  <p>That generates a stream of five random <code>double</code>s.</p>
+            <p>That generates a stream of five random <code>double</code>s.</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">iterate</span><span class="hljs-params">(T seed, UnaryOperator&lt;T&gt; f)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">iterate</span><span class="hljs-params">(T seed, UnaryOperator&lt;T&gt; f)</span></span></code></p>
 
-	  <p>This method returns an "infinite" stream produced by the iterative application of a function <code>f</code> to an initial element seed. The first element (<code>n = 0</code>) in the stream will be the provided seed. For <code>n &gt; 0</code>, the element at position <code>n</code>&nbsp;will be the result of applying the function <code>f</code> to the element at position <code>n - 1</code>. For example:</p>
+            <p>This method returns an "infinite" stream produced by the iterative application of a function <code>f</code> to an initial element seed. The first element (<code>n = 0</code>) in the stream will be the provided seed. For <code>n &gt; 0</code>, the element at position <code>n</code>&nbsp;will be the result of applying the function <code>f</code> to the element at position <code>n - 1</code>. For example:</p>
 
-	  <p><code class="java hljs">Stream&lt;Integer&gt; s = Stream.iterate(<span class="hljs-number">1</span>, <span class="hljs-keyword">new</span> UnaryOperator&lt;Integer&gt;() {<br />
+            <p><code class="java hljs">Stream&lt;Integer&gt; s = Stream.iterate(<span class="hljs-number">1</span>, <span class="hljs-keyword">new</span> UnaryOperator&lt;Integer&gt;() {<br />
 	  <span class="hljs-annotation">&nbsp; &nbsp;&nbsp;@Override<font color="#000000"><br /></font></span><span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> Integer <span class="hljs-title">apply</span><span class="hljs-params">(Integer t)</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;return</span> t * <span class="hljs-number">2</span>; }<br />
 	  }).limit(<span class="hljs-number">5</span>);</code></p>
 
-	  <p>Or just:</p>
+            <p>Or just:</p>
 
-	  <p><code class="java hljs">Stream&lt;Integer&gt; s = Stream.iterate(<span class="hljs-number">1</span>, t -&gt; t * <span class="hljs-number">2</span>).limit(<span class="hljs-number">5</span>);</code></p>
+            <p><code class="java hljs">Stream&lt;Integer&gt; s = Stream.iterate(<span class="hljs-number">1</span>, t -&gt; t * <span class="hljs-number">2</span>).limit(<span class="hljs-number">5</span>);</code></p>
 
-	  <p>That generates the elements <code>1</code>, <code>2</code>, <code>4</code>, <code>8</code>, <code>16</code>.</p>
+            <p>That generates the elements <code>1</code>, <code>2</code>, <code>4</code>, <code>8</code>, <code>16</code>.</p>
 
-	  <p>There's a <code>Stream.Builder&lt;T&gt;</code> class (that follows the builder design pattern) with methods that add an element to the stream being built:</p>
+            <p>There's a <code>Stream.Builder&lt;T&gt;</code> class (that follows the builder design pattern) with methods that add an element to the stream being built:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(T t)</span> Stream.Builder&lt;T&gt; <span class="hljs-title">add</span><span class="hljs-params">(T t)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(T t)</span> Stream.Builder&lt;T&gt; <span class="hljs-title">add</span><span class="hljs-params">(T t)</span></span></code></p>
 
-	  <p>For example:</p>
+            <p>For example:</p>
 
-	  <p><code class="java hljs">Stream.Builder&lt;String&gt; builder =<br />
+            <p><code class="java hljs">Stream.Builder&lt;String&gt; builder =<br />
 	  &nbsp; &nbsp; Stream.&lt;String&gt;builder()<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;.add(<span class="hljs-string">"h"</span>).add(<span class="hljs-string">"e"</span>).add(<span class="hljs-string">"l"</span>).add(<span class="hljs-string">"l"</span>);<br />
 	  builder.accept(<span class="hljs-string">"o"</span>);<br />
 	  Stream&lt;String&gt; s = builder.build();</code></p>
 
-	  <p><code>IntStream</code> and <code>LongStream</code> define the methods:</p>
+            <p><code>IntStream</code> and <code>LongStream</code> define the methods:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> IntStream <span class="hljs-title">range</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endExclusive)<br /></span><span class="hljs-keyword">static</span> IntStream <span class="hljs-title">rangeClosed</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endInclusive)<br /></span><span class="hljs-keyword">static</span> LongStream <span class="hljs-title">range</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endExclusive)<br /></span><span class="hljs-keyword">static</span> LongStream <span class="hljs-title">rangeClosed</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endInclusive)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> IntStream <span class="hljs-title">range</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endExclusive)<br /></span><span class="hljs-keyword">static</span> IntStream <span class="hljs-title">rangeClosed</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endInclusive)<br /></span><span class="hljs-keyword">static</span> LongStream <span class="hljs-title">range</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endExclusive)<br /></span><span class="hljs-keyword">static</span> LongStream <span class="hljs-title">rangeClosed</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endInclusive)</span></span></code></p>
 
-	  <p>That returns a sequential stream for the range of <code>int</code> or <code>long</code> elements. For example:</p>
+            <p>That returns a sequential stream for the range of <code>int</code> or <code>long</code> elements. For example:</p>
 
-	  <p><code class="java hljs"><span class="hljs-comment">// stream of 1, 2, 3<br /></span>IntStream s = IntStream.range(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>);<br />
+            <p><code class="java hljs"><span class="hljs-comment">// stream of 1, 2, 3<br /></span>IntStream s = IntStream.range(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>);<br />
 	  <span class="hljs-comment">// stream of 1, 2, 3, 4<br /></span>IntStream s = IntStream.rangeClosed(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>);</code></p>
 
-	  <p>Also, there are new methods in the Java API that generate streams. For example:</p>
+            <p>Also, there are new methods in the Java API that generate streams. For example:</p>
 
-	  <p><code class="java hljs">IntStream s1 = <span class="hljs-keyword">new</span> Random().ints(<span class="hljs-number">5</span>, <span class="hljs-number">1</span>, <span class="hljs-number">10</span>);</code></p>
+            <p><code class="java hljs">IntStream s1 = <span class="hljs-keyword">new</span> Random().ints(<span class="hljs-number">5</span>, <span class="hljs-number">1</span>, <span class="hljs-number">10</span>);</code></p>
 
-	  <p>That returns an <code>IntStream</code> of five random <code>int</code>s from one (inclusive) to ten (exclusive).</p>
+            <p>That returns an <code>IntStream</code> of five random <code>int</code>s from one (inclusive) to ten (exclusive).</p>
 
-	  <h2>Intermediate operations</h2>
+            <h2>Intermediate operations</h2>
 
-	  <p>You can easily identify intermediate operations; they always return a new stream. This allows the operations to be connected.</p>
+            <p>You can easily identify intermediate operations; they always return a new stream. This allows the operations to be connected.</p>
 
-	  <p>For example:</p>
+            <p>For example:</p>
 
-	  <p><code class="java hljs">Stream&lt;String&gt; s = Stream.of(<span class="hljs-string">"m"</span>, <span class="hljs-string">"k"</span>, <span class="hljs-string">"c"</span>, <span class="hljs-string">"t"</span>)<br />
+            <p><code class="java hljs">Stream&lt;String&gt; s = Stream.of(<span class="hljs-string">"m"</span>, <span class="hljs-string">"k"</span>, <span class="hljs-string">"c"</span>, <span class="hljs-string">"t"</span>)<br />
 	  &nbsp; &nbsp; .sorted()<br />
 	  &nbsp; &nbsp; .limit(<span class="hljs-number">3</span>)</code></p>
 
-	  <p>An important feature of intermediate operations is that they don't process the elements until a terminal operation is invoked, in other words, they're lazy.</p>
+            <p>An important feature of intermediate operations is that they don't process the elements until a terminal operation is invoked, in other words, they're lazy.</p>
 
-	  <p>Intermediate operations are further divided into <i>stateless</i> and <i>stateful</i> operations.</p>
+            <p>Intermediate operations are further divided into <i>stateless</i> and <i>stateful</i> operations.</p>
 
-	  <p>Stateless operations retain no state from previously elements when processing a new element so each can be processed independently of operations on other elements.</p>
+            <p>Stateless operations retain no state from previously elements when processing a new element so each can be processed independently of operations on other elements.</p>
 
-	  <p>Stateful operations, such as distinct and sorted, may incorporate state from previously seen elements when processing new elements.</p>
+            <p>Stateful operations, such as distinct and sorted, may incorporate state from previously seen elements when processing new elements.</p>
 
-	  <p>The following table summarizes the methods of the <code>Stream</code> interface that represent intermediate operations.</p>
+            <p>The following table summarizes the methods of the <code>Stream</code> interface that represent intermediate operations.</p>
 
-	  <table border="1" cellspacing="5" width="98%">
-		<tr>
-		  <th>Method</th>
+            <table border="1" cellspacing="5" width="98%">
+                <tr>
+                    <th>Method</th>
 
-		  <th>Type</th>
+                    <th>Type</th>
 
-		  <th>Description</th>
-		</tr>
+                    <th>Description</th>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Stream&lt;T&gt; distinct()</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Stream&lt;T&gt; distinct()</code></td>
 
-		  <td style="text-align: center;"><span class="small">Stateful</span></td>
+                    <td style="text-align: center;"><span class="small">Stateful</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns a stream consisting of the distinct elements.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns a stream consisting of the distinct elements.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Stream&lt;T&gt; filter(Predicate&lt;? super T&gt; predicate)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Stream&lt;T&gt; filter(Predicate&lt;? super T&gt; predicate)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Stateless</span></td>
+                    <td style="text-align: center;"><span class="small">Stateless</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns a stream of elements that match the given predicate.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns a stream of elements that match the given predicate.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>&lt;R&gt; Stream&lt;R&gt; flatMap(Function&lt;? super T,? extends Stream&lt;? extends R&gt;&gt; mapper)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>&lt;R&gt; Stream&lt;R&gt; flatMap(Function&lt;? super T,? extends Stream&lt;? extends R&gt;&gt; mapper)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Stateless</span></td>
+                    <td style="text-align: center;"><span class="small">Stateless</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns a stream with the content produced by applying the provided mapping function to each element. There are versions for <code>int</code>, <code>long</code> and <code>double</code> also.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns a stream with the content produced by applying the provided mapping function to each element. There are versions for <code>int</code>, <code>long</code> and <code>double</code> also.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Stream&lt;T&gt; limit(long maxSize)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Stream&lt;T&gt; limit(long maxSize)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Stateful</span></td>
+                    <td style="text-align: center;"><span class="small">Stateful</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns a stream truncated to be no longer than <code>maxSize</code> in length.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns a stream truncated to be no longer than <code>maxSize</code> in length.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>&lt;R&gt; Stream&lt;R&gt; map(Function&lt;? super T,? extends R&gt; mapper)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>&lt;R&gt; Stream&lt;R&gt; map(Function&lt;? super T,? extends R&gt; mapper)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Stateless</span></td>
+                    <td style="text-align: center;"><span class="small">Stateless</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns a stream consisting of the results of applying the given function to the elements of this stream. There are versions for <code>int</code>, <code>long</code> and <code>double</code> also.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns a stream consisting of the results of applying the given function to the elements of this stream. There are versions for <code>int</code>, <code>long</code> and <code>double</code> also.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Stream&lt;T&gt; peek(Consumer&lt;? super T&gt; action)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Stream&lt;T&gt; peek(Consumer&lt;? super T&gt; action)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Stateless</span></td>
+                    <td style="text-align: center;"><span class="small">Stateless</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns a stream with the elements of this stream, performing the provided action on each element.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns a stream with the elements of this stream, performing the provided action on each element.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Stream&lt;T&gt; skip(long n)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Stream&lt;T&gt; skip(long n)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Stateful</span></td>
+                    <td style="text-align: center;"><span class="small">Stateful</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns a stream with the remaining elements of this stream after discarding the first n elements.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns a stream with the remaining elements of this stream after discarding the first n elements.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Stream&lt;T&gt; sorted()</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Stream&lt;T&gt; sorted()</code></td>
 
-		  <td style="text-align: center;"><span class="small">Stateful</span></td>
+                    <td style="text-align: center;"><span class="small">Stateful</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns a stream sorted according to the natural order of its elements.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns a stream sorted according to the natural order of its elements.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Stream&lt;T&gt; sorted(Comparator&lt;? super T&gt; comparator)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Stream&lt;T&gt; sorted(Comparator&lt;? super T&gt; comparator)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Stateful</span></td>
+                    <td style="text-align: center;"><span class="small">Stateful</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns a stream with the sorted according to the provided <code>Comparator</code>.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns a stream with the sorted according to the provided <code>Comparator</code>.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Stream&lt;T&gt; parallel()</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Stream&lt;T&gt; parallel()</code></td>
 
-		  <td style="text-align: center;"><span class="small">N/A</span></td>
+                    <td style="text-align: center;"><span class="small">N/A</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns an equivalent stream that is parallel.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns an equivalent stream that is parallel.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Stream&lt;T&gt; sequential()</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Stream&lt;T&gt; sequential()</code></td>
 
-		  <td style="text-align: center;"><span class="small">N/A</span></td>
+                    <td style="text-align: center;"><span class="small">N/A</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns an equivalent stream that is sequential.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns an equivalent stream that is sequential.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Stream&lt;T&gt; unordered()</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Stream&lt;T&gt; unordered()</code></td>
 
-		  <td style="text-align: center;"><span class="small">N/A</span></td>
+                    <td style="text-align: center;"><span class="small">N/A</span></td>
 
-		  <td style="text-align: center;"><span class="small">Returns an equivalent stream that is unordered.</span></td>
-		</tr>
-	  </table>
+                    <td style="text-align: center;"><span class="small">Returns an equivalent stream that is unordered.</span></td>
+                </tr>
+            </table>
 
-	  <p><br /></p>
+            <p><br /></p>
 
-	  <h2>Terminal operations</h2>
+            <h2>Terminal operations</h2>
 
-	  <p>You can also easily identify terminal operations, they always return something other than a stream.</p>
+            <p>You can also easily identify terminal operations, they always return something other than a stream.</p>
 
-	  <p>After the terminal operation is performed, the stream pipeline is <i>consumed</i>, and can't be used anymore. For example:</p>
+            <p>After the terminal operation is performed, the stream pipeline is <i>consumed</i>, and can't be used anymore. For example:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span>[] digits = {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span> , <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>};<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] digits = {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span> , <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>};<br />
 	  IntStream s = IntStream.of(digits);<br />
 	  <span class="hljs-keyword">long</span> n = s.count();<br />
 	  System.out.println(s.findFirst()); <span class="hljs-comment">// An exception is thrown</span></code></p>
 
-	  <p>If you need to traverse the same stream again, you must return to the data source to get a new one. For example:</p>
+            <p>If you need to traverse the same stream again, you must return to the data source to get a new one. For example:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">int</span>[] digits = {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span> , <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>};<br />
+            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] digits = {<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span> , <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>};<br />
 	  <span class="hljs-keyword">long</span> n = IntStream.of(digits).count();<br />
 	  System.out.println(IntStream.of(digits).findFirst()); <span class="hljs-comment">// OK</span></code></p>
 
-	  <p>The following table summarizes the methods of the <code>Stream</code> interface that represent terminal operations.</p>
+            <p>The following table summarizes the methods of the <code>Stream</code> interface that represent terminal operations.</p>
 
-	  <table border="1" cellspacing="5" width="98%">
-		<tr>
-		  <th>Method</th>
+            <table border="1" cellspacing="5" width="98%">
+                <tr>
+                    <th>Method</th>
 
-		  <th>Description</th>
-		</tr>
+                    <th>Description</th>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>boolean allMatch(Predicate&lt;? super T&gt; predicate)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>boolean allMatch(Predicate&lt;? super T&gt; predicate)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns whether all elements of this stream match the provided predicate.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns whether all elements of this stream match the provided predicate.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>boolean anyMatch(Predicate&lt;? super T&gt; predicate)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>boolean anyMatch(Predicate&lt;? super T&gt; predicate)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns whether any elements of this stream match the provided predicate.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns whether any elements of this stream match the provided predicate.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>boolean noneMatch(Predicate&lt;? super T&gt; predicate)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>boolean noneMatch(Predicate&lt;? super T&gt; predicate)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns whether no elements of this stream match the provided predicate.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns whether no elements of this stream match the provided predicate.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Optional&lt;T&gt; findAny()</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Optional&lt;T&gt; findAny()</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns an <code>Optional</code> describing some element of the stream.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns an <code>Optional</code> describing some element of the stream.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Optional&lt;T&gt; findFirst()</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Optional&lt;T&gt; findFirst()</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns an <code>Optional</code> describing the first element of this stream.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns an <code>Optional</code> describing the first element of this stream.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>&lt;R,A&gt; R collect(Collector&lt;? super T,A,R&gt; collector)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>&lt;R,A&gt; R collect(Collector&lt;? super T,A,R&gt; collector)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Performs a mutable reduction operation on the elements of this stream using a <code>Collector</code>.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Performs a mutable reduction operation on the elements of this stream using a <code>Collector</code>.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>long count()</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>long count()</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns the count of elements in this stream.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns the count of elements in this stream.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>void forEach(Consumer&lt;? super T&gt; action)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>void forEach(Consumer&lt;? super T&gt; action)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Performs an action for each element of this stream.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Performs an action for each element of this stream.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>void forEachOrdered(Consumer&lt;? super T&gt; action)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>void forEachOrdered(Consumer&lt;? super T&gt; action)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Performs an action for each element of this stream, in the encounter order of the stream if the stream has a defined encounter order.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Performs an action for each element of this stream, in the encounter order of the stream if the stream has a defined encounter order.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Optional&lt;T&gt; max(Comparator&lt;? super T&gt; comparator)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Optional&lt;T&gt; max(Comparator&lt;? super T&gt; comparator)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns the maximum element of this stream according to the provided <code>Comparator</code>.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns the maximum element of this stream according to the provided <code>Comparator</code>.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Optional&lt;T&gt; min(Comparator&lt;? super T&gt; comparator)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Optional&lt;T&gt; min(Comparator&lt;? super T&gt; comparator)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns the maximum element of this stream according to the provided <code>Comparator</code>.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns the maximum element of this stream according to the provided <code>Comparator</code>.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>T reduce(T identity, BinaryOperator&lt;T&gt; accumulator)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>T reduce(T identity, BinaryOperator&lt;T&gt; accumulator)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Performs a reduction on the elements of this stream, using the provided identity value and an associative accumulation function, and returns the reduced value.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Performs a reduction on the elements of this stream, using the provided identity value and an associative accumulation function, and returns the reduced value.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Object[] toArray()</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Object[] toArray()</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns an array containing the elements of this stream.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns an array containing the elements of this stream.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>&lt;A&gt; A[] toArray(IntFunction&lt;A[]&gt; generator)</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>&lt;A&gt; A[] toArray(IntFunction&lt;A[]&gt; generator)</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns an array containing the elements of this stream, using the provided generator function to allocate the returned array.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns an array containing the elements of this stream, using the provided generator function to allocate the returned array.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Iterator&lt;T&gt; iterator()</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Iterator&lt;T&gt; iterator()</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns an iterator for the elements of the stream.</span></td>
-		</tr>
+                    <td style="text-align: center;"><span class="small">Returns an iterator for the elements of the stream.</span></td>
+                </tr>
 
-		<tr>
-		  <td style="text-align: center;"><code>Spliterator&lt;T&gt; spliterator()</code></td>
+                <tr>
+                    <td style="text-align: center;"><code>Spliterator&lt;T&gt; spliterator()</code></td>
 
-		  <td style="text-align: center;"><span class="small">Returns a spliterator for the elements of the stream.</span></td>
-		</tr>
-	  </table>
+                    <td style="text-align: center;"><span class="small">Returns a spliterator for the elements of the stream.</span></td>
+                </tr>
+            </table>
 
-	  <p><br /></p>
+            <p><br /></p>
 
-	  <h2>Lazy operations</h2>
+            <h2>Lazy operations</h2>
 
-	  <p>Intermediate operations are deferred until a terminal operation is invoked. The reason is that intermediate operations can usually be merged or optimized by a terminal operation.</p>
+            <p>Intermediate operations are deferred until a terminal operation is invoked. The reason is that intermediate operations can usually be merged or optimized by a terminal operation.</p>
 
-	  <p>Let's take for example this stream pipeline:</p>
+            <p>Let's take for example this stream pipeline:</p>
 
-	  <p><code class="java hljs">Stream.of(<span class="hljs-string">"sun"</span>, <span class="hljs-string">"pool"</span>, <span class="hljs-string">"beach"</span>, <span class="hljs-string">"kid"</span>, <span class="hljs-string">"island"</span>, <span class="hljs-string">"sea"</span>, <span class="hljs-string">"sand"</span>)<br />
+            <p><code class="java hljs">Stream.of(<span class="hljs-string">"sun"</span>, <span class="hljs-string">"pool"</span>, <span class="hljs-string">"beach"</span>, <span class="hljs-string">"kid"</span>, <span class="hljs-string">"island"</span>, <span class="hljs-string">"sea"</span>, <span class="hljs-string">"sand"</span>)<br />
 	  &nbsp; &nbsp; .map(str -&gt; str.length())<br />
 	  &nbsp; &nbsp; .filter(i -&gt; i &gt; <span class="hljs-number">3</span>)<br />
 	  &nbsp; &nbsp; .limit(<span class="hljs-number">2</span>)<br />
 	  &nbsp; &nbsp; .forEach(System.out::println);</code></p>
 
-	  <p>Here's what it does:</p>
+            <p>Here's what it does:</p>
 
-	  <ul>
-		<li>It generates a stream of strings,</li>
+            <ul>
+                <li>It generates a stream of strings,</li>
 
-		<li>Then convert the stream to a stream of <code>int</code>s (representing the length of each string)</li>
+                <li>Then convert the stream to a stream of <code>int</code>s (representing the length of each string)</li>
 
-		<li>Then it filters the lengths greater than three,</li>
+                <li>Then it filters the lengths greater than three,</li>
 
-		<li>Then it grabs the first two elements of the string and</li>
+                <li>Then it grabs the first two elements of the string and</li>
 
-		<li>Finally, prints those two elements.</li>
-	  </ul>
+                <li>Finally, prints those two elements.</li>
+            </ul>
 
-	  <p>And you may think the map operation is applied to all seven elements, then the filter operation again to all seven, then it picks the first two, and finally it prints the values.</p>
+            <p>And you may think the map operation is applied to all seven elements, then the filter operation again to all seven, then it picks the first two, and finally it prints the values.</p>
 
-	  <p>But this is not how it works. If we modify the lambda expressions of map and filter to print a message:</p>
+            <p>But this is not how it works. If we modify the lambda expressions of map and filter to print a message:</p>
 
-	  <p><code class="java hljs">Stream.of(<span class="hljs-string">"sun"</span>, <span class="hljs-string">"pool"</span>, <span class="hljs-string">"beach"</span>, <span class="hljs-string">"kid"</span>, <span class="hljs-string">"island"</span>, <span class="hljs-string">"sea"</span>, <span class="hljs-string">"sand"</span>)<br />
+            <p><code class="java hljs">Stream.of(<span class="hljs-string">"sun"</span>, <span class="hljs-string">"pool"</span>, <span class="hljs-string">"beach"</span>, <span class="hljs-string">"kid"</span>, <span class="hljs-string">"island"</span>, <span class="hljs-string">"sea"</span>, <span class="hljs-string">"sand"</span>)<br />
 	  &nbsp; &nbsp; .map(str -&gt; {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Mapping: "</span> + str);<br />
 	  <span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</font>return</span> str.length();<br />
@@ -545,73 +538,73 @@
 	  &nbsp; &nbsp; .limit(<span class="hljs-number">2</span>)<br />
 	  &nbsp; &nbsp; .forEach(System.out::println);</code></p>
 
-	  <p>The order of evaluation will be revealed:</p>
+            <p>The order of evaluation will be revealed:</p>
 
-	  <p><code class="java hljs">Mapping: sun<br />
+            <p><code class="java hljs">Mapping: sun<br />
 	  Filtering: <span class="hljs-number">3<br /></span>Mapping: pool<br />
 	  Filtering: <span class="hljs-number">4<br /></span><span class="hljs-number">4<br /></span>Mapping:&nbsp;beach<br />
 	  Filtering: <span class="hljs-number">5<br /></span><span class="hljs-number">5</span></code></p>
 
-	  <p>From this example, we can see the stream didn't apply all the operations on the pipeline to all elements, only until if it finds the elements needed to return a result (due to the <code>limit(2)</code> operation). This is called <i>short-circuiting</i>.</p>
+            <p>From this example, we can see the stream didn't apply all the operations on the pipeline to all elements, only until if it finds the elements needed to return a result (due to the <code>limit(2)</code> operation). This is called <i>short-circuiting</i>.</p>
 
-	  <p>Short-circuit operations cause intermediate operations to be processed until a result can be produced.</p>
+            <p>Short-circuit operations cause intermediate operations to be processed until a result can be produced.</p>
 
-	  <p>In such a way, because of lazy and short-circuit operations, streams don't execute all operations on all their elements. Instead, the elements of the stream go through a pipeline of operations until the point a result can be deduced or generated.</p>
+            <p>In such a way, because of lazy and short-circuit operations, streams don't execute all operations on all their elements. Instead, the elements of the stream go through a pipeline of operations until the point a result can be deduced or generated.</p>
 
-	  <p>You can see short-circuiting as a subclassification. There's only one short-circuit intermediate operation, while the rest are terminal:</p>
+            <p>You can see short-circuiting as a subclassification. There's only one short-circuit intermediate operation, while the rest are terminal:</p>
 
-	  <p><b>INTERMEDIATE</b></p>
+            <p><b>INTERMEDIATE</b></p>
 
-	  <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">limit</span><span class="hljs-params">(<span class="hljs-keyword">long</span> maxSize)</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">limit</span><span class="hljs-params">(<span class="hljs-keyword">long</span> maxSize)</span></span></code></p>
 
-	  <p>(Because it doesn't need to process all the elements of the stream to create a stream of a given size)</p>
+            <p>(Because it doesn't need to process all the elements of the stream to create a stream of a given size)</p>
 
-	  <p><b>TERMINAL</b></p>
+            <p><b>TERMINAL</b></p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">anyMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)<br /></span><span class="hljs-keyword">boolean</span> <span class="hljs-title">allMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)<br /></span><span class="hljs-keyword">boolean</span> <span class="hljs-title">noneMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)<br /></span>Optional&lt;T&gt; <span class="hljs-title">findFirst</span><span class="hljs-params">()<br /></span>Optional&lt;T&gt; <span class="hljs-title">findAny</span><span class="hljs-params">()</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">anyMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)<br /></span><span class="hljs-keyword">boolean</span> <span class="hljs-title">allMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)<br /></span><span class="hljs-keyword">boolean</span> <span class="hljs-title">noneMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)<br /></span>Optional&lt;T&gt; <span class="hljs-title">findFirst</span><span class="hljs-params">()<br /></span>Optional&lt;T&gt; <span class="hljs-title">findAny</span><span class="hljs-params">()</span></span></code></p>
 
-	  <p>(Because as soon as you find a matching element, there's no need to continuing processing the stream)</p>
+            <p>(Because as soon as you find a matching element, there's no need to continuing processing the stream)</p>
 
-	  <p>In the next chapters, we'll review the rest of the operations of the <code>Stream</code> interface.</p>
+            <p>In the next chapters, we'll review the rest of the operations of the <code>Stream</code> interface.</p>
 
-	  
 
-	  <h2>Key Points</h2>
 
-	  <ul>
-		<li>Streams can be defined as wrappers for collections and arrays. They wrap an existing collection (or another data source) to support operations expressed with lambdas, so you specify what you want to do, not how to do it.</li>
+            <h2>Key Points</h2>
 
-		<li>These are the characteristics of a stream:
+            <ul>
+                <li>Streams can be defined as wrappers for collections and arrays. They wrap an existing collection (or another data source) to support operations expressed with lambdas, so you specify what you want to do, not how to do it.</li>
 
-		  <ul>
-			<li>Streams work perfectly with lambdas.</li>
+                <li>These are the characteristics of a stream:
 
-			<li>Streams don't store its elements.</li>
+                    <ul>
+                        <li>Streams work perfectly with lambdas.</li>
 
-			<li>Streams are immutable.</li>
+                        <li>Streams don't store its elements.</li>
 
-			<li>Streams are not reusable.</li>
+                        <li>Streams are immutable.</li>
 
-			<li>Streams don't support indexed access to their elements.</li>
+                        <li>Streams are not reusable.</li>
 
-			<li>Streams are easily parallelizable.</li>
+                        <li>Streams don't support indexed access to their elements.</li>
 
-			<li>Stream operations are lazy when possible.</li>
-		  </ul>
-		</li>
+                        <li>Streams are easily parallelizable.</li>
 
-		<li>Stream operations can be chained to form a pipeline. To set up this pipeline you:
+                        <li>Stream operations are lazy when possible.</li>
+                    </ul>
+                </li>
 
-		  <ol>
-			<li>Create the stream.</li>
+                <li>Stream operations can be chained to form a pipeline. To set up this pipeline you:
 
-			<li>Apply zero or more intermediate operations to transform the initial stream into new streams.</li>
+                    <ol>
+                        <li>Create the stream.</li>
 
-			<li>Apply a terminal operation to generate a result or a "side-effect".</li>
-		  </ol>
-		</li>
+                        <li>Apply zero or more intermediate operations to transform the initial stream into new streams.</li>
 
-		<li>There are many ways to create a stream. The most popular are: <code class="java hljs"><span class="hljs-comment">// From an existing collection<br /></span>List&lt;String&gt; words = Arrays.asList(<span class="hljs-keyword">new</span> String[]{<span class="hljs-string">"hello"</span>, <span class="hljs-string">"hola"</span>, <span class="hljs-string">"hallo"</span>, <span class="hljs-string">"ciao"</span>});<br />
+                        <li>Apply a terminal operation to generate a result or a "side-effect".</li>
+                    </ol>
+                </li>
+
+                <li>There are many ways to create a stream. The most popular are: <code class="java hljs"><span class="hljs-comment">// From an existing collection<br /></span>List&lt;String&gt; words = Arrays.asList(<span class="hljs-keyword">new</span> String[]{<span class="hljs-string">"hello"</span>, <span class="hljs-string">"hola"</span>, <span class="hljs-string">"hallo"</span>, <span class="hljs-string">"ciao"</span>});<br />
 		Stream&lt;String&gt; s1 = words.stream();<br />
 		<br />
 		<span class="hljs-comment">// From individual elements<br /></span>Stream&lt;String&gt; s2 = Stream.of(<span class="hljs-string">"hello"</span>, <span class="hljs-string">"hola"</span>, <span class="hljs-string">"hallo"</span>, <span class="hljs-string">"ciao"</span>);<br />
@@ -619,26 +612,26 @@
 		// From an array<br /></span>String[] words = {<span class="hljs-string">"hello"</span>, <span class="hljs-string">"hola"</span>, <span class="hljs-string">"hallo"</span>, <span class="hljs-string">"ciao"</span>};<br />
 		Stream&lt;String&gt; s3 = Stream.of(words);</code></li>
 
-		<li>Don't use <code>Stream&lt;T&gt;.of()</code> when working with primitives. Instead use <code>Arrays.stream</code> or the primitive versions of <code>Stream</code>: <code class="java hljs"><span class="hljs-keyword">int</span>[] nums = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>};<br />
+                <li>Don't use <code>Stream&lt;T&gt;.of()</code> when working with primitives. Instead use <code>Arrays.stream</code> or the primitive versions of <code>Stream</code>: <code class="java hljs"><span class="hljs-keyword">int</span>[] nums = {<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>};<br />
 		IntStream s1 = Arrays.stream(nums);<br />
 		IntStream s2 = IntStream.of(nums);</code></li>
 
-		<li>Intermediate operations such as <code>map</code> or <code>filter</code> always return a new stream and are divided into <i>stateless</i> and <i>stateful</i> operations, and they are lazy, meaning that they are deferred until a terminal operation is invoked.</li>
+                <li>Intermediate operations such as <code>map</code> or <code>filter</code> always return a new stream and are divided into <i>stateless</i> and <i>stateful</i> operations, and they are lazy, meaning that they are deferred until a terminal operation is invoked.</li>
 
-		<li>Terminal operations such as <code>count</code> or <code>forEach</code> always return something other than a stream.</li>
+                <li>Terminal operations such as <code>count</code> or <code>forEach</code> always return something other than a stream.</li>
 
-		<li>Short-circuit operations cause intermediate operations to be processed until a result can be produced.</li>
+                <li>Short-circuit operations cause intermediate operations to be processed until a result can be produced.</li>
 
-		<li>In such a way, because of lazy and short-circuit operations, streams don't execute all operations on all their elements, but until the point a result can be deduced or generated.</li>
-	  </ul>
+                <li>In such a way, because of lazy and short-circuit operations, streams don't execute all operations on all their elements, but until the point a result can be deduced or generated.</li>
+            </ul>
 
-	  
 
-	  <h2>Self Test</h2>
 
-	  <p>1. Given:</p>
+            <h2>Self Test</h2>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_12_1</span></span> {<br />
+            <p>1. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_12_1</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; IntStream.range(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .filter(i -&gt; {<br />
@@ -656,78 +649,57 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>101010104</code><br />
-	  B. <code>1111111110000000004</code><br />
-	  C. <code>11041106</code><br />
-	  D. <code>1101104</code><br />
-	  E. An exception is thrown</p>
+            <p>What is the result?<br /> A. <code>101010104</code><br /> B. <code>1111111110000000004</code><br /> C. <code>11041106</code><br /> D. <code>1101104</code><br /> E. An exception is thrown</p>
 
-	  
 
-	  <p>2. Which of the following are intermediate operations?<br />
-	  A. <code>limit</code><br />
-	  B. <code>peek</code><br />
-	  C. <code>anyMatch</code><br />
-	  D. <code>skip</code></p>
 
-	  
+            <p>2. Which of the following are intermediate operations?<br /> A. <code>limit</code><br /> B. <code>peek</code><br /> C. <code>anyMatch</code><br /> D. <code>skip</code></p>
 
-	  <p>3. Which of the following are terminal operations?<br />
-	  A. <code>sorted</code><br />
-	  B. <code>flatMap</code><br />
-	  C. <code>max</code><br />
-	  D. <code>distinct</code></p>
 
-	  
 
-	  <p>4. Which of the following are short-circuit operations?<br />
-	  A. <code>reduce</code><br />
-	  B. <code>parallel</code><br />
-	  C. <code>findNone</code><br />
-	  D. <code>findFirst</code></p>
+            <p>3. Which of the following are terminal operations?<br /> A. <code>sorted</code><br /> B. <code>flatMap</code><br /> C. <code>max</code><br /> D. <code>distinct</code></p>
 
-	  
 
-	  <p>5. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_12_2</span></span> {<br />
+            <p>4. Which of the following are short-circuit operations?<br /> A. <code>reduce</code><br /> B. <code>parallel</code><br /> C. <code>findNone</code><br /> D. <code>findFirst</code></p>
+
+
+
+            <p>5. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_12_2</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; IntStream.range(<span class="hljs-number">1</span>, <span class="hljs-number">5</span>).count().limit(<span class="hljs-number">4</span>);<br />
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>5</code><br />
-	  B. <code>4</code><br />
-	  C. <code>1</code><br />
-	  D. Compilation error<br />
-	  E. An exception is thrown</p>
+            <p>What is the result?<br /> A. <code>5</code><br /> B. <code>4</code><br /> C. <code>1</code><br /> D. Compilation error<br /> E. An exception is thrown</p>
 
-  
 
-  
-    
-		<div class="answers">
-			<a href="ch12a.html" target="_blank">Open answers page</a>
-		</div>
 
-		<div class="book-info"></div>
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch11.html">11. Method References</a>
-			</div>
-			<div class="next">
-				<a href="ch13.html">13. Iterating and Filtering Collections</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+
+            <div class="answers">
+                <a href="ch12a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch11.html">11. Method References</a>
+                </div>
+                <div class="next">
+                    <a href="ch13.html">13. Iterating and Filtering Collections</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>

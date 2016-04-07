@@ -2,118 +2,118 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter TWENTY-EIGHT</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter TWENTY-EIGHT</i><br />
 			  Fork/Join Framework</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Use parallel Fork/Join Framework.</i><br /></p>
-			  
-			</div>	
-		</div>
-	</div>
-	
-	
+                <p style="text-align: center;"><i>Use parallel Fork/Join Framework.</i><br /></p>
 
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-		<h2>The Fork/Join Framework</h2>
 
-	  <p>The Fork/Join framework is designed to work with large tasks that can be split up into smaller tasks.</p>
 
-	  <p>This is done through recursion, where you keep splitting up the task until you meet the base case, a task so simple that can be solved directly, and then combining all the partial results to compute the final result.</p>
+    <div class="container">
 
-	  <p>Splitting up the problem is know as <b>FORKING</b> and combining the results is known as <b>JOINING</b>.</p>
+        <div class="column">
 
-	  <p>The main class of the Fork/Join framework is <code>java.util.concurrent.ForkJoinPool</code>, which is actually a subclass of <code>ExecutorService</code>.</p>
+            <h2>The Fork/Join Framework</h2>
 
-	  <p>We create a <code>ForkJoinPool</code> instance mostly through two constructors:</p>
+            <p>The Fork/Join framework is designed to work with large tasks that can be split up into smaller tasks.</p>
 
-	  <p><code class="java hljs">ForkJoinPool() ForkJoinPool(<span class="hljs-keyword">int</span> parallelism)</code></p>
+            <p>This is done through recursion, where you keep splitting up the task until you meet the base case, a task so simple that can be solved directly, and then combining all the partial results to compute the final result.</p>
 
-	  <p>The first version creates an instance with a number of threads equal to the number of processors of your machine (using the method <code>Runtime.getRuntime().availableProcessors(</code>)), which is the recommend way.</p>
+            <p>Splitting up the problem is know as <b>FORKING</b> and combining the results is known as <b>JOINING</b>.</p>
 
-	  <p>The other version allows you to define the number of threads that will be used.</p>
+            <p>The main class of the Fork/Join framework is <code>java.util.concurrent.ForkJoinPool</code>, which is actually a subclass of <code>ExecutorService</code>.</p>
 
-	  <p>Just like an <code>ExecutorService</code> executes a task represented by a <code>Runnable</code> or a <code>Callable</code>, in the Fork/Join framework a task is usually represented by a subclass of either:</p>
+            <p>We create a <code>ForkJoinPool</code> instance mostly through two constructors:</p>
 
-	  <ul>
-		<li><code>RecursiveAction</code>, which is the equivalent of <code>Runnable</code> in the sense that it <b>DOESN'T</b> return a value.</li>
+            <p><code class="java hljs">ForkJoinPool() ForkJoinPool(<span class="hljs-keyword">int</span> parallelism)</code></p>
 
-		<li><code>RecursiveTask&lt;V&gt;</code>, which is the equivalent of <code>Callable</code> in the sense that it <b>DOES</b> return a value.</li>
-	  </ul>
+            <p>The first version creates an instance with a number of threads equal to the number of processors of your machine (using the method <code>Runtime.getRuntime().availableProcessors(</code>)), which is the recommend way.</p>
 
-	  <p>Both of them extend from the abstract class <code>java.util.concurrent.ForkJoinTask</code>.</p>
+            <p>The other version allows you to define the number of threads that will be used.</p>
 
-	  <p>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing another work.</p>
+            <p>Just like an <code>ExecutorService</code> executes a task represented by a <code>Runnable</code> or a <code>Callable</code>, in the Fork/Join framework a task is usually represented by a subclass of either:</p>
 
-	  <p>To implement this, a <code>ForkJoinTask</code> object has three methods:</p>
+            <ul>
+                <li><code>RecursiveAction</code>, which is the equivalent of <code>Runnable</code> in the sense that it <b>DOESN'T</b> return a value.</li>
 
-	  <p><code class="java hljs"><span class="hljs-function">ForkJoinTask&lt;V&gt; <span class="hljs-title">fork</span><span class="hljs-params">()</span><br />
+                <li><code>RecursiveTask&lt;V&gt;</code>, which is the equivalent of <code>Callable</code> in the sense that it <b>DOES</b> return a value.</li>
+            </ul>
+
+            <p>Both of them extend from the abstract class <code>java.util.concurrent.ForkJoinTask</code>.</p>
+
+            <p>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing another work.</p>
+
+            <p>To implement this, a <code>ForkJoinTask</code> object has three methods:</p>
+
+            <p><code class="java hljs"><span class="hljs-function">ForkJoinTask&lt;V&gt; <span class="hljs-title">fork</span><span class="hljs-params">()</span><br />
 	  V <span class="hljs-title">join</span><span class="hljs-params">()</span><br />
 	  <span class="hljs-comment">// for RecursiveAction<br /></span><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">compute</span><span class="hljs-params">()</span><br />
 	  <span class="hljs-comment">// for RecursiveTask<br /></span><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> V <span class="hljs-title">compute</span><span class="hljs-params">()</span></span></code></p>
 
-	  <p>And each thread has a queue of tasks.</p>
+            <p>And each thread has a queue of tasks.</p>
 
-	  <p>In the beginning, you have a large task. This task is divided into (generally) two smaller tasks recursively until the base case is reached.</p>
+            <p>In the beginning, you have a large task. This task is divided into (generally) two smaller tasks recursively until the base case is reached.</p>
 
-	  <p>Each time a task is divided, you call the <code>fork()</code> method to place the first subtask in the current thread's queue, and then you call the <code>compute()</code> method on the second subtask (to recursively calculate the result).</p>
+            <p>Each time a task is divided, you call the <code>fork()</code> method to place the first subtask in the current thread's queue, and then you call the <code>compute()</code> method on the second subtask (to recursively calculate the result).</p>
 
-	  <p>This way, the first subtask will wait in the queue to be processed or stolen by an idle thread to repeat the process. The second subtask will be processed immediately (also repeating the process).</p>
+            <p>This way, the first subtask will wait in the queue to be processed or stolen by an idle thread to repeat the process. The second subtask will be processed immediately (also repeating the process).</p>
 
-	  <p>Of course, you have to divide the task enough times to keep all threads busy (preferably into a number of tasks greater that the number of threats to ensure this).</p>
+            <p>Of course, you have to divide the task enough times to keep all threads busy (preferably into a number of tasks greater that the number of threats to ensure this).</p>
 
-	  <p>All right, let's review this. The first subtask is waiting in a queue to be processed, and the second one is processed immediately. So when or how do you get the result of the first subtask?</p>
+            <p>All right, let's review this. The first subtask is waiting in a queue to be processed, and the second one is processed immediately. So when or how do you get the result of the first subtask?</p>
 
-	  <p>To get the result of the first subtask you call the <code>join()</code> method on this first subtask.</p>
+            <p>To get the result of the first subtask you call the <code>join()</code> method on this first subtask.</p>
 
-	  <p>This should be the last step because <code>join()</code> will block the program until the result is returned.</p>
+            <p>This should be the last step because <code>join()</code> will block the program until the result is returned.</p>
 
-	  <p>This means that the <b>ORDER</b> in which you call the methods is <b>IMPORTANT</b>.</p>
+            <p>This means that the <b>ORDER</b> in which you call the methods is <b>IMPORTANT</b>.</p>
 
-	  <p>If you don't call <code>fork()</code> before <code>join()</code>, there won't be any result to get.</p>
+            <p>If you don't call <code>fork()</code> before <code>join()</code>, there won't be any result to get.</p>
 
-	  <p>If you call <code>join()</code> before <code>compute()</code>, the program will perform like if it was executed in one thread and you'll be wasting time, because while the second subtask is recursively calculating the value, the first one can be stolen by another thread to process it. This way, when <code>join()</code> is finally called, either the result is ready or you don't have to wait a long time to get it.</p>
+            <p>If you call <code>join()</code> before <code>compute()</code>, the program will perform like if it was executed in one thread and you'll be wasting time, because while the second subtask is recursively calculating the value, the first one can be stolen by another thread to process it. This way, when <code>join()</code> is finally called, either the result is ready or you don't have to wait a long time to get it.</p>
 
-	  <p>But remember, the Fork/Join framework is not for every task. You can use it for any task that can be solved (or algorithm that can be implemented) recursively, but it's best for tasks that can be divided into smaller subtasks <b>AND</b> that they can be computed independently (so the order doesn't matter).</p>
+            <p>But remember, the Fork/Join framework is not for every task. You can use it for any task that can be solved (or algorithm that can be implemented) recursively, but it's best for tasks that can be divided into smaller subtasks <b>AND</b> that they can be computed independently (so the order doesn't matter).</p>
 
-	  <p>So let's pick a simple example, finding the minimum value of an array. This array can be split up in many subarrays and locate the minimum of each of them. Then, we can find the minimum value between those values.</p>
+            <p>So let's pick a simple example, finding the minimum value of an array. This array can be split up in many subarrays and locate the minimum of each of them. Then, we can find the minimum value between those values.</p>
 
-	  <p>Let's code this example with a <code>RecursiveAction</code> first, to see how this fork/join works. Remember that this class doesn't return a result so we're only going to print the partial results.</p>
+            <p>Let's code this example with a <code>RecursiveAction</code> first, to see how this fork/join works. Remember that this class doesn't return a result so we're only going to print the partial results.</p>
 
-	  <p>Another thing. The most basic scenario we can have (the base case) is when we just have to compare two values. However, having subtasks that are too small won't perform well.</p>
+            <p>Another thing. The most basic scenario we can have (the base case) is when we just have to compare two values. However, having subtasks that are too small won't perform well.</p>
 
-	  <p>For that reason, when working with fork/join, generally you divide the elements in sets of a certain size (that can be handled by a single thread), for which you solve the problem sequentially.</p>
+            <p>For that reason, when working with fork/join, generally you divide the elements in sets of a certain size (that can be handled by a single thread), for which you solve the problem sequentially.</p>
 
-	  <p>For this example, let's process five numbers per thread:</p>
+            <p>For this example, let's process five numbers per thread:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FindMinimumAction</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">RecursiveAction</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FindMinimumAction</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">RecursiveAction</span></span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp;// A thread can easily handle, let's say, five elements</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp;private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> SEQUENTIAL_THRESHOLD = <span class="hljs-number">5</span>;<br />
 	  <span class="hljs-comment">&nbsp; &nbsp;// The array with the numbers (we'll pass the same array in</span><br />
@@ -161,11 +161,11 @@
 	  &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>The <code>compute()</code> method defines the base case, when the (sub)array has five elements or less, in which case the minimum is found sequentially. Otherwise, the array is split into two subarrays recursively until the condition of the base case is fulfilled.</p>
+            <p>The <code>compute()</code> method defines the base case, when the (sub)array has five elements or less, in which case the minimum is found sequentially. Otherwise, the array is split into two subarrays recursively until the condition of the base case is fulfilled.</p>
 
-	  <p>Dividing the tasks may not always result in evenly distributed subtasks. But to keep this simple, let's try the class with twenty elements, which is very likely to be split up into four sets:</p>
+            <p>Dividing the tasks may not always result in evenly distributed subtasks. But to keep this simple, let's try the class with twenty elements, which is very likely to be split up into four sets:</p>
 
-	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp;int</span>[] data = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">20</span>];<br />
 	  &nbsp; &nbsp;Random random = <span class="hljs-keyword">new</span> Random();<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp;for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; data.length; i++) {<br />
@@ -182,9 +182,9 @@
 	  &nbsp; &nbsp;pool.invoke(task);<br />
 	  }</code></p>
 
-	  <p>A possible output can be:</p>
+            <p>A possible output can be:</p>
 
-	  <p><code class="hljs">109 411 348 938 776<br />
+            <p><code class="hljs">109 411 348 938 776<br />
 	  188 42 28 818 825<br />
 	  642 454 431 742 463<br />
 	  33 832 705 910 456<br />
@@ -193,11 +193,11 @@
 	  Minimum of this subarray: 431<br />
 	  Minimum of this subarray: 109</code></p>
 
-	  <p>Notice that we didn't need to shut down the pool explicitly. When the program exits, the pool is shut down, so it can be reused.</p>
+            <p>Notice that we didn't need to shut down the pool explicitly. When the program exits, the pool is shut down, so it can be reused.</p>
 
-	  <p>We also have the <code>invokeAll()</code> method, that doesn't return a value but does something equivalent to the call of <code>fork()</code>, <code>compute()</code>, and <code>join()</code> methods. So instead of having something like:</p>
+            <p>We also have the <code>invokeAll()</code> method, that doesn't return a value but does something equivalent to the call of <code>fork()</code>, <code>compute()</code>, and <code>join()</code> methods. So instead of having something like:</p>
 
-	  <p><code class="java hljs">...<br />
+            <p><code class="java hljs">...<br />
 	  FindMinimumAction firstSubtask =<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp;new</span> FindMinimumAction(data, start, mid);<br />
 	  FindMinimumAction secondSubtask =<br />
@@ -207,9 +207,9 @@
 	  <span class="hljs-comment">// wait for the first task result<br /></span>firstSubtask.join();<br />
 	  ...</code></p>
 
-	  <p>We can simply have:</p>
+            <p>We can simply have:</p>
 
-	  <p><code class="java hljs">...<br />
+            <p><code class="java hljs">...<br />
 	  FindMinimumAction firstSubtask =<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp;new</span> FindMinimumAction(data, start, mid);<br />
 	  FindMinimumAction secondSubtask =<br />
@@ -217,11 +217,11 @@
 	  invokeAll(firstSubtask, secondSubtask);<br />
 	  ...</code></p>
 
-	  <p>Now, let's change this example to use a <code>RecursiveTask</code> so we can return the minimum value of all.</p>
+            <p>Now, let's change this example to use a <code>RecursiveTask</code> so we can return the minimum value of all.</p>
 
-	  <p>Actually, the only changes we need to do are in the <code>compute()</code> method:</p>
+            <p>Actually, the only changes we need to do are in the <code>compute()</code> method:</p>
 
-	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FindMinimumTask</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">RecursiveTask</span>&lt;<span class="hljs-title">Integer</span>&gt;</span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FindMinimumTask</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">RecursiveTask</span>&lt;<span class="hljs-title">Integer</span>&gt;</span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp;// ...</span><br />
 	  <span class="hljs-annotation">&nbsp; &nbsp;@Override</span><br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;<span class="hljs-comment">//Return type matches the generic<br /></span>&nbsp; &nbsp;protected</span> Integer <span class="hljs-title">compute</span><span class="hljs-params">()</span></span> {<br />
@@ -244,66 +244,54 @@
 	  <span class="hljs-comment">&nbsp; &nbsp;// ...</span><br />
 	  }</code></p>
 
-	  <p>In the <code>main()</code> method, the only changes are printing the value that <code>pool.invoke(task)</code> returns and a little formatting to the output, which can be:</p>
+            <p>In the <code>main()</code> method, the only changes are printing the value that <code>pool.invoke(task)</code> returns and a little formatting to the output, which can be:</p>
 
-	  <p>Array values:</p>
+            <p>Array values:</p>
 
-	  <p><code class="hljs">819 997 124 425 669 657 487 447 386 979 31 748 194 644 893 209 913 810 142 565<br />
+            <p><code class="hljs">819 997 124 425 669 657 487 447 386 979 31 748 194 644 893 209 913 810 142 565<br />
 	  Minimum value: 31</code></p>
 
-	  
 
-	  <h2>Key Points</h2>
 
-	  <ul>
-		<li>The Fork/Join framework is designed to work with large tasks that can be split up into smaller tasks.</li>
+            <h2>Key Points</h2>
 
-		<li>This is done through recursion, where you keep splitting up the task until you meet the base case, a task so simple that can be solved directly, and then combining all the partial results to compute the final result.</li>
+            <ul>
+                <li>The Fork/Join framework is designed to work with large tasks that can be split up into smaller tasks.</li>
 
-		<li>Splitting up the problem is know as <b>FORKING</b> and combining the results is known as <b>JOINING</b>.</li>
+                <li>This is done through recursion, where you keep splitting up the task until you meet the base case, a task so simple that can be solved directly, and then combining all the partial results to compute the final result.</li>
 
-		<li>The main class of the Fork/Join framework is <code>java.util.concurrent.ForkJoinPool</code>, which is actually a subclass of <code>ExecutorService</code>.</li>
+                <li>Splitting up the problem is know as <b>FORKING</b> and combining the results is known as <b>JOINING</b>.</li>
 
-		<li>Just like an <code>ExecutorService</code> executes a task represented by a <code>Runnable</code> or a <code>Callable</code>, in the Fork/Join framework a task is represented by a subclass of either <code>RecursiveAction</code> (that <b>DOESN'T</b> return a value) or <code>RecursiveTask&lt;V&gt;</code> (that <b>DOES</b> return a value).</li>
+                <li>The main class of the Fork/Join framework is <code>java.util.concurrent.ForkJoinPool</code>, which is actually a subclass of <code>ExecutorService</code>.</li>
 
-		<li>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing another work.</li>
+                <li>Just like an <code>ExecutorService</code> executes a task represented by a <code>Runnable</code> or a <code>Callable</code>, in the Fork/Join framework a task is represented by a subclass of either <code>RecursiveAction</code> (that <b>DOESN'T</b> return a value) or <code>RecursiveTask&lt;V&gt;</code> (that <b>DOES</b> return a value).</li>
 
-		<li>A <code>ForkJoinTask</code> object has three main methods, <code>fork()</code>, <code>join()</code>, and <code>compute()</code>. The <b>ORDER</b> in which you call the methods is <b>IMPORTANT</b>.</li>
+                <li>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing another work.</li>
 
-		<li>You must first call <code>join()</code> (to queue the first subtask, then <code>compute()</code> (on the second subtask to process it recursively, and then <code>join()</code> to get the result of the first subtask).</li>
-	  </ul>
+                <li>A <code>ForkJoinTask</code> object has three main methods, <code>fork()</code>, <code>join()</code>, and <code>compute()</code>. The <b>ORDER</b> in which you call the methods is <b>IMPORTANT</b>.</li>
 
-	  
+                <li>You must first call <code>join()</code> (to queue the first subtask, then <code>compute()</code> (on the second subtask to process it recursively, and then <code>join()</code> to get the result of the first subtask).</li>
+            </ul>
 
-	  <h2>Self Test</h2>
 
-	  <p>1. What of the following statements is true?<br />
-	  A. <code>RecursiveAction</code> is a subclass of <code>ForkJoinPool</code>.<br />
-	  B. When working with the Fork/Join framework, by default, one thread per CPU is created.<br />
-	  C. You need to shut down a <code>ForkJoinPool</code> explicitly.<br />
-	  D. <code>fork()</code> blocks the program until the result is ready.</p>
 
-	  
+            <h2>Self Test</h2>
 
-	  <p>2. Which of the following is the right order to call the methods of a <code>ForkJoinTask</code>?<br />
-	  A. <code>compute()</code>, <code>fork()</code>, <code>join()</code><br />
-	  B. <code>fork()</code>, <code>compute()</code>, <code>join()</code><br />
-	  C. <code>join()</code>, <code>fork(</code>), <code>compute()</code><br />
-	  D. <code>fork()</code>, <code>join()</code>, <code>compute()</code></p>
+            <p>1. What of the following statements is true?<br /> A. <code>RecursiveAction</code> is a subclass of <code>ForkJoinPool</code>.<br /> B. When working with the Fork/Join framework, by default, one thread per CPU is created.<br /> C. You need to shut down a <code>ForkJoinPool</code> explicitly.<br /> D. <code>fork()</code> blocks the program until the result is ready.</p>
 
-	  
 
-	  <p>3. When using a <code>RecursiveTask</code>, which of the following statements is true?<br />
-	  A. You can use the <code>invokeAll()</code> method instead of the <code>fork()</code>/<code>join()</code>/<code>compute()</code> methods.<br />
-	  B. You can use <code>ExecutorService</code> directly with this class.<br />
-	  C. An action is triggered when the task is completed.<br />
-	  D. <code>ForkJoinTask.invoke()</code> returns the same type as the generic type of <code>RecursiveTask</code>.</p>
 
-	  
+            <p>2. Which of the following is the right order to call the methods of a <code>ForkJoinTask</code>?<br /> A. <code>compute()</code>, <code>fork()</code>, <code>join()</code><br /> B. <code>fork()</code>, <code>compute()</code>, <code>join()</code><br /> C. <code>join()</code>, <code>fork(</code>), <code>compute()</code><br /> D. <code>fork()</code>, <code>join()</code>, <code>compute()</code></p>
 
-	  <p>4. Given:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_28_4</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">RecursiveTask</span>&lt;<span class="hljs-title">Integer</span>&gt;</span> {<br />
+
+            <p>3. When using a <code>RecursiveTask</code>, which of the following statements is true?<br /> A. You can use the <code>invokeAll()</code> method instead of the <code>fork()</code>/<code>join()</code>/<code>compute()</code> methods.<br /> B. You can use <code>ExecutorService</code> directly with this class.<br /> C. An action is triggered when the task is completed.<br /> D. <code>ForkJoinTask.invoke()</code> returns the same type as the generic type of <code>RecursiveTask</code>.</p>
+
+
+
+            <p>4. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_28_4</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">RecursiveTask</span>&lt;<span class="hljs-title">Integer</span>&gt;</span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp;private</span> <span class="hljs-keyword">int</span> n;<br />
 	  <br />
 	  &nbsp; &nbsp;Question_28_4(<span class="hljs-keyword">int</span> n) {<br />
@@ -321,36 +309,33 @@
 	  &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-	  <p>What is not right about this implementation of the Fork/Join framework?<br />
-	  A. Everything is right, it's a perfect implementation of the Fork/Join framework.<br />
-	  B. The order of the <code>fork()</code>, <code>join()</code>, <code>compute()</code> methods is not right.<br />
-	  C. This implementation is very inefficient, the subtasks will be very small.<br />
-	  D. It doesn't compile.</p>
+            <p>What is not right about this implementation of the Fork/Join framework?<br /> A. Everything is right, it's a perfect implementation of the Fork/Join framework.<br /> B. The order of the <code>fork()</code>, <code>join()</code>, <code>compute()</code> methods is not right.<br /> C. This implementation is very inefficient, the subtasks will be very small.<br /> D. It doesn't compile.</p>
 
-  
 
-  
-    
-		<div class="answers">
-			<a href="ch28a.html" target="_blank">Open answers page</a>
-		</div>
 
-		<div class="book-info"></div>
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch27.html">27. Concurrency</a>
-			</div>
-			<div class="next">
-				<a href="ch29.html">JDBC API</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+
+            <div class="answers">
+                <a href="ch28a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch27.html">27. Concurrency</a>
+                </div>
+                <div class="next">
+                    <a href="ch29.html">JDBC API</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>

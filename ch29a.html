@@ -1,74 +1,69 @@
 <!doctype html>
 <html lang="en">
+
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter TWENTY-NINE</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter TWENTY-NINE</i><br />
 			  JDBC API</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Describe the interfaces that make up the core of the JDBC API including the Driver, Connection, Statement, and ResultSet interfaces and their relationship to provider implementations.<br /></i><i>Identify the components required to connect to a database using the DriverManager class including the JDBC URL.<br /></i><i>Submit queries and read results from the database including creating statements, returning result sets, iterating through the results, and properly closing result sets, statements, and connections.</i></p>
-			  
-			</div>
-		</div>
-	</div>
+                <p style="text-align: center;"><i>Describe the interfaces that make up the core of the JDBC API including the Driver, Connection, Statement, and ResultSet interfaces and their relationship to provider implementations.<br /></i><i>Identify the components required to connect to a database using the DriverManager class including the JDBC URL.<br /></i><i>Submit queries and read results from the database including creating statements, returning result sets, iterating through the results, and properly closing result sets, statements, and connections.</i></p>
 
-  
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-	  <h2>Answers</h2>
 
-	  <p><b>1. The correct answer is B.</b><br />
-	  If the result set is empty, <code>next()</code> returns <code>false</code>, so nothing is printed.</p>
+    <div class="container">
 
-	  <p><br /></p>
+        <div class="column">
 
-	  <p><b>2. The correct answer is C.</b><br />
-	  If the argument of <code>absolute()</code> is negative, the cursor is positioned starting from the end of the result set. Since <code>last()</code> moves the cursor to the last element of the result set, this and <code>absolute(-1)</code> are equivalent.</p>
+            <h2>Answers</h2>
 
-	  <p><br /></p>
+            <p><b>1. The correct answer is B.</b><br /> If the result set is empty, <code>next()</code> returns <code>false</code>, so nothing is printed.</p>
 
-	  <p><b>3. The correct answer is D.</b><br />
-	  The first object you have to close is <code>ResultSet</code>, then <code>Statement</code>, and finally <code>Connection</code>.</p>
+            <p><br /></p>
 
-	  <p><br /></p>
+            <p><b>2. The correct answer is C.</b><br /> If the argument of <code>absolute()</code> is negative, the cursor is positioned starting from the end of the result set. Since <code>last()</code> moves the cursor to the last element of the result set, this and <code>absolute(-1)</code> are equivalent.</p>
 
-	  <p><b>4. The correct answer is B.</b><br />
-	  <code>execute()</code> returns a <code>boolean</code> value, <code>true</code> for <code>SELECT</code> and <code>false</code> for other statements.</p>
+            <p><br /></p>
 
-	  <p><br /></p>
+            <p><b>3. The correct answer is D.</b><br /> The first object you have to close is <code>ResultSet</code>, then <code>Statement</code>, and finally <code>Connection</code>.</p>
 
-	  <p><b>5. The correct answer is D.</b><br />
-	  Option A is invalid. The method <code>getInteger()</code> doesn't exist (the correct one is <code>getInt()</code>).<br />
-	  Option B is invalid. The string argument must be the name of the column.<br />
-	  Option C is invalid. In JDBC, indexes start at <code>1</code>.<br />
-	  Option D is valid. <code>rb.getBoolean(1)</code> can be a valid way to get the value of the first column of a row.</p>
-	  <p><br /></p>
-  
-	</div>
-  </div>
-		
-  <footer></footer>
-  
+            <p><br /></p>
+
+            <p><b>4. The correct answer is B.</b><br />
+                <code>execute()</code> returns a <code>boolean</code> value, <code>true</code> for <code>SELECT</code> and <code>false</code> for other statements.</p>
+
+            <p><br /></p>
+
+            <p><b>5. The correct answer is D.</b><br /> Option A is invalid. The method <code>getInteger()</code> doesn't exist (the correct one is <code>getInt()</code>).<br /> Option B is invalid. The string argument must be the name of the column.<br /> Option C is invalid. In JDBC, indexes start at <code>1</code>.<br /> Option D is valid. <code>rb.getBoolean(1)</code> can be a valid way to get the value of the first column of a row.</p>
+            <p><br /></p>
+
+        </div>
+    </div>
+
+    <footer></footer>
+
 </body>
+
 </html>

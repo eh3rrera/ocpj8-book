@@ -2,95 +2,95 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Chapter THIRTY</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Chapter THIRTY</i><br />
 			  Localization</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Read and set the locale by using the Locale object.<br /></i><i>Create and read a Properties file.<br /></i><i>Build a resource bundle for each locale and load a resource bundle in an application.</i></p>
-			  
-			</div>
-		</div>
-	</div>
-	
-	
+                <p style="text-align: center;"><i>Read and set the locale by using the Locale object.<br /></i><i>Create and read a Properties file.<br /></i><i>Build a resource bundle for each locale and load a resource bundle in an application.</i></p>
 
-  <div class="container">
-  
-	<div class="column">
+            </div>
+        </div>
+    </div>
 
-		<h2>Localization</h2>
 
-	  <p><i>Localization</i> (abbreviated as l10N because of the number of characters between the first and the last letter) is the mechanism by which an application is adapted to a specific language and region.</p>
 
-	  <p>It's related to the concept of <i>internationalization</i> (abbreviated as i18n for the same reason as localization), which is about designing an application that can handle different languages and regions.</p>
+    <div class="container">
 
-	  <p>The most common things that can be customized by language and/or region are messages, dates, and numbers.</p>
+        <div class="column">
 
-	  <p>In Java, it all starts with one class <code>java.util.Locale</code>.</p>
+            <h2>Localization</h2>
 
-	  <p>The <code>Locale</code> class basically represents a language and a country although, to be precise, a locale can have the following information:</p>
+            <p><i>Localization</i> (abbreviated as l10N because of the number of characters between the first and the last letter) is the mechanism by which an application is adapted to a specific language and region.</p>
 
-	  <ul>
-		<li>An ISO 639 alpha-2 or alpha-3 language code, like <i>ja</i> (Japanese)</li>
+            <p>It's related to the concept of <i>internationalization</i> (abbreviated as i18n for the same reason as localization), which is about designing an application that can handle different languages and regions.</p>
 
-		<li>An ISO 3166 alpha-2 country code or UN M.49 numeric-3 area code, like <i>JP</i> (Japan)</li>
+            <p>The most common things that can be customized by language and/or region are messages, dates, and numbers.</p>
 
-		<li>A variant name, usually empty but can be any string.</li>
+            <p>In Java, it all starts with one class <code>java.util.Locale</code>.</p>
 
-		<li>An ISO 15924 alpha-4 script code, like <i>Latn</i> (Latin)</li>
+            <p>The <code>Locale</code> class basically represents a language and a country although, to be precise, a locale can have the following information:</p>
 
-		<li>A set of extensions represented by single characters, like <i>u</i>.</li>
-	  </ul>
+            <ul>
+                <li>An ISO 639 alpha-2 or alpha-3 language code, like <i>ja</i> (Japanese)</li>
 
-	  <p>But most of the time, we just work with languages and countries.</p>
-	  <hr />
+                <li>An ISO 3166 alpha-2 country code or UN M.49 numeric-3 area code, like <i>JP</i> (Japan)</li>
 
-	  <h4><i>A Locale representation</i></h4>
+                <li>A variant name, usually empty but can be any string.</li>
 
-	  <p><i>The language part is required</i></p>
+                <li>An ISO 15924 alpha-4 script code, like <i>Latn</i> (Latin)</li>
 
-	  <p><i>The country part is optional</i></p>
+                <li>A set of extensions represented by single characters, like <i>u</i>.</li>
+            </ul>
 
-	  <p><i><code style="color:black;"><span style="font-size:600%"><b>fr_CA</b></span></code></i></p>
+            <p>But most of the time, we just work with languages and countries.</p>
+            <hr />
 
-	  <p><i>Notice the lower case in the language part</i></p>
+            <h4><i>A Locale representation</i></h4>
 
-	  <p><i>Then the underscore for separation</i></p>
+            <p><i>The language part is required</i></p>
 
-	  <p><i>Notice the upper case in the country part</i></p>
-	  <hr />
+            <p><i>The country part is optional</i></p>
 
-	  <p>You can get the default locale of your machine with:</p>
+            <p><i><code style="color:black;"><span style="font-size:600%"><b>fr_CA</b></span></code></i></p>
 
-	  <p><code class="java hljs">Locale locale = Locale.getDefault();</code></p>
+            <p><i>Notice the lower case in the language part</i></p>
 
-	  <p>And get information like:</p>
+            <p><i>Then the underscore for separation</i></p>
 
-	  <p><code class="java hljs">System.out.println(<span class="hljs-string">"Country Code: "</span><br />
+            <p><i>Notice the upper case in the country part</i></p>
+            <hr />
+
+            <p>You can get the default locale of your machine with:</p>
+
+            <p><code class="java hljs">Locale locale = Locale.getDefault();</code></p>
+
+            <p>And get information like:</p>
+
+            <p><code class="java hljs">System.out.println(<span class="hljs-string">"Country Code: "</span><br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+ locale.getCountry());<br />
 	  System.out.println(<span class="hljs-string">"Country Name: "</span><br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+ locale.getDisplayCountry());<br />
@@ -99,97 +99,94 @@
 	  System.out.println(<span class="hljs-string">"Language Name: "</span><br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+ locale.getDisplayLanguage());</code></p>
 
-	  <p>The output (notice how the actual names are localized in Spanish):<br />
-	  <code class="java hljs">Country Code: MX<br />
+            <p>The output (notice how the actual names are localized in Spanish):<br />
+                <code class="java hljs">Country Code: MX<br />
 	  Country Name: México<br />
 	  Language Code: es<br />
 	  Language Name: español</code></p>
 
-	  <p>You can also get all the locales supported by Java:</p>
+            <p>You can also get all the locales supported by Java:</p>
 
-	  <p><code class="java hljs">Locale [] locales = Locale.getAvailableLocales();<br />
+            <p><code class="java hljs">Locale [] locales = Locale.getAvailableLocales();<br />
 	  Arrays.stream(locales)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.forEach(System.out::println);</code></p>
 
-	  <p>This would output around 160 locales in the form of <code>language[_country]</code>, for example:</p>
+            <p>This would output around 160 locales in the form of <code>language[_country]</code>, for example:</p>
 
-	  <p><code class="java hljs">it<br />
+            <p><code class="java hljs">it<br />
 	  pt_BR<br />
 	  ro_RO</code></p>
 
-	  <h2>Setting the locale</h2>
+            <h2>Setting the locale</h2>
 
-	  <p>There are three different ways to create a <code>Locale</code> instance:</p>
+            <p>There are three different ways to create a <code>Locale</code> instance:</p>
 
-	  <p><b>1. Using a constructor</b><br />
-	  There are three constructors:</p>
+            <p><b>1. Using a constructor</b><br /> There are three constructors:</p>
 
-	  <p><code>Locale(String language)<br />
+            <p><code>Locale(String language)<br />
 	  Locale(String language, String country)<br />
 	  Locale(String language, String country, String variant)</code></p>
 
-	  <p>For example:</p>
+            <p>For example:</p>
 
-	  <p><code class="java hljs">Locale chinese = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"zh"</span>); ]<br />
+            <p><code class="java hljs">Locale chinese = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"zh"</span>); ]<br />
 	  Locale CHINA = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"zh"</span>, <span class="hljs-string">"CN"</span>);</code></p>
 
-	  <p><b>2. Using the forLanguageTag(String) factory method</b><br />
-	  This method expects a language code, for example:</p>
+            <p><b>2. Using the forLanguageTag(String) factory method</b><br /> This method expects a language code, for example:</p>
 
-	  <p><code class="java hljs">Locale german = Locale.forLanguageTag(<span class="hljs-string">"de"</span>);</code></p>
+            <p><code class="java hljs">Locale german = Locale.forLanguageTag(<span class="hljs-string">"de"</span>);</code></p>
 
-	  <p><b>3. Using Locale.Builder</b><br />
-	  You can set the properties you need and build the object at the end, for example:</p>
+            <p><b>3. Using Locale.Builder</b><br /> You can set the properties you need and build the object at the end, for example:</p>
 
-	  <p><code class="java hljs">Locale japan = <span class="hljs-keyword">new</span> Locale.Builder()<br />
+            <p><code class="java hljs">Locale japan = <span class="hljs-keyword">new</span> Locale.Builder()<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.setRegion(<span class="hljs-string">"JP"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.setLanguage(<span class="hljs-string">"jp"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.build();</code></p>
 
-	  <p>Passing an invalid(s) argument(s) to any of the above three methods will not throw an exception, it will just create an object with invalid options that will make your program not behave correctly:</p>
+            <p>Passing an invalid(s) argument(s) to any of the above three methods will not throw an exception, it will just create an object with invalid options that will make your program not behave correctly:</p>
 
-	  <p><code class="java hljs">Locale badLocale = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"a"</span>, <span class="hljs-string">"A"</span>); <span class="hljs-comment">// No error</span><br />
+            <p><code class="java hljs">Locale badLocale = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"a"</span>, <span class="hljs-string">"A"</span>); <span class="hljs-comment">// No error</span><br />
 	  System.out.println(badLocale); <span class="hljs-comment">// It prints a_A</span></code></p>
 
-	  <p>So it's good to know that <code>Locale</code> class also provides predefined constants for some common languages and countries, for example:</p>
+            <p>So it's good to know that <code>Locale</code> class also provides predefined constants for some common languages and countries, for example:</p>
 
-	  <p><code class="java hljs">Locale.GERMAN<br />
+            <p><code class="java hljs">Locale.GERMAN<br />
 	  Locale.KOREAN<br />
 	  Locale.UK<br />
 	  Locale.ITALY</code></p>
 
-	  <p>For the exam, you don't have to know all these constants, or some obscure language and country codes, just that there are four ways to start working with locales.</p>
+            <p>For the exam, you don't have to know all these constants, or some obscure language and country codes, just that there are four ways to start working with locales.</p>
 
-	  <p>Once you have a <code>Locale</code> object, you can change the locale of your program with the <code>setDefault(Locale)</code> method:</p>
+            <p>Once you have a <code>Locale</code> object, you can change the locale of your program with the <code>setDefault(Locale)</code> method:</p>
 
-	  <p><code class="java hljs">System.out.println(Locale.getDefault()); <span class="hljs-comment">// Prints let's say en_GB</span><br />
+            <p><code class="java hljs">System.out.println(Locale.getDefault()); <span class="hljs-comment">// Prints let's say en_GB</span><br />
 	  Locale.setDefault(<span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"en"</span>, <span class="hljs-string">"US"</span>));<br />
 	  System.out.println(Locale.getDefault()); <span class="hljs-comment">// Now prints en_US</span></code></p>
 
-	  <h2>Property files</h2>
+            <h2>Property files</h2>
 
-	  <p>Property files define strings in key/value pairs separated by lines.</p>
+            <p>Property files define strings in key/value pairs separated by lines.</p>
 
-	  <p>There are some rules, like:</p>
+            <p>There are some rules, like:</p>
 
-	  <ul>
-		<li>Spaces at the beginning of the line (if any) are ignored.</li>
+            <ul>
+                <li>Spaces at the beginning of the line (if any) are ignored.</li>
 
-		<li>Any line that starts with <code>#</code> or <code>!</code> will be treated as a comment.</li>
+                <li>Any line that starts with <code>#</code> or <code>!</code> will be treated as a comment.</li>
 
-		<li>You can break a line for readability purposes with a backslash.</li>
-	  </ul>
+                <li>You can break a line for readability purposes with a backslash.</li>
+            </ul>
 
-	  <p>For example, we can have the following file:</p>
+            <p>For example, we can have the following file:</p>
 
-	  <p><b>Messages.properties</b><br />
-	  <code class="java hljs"># Video related messages<br />
+            <p><b>Messages.properties</b><br />
+                <code class="java hljs"># Video related messages<br />
 	  video.added = The video has been added<br />
 	  video.deleted = The video has been deleted</code></p>
 
-	  <p>To read it, you create an instance of <code>java.util.Properties</code> and load it with either a <code>java.io.Reader</code> or a <code>java.io.InputStream</code>, for example:</p>
+            <p>To read it, you create an instance of <code>java.util.Properties</code> and load it with either a <code>java.io.Reader</code> or a <code>java.io.InputStream</code>, for example:</p>
 
-	  <p><code class="java hljs">Properties prop = <span class="hljs-keyword">new</span> Properties();<br />
+            <p><code class="java hljs">Properties prop = <span class="hljs-keyword">new</span> Properties();<br />
 	  <span class="hljs-keyword">try</span> (InputStream is = getClassLoader()<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.getResourceAsStream(<span class="hljs-string">"Messages.properties"</span>)) {<br />
 	  &nbsp; &nbsp; prop.load(is); <span class="hljs-comment">// Load properties</span><br />
@@ -201,83 +198,81 @@
 	  &nbsp; &nbsp; e.printStackTrace();<br />
 	  }</code></p>
 
-	  <h2>Resource Bundles</h2>
+            <h2>Resource Bundles</h2>
 
-	  <p>To localize an application, we have Resource Bundles, which define a set of keys with localized values. Resource Bundles can be property files or classes.</p>
+            <p>To localize an application, we have Resource Bundles, which define a set of keys with localized values. Resource Bundles can be property files or classes.</p>
 
-	  <p>To support this, we have an abstract class <code>java.util.ResourceBundle</code> with two subclasses:</p>
+            <p>To support this, we have an abstract class <code>java.util.ResourceBundle</code> with two subclasses:</p>
 
-	  <p><b>java.util.PropertyResourceBundle</b><br />
-	  Each locale is represented by a property file. Keys and values are of type <code>String</code>.</p>
+            <p><b>java.util.PropertyResourceBundle</b><br /> Each locale is represented by a property file. Keys and values are of type <code>String</code>.</p>
 
-	  <p><b>java.util.ListResourceBundle</b><br />
-	  Each locale is represented by a subclass of this class that overrides the method <code>Object[][] getContents()</code>. The returned array represents the keys and values. Keys must be of type <code>String</code>, but values can be any object.</p>
+            <p><b>java.util.ListResourceBundle</b><br /> Each locale is represented by a subclass of this class that overrides the method <code>Object[][] getContents()</code>. The returned array represents the keys and values. Keys must be of type <code>String</code>, but values can be any object.</p>
 
-	  <p>In both methods, the name (of the file or the class) follows a convention which allows Java to search for resource bundles and match them to their corresponding locales.</p>
+            <p>In both methods, the name (of the file or the class) follows a convention which allows Java to search for resource bundles and match them to their corresponding locales.</p>
 
-	  <p>That name convention is:</p>
+            <p>That name convention is:</p>
 
-	  <p><i><code style="color:black;"><b style="font-size:160%">package.Bundle_language_country_variant</b></code></i></p>
+            <p><i><code style="color:black;"><b style="font-size:160%">package.Bundle_language_country_variant</b></code></i></p>
 
-	  <p>For example:</p>
+            <p>For example:</p>
 
-	  <p><i><code style="color:black"><b style="font-size:160%">com.example.MyBundle_fr_FR</b></code></i></p>
+            <p><i><code style="color:black"><b style="font-size:160%">com.example.MyBundle_fr_FR</b></code></i></p>
 
-	  <p>Only the resource bundle name is required (and the name of the package if is not the default one).</p>
+            <p>Only the resource bundle name is required (and the name of the package if is not the default one).</p>
 
-	  <p>For example, we can have bundles with the following names (assuming we're working with property files, although it's the same with classes):</p>
+            <p>For example, we can have bundles with the following names (assuming we're working with property files, although it's the same with classes):</p>
 
-	  <p><code class="java hljs">MyBundle.properties<br />
+            <p><code class="java hljs">MyBundle.properties<br />
 	  MyBundle_en.properties<br />
 	  MyBundle_en_NZ.properties<br />
 	  MyBundle_en_US.properties</code></p>
 
-	  <p>To determine which bundle belongs to a particular locale, Java tries to find the most specific bundle that matches the properties of the locale.</p>
+            <p>To determine which bundle belongs to a particular locale, Java tries to find the most specific bundle that matches the properties of the locale.</p>
 
-	  <p>This means that:</p>
+            <p>This means that:</p>
 
-	  <p>1. Java first searches for a bundle whose name matches the complete locale:<br />
-	  <code>package.bundle_language_country_variant</code></p>
+            <p>1. Java first searches for a bundle whose name matches the complete locale:<br />
+                <code>package.bundle_language_country_variant</code></p>
 
-	  <p>2. If it cannot find one, it drops the last component of the name and repeats the search:<br />
-	  <code>package.bundle_language_country</code></p>
+            <p>2. If it cannot find one, it drops the last component of the name and repeats the search:<br />
+                <code>package.bundle_language_country</code></p>
 
-	  <p>3. If it cannot find one, again, it drops the last component of the name and repeats the search:<br />
-	  <code>package.bundle_language</code></p>
+            <p>3. If it cannot find one, again, it drops the last component of the name and repeats the search:<br />
+                <code>package.bundle_language</code></p>
 
-	  <p>4. If still cannot find one, the last component is dropped again, leaving just the name of the bundle:<br />
-	  <code>package.bundle</code></p>
+            <p>4. If still cannot find one, the last component is dropped again, leaving just the name of the bundle:<br />
+                <code>package.bundle</code></p>
 
-	  <p>If nothing is found, a <code>MissingBundleException</code> is thrown.</p>
+            <p>If nothing is found, a <code>MissingBundleException</code> is thrown.</p>
 
-	  <p>If a class and a property file share the same name, Java gives priority to the class.</p>
+            <p>If a class and a property file share the same name, Java gives priority to the class.</p>
 
-	  <p>But there's another important point.</p>
+            <p>But there's another important point.</p>
 
-	  <p>In your program, you can use the keys of the matching resource bundle and <b>ANY</b> of its <b>PARENTS</b>.</p>
+            <p>In your program, you can use the keys of the matching resource bundle and <b>ANY</b> of its <b>PARENTS</b>.</p>
 
-	  <p>The parents of a resource bundle are the ones with the same name but fewer components. For example, the parents of <code>MyBundle_es_ES</code> are:</p>
+            <p>The parents of a resource bundle are the ones with the same name but fewer components. For example, the parents of <code>MyBundle_es_ES</code> are:</p>
 
-	  <p><code class="java hljs">MyBundle_es<br />
+            <p><code class="java hljs">MyBundle_es<br />
 	  MyBundle</code></p>
 
-	  <p>For example, let's assume the default locale <code>en_US</code>, using those and another property files (all in the default package) with the values:</p>
+            <p>For example, let's assume the default locale <code>en_US</code>, using those and another property files (all in the default package) with the values:</p>
 
-	  <p><code class="java hljs"><b>MyBundle_EN.properties</b><br />
+            <p><code class="java hljs"><b>MyBundle_EN.properties</b><br />
 	  s = buddy</code></p>
 
-	  <p><code class="java hljs"><b>MyBundle_es_ES.properties</b><br />
+            <p><code class="java hljs"><b>MyBundle_es_ES.properties</b><br />
 	  s = tío</code></p>
 
-	  <p><code class="java hljs"><b>MyBundle_es.properties</b><br />
+            <p><code class="java hljs"><b>MyBundle_es.properties</b><br />
 	  s = amigo</code></p>
 
-	  <p><code class="java hljs"><b>MyBundle.properties</b><br />
+            <p><code class="java hljs"><b>MyBundle.properties</b><br />
 	  hi = Hola</code></p>
 
-	  <p>We can create a resource bundle like this:</p>
+            <p>We can create a resource bundle like this:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Locale spain = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"es"</span>, <span class="hljs-string">"ES"</span>);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Locale spanish = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"es"</span>);<br />
@@ -290,40 +285,40 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>The output:</p>
+            <p>The output:</p>
 
-	  <p><code class="java hljs">Hola tío<br />
+            <p><code class="java hljs">Hola t&iacute;o<br />
 	  Hola amigo</code></p>
 
-	  <p>As you can see, each locale picks different values for key <code>s</code>, but they both use the same for <code>hi</code>&nbsp;since this key is defined in their parent.</p>
+            <p>As you can see, each locale picks different values for key <code>s</code>, but they both use the same for <code>hi</code>&nbsp;since this key is defined in their parent.</p>
 
-	  <p>If you don't specify a locale, the <code>ResourceBundle</code> class will use the default locale of your system:</p>
+            <p>If you don't specify a locale, the <code>ResourceBundle</code> class will use the default locale of your system:</p>
 
-	  <p><code class="java hljs">ResourceBundle rb = ResourceBundle.getBundle(<span class="hljs-string">"MyClass"</span>);<br />
+            <p><code class="java hljs">ResourceBundle rb = ResourceBundle.getBundle(<span class="hljs-string">"MyClass"</span>);<br />
 	  System.out.format(<span class="hljs-string">"%s %s\n"</span>,<br />
 	  &nbsp; &nbsp; rb.getString(<span class="hljs-string">"hi"</span>), rb.getString(<span class="hljs-string">"s"</span>));</code></p>
 
-	  <p>Since we assume that the default locale is <code>en_US</code>, the output is:</p>
+            <p>Since we assume that the default locale is <code>en_US</code>, the output is:</p>
 
-	  <p><code class="java hljs">Hola buddy</code></p>
+            <p><code class="java hljs">Hola buddy</code></p>
 
-	  <p>We can also get all the keys in a resource bundle with the method <code>keySet()</code>:</p>
+            <p>We can also get all the keys in a resource bundle with the method <code>keySet()</code>:</p>
 
-	  <p><code class="java hljs">ResourceBundle rb =<br />
+            <p><code class="java hljs">ResourceBundle rb =<br />
 	  &nbsp; &nbsp; ResourceBundle.getBundle(<span class="hljs-string">"MyBundle"</span>, spain);<br />
 	  Set&lt;String&gt; keys = rb.keySet();<br />
 	  keys.stream()<br />
 	  &nbsp; &nbsp; .forEach(key -&gt;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.format(<span class="hljs-string">"%s %s\n"</span>, key, rb.getString(key)));</code></p>
 
-	  <p>The output (notice it also prints the parent key):</p>
+            <p>The output (notice it also prints the parent key):</p>
 
-	  <p><code class="java hljs">hi Hola<br />
-	  s tío</code></p>
+            <p><code class="java hljs">hi Hola<br />
+	  s t&iacute;o</code></p>
 
-	  <p>If instead of using property files we were using classes, the program would look like this:</p>
+            <p>If instead of using property files we were using classes, the program would look like this:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">package</span> bundles;<br />
+            <p><code class="java hljs"><span class="hljs-keyword">package</span> bundles;<br />
 	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyBundle_EN</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ListResourceBundle</span></span> {<br />
 	  <span class="hljs-annotation">&nbsp; &nbsp; @Override</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; protected</span> Object[][] getContents() {<br />
@@ -379,11 +374,11 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>The only thing that changed in the <code>Test</code> class was the name of the bundle (we had to reference the package). This should not surprise you, after all, both <code>PropertyResourceBundle</code> and <code>ListResourceBundle</code> inherit from the same class.</p>
+            <p>The only thing that changed in the <code>Test</code> class was the name of the bundle (we had to reference the package). This should not surprise you, after all, both <code>PropertyResourceBundle</code> and <code>ListResourceBundle</code> inherit from the same class.</p>
 
-	  <p>Remember also, when using classes we can have values of types other than <code>String</code>, for example:</p>
+            <p>Remember also, when using classes we can have values of types other than <code>String</code>, for example:</p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyBundle</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ListResourceBundle</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyBundle</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">ListResourceBundle</span></span> {<br />
 	  <span class="hljs-annotation">&nbsp; &nbsp; @Override<br /></span><span class="hljs-keyword">&nbsp; &nbsp; protected</span> Object[][] getContents() {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Object[][] {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; { <span class="hljs-string">"hi"</span>, <span class="hljs-string">"Hola"</span> },<br />
@@ -392,67 +387,67 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>To get an object value, we use:</p>
+            <p>To get an object value, we use:</p>
 
-	  <p><code class="java hljs">Integer num = (Integer)rb.getObject(<span class="hljs-string">"number"</span>);</code></p>
+            <p><code class="java hljs">Integer num = (Integer)rb.getObject(<span class="hljs-string">"number"</span>);</code></p>
 
-	  <p>Instead of <code>rb.getString(key)</code>. In fact, this method is just a shortcut to:</p>
+            <p>Instead of <code>rb.getString(key)</code>. In fact, this method is just a shortcut to:</p>
 
-	  <p><code class="java hljs">String val = (String)rb.getObject(<span class="hljs-string">"hi"</span>);</code></p>
+            <p><code class="java hljs">String val = (String)rb.getObject(<span class="hljs-string">"hi"</span>);</code></p>
 
-	  
 
-	  <h2>Key Points</h2>
 
-	  <ul>
-		<li><i>Localization</i> (abbreviated as l10N because of the number of characters between the first and the last letter) is the mechanism by which an application is adapted to a particular language and region.</li>
+            <h2>Key Points</h2>
 
-		<li>The <code>java.util.Locale</code> class basically represents a language and a country and is the starting point for localization in Java.</li>
+            <ul>
+                <li><i>Localization</i> (abbreviated as l10N because of the number of characters between the first and the last letter) is the mechanism by which an application is adapted to a particular language and region.</li>
 
-		<li>You can get the default locale of your machine with: <code class="java hljs">Locale locale = Locale.getDefault();</code></li>
+                <li>The <code>java.util.Locale</code> class basically represents a language and a country and is the starting point for localization in Java.</li>
 
-		<li>You can also get all the locales supported by Java: <code class="java hljs">Locale [] locales = Locale.getAvailableLocales();</code></li>
+                <li>You can get the default locale of your machine with: <code class="java hljs">Locale locale = Locale.getDefault();</code></li>
 
-		<li>You can create a <code>Locale</code> object using a constructor:<br />
-		<code>Locale(String language)<br />
+                <li>You can also get all the locales supported by Java: <code class="java hljs">Locale [] locales = Locale.getAvailableLocales();</code></li>
+
+                <li>You can create a <code>Locale</code> object using a constructor:<br />
+                    <code>Locale(String language)<br />
 		Locale(String language, String country)<br />
 		Locale(String language, String country, String variant)</code></li>
 
-		<li>By using the <code>forLanguageTag(String)</code> factory method: <code class="java hljs">Locale german = Locale.forLanguageTag(<span class="hljs-string">"de"</span>);</code></li>
+                <li>By using the <code>forLanguageTag(String)</code> factory method: <code class="java hljs">Locale german = Locale.forLanguageTag(<span class="hljs-string">"de"</span>);</code></li>
 
-		<li>By using <code>Locale.Builder</code>: <code class="java hljs">Locale japan = <span class="hljs-keyword">new</span> Locale.Builder() .setRegion(<span class="hljs-string">"JP"</span>) .setLanguage(<span class="hljs-string">"jp"</span>) .build();</code></li>
+                <li>By using <code>Locale.Builder</code>: <code class="java hljs">Locale japan = <span class="hljs-keyword">new</span> Locale.Builder() .setRegion(<span class="hljs-string">"JP"</span>) .setLanguage(<span class="hljs-string">"jp"</span>) .build();</code></li>
 
-		<li>By using predefined constants for some common languages and countries, for example: <code>Locale.GERMAN<br />
+                <li>By using predefined constants for some common languages and countries, for example: <code>Locale.GERMAN<br />
 		Locale.KOREAN</code></li>
 
-		<li>Once you have a <code>Locale</code> object, you can change the locale of your program with the <code>setDefault(Locale)</code> method: <code class="java hljs">Locale.setDefault(<span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"en"</span>, <span class="hljs-string">"US"</span>));</code></li>
+                <li>Once you have a <code>Locale</code> object, you can change the locale of your program with the <code>setDefault(Locale)</code> method: <code class="java hljs">Locale.setDefault(<span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"en"</span>, <span class="hljs-string">"US"</span>));</code></li>
 
-		<li>Property files define strings in key/value pairs separated by lines.</li>
+                <li>Property files define strings in key/value pairs separated by lines.</li>
 
-		<li>To localize an application, we have Resource Bundles, which define a set of keys with localized values. Resource Bundles can be property files or classes.</li>
+                <li>To localize an application, we have Resource Bundles, which define a set of keys with localized values. Resource Bundles can be property files or classes.</li>
 
-		<li><b>java.util.PropertyResourceBundle</b>. Each locale is represented by a property file. Keys and values are of type String.</li>
+                <li><b>java.util.PropertyResourceBundle</b>. Each locale is represented by a property file. Keys and values are of type String.</li>
 
-		<li><b>java.util.ListResourceBundle</b>. Each locale is represented by a subclass of it that overrides the method <code>Object[][] getContents()</code>. The returned array represents the keys and values. Keys must be of type <code>String</code>, but values can be any object.</li>
+                <li><b>java.util.ListResourceBundle</b>. Each locale is represented by a subclass of it that overrides the method <code>Object[][] getContents()</code>. The returned array represents the keys and values. Keys must be of type <code>String</code>, but values can be any object.</li>
 
-		<li>To determine which bundle belongs to a particular locale, Java tries to find the most specific bundle that matches the properties of the locale.</li>
+                <li>To determine which bundle belongs to a particular locale, Java tries to find the most specific bundle that matches the properties of the locale.</li>
 
-		<li>If it cannot locate one, the last component of the name is dropped until it's just the name of the bundle.</li>
+                <li>If it cannot locate one, the last component of the name is dropped until it's just the name of the bundle.</li>
 
-		<li>If nothing is found, a <code>MissingBundleException</code> is thrown.</li>
+                <li>If nothing is found, a <code>MissingBundleException</code> is thrown.</li>
 
-		<li>If a class and a property file share the same name, Java gives priority to the class.</li>
+                <li>If a class and a property file share the same name, Java gives priority to the class.</li>
 
-		<li>You can use the keys of the matching resource bundle and <b>ANY</b> of its <b>PARENTS</b>. The parents of a resource bundle are the ones with the same name but fewer components.</li>
-	  </ul>
+                <li>You can use the keys of the matching resource bundle and <b>ANY</b> of its <b>PARENTS</b>. The parents of a resource bundle are the ones with the same name but fewer components.</li>
+            </ul>
 
-	  
 
-	  <h2>Self Test</h2>
 
-	  <p>1. Given:</p>
+            <h2>Self Test</h2>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_30_1</span></span> {<br />
+            <p>1. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_30_1</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Locale locale = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">""</span>, <span class="hljs-string">""</span>);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; ResourceBundle rb = ResourceBundle.getBundle(<span class="hljs-string">"Bundle1"</span>, locale);<br />
@@ -460,83 +455,65 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p><code><b>Bundle1.properties</b><br />
+            <p><code><b>Bundle1.properties</b><br />
 	  key1 = Hi</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>Hi</code><br />
-	  B. <code>null</code><br />
-	  C. Compilation fails<br />
-	  D. An exception occurs at runtime</p>
+            <p>What is the result?<br /> A. <code>Hi</code><br /> B. <code>null</code><br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
-	  
 
-	  <p>2. Which of the following are valid ways to create a locale?<br />
-	  A. <code>new Locale();</code><br />
-	  B. <code>Locale.Builder().setLanguage("de");</code><br />
-	  C. <code>new Locale.Builder().setRegion("DE").build();</code><br />
-	  D. <code>Locale.forRegionTag("it");</code></p>
 
-	  
+            <p>2. Which of the following are valid ways to create a locale?<br /> A. <code>new Locale();</code><br /> B. <code>Locale.Builder().setLanguage("de");</code><br /> C. <code>new Locale.Builder().setRegion("DE").build();</code><br /> D. <code>Locale.forRegionTag("it");</code></p>
 
-	  <p>3. Assuming a default locale <code>de_DE</code>, which of the following resource bundles will be loaded first with</p>
 
-	  <p><code class="java hljs">ResourceBundle rb = <span class="hljs-keyword">new</span> ResourceBundle(<span class="hljs-string">"MyBundle"</span>);</code></p>
 
-	  <p>A. <code>MyBundle.class</code><br />
-	  B. <code>MyBundle.properties</code><br />
-	  C. <code>MyBundle_de.class</code><br />
-	  D. <code>MyBundle_de.properties</code></p>
+            <p>3. Assuming a default locale <code>de_DE</code>, which of the following resource bundles will be loaded first with</p>
 
-	  
+            <p><code class="java hljs">ResourceBundle rb = <span class="hljs-keyword">new</span> ResourceBundle(<span class="hljs-string">"MyBundle"</span>);</code></p>
 
-	  <p>4. Given:</p>
+            <p>A. <code>MyBundle.class</code><br /> B. <code>MyBundle.properties</code><br /> C. <code>MyBundle_de.class</code><br /> D. <code>MyBundle_de.properties</code></p>
 
-	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_30_4</span></span> {<br />
+
+
+            <p>4. Given:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_30_4</span></span> {<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Locale locale = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"en"</span>, <span class="hljs-string">"CA"</span>);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(rb.getString(locale));<br />
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-	  <p>What is the result?<br />
-	  A. <code>en</code><br />
-	  B. <code>en_CA</code><br />
-	  C. <code>CA</code><br />
-	  D. <code>CA_en</code></p>
+            <p>What is the result?<br /> A. <code>en</code><br /> B. <code>en_CA</code><br /> C. <code>CA</code><br /> D. <code>CA_en</code></p>
 
-	  
 
-	  <p>5. Which of the following are valid ways to get a value given its key from a property file resource bundle <code>rb</code>?<br />
-	  A. <code>rb.getValue("key");</code><br />
-	  B. <code>rb.getProperty("key");</code><br />
-	  C. <code>rb.getObject("key");</code><br />
-	  D. <code>rb.get("key");</code></p>
 
-  
+            <p>5. Which of the following are valid ways to get a value given its key from a property file resource bundle <code>rb</code>?<br /> A. <code>rb.getValue("key");</code><br /> B. <code>rb.getProperty("key");</code><br /> C. <code>rb.getObject("key");</code><br /> D. <code>rb.get("key");</code></p>
 
-  
-    
-		<div class="answers">
-			<a href="ch30a.html" target="_blank">Open answers page</a>
-		</div>
 
-		<div class="book-info"></div>
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch29.html">29. JDBC API</a>
-			</div>
-			<div class="next">
-				<a href="ch31.html">31. From Java 6 to Java 8</a>
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+
+
+            <div class="answers">
+                <a href="ch30a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch29.html">29. JDBC API</a>
+                </div>
+                <div class="next">
+                    <a href="ch31.html">31. From Java 6 to Java 8</a>
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>
