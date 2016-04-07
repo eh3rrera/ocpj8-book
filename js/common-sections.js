@@ -24,11 +24,11 @@ $(document).ready(function(){
 				<li><a tabindex="-1" href="ch13.html">13. Iterating and Filtering Collections</a></li> \
 				<li><a tabindex="-1" href="ch14.html">14. Optional Class</a></li> \
 				<li><a tabindex="-1" href="ch15.html">15. Data Search</a></li> \
+				<li><a tabindex="-1" href="ch16.html">16. Stream Operations on Collections</a></li> \
 			  </ul> \
 			</li> \
 			<li class="column-menu"> \
 			  <ul> \
-				<li><a tabindex="-1" href="ch16.html">16. Stream Operations on Collections</a></li> \
 				<li><a tabindex="-1" href="ch17.html">17. Peeking, Mapping, Reducing and Collecting</a></li> \
 				<li><a tabindex="-1" href="ch18.html">18. Parallel Streams</a></li> \
 				<li><a tabindex="-1" href="ch19.html">19. Exceptions</a></li> \
@@ -43,6 +43,8 @@ $(document).ready(function(){
 				<li><a tabindex="-1" href="ch28.html">28. Fork/Join Framework</a></li> \
 				<li><a tabindex="-1" href="ch29.html">29. JDBC API</a></li> \
 				<li><a tabindex="-1" href="ch30.html">30. Localization</a></li> \
+				<li><a tabindex="-1" href="upgrade.html">Upgrade from Java 6/7</a></li> \
+				<li><a tabindex="-1" href="ch31.html">A1. From Java 6 to Java 8</a></li> \
 			  </ul> \
 			</li> \
 		  </ul> \
@@ -68,11 +70,11 @@ $(document).ready(function(){
 				<li><a tabindex="-1" href="ch13.html">13. Iterating and Filtering Collections</a></li> \
 				<li><a tabindex="-1" href="ch14.html">14. Optional Class</a></li> \
 				<li><a tabindex="-1" href="ch15.html">15. Data Search</a></li> \
+				<li><a tabindex="-1" href="ch16.html">16. Stream Operations on Collections</a></li> \
 			</ul> \
 		  </li> \
 		  <li class="column-menu"> \
 			<ul> \
-				<li><a tabindex="-1" href="ch16.html">16. Stream Operations on Collections</a></li> \
 				<li><a tabindex="-1" href="ch17.html">17. Peeking, Mapping, Reducing and Collecting</a></li> \
 				<li><a tabindex="-1" href="ch18.html">18. Parallel Streams</a></li> \
 				<li><a tabindex="-1" href="ch19.html">19. Exceptions</a></li> \
@@ -87,6 +89,8 @@ $(document).ready(function(){
 				<li><a tabindex="-1" href="ch28.html">28. Fork/Join Framework</a></li> \
 				<li><a tabindex="-1" href="ch29.html">29. JDBC API</a></li> \
 				<li><a tabindex="-1" href="ch30.html">30. Localization</a></li> \
+				<li><a tabindex="-1" href="upgrade.html">Upgrade from Java 6/7</a></li> \
+				<li><a tabindex="-1" href="ch31.html">A1. From Java 6 to Java 8</a></li> \
 			</ul> \
 		  </li> \
 		</ul> \
@@ -95,7 +99,7 @@ $(document).ready(function(){
 	var buy_info = '<p><a href="#" target="_blank">Buying the print/kindle version from Amazon</a></p> \
 		<p><a href="https://leanpub.com/java8-programmer-ii-study-guide/" target="_blank">Buying the PDF/EPUB/MOBI version from Leanpub</a></p>';
 	  
-	var problem_info = '<p>Do you have a problem?</p> \
+	var problem_info = '<p>Do you have a problem or something to say?</p> \
 		<p><a href="https://github.com/eh3rrera/ocpj8-book/issues" target="_blank">Report an issue with the book</a></p> \
 		<p><a href="http://eherrera.net/" target="_blank">Contact me</a></p>';
 	  
