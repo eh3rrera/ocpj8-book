@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter SEVENTEEN</i><br />
+			  Peeking, Mapping, Reducing and Collecting</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Develop code to extract data from an object using peek() and map() methods including primitive versions of the map() method.<br /></i><i>Save results to a collection using the collect method and group/partition data using the Collectors class.<br /></i><i>Use of merge() and flatMap() methods of the Stream API.</i></p>
+			  
+			</div>
+		</div>
+	</div>
+
+  
+  <div class="container">
+  
+	<div class="column">
+
+	  <h2>Answers</h2>
+
+	  <p><b>1. The correct answer is B.</b><br />
+	  <code>partitioningBy()</code> always returns a map with two keys, even if one key contains an empty list. Since the predicate returns <code>true</code> for all the elements of the stream, they are placed on the list of the <code>true</code> key.</p>
+
+	  <p><br /></p>
+
+	  <p><b>2. The correct answer is D.</b><br />
+	  Option A is not equivalent because <code>partitioningBy()</code> returns a map with a <code>Boolean</code> as a key.<br />
+	  Option B doesn't compile, <code>partitioningBy(</code>) takes a predicate as an argument (a lambda expression that must return a <code>boolean</code>).<br />
+	  Option C is not equivalent because it will create a map with keys of type <code>Boolean</code>.<br />
+	  Option D is equivalent because by default, <code>groupingBy()</code> creates a map whose values are of type <code>List&lt;T&gt;</code>.</p>
+
+	  <p><br /></p>
+
+	  <p><b>3. The correct answer is D.</b><br />
+	  The program prints something like this:<br />
+	  <code>[Ljava.lang.String;@87aac27</code><br />
+	  The mapping function converts each element of the stream to an array of strings.</p>
+
+	  <p>Then, limit(<code>1</code>) returns the first element of the stream, an array containing <code>["a", "a", "a", "a", "a"]</code>, which is passed to <code>System.out.print()</code>.</p>
+
+	  <p><br /></p>
+
+	  <p><b>4. The correct answer is A.</b><br />
+	  For each element of the stream, <code>flatMap()</code> returns a stream with the element three times repeated. The streams are merged into one and this is converted to a <code>List</code>, which is printed.</p>
+
+	  <p><br /></p>
+
+	  <p><b>5. The correct answer is B.</b><br />
+	  Option A doesn't compile. <code>reduce()</code> takes a <code>BinaryOperator</code>, not a <code>Predicate</code>.<br />
+	  Option B is the right way to implement <code>OptionalInt min()</code> with a reduce operation.<br />
+	  Option C is incorrect because it doesn't return an <code>Optional</code>.<br />
+	  Option D doesn't compile. <code>minBy()</code> takes a <code>Comparator</code>.</p>
+
+	  <p><br /></p>
+
+	  <p><b>6. The correct answer is D.</b><br />
+	  Option A is incorrect, it must return an <code>Optional</code>.<br />
+	  Option B is incorrect, it must return just <code>T</code>.<br />
+	  Option C is incorrect, it's missing the first argument, <code>U</code> identity.</p>
+
+	  <p><br /></p>
+
+	  <p><b>7. The correct answer is C.</b><br />
+	  The type of the resulting map is:</p>
+
+	  <p><code class="java hljs">TreeMap&lt;Integer, Map&lt;Boolean, List&lt;Integer&gt;&gt;&gt;</code></p>
+
+	  <p>Elements are collected in a <code>TreeMap</code>, which has a natural order&nbsp;by default so we can discard Option A.</p>
+
+	  <p>Keys of the map will be the remainder after dividing by <code>10</code> each element: <code>6</code>, <code>4</code>, <code>1</code>, <code>1</code>, <code>8</code>, <code>8</code>, <code>6</code>. Values with the same key are appended to a <code>List</code>&nbsp;so we can discard Option B because it is missing a <code>98</code>.</p>
+
+	  <p>A downstream collector, <code>partitioningBy()</code>, partitions each value of the map into two groups, depending on whether the individual elements are greater than <code>5</code> or not, so Option B is also discarded.</p>
+
+	  <p><br /></p>
+	  
+  
+	</div>
+  </div>
+		
+  <footer></footer>
+  
+</body>
+</html>

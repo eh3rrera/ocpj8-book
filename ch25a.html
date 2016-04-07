@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter TWENTY-FIVE</i><br />
+			  Files and Streams</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Use Stream API with NIO.2.</i><br /></p>
+			  
+			</div>
+		</div>
+	</div>
+
+  
+  <div class="container">
+  
+	<div class="column">
+
+	  <h2>Answers</h2>
+
+	  <p><b>1. The correct answer is A.</b><br />
+	  A value of zero for the <code>maxDepth</code> argument means that only the starting directory is visited (no files or subdirectories).</p>
+
+	  <p><br /></p>
+
+	  <p><b>2. The correct answer is D.</b><br />
+	  Option A is false. <code>Files.find()</code> doesn't have a default subdirectory depth. This is passed as an argument to the method.<br />
+	  Option B is false. <code>Files.find()</code> follows symbolic links only if <code>FileVisitOption.FOLLOW_LINKS</code> is passed as an argument.<br />
+	  Option C is false. <code>Files.walk()</code> follows symbolic links only if <code>FileVisitOption.FOLLOW_LINKS</code> is passed as an argument.<br />
+	  Option D is true. <code>Files.walk()</code> traverses subdirectories recursively.</p>
+
+	  <p><br /></p>
+
+	  <p><b>3. The correct answer is D.</b><br />
+	  Option A is not equivalent. <code>Files.list()</code> doesn't traverse subdirectories recursively.<br />
+	  Option B is not equivalent. <code>Files.find()</code> is missing the max depth argument.<br />
+	  Option C is not equivalent. The last argument must be a <code>BiPredicate</code>.</p>
+
+	  <p><br /></p>
+
+	  <p><b>4. The correct answer is C.</b><br />
+	  If the file doesn't exist, <code>Files.line(Path)</code> throws an <code>IOException</code> (a <code>java.nio.file.NoSuchFileException</code>) when the method is called, before the stream is created.</p>
+
+	  <p><br /></p>
+
+	  
+  
+	</div>
+  </div>
+		
+  <footer></footer>
+  
+</body>
+</html>

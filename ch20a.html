@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter TWENTY</i><br />
+			  Assertions</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Test invariants by using assertions.</i><br /></p>
+			  
+			</div>
+		</div>
+	</div>
+
+  
+  <div class="container">
+  
+	<div class="column">
+
+	  <h2>Answers</h2>
+
+	  <p><b>1. The correct answer is C.</b><br />
+	  The <code>++</code> operator increments the value of <code>x</code> to <code>1</code> before the condition is evaluated. Note that changing values of variables or objects in assertions is discouraged since there's no guarantee that assertions would be enabled when the program runs.</p>
+
+	  <p><br /></p>
+
+	  <p><b>2. The correct answer is A.</b><br />
+	  You can disable assertion at the command-line. The other statements are false.</p>
+
+	  <p><br /></p>
+
+	  <p><b>3. The correct answer is B.</b><br />
+	  The command:<br />
+	  <code class="hljs">java -esa -ea:com.example MainClass</code><br />
+	  Enables assertions in system classes and classes in the <code>com.example</code> package.</p>
+
+	  <p><br /></p>
+
+	  <p><b>4. The correct answer is D.</b><br />
+	  There's nothing wrong with the program, the method <code>isValid()</code> returns <code>false</code>, which makes the program to throw an <code>AssertionError</code> at runtime.</p>
+
+	  <p><br /></p>
+
+	  <p><b>5. The correct answer is C.</b><br />
+	  <code class="hljs">assert false : "Assertion is false"</code><br />
+	  It's equivalent to:<br />
+	  <code class="hljs">if(false) throw new AssertionError("Asssertion is false");</code></p>
+
+	  <p><br /></p>
+  
+	</div>
+  </div>
+		
+  <footer></footer>
+  
+</body>
+</html>

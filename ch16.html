@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter SIXTEEN</i><br />
+			  Stream Operations on Collections</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Develop code that uses Stream data methods and calculation methods.<br /></i><i>Use java.util.Comparator and java.lang.Comparable interfaces.<br /></i><i>Sort a collection using Stream API.</i></p>
+			  
+			</div>
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>Comparator and Comparable</h2>
+
+	  <p>To sort arrays or collections, Java provides two very similar interfaces:</p>
+
+	  <ul>
+		<li><b>java.util.Comparator</b><br />
+		<code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Comparator</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
+		<span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; int</span> <span class="hljs-title">compare</span><span class="hljs-params">(T obj1, T obj2)</span></span>;<br />
+		<span class="hljs-comment"><br />
+		&nbsp; &nbsp; // Other default and static methods ...</span><br />
+		}</code></li>
+
+		<li><b>java.lang.Comparable</b><br />
+		<code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Comparable</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
+		<span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; int</span> <span class="hljs-title">compareTo</span><span class="hljs-params">(T obj)</span></span>;<br />
+		}</code></li>
+	  </ul>
+
+	  <p>The difference is that <code>java.util.Comparator</code> is implemented by a class you use to sort <b>ANOTHER</b> class' objects while <code>java.lang.Comparable</code> is implemented by the <b>SAME</b> object you want to sort.</p>
+
+	  <p>With <code>Comparator</code>, you make an object to compare two objects of another type to sort them; that's why you take two parameters, and the method is called compare (those two objects).</p>
+
+	  <p>With <code>Comparable</code>, you make an object comparable to another object of the same type to sort them, that's why you only take <b>ONE</b> parameter and the method is called <code>compareTo</code> (that other object). Since this interface is easier to grasp, let's start with it.</p>
+
+	  <h2>java.lang.Comparable</h2>
+
+	  <p>The method to implement is:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">compareTo</span><span class="hljs-params">(T obj)</span></span>;</code></p>
+
+	  <p>As you can see, it returns an int. Here are its rules:</p>
+
+	  <ul>
+		<li>When <b>ZERO</b> is returned, it means that the object is <b>EQUAL</b> to the argument.</li>
+
+		<li>When a number <b>GREATER</b> than zero is returned, it means that the object is <b>GREATER</b> than the argument.</li>
+
+		<li>When a number <b>LESS</b> than zero is returned, it means that the object is <b>LESS</b> than the argument.</li>
+	  </ul>
+
+	  <p>Many classes of Java (like <code>BigDecimal</code>, <code>BigInteger</code>, wrappers like <code>Integer</code>, <code>String</code>, etc.) implement this interface with a natural order (like <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code> or <code>A</code>, <code>B</code>, <code>C</code>, <code>a</code>, <code>b</code>, <code>c</code>).</p>
+
+	  <p>Since this method can be used to test if an object is equal to another one, it's recommended that the implementation is consistent with the <code>equals(Object)</code> method (if the <code>compareTo</code> method returns <code>0</code>, the equals method must return <code>true</code>).</p>
+
+	  <p>Once a object implements this interface, it can be sorted by <code>Collections.sort()</code> or <code>Arrays.sort()</code>. Also, it can be used as key in a sorted map (like <code>TreeMap</code>) or in a sorted set (like <code>TreeSet</code>).</p>
+
+	  <p>The following is an example of how an object can implement <code>Comparable</code>.</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Comparable</span>&lt;<span class="hljs-title">Computer</span>&gt;</span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> String brand;<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">int</span> id;<br />
+	  <span class="hljs-function"><span class="hljs-keyword"><br />
+	  &nbsp; &nbsp; public</span> <span class="hljs-title">Computer</span><span class="hljs-params">(String brand, <span class="hljs-keyword">int</span> id)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; this</span>.brand = brand;<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; this</span>.id = id;<br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-comment"><br />
+	  &nbsp; &nbsp; // Let's compare first by brand and then by id</span><br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compareTo</span><span class="hljs-params">(Computer other)</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Reusing the implementation of String</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; int</span> result = <span class="hljs-keyword">this</span>.brand.compareTo(other.brand);<br />
+	  <br />
+	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-comment">// If the objects are equal, compare by id</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; if</span>(result == <span class="hljs-number">0</span>) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Let's do the comparison "manually"</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // instead of using Integer.compareTo()</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if</span>(<span class="hljs-keyword">this</span>.id &gt; other.id) result = <span class="hljs-number">1</span>;<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else</span> <span class="hljs-keyword">if</span>( <span class="hljs-keyword">this</span>.id &lt; other.id) result = -<span class="hljs-number">1</span>;<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // else result = 0;</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; return</span> result;<br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-comment"><br />
+	  &nbsp; &nbsp; // equals and compareTo must be consistent</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // to avoid errors in some cases</span><br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object other)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; if</span> (<span class="hljs-keyword">this</span> == other) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; if</span> (!(other <span class="hljs-keyword">instanceof</span> Computer)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; return</span> <span class="hljs-keyword">this</span>.brand.equals(other)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &amp;&amp; <span class="hljs-keyword">this</span>.id == ((Computer)other).id;<br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword"><br />
+	  &nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Computer c1 = <span class="hljs-keyword">new</span> Computer(<span class="hljs-string">"Lenovo"</span>, <span class="hljs-number">1</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Computer c2 = <span class="hljs-keyword">new</span> Computer(<span class="hljs-string">"Apple"</span>, <span class="hljs-number">2</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Computer c3 = <span class="hljs-keyword">new</span> Computer(<span class="hljs-string">"Dell"</span>, <span class="hljs-number">3</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Computer c4 = <span class="hljs-keyword">new</span> Computer(<span class="hljs-string">"Lenovo"</span>, <span class="hljs-number">2</span>);<br />
+	  <span class="hljs-comment"><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; // Some comparisons</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(c1.compareTo(c1)); <span class="hljs-comment">// c1 == c1<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; System.out.println(c1.compareTo(c2)); <span class="hljs-comment">// c1 &gt; c2<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; System.out.println(c2.compareTo(c1)); <span class="hljs-comment">// c2 &lt; c1<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; System.out.println(c1.compareTo(c4)); <span class="hljs-comment">// c1 &lt; c2<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; System.out.println(c1.equals(c4)); <span class="hljs-comment">// c1 != c2</span><br />
+	  <span class="hljs-comment"><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; // Creating a list and sorting it</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; List&lt;Computer&gt; list = Arrays.asList(c1, c2, c3, c4);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Collections.sort(list);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; list.forEach(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;c -&gt; System.out.format(<span class="hljs-string">"%s-%d\n"</span>,c.brand,c.id)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; );<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>When you execute this program, this is the output:</p>
+
+	  <p><code class="java hljs">0<br />
+	  11<br />
+	  -11<br />
+	  -1<br />
+	  false<br />
+	  Apple-2<br />
+	  Dell-3<br />
+	  Lenovo-1<br />
+	  Lenovo-2<br /></code></p>
+
+	  <h2>java.util.Comparator</h2>
+
+	  <p>The method to implement is:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(T o1, T o2)</span></span>;</code></p>
+
+	  <p>The rules of the returned value are similar than <code>Comparable</code>'s:</p>
+
+	  <ul>
+		<li>When <b>ZERO</b> is returned, it means that the <b>FIRST</b> argument is <b>EQUAL</b> to the <b>SECOND</b> argument.</li>
+
+		<li>When a number <b>GREATER</b> than zero is returned, it means that the <b>FIRST</b> argument is <b>GREATER</b> than the <b>SECOND</b> argument.</li>
+
+		<li>When a number <b>LESS</b> than zero is returned, it means that the <b>FIRST</b> argument is <b>LESS</b> than the <b>SECOND</b> argument.</li>
+	  </ul>
+
+	  <p>One advantage of using a <code>Comparator</code> instead of <code>Comparable</code>&nbsp;is that you can have many <code>Comparator</code>s to sort the same object in different ways.</p>
+
+	  <p>For instance, we can take the <code>Computer</code> class of the previous example to create a <code>Comparator</code> that sorts first by id and then by brand, and since the rules of the returned value are practically the same as <code>Comparable</code>'s, we can use the <code>compareTo</code> method:</p>
+
+	  <p><code class="java hljs">Comparator&lt;Computer&gt; sortById =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; new</span> Comparator&lt;Computer&gt;() {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Computer c1, Computer c2)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int</span> result = Integer.compare(c1.id, c2.id);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return</span> result == <span class="hljs-number">0</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ? c1.brand.compareTo(c2.brand) : result;<br />
+	  &nbsp; &nbsp; }<br />
+	  };</code></p>
+
+	  <p>Also, <code>Integer.compare(x, y)</code> is equivalent to:</p>
+
+	  <p><code class="java hljs">Integer.valueOf(x).compareTo(Integer.valueOf(y))</code></p>
+
+	  <p>Luckily, <code>Comparator</code> is a functional interface, so we can use a lambda expression instead of an inner class:</p>
+
+	  <p><code class="java hljs">Comparator&lt;Computer&gt; sortById = (c1, c2) -&gt; {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; int</span> result = Integer.compare(c1.id, c2.id);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; return</span> result == <span class="hljs-number">0</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp;? c1.brand.compareTo(c2.brand) : result;<br />
+	  }</code></p>
+
+	  <p>So, when we use it in the list of the previous example:</p>
+
+	  <p><code class="java hljs">List&lt;Computer&gt; list = Arrays.asList(c1, c2, c3, c4);<br />
+	  Collections.sort(list, sortById);<br />
+	  list.forEach(<br />
+	  &nbsp; &nbsp;c -&gt; System.out.format(<span class="hljs-string">"%d-%s\n"</span>,c.id,c.brand)<br />
+	  );</code></p>
+
+	  <p>The output is:</p>
+
+	  <p><code class="java hljs">1-Lenovo<br />
+	  2-Apple<br />
+	  2-Lenovo<br />
+	  3-Dell</code></p>
+
+	  <p>In case you're wondering, <code>Comparable</code> is also considered a functional interface, but since <code>Comparable</code> is expected to be implemented by the object being compared, you'll almost never use it as a lambda expression.</p>
+
+	  <p>In Java 8, with the introduction of default and static methods in interfaces, we have some useful methods on <code>Comparator</code> to simplify our code like:</p>
+
+	  <p><code class="java hljs">Comparator&lt;T&gt;<br />
+	  &nbsp; &nbsp;Comparator.comparing(Function&lt;? <span class="hljs-keyword">super</span> T, ? extends U&gt;)<br />
+	  Comparator&lt;T&gt;<br />
+	  &nbsp; &nbsp;Comparator.comparingInt(ToIntFunction&lt;? <span class="hljs-keyword">super</span> T&gt;)<br />
+	  Comparator&lt;T&gt;<br />
+	  &nbsp; &nbsp;Comparator.comparingLong(ToLongFunction&lt;? <span class="hljs-keyword">super</span> T&gt;)<br />
+	  Comparator&lt;T&gt;<br />
+	  &nbsp; &nbsp;Comparator.comparingDouble(ToDoubleFunction&lt;? <span class="hljs-keyword">super</span> T&gt;)</code></p>
+
+	  <p>That takes a <code>Function</code> (a lambda expression) that returns the value of a property of the object that will be used to create a <code>Comparator</code> using the value returned by <code>comparedTo</code> (also notice the versions when you're working with primitives).</p>
+
+	  <p>For example:</p>
+
+	  <p><code class="java hljs">Comparator&lt;Computer&gt; sortById =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Comparator.comparing(c -&gt; c.id);</code></p>
+
+	  <p>Or:</p>
+
+	  <p><code class="java hljs">Comparator&lt;Computer&gt; sortById =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Comparator.comparingInt(c -&gt; c.id);</code></p>
+
+	  <p>They are equivalent to:</p>
+
+	  <p><code class="java hljs">Comparator&lt;Computer&gt; sortById = <span class="hljs-keyword">new</span> Comparator&lt;Computer&gt;() {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(Computer c1, Computer c2)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; return</span> Integer.valueOf(c1.id)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .compareTo(Integer.valueOf(c2.id));<br />
+	  &nbsp; &nbsp; }<br />
+	  };</code></p>
+
+	  <p>Another useful method is <code>thenComparing</code>&nbsp;that chains two <code>Comparators</code> (notice that this is not a <code>static</code> method):</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">Comparator&lt;T&gt;<br />
+	  <span class="hljs-title">&nbsp; &nbsp; thenComparing</span><span class="hljs-params">(Comparator&lt;? <span class="hljs-keyword">super</span> T&gt;)</span><br />
+	  Comparator&lt;T&gt;<br />
+	  <span class="hljs-title">&nbsp; &nbsp; thenComparing</span><span class="hljs-params">(Function&lt;? <span class="hljs-keyword">super</span> T, ? extends U&gt;)</span><br />
+	  Comparator&lt;T&gt;<br />
+	  <span class="hljs-title">&nbsp; &nbsp; thenComparingInt</span><span class="hljs-params">(ToIntFunction&lt;? <span class="hljs-keyword">super</span> T&gt;)</span><br />
+	  Comparator&lt;T&gt;<br />
+	  <span class="hljs-title">&nbsp; &nbsp; thenComparingLong</span><span class="hljs-params">(ToLongFunction&lt;? <span class="hljs-keyword">super</span> T&gt;)</span><br />
+	  Comparator&lt;T&gt;<br />
+	  <span class="hljs-title">&nbsp; &nbsp; thenComparingDouble</span><span class="hljs-params">(ToDoubleFunction&lt;? <span class="hljs-keyword">super</span> T&gt;)</span></span></code></p>
+
+	  <p>This way, we can simplify the code to create a <code>Comparator</code> to sort by id and then by brand by using:</p>
+
+	  <p><code class="java hljs">Comparator&lt;Computer&gt; sortByIdThenByBrand =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Comparator.comparing((Computer c) -&gt; c.id)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .thenComparing(c -&gt; c.brand);</code></p>
+
+	  <p>Finally, the default method <code>reverse()</code> will create a <code>Comparator</code> that reverses the order of the original <code>Comparator</code>:</p>
+
+	  <p><code class="java hljs">List&lt;Computer&gt; list = Arrays.asList(c1, c2, c3, c4);<br />
+	  Collections.sort(list,<br />
+	  &nbsp; &nbsp; Comparator.comparing((Computer c) -&gt; c.id).reversed());<br />
+	  list.forEach(<br />
+	  &nbsp; &nbsp; c -&gt; System.out.format(<span class="hljs-string">"%d-%s\n"</span>,c.id,c.brand));</code></p>
+
+	  <p>The output:</p>
+
+	  <p><code class="java hljs">3-Dell<br />
+	  2-Apple<br />
+	  2-Lenovo<br />
+	  1-Lenovo</code></p>
+
+	  <h2>Sorting a Stream</h2>
+
+	  <p>Sorting a stream is simple. The method</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">sorted</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p>Returns a stream with the elements sorted according to their natural order. For example:</p>
+
+	  <p><code class="java hljs">List&lt;Integer&gt; list = Arrays.asList(<span class="hljs-number">57</span>, <span class="hljs-number">38</span>, <span class="hljs-number">37</span>, <span class="hljs-number">54</span>, <span class="hljs-number">2</span>);<br />
+	  list.stream()<br />
+	  &nbsp; &nbsp; .sorted()<br />
+	  &nbsp; &nbsp; .forEach(System.out::println);</code></p>
+
+	  <p>Will print:</p>
+
+	  <p><code class="java hljs">2<br />
+	  37<br />
+	  38<br />
+	  54<br />
+	  57</code></p>
+
+	  <p>The only requirement is that the elements of the stream implement <code>java.lang.Comparable</code> (that way, they are sorted in natural order). Otherwise, a <code>ClassCastException</code> may be thrown.</p>
+
+	  <p>If we want to sort using a different order, there's a version of this method that takes a <code>java.util.Comparator</code> (this version is not available for primitive stream like <code>IntStream</code>):</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">Stream&lt;T&gt; <span class="hljs-title">sorted</span><span class="hljs-params">(Comparator&lt;? <span class="hljs-keyword">super</span> T&gt; comparator)</span></span></code></p>
+
+	  <p>For example:</p>
+
+	  <p><code class="java hljs">List&lt;String&gt; strings =<br />
+	  &nbsp; &nbsp; Arrays.asList(<span class="hljs-string">"Stream"</span>,<span class="hljs-string">"Operations"</span>,<span class="hljs-string">"on"</span>,<span class="hljs-string">"Collections"</span>);<br />
+	  strings.stream()<br />
+	  &nbsp; &nbsp; .sorted( (s1, s2) -&gt; s2.length() - s1.length() )<br />
+	  &nbsp; &nbsp; .forEach(System.out::println);</code></p>
+
+	  <p>Or:</p>
+
+	  <p><code class="java hljs">List&lt;String&gt; strings =<br />
+	  &nbsp; &nbsp; Arrays.asList(<span class="hljs-string">"Stream"</span>,<span class="hljs-string">"Operations"</span>,<span class="hljs-string">"on"</span>,<span class="hljs-string">"Collections"</span>);<br />
+	  strings.stream()<br />
+	  &nbsp; &nbsp; .sorted( Comparator.comparing(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (String s) -&gt; s.length()).reversed() )<br />
+	  &nbsp; &nbsp; .forEach(System.out::println);</code></p>
+
+	  <p>Both will print:</p>
+
+	  <p><code class="java hljs">Collections<br />
+	  Operations<br />
+	  Stream<br />
+	  on</code></p>
+
+	  <p>The first snippet of code will return a positive value if the first string length is less than the second's, and a negative value otherwise, to sort the string in descending order.</p>
+
+	  <p>The second snippet of code will create a <code>Comparator</code> with the length of the string in natural order (ascending order) and then reverse that order.</p>
+
+	  <h2>Data and Calculation Methods</h2>
+
+	  <p>The <code>Stream</code> interface provides the following data and calculation methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">count</span><span class="hljs-params">()</span><br />
+	  Optional&lt;T&gt; <span class="hljs-title">max</span><span class="hljs-params">(Comparator&lt;? <span class="hljs-keyword">super</span> T&gt; comparator)</span><br />
+	  Optional&lt;T&gt; <span class="hljs-title">min</span><span class="hljs-params">(Comparator&lt;? <span class="hljs-keyword">super</span> T&gt; comparator)</span></span></code></p>
+
+	  <p>And in the case of the primitive versions of the <code>Stream</code> interface, we have the following methods:</p>
+
+	  <p><b>IntStream</b></p>
+
+	  <p><code class="java hljs"><span class="hljs-function">OptionalDouble <span class="hljs-title">average</span><span class="hljs-params">()<br /></span><span class="hljs-keyword">long</span>&nbsp;<span class="hljs-title">count</span><span class="hljs-params">()</span><br />
+	  OptionalInt <span class="hljs-title">max</span><span class="hljs-params">()</span><br />
+	  OptionalInt <span class="hljs-title">min</span><span class="hljs-params">()</span><br />
+	  <span class="hljs-keyword">int</span> <span class="hljs-title">sum</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p><b>LongStream</b></p>
+
+	  <p><code class="java hljs"><span class="hljs-function">OptionalDouble <span class="hljs-title">average</span><span class="hljs-params">()<br /></span><span class="hljs-keyword">long</span>&nbsp;<span class="hljs-title">count</span><span class="hljs-params">()</span><br />
+	  OptionalLong <span class="hljs-title">max</span><span class="hljs-params">()</span><br />
+	  OptionalLong <span class="hljs-title">min</span><span class="hljs-params">()</span><br />
+	  <span class="hljs-keyword">long</span> <span class="hljs-title">sum</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p><b>DoubleStream</b></p>
+
+	  <p><code class="java hljs"><span class="hljs-function">OptionalDouble <span class="hljs-title">average</span><span class="hljs-params">()<br /></span><span class="hljs-keyword">long</span>&nbsp;<span class="hljs-title">count</span><span class="hljs-params">()</span><br />
+	  OptionalDobule <span class="hljs-title">max</span><span class="hljs-params">()</span><br />
+	  OptionalDouble <span class="hljs-title">min</span><span class="hljs-params">()</span><br />
+	  <span class="hljs-keyword">double</span> <span class="hljs-title">sum</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p><code>count()</code> returns the number of elements in the stream or zero if the stream is empty:</p>
+
+	  <p><code class="java hljs">List&lt;Integer&gt; list = Arrays.asList(<span class="hljs-number">57</span>, <span class="hljs-number">38</span>, <span class="hljs-number">37</span>, <span class="hljs-number">54</span>, <span class="hljs-number">2</span>);<br />
+	  System.out.println(list.stream().count()); <span class="hljs-comment">// 5</span></code></p>
+
+	  <p><code>min()</code> returns the minimum value in the stream wrapped in an <code>Optional</code> or an empty one if the stream is empty.</p>
+
+	  <p><code>max()</code> returns the maximum value in the stream wrapped in an <code>Optional</code> or an empty one if the stream is empty.</p>
+
+	  <p>When we talk about primitives, is easy to know which the minimum or maximum value is. But when we are talking about objects (of any kind), Java needs to know how to compare them to know which one is the maximum and the minimum. That's why the <code>Stream</code> interface needs a <code>Comparator</code> for <code>max()</code> and <code>min()</code>:</p>
+
+	  <p><code class="java hljs">List&lt;String&gt; strings =<br />
+	  &nbsp; &nbsp; Arrays.asList(<span class="hljs-string">"Stream"</span>,<span class="hljs-string">"Operations"</span>,<span class="hljs-string">"on"</span>,<span class="hljs-string">"Collections"</span>);<br />
+	  strings.stream()<br />
+	  &nbsp; &nbsp; .min( Comparator.comparing(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(String s) -&gt; s.length())<br />
+	  &nbsp; &nbsp; ).ifPresent(System.out::println); <span class="hljs-comment">// on</span></code></p>
+
+	  <p><code>sum()</code> returns the sum of the elements in the stream or zero if the stream is empty:</p>
+
+	  <p><code class="java hljs">System.out.println(<br />
+	  &nbsp; &nbsp; IntStream.of(<span class="hljs-number">28</span>,<span class="hljs-number">4</span>,<span class="hljs-number">91</span>,<span class="hljs-number">30</span>).sum()<br />
+	  ); <span class="hljs-comment">// 153</span></code></p>
+
+	  <p><code>average()</code> returns the average of the elements in the stream wrapped in an&nbsp;<code>OptionalDouble</code> or an empty one if the stream is empty:</p>
+
+	  <p><code class="java hljs">System.out.println(<br />
+	  &nbsp; &nbsp; IntStream.of(<span class="hljs-number">28</span>,<span class="hljs-number">4</span>,<span class="hljs-number">91</span>,<span class="hljs-number">30</span>).average()<br />
+	  ); <span class="hljs-comment">// 38.25</span></code></p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li><code>java.util.Comparator</code> is implemented by a class you use to sort <b>ANOTHER</b> class' objects. <code>java.lang.Comparable</code> is implemented by the <b>SAME</b> object you want to sort.</li>
+
+		<li>The main methods of both interfaces return an <code>int</code>. Their rules are very similar:
+
+		  <ul>
+			<li>When <b>ZERO</b> is returned, it means that the object (or first argument) is <b>EQUAL</b> to the (second) argument.</li>
+
+			<li>When a number <b>GREATER</b> than zero is returned, it means that the object (or first argument) is <b>GREATER</b> than the (second) argument.</li>
+
+			<li>When a number <b>LESS</b> than zero is returned, it means that the object (or first argument) is <b>LESS</b> than the (second) argument.</li>
+		  </ul>
+		</li>
+
+		<li><code>comparing()</code>, <code>thenComparing()</code>, and <code>reverse()</code> are helper methods of the <code>Comparator</code> interface added in Java 8.</li>
+
+		<li>The <code>sorted()</code> method of the <code>Stream</code> interface returns a stream with the elements sorted according to its natural order. You can also pass a <code>Comparator</code> as an argument.</li>
+
+		<li><code>count()</code> returns the number of elements in the stream or zero if the stream is empty.</li>
+
+		<li><code>min()</code> returns the minimum value in the stream wrapped in an <code>Optional</code> or an empty one if the stream is empty.</li>
+
+		<li><code>max()</code> returns the maximum value in the stream wrapped in an <code>Optional</code> or an empty one if the stream is empty.</li>
+
+		<li><code>sum()</code> returns the sum of the elements in the stream or zero if the stream is empty.</li>
+
+		<li><code>average()</code> returns the average of the elements in the stream wrapped in a <code>OptionalDouble</code> or an empty one if the stream is empty.</li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_16_1</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; List&lt;String&gt; strings =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Arrays.asList( <span class="hljs-string">"Stream"</span>,<span class="hljs-string">"Operations"</span>,<span class="hljs-string">"on"</span>,<span class="hljs-string">"Collections"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Collections.sort(strings, String::compareTo);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(strings.get(<span class="hljs-number">0</span>));<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>Collections</code><br />
+	  B. <code>on</code><br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>2. Which of the following statements returns a valid <code>Comparator</code>?<br />
+	  A. <code>(String s) -&gt; s.length();</code><br />
+	  B. <code>Comparator.reversed();</code><br />
+	  C. <code>Comparator.thenComparing((String s) -&gt; s.length());</code><br />
+	  D. <code>Comparator.comparing((String s) -&gt; s.length() * -1);</code></p>
+
+	  
+
+	  <p>3. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_16_3</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;List&lt;Integer&gt; list = Arrays.asList(<span class="hljs-number">30</span>, <span class="hljs-number">5</span>, <span class="hljs-number">8</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;list.stream().max().get();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>5</code><br />
+	  B. <code>30</code><br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>4. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_16_4</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; List&lt;String&gt; strings =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Arrays.asList( <span class="hljs-string">"Stream"</span>,<span class="hljs-string">"Operations"</span>,<span class="hljs-string">"on"</span>,<span class="hljs-string">"Collections"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; strings.stream()<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .sorted(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Comparator.comparing(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(String s1, String s2) -&gt;<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;s1.length() - s2.length()<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .forEach(System.out::print);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>CollectionsOperationsStreamOn</code><br />
+	  B. <code>onStreamOperationsCollections</code><br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+  
+
+    
+		<div class="answers">
+			<a href="ch16a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch15.html">15. Data Search</a>
+			</div>
+			<div class="next">
+				<a href="ch17.html">17. Peeking, Mapping, Reducing and Collecting</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

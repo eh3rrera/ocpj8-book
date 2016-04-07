@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter FIFTEEN</i><br />
+			  Data Search</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Search for data by using search methods of the Stream classes including findFirst, findAny, anyMatch, allMatch, noneMatch.</i><br /></p>
+			  
+			</div>	
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>Finding and Matching</h2>
+
+	  <p>Searching is a common operation when you have a set of data.</p>
+
+	  <p>The Stream API has two types of operation for searching.</p>
+
+	  <p>Methods starting with <i>Find</i>:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">Optional&lt;T&gt; <span class="hljs-title">findAny</span><span class="hljs-params">()</span><br />
+	  Optional&lt;T&gt; <span class="hljs-title">findFirst</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p>That search for an element in a stream. Since there's a possibility that an element couldn't be found (if the stream is empty, for example), the return type of this methods is an <code><b>Optional</b></code>.</p>
+
+	  <p>And method ending with <i>Match</i>:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">allMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</span><br />
+	  <span class="hljs-keyword">boolean</span> <span class="hljs-title">anyMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</span><br />
+	  <span class="hljs-keyword">boolean</span> <span class="hljs-title">noneMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</span></span></code></p>
+
+	  <p>That indicate if a certain element matches the given predicate, that's why they return a <code><b>boolean</b></code>.</p>
+
+	  <p>Since all these methods return a type different than a stream, they are considered <b>TERMINAL</b> operations.</p>
+
+	  <h2>findAny() and findFirst()</h2>
+
+	  <p><code>findAny()</code> and <code>findFirst()</code> practically do the same, they return the first element they find in a stream:</p>
+
+	  <p><code class="java hljs">IntStream stream = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  stream.findFirst()<br />
+	  &nbsp; &nbsp; .ifPresent(System.out::println); <span class="hljs-comment">// 1</span><br />
+	  <br />
+	  IntStream stream2 = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  stream2.findAny()<br />
+	  &nbsp; &nbsp; .ifPresent(System.out::println); <span class="hljs-comment">// 1</span></code></p>
+
+	  <p>If the stream is empty, they return an empty <code>Optional</code>:</p>
+
+	  <p><code class="java hljs">Stream&lt;String&gt; stream = Stream.empty();<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; stream.findAny().isPresent()<br />
+	  );&nbsp;<span class="hljs-comment">// false</span></code></p>
+
+	  <p>Of course, you can combine these methods with other stream operations:</p>
+
+	  <p><code class="java hljs">IntStream stream = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  stream<br />
+	  &nbsp; &nbsp; .filter(i -&gt; i &gt; <span class="hljs-number">4</span>)<br />
+	  &nbsp; &nbsp; .findFirst()<br />
+	  &nbsp; &nbsp; .ifPresent(System.out::println); <span class="hljs-comment">// 5</span></code></p>
+
+	  <p>When to use <code>findAny()</code> and when to use <code>findFirst()</code>?</p>
+
+	  <p>When working with parallel streams, it's harder to find the first element. In this case, it's better to use <code>findAny()</code> if you don't really mind which element is returned.</p>
+
+	  <h2>anyMatch(), allMatch(), and noneMatch()</h2>
+
+	  <p><code>anyMatch()</code> returns true if any of the elements in a stream matches the given predicate:</p>
+
+	  <p><code class="java hljs">IntStream stream = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; stream.anyMatch(i -&gt; i%<span class="hljs-number">3</span> == <span class="hljs-number">0</span>)<br />
+	  ); <span class="hljs-comment">// true</span></code></p>
+
+	  <p>If the stream is empty or if there's no matching element, this method returns <code>false</code>:</p>
+
+	  <p><code class="java hljs">IntStream stream = IntStream.empty();<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; stream.anyMatch(i -&gt; i%<span class="hljs-number">3</span> == <span class="hljs-number">0</span>)<br />
+	  ); <span class="hljs-comment">// false</span><br />
+	  <br />
+	  IntStream stream2 = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; stream2.anyMatch(i -&gt; i%<span class="hljs-number">10</span> == <span class="hljs-number">0</span>)<br />
+	  ); <span class="hljs-comment">// false</span></code></p>
+
+	  <p><code>allMatch()</code> returns true only if <b>ALL</b> elements in the stream match the given predicate:</p>
+
+	  <p><code class="java hljs">IntStream stream = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; stream.allMatch(i -&gt; i &gt; <span class="hljs-number">0</span>)<br />
+	  ); <span class="hljs-comment">// true</span><br />
+	  <br />
+	  IntStream stream2 = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; stream2.allMatch(i -&gt; i%<span class="hljs-number">3</span> == <span class="hljs-number">0</span>)<br />
+	  ); <span class="hljs-comment">// false</span></code></p>
+
+	  <p>If the stream is empty, this method returns <b>TRUE</b> without evaluating the predicate:</p>
+
+	  <p><code class="java hljs">IntStream stream = IntStream.empty();<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; stream.allMatch(i -&gt; i%<span class="hljs-number">3</span> == <span class="hljs-number">0</span>)<br />
+	  ); <span class="hljs-comment">// true</span></code></p>
+
+	  <p><code>noneMatch()</code> is the opposite of <code>allMatch()</code>, it returns true if <b>NONE</b> of the elements in the stream match the given predicate:</p>
+
+	  <p><code class="java hljs">IntStream stream = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; stream.noneMatch(i -&gt; i &gt; <span class="hljs-number">0</span>)<br />
+	  ); <span class="hljs-comment">// false</span><br />
+	  <br />
+	  IntStream stream2 = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; stream2.noneMatch(i -&gt; i%<span class="hljs-number">3</span> == <span class="hljs-number">0</span>)<br />
+	  ); <span class="hljs-comment">// false</span><br />
+	  <br />
+	  IntStream stream3 = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; stream3.noneMatch(i -&gt; i &gt; <span class="hljs-number">10</span>)<br />
+	  ); <span class="hljs-comment">// true</span></code></p>
+
+	  <p>If the stream is empty, this method returns also <b>TRUE</b> without evaluating the predicate:</p>
+
+	  <p><code class="java hljs">IntStream stream = IntStream.empty();<br />
+	  System.out.println(<br />
+	  &nbsp; &nbsp; stream.noneMatch(i -&gt; i%<span class="hljs-number">3</span> == <span class="hljs-number">0</span>)<br />
+	  ); <span class="hljs-comment">// true</span></code></p>
+
+	  <h2>Short-circuiting</h2>
+
+	  <p>All of these operations use something similar to the short-circuiting of <code>&amp;&amp;</code> and <code>||</code> operators.</p>
+
+	  <p>Short-circuiting means that the evaluation stops once a result is found.</p>
+
+	  <p>In the case of the <i>find*</i> operations, it's obvious that they stop at the first found element.</p>
+
+	  <p>But in the case of the <i>*Match</i> operations, think about it, why would you evaluate all the elements of a stream when by evaluating the third element (for example) you can know if all or none (for example) of the elements will match?</p>
+
+	  <p>Consider this code:</p>
+
+	  <p><code class="java hljs">IntStream stream = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  <span class="hljs-keyword">boolean</span> b = stream<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.filter(i -&gt; {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"Filter:"</span> + i);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>; })<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.allMatch(i -&gt; {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"AllMatch:"</span> + i);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return</span> i &lt; <span class="hljs-number">3</span>;<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;});<br />
+	  System.out.println(b);</code></p>
+
+	  <p>What would you think the output will be?</p>
+
+	  
+
+	  <p>The output:</p>
+
+	  <p><code class="java hljs">Filter:<span class="hljs-number">1</span><br />
+	  Filter:<span class="hljs-number">2</span><br />
+	  AllMatch:<span class="hljs-number">2</span><br />
+	  Filter:<span class="hljs-number">3</span><br />
+	  Filter:<span class="hljs-number">4</span><br />
+	  AllMatch:<span class="hljs-number">4</span><br />
+	  <span class="hljs-keyword">false</span></code></p>
+
+	  <p>As you can see, first of all, operations on a stream are not evaluated sequentially (in this case, first filter all the elements and then evaluate if all elements match the predicate of <code>allMatch()</code>).</p>
+
+	  <p>Second, we can see that as soon as an element passes the filter predicate (like <code>2</code>) the predicate of <code>allMatch()</code> is evaluated.</p>
+
+	  <p>Finally, we can see short-circuiting in action. As soon as the predicate of <code>allMatch()</code> finds an element that doesn't evaluate to true (like <code>4</code>), the two stream operations are canceled, no further elements are processed and the result is returned.</p>
+
+	  <p>Just remember:</p>
+
+	  <ul>
+		<li>With some operations, the whole stream doesn't need to be processed.</li>
+
+		<li>Stream operations are not performed sequentially.</li>
+	  </ul>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li>The Stream API has two types of operation for searching. Methods starting with <i>Find</i>: <code class="java hljs"><span class="hljs-function">Optional&lt;T&gt; <span class="hljs-title">findAny</span><span class="hljs-params">()</span><br />
+		Optional&lt;T&gt; <span class="hljs-title">findFirst</span><span class="hljs-params">()</span></span></code></li>
+
+		<li>And method ending with <i>Match</i>:</li>
+
+		<li style="list-style: none; display: inline"><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">allMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</span><br />
+		<span class="hljs-keyword">boolean</span> <span class="hljs-title">anyMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</span><br />
+		<span class="hljs-keyword">boolean</span> <span class="hljs-title">noneMatch</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; predicate)</span></span></code></li>
+
+		<li>Both types are considered <b>TERMINAL</b> operations.</li>
+
+		<li><code>findAny()</code> and <code>findFirst()</code> practically do the same, they return the first element they find in a stream. If the stream is empty, they return an empty <code>Optional</code>.</li>
+
+		<li>When working with parallel streams, it's harder to find the first element, so in this case, it's better to use <code>findAny()</code> if you don't really mind which element is returned.</li>
+
+		<li><code>anyMatch()</code> returns true if any of the elements in a stream matches the given predicate. If the stream is empty or if there's no matching element, it returns <code>false</code>.</li>
+
+		<li><code>allMatch()</code> returns true only if <b>ALL</b> elements in the stream match the given predicate.</li>
+
+		<li><code>noneMatch()</code> returns true if <b>NONE</b> of the elements in the stream match the given predicate.</li>
+
+		<li>Both <code>allMatch()</code> and <code>noneMatch()</code> return <code>false</code> if the stream is empty.</li>
+
+		<li>All of these operations are short-circuiting, meaning that the evaluation stops once a result is found.</li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_15_1</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Stream&lt;Integer&gt; s = Stream.of(<span class="hljs-number">100</span>, <span class="hljs-number">45</span>, <span class="hljs-number">98</span>, <span class="hljs-number">33</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; s.anyMatch(i -&gt; i &gt; <span class="hljs-number">50</span>)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .findAny()<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .ifPresent(System.out::println);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>100</code><br />
+	  B. <code>98</code><br />
+	  C. Nothing is printed<br />
+	  D. Compilation fails</p>
+
+	  
+
+	  <p>2. Which of the following methods of the Stream interface returns an <code>Optional</code> type?<br />
+	  A. <code>filter()</code><br />
+	  B. <code>findMatch()</code><br />
+	  C. <code>findAny()</code><br />
+	  D. <code>anyMatch()</code></p>
+
+	  
+
+	  <p>3. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_15_3</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; IntStream stream = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; stream.allMatch(i -&gt; {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.print(i);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return</span> i % <span class="hljs-number">3</span> == <span class="hljs-number">0</span>;<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; });<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>1234567</code><br />
+	  B. <code>36</code><br />
+	  C. <code>1</code><br />
+	  D. Compilation fails</p>
+
+	  
+
+	  <p>4. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_15_4</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; IntStream stream = IntStream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; stream.filter(i -&gt; {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return</span> i &gt; <span class="hljs-number">3</span>;<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; }).anyMatch(i -&gt; {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.print(i);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>;<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; });<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>45</code><br />
+	  B. <code>5</code><br />
+	  C. <code>4567</code><br />
+	  D. Compilation fails</p>
+
+  
+
+  
+
+    
+		<div class="answers">
+			<a href="ch15a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch14.html">14. Optional Class</a>
+			</div>
+			<div class="next">
+				<a href="ch16.html">16. Stream Operations on Collections</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

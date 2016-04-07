@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter TWELVE</i><br />
+			  Streams</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Describe Stream interface and Stream pipeline.<br /></i><i>Use method references with Streams.</i></p>
+			  
+			</div>
+		</div>
+	</div>
+
+  
+  <div class="container">
+  
+	<div class="column">
+
+	  <h2>Answers</h2>
+
+	  <p><b>1. The correct answer is D.</b><br />
+	  <code>IntStream.range(1, 10)</code> produces a stream of <code>int</code>s from <code>1</code> to <code>9</code>. Since <code>limit</code>&nbsp;is a short-circuit operation, when there's an element that fulfills both <code>filter</code> conditions, the stream will terminate.<br />
+	  When <code>1</code> is evaluated, <code>1</code> is printed in the first filter, but since <code>false</code> is returned, <code>2</code> is processed. This element passes the first filter, but not the second one, so <code>10</code> is printed. When <code>3</code> is processed, <code>1</code> from the first filter is printed and then <code>4</code> is processed. This element passes both conditions so <code>10</code> is printed and the stream finishes, printing <code>4</code> at the end because of the <code>forEach</code> operation.</p>
+
+	  <p><br /></p>
+
+	  <p><b>2. The correct answers are A, B, and D.</b><br />
+	  <code>limit</code>, <code>peek</code>, and <code>skip</code> are intermediate operations. <code>anyMatch</code> is a terminal operation.</p>
+
+	  <p><br /></p>
+
+	  <p><b>3. The correct answer is C.</b><br />
+	  <code>max</code> is the only terminal operation. <code>sorted</code>, <code>flatMap</code>, and <code>distinct</code> are intermediate operations.</p>
+
+	  <p><br /></p>
+
+	  <p><b>4. The correct answer is D.</b><br />
+	  <code>findFirst</code> is the only short-circuit operation. <code>reduce</code> is a terminal operation. <code>parallel</code> is an intermediate operation. <code>findNone</code> doesn't exist.</p>
+
+	  <p><br /></p>
+
+	  <p><b>5. The correct answer is D.</b><br />
+	  Since <code>count</code> is a terminal operation, it doesn't return a reference to a stream, and it cannot be chained, so a compile-time error is generated.</p>
+
+	  <p><br /></p>
+	  
+  
+	</div>
+  </div>
+		
+  <footer></footer>
+  
+</body>
+</html>

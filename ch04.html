@@ -1,0 +1,955 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			
+			  <h1><i class="chapter">Chapter FOUR</i><br />
+			  Interfaces</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Develop code that declares, implements and/or extends interfaces and use the atOverride annotation.</i></p>
+			  
+			  
+			  
+			</div>	
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>What's an interface?</h2>
+
+	  <p>The first time you look an interface, you'll probably think that it's like a class with just methods definitions:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;&nbsp;void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>And for practical terms, you're right.</p>
+
+	  <p>An interface is a data type that just defines (abstract) methods that one class must implement.</p>
+
+	  <p>Although conceptually, it's more interesting than that, because this allows you to define what a class can do without saying how to do it. That's why it's said that an interface is a contract.</p>
+
+	  <p>Any class that implements an interface must provide an implementation for all the methods of the interface, otherwise, the class has to be marked as <code>abstract</code>.</p>
+
+	  <p>As a class is defined with the <code>class</code> keyword, an interface is defined with the <code>interface</code> keyword.</p>
+
+	  <p>If a class wants to implement an interface, it has to specify it with the <code>implements</code> keyword.</p>
+	  <hr />
+
+	  <h4><i>Defining an interface</i></h4>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> ID = <span class="hljs-number">0</span>;<br />
+	  <span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <h4><i>Implementing an interface</i></h4>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Server</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;&nbsp;public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment"><font color="#000000">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</font>// Implementation code</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+	  <hr />
+
+	  <p>Like a class, an interface has either <code>public</code> or default accessibility:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">PublicAccessInterface</span></span> {<br />
+	  <span class="hljs-comment"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>// ...<br /></span>}</code><code class="java hljs"><span class="hljs-keyword">interface</span> <span class="hljs-title">DefaultAccessInterface</span> {<br />
+	  &nbsp; &nbsp; <span class="hljs-comment">// ...<br /></span> }</code></p>
+
+	  <p>Interfaces are <code>abstract</code> by default (you don't have to specify it):</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">PublicAccessInterface</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;&nbsp;// This is the same as the definition above</span><br />
+	  }</code></p>
+
+	  <p>This means two things:</p>
+
+	  <ul>
+		<li>You can't create an interface directly, it has to be implemented by a class to use it.</li>
+
+		<li>An interface cannot be marked as <code>final</code>.</li>
+	  </ul>
+
+	  <p>The methods defined in an interface are by default <b>PUBLIC</b> and <b>ABSTRACT</b>, the compiler will treat them as such even if you don't specify it.</p>
+
+	  <p>So even though you define an interface like this:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span>;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;&nbsp;void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>For the compiler, the interface will look like this:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span>;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>That's the reason you must mark the method as <code>public</code> when it's implemented:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Server</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Implementation</span><br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-comment">// Implementation<br /></span>&nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>Also, that's the reason if one or more of the interface's methods are not implemented, you must mark the class (and the methods) as <code>abstract</code>:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Server</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Implementation</span><br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;&nbsp;public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setup</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>Fields declared in an interface are by default <b>PUBLIC</b>, <b>STATIC</b>, and <b>FINAL</b>. Like methods, the compiler will treat them as such even if you don't specify it.</p>
+
+	  <p>This means that fields are <b>CONSTANTS</b> instead of <b>VARIABLES</b>:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">int</span> ID = <span class="hljs-number">0</span>; <span class="hljs-comment">// You have to assign a value at creation time</span><br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Resource</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">change</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; ID = <span class="hljs-number">5</span>; <span class="hljs-comment">// This WON'T compile</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>This also means that the following declarations are all equivalent inside an interface:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">int</span> ID = <span class="hljs-number">0</span>;<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> ID = <span class="hljs-number">0</span>;<br />
+	  <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> ID = <span class="hljs-number">0</span>;<br />
+	  <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> ID = <span class="hljs-number">0</span>;<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ID = <span class="hljs-number">0</span>;<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> ID = <span class="hljs-number">0</span>;<br />
+	  <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ID = <span class="hljs-number">0</span>;<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> ID = <span class="hljs-number">0</span>;</code></p>
+
+	  <p>So watch out for declarations that won't compile, like these:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">int</span> ID = <span class="hljs-number">0</span>; <span class="hljs-comment">// It cannot be private</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; int</span> TIMEOUT; <span class="hljs-comment">// It's final, so you have to provide a value</span><br />
+	  }</code></p>
+
+	  <p>There are two rules regarding inheritances and interfaces:</p>
+
+	  <ul>
+		<li>A class can implement (not extend from) any number of interfaces.</li>
+
+		<li>An interface can extend any number of interfaces, but it cannot extend from a class.</li>
+	  </ul>
+
+	  <p>Implementing an interface is a type of inheritance. When a class implements an interface, we can use it like this to take advantage of polymorphism:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Disk</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Monitoring Disk"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Server</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Monitoring Server"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Monitorable m = <span class="hljs-keyword">new</span> Disk();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; m.monitor();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; m = <span class="hljs-keyword">new</span> Server();&nbsp;<span class="hljs-comment">// Change implementation<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; m.monitor();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>This is the output:</p>
+
+	  <p><code class="java hljs">Monitoring Disk<br />
+	  Monitoring Server</code></p>
+
+	  <p>A class cannot extend from more than one class, but it can implement more than one interface. You can see the reason with an example. Consider:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Truck</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;&nbsp;public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Accelerating truck..."</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CompactCar</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;&nbsp;public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Accelerating compact car..."</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>If you could inherit from multiple classes:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Truck</span>, <span class="hljs-title">CompactCar</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;&nbsp;public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; accelerate();<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // ...</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>Which <code>accelerate()</code> method would Java choose?</p>
+
+	  <p>This is a problem that the designers of Java decided to avoid by not allowing multiple inheritance.</p>
+
+	  <p>But what if we were using interfaces?</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Truck</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">CompactCar</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Truck</span>, <span class="hljs-title">CompactCar</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Accelerating car"</span>); }<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // ...</span><br />
+	  }</code></p>
+
+	  <p>As the interfaces don't provide an implementation, there's only one (<code>Car</code>'s implementation) so there's no conflict and we avoid the problem altogether!</p>
+
+	  <p>And if the methods have the same name but different parameters:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Truck</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">CompactCar</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">(<span class="hljs-keyword">int</span> speed)</span></span>;<br />
+	  }</code></p>
+
+	  <p>They're considered two different methods because the method's signature is different, so the implemented class has to implement both versions of the methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Truck</span>, <span class="hljs-title">CompactCar</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // implementation</span><br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">(<span class="hljs-keyword">int</span> speed)</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // implementation</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>However, when the methods only differ in their return type, since the return type is not considered in the method's signature, the Java compiler will generate an error:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Truck</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">CompactCar</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; int</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Truck</span>, <span class="hljs-title">CompactCar</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Java will complain about duplicate methods</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // and incompatible return types</span><br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // implementation</span><br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // implementation</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>Optionally, to make things clearer, we can use the <code>@Override</code> annotation.</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">CompactCar</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; int</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CompactCar</span></span> {<br />
+	  <span class="hljs-annotation">&nbsp; &nbsp; @Override<br /></span><span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-comment">// implementation</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p><code>@Override</code> indicates that a method overrides a method declaration in a supertype, either in an interface or a parent class.</p>
+
+	  <p>If the annotated method doesn't override or implement the method correctly, the compiler will generate an error.</p>
+
+	  <p>This is the only function of the annotation. It's useful in cases like when there's a not-so-obvious error caused by a typo:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">CompactCar</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; int</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">CompactCar</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Compiler will mark an error about method</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // "acelerate" not overriding or implementing something</span><br />
+	  <span class="hljs-annotation">&nbsp; &nbsp; @Override</span><br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">acelerate</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // implementation</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>Finally, an interface can only extend other interfaces.</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Monitorable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Pluggable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">plug</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Resource</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Monitoreable</span>, <span class="hljs-title">Pluggable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">printInfo</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>A non-abstract class implementing <code>Resource</code>, must have to implement all methods of the three interfaces:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Disk</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Resource</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // implementation</span><br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">plug</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // implementation</span><br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printInfo</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // implementation</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <h2>What's new in Java 8?</h2>
+
+	  <p>Assume we have an interface like this:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>And an implementation:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println("Processing in sequence");<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>We know that when a class implements an interface, unless it is marked as <code>abstract</code>, it has to implement <b>ALL</b> the methods of that interface.</p>
+
+	  <p>So if we add another method to <code>Processable</code>, for example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span>;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>We have to update the class to avoid a compilation error:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processing in sequence"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processing in parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>That was easy. But think about the following:</p>
+
+	  <ul>
+		<li>What if we have hundreds of classes implementing <code>Processable</code>?</li>
+
+		<li>What if we can't update or don't have access to the code for some reason?</li>
+
+		<li>What if the new method is not needed or doesn't make sense for some implementations?</li>
+	  </ul>
+
+	  <p>These are real problems, sometimes not easy to solve.</p>
+
+	  <p>However, Java 8 gives us <i>default</i> methods. We don't have to provide implementations for them because they are non-abstract methods.</p>
+
+	  <p>In other words, interfaces now allow methods with a <b>BODY</b>. And this is not as simple as it sounds.</p>
+
+	  <h2>Default methods</h2>
+
+	  <p>The main reason for adding <i>default</i> methods to interfaces was to support <i>interface evolution</i>, to add new functionality to interfaces and at the same time, ensuring compatibility with the code written for older versions.</p>
+
+	  <p>There are other two side effects worth mentioning:</p>
+
+	  <ul>
+		<li><b>We can now design <i>optional</i> methods</b>. We can have methods with limited or default functionality so the classes implementing the interfaces can decide if they keep that functionality or provide another one.</li>
+
+		<li><b>We can have <i>utility</i> methods directly on the interface</b>. Methods that get or create resources, for example, made just for convenience and possibly implemented in terms of non-default methods of the interface.</li>
+	  </ul>
+
+	  <p>However, now that interfaces can provide behavior, the difference with abstract classes is not very clear in some cases. There are still two significant differences:</p>
+
+	  <ul>
+		<li>A class can only extend from <b>ONE</b> abstract class, but it can implement <b>MULTIPLE</b> interfaces.</li>
+
+		<li>An abstract class can have a state through <b>INSTANCE</b> variables (fields). An interface <b>CAN'T</b>.</li>
+	  </ul>
+
+	  <p>Default methods come with many rules, especially regarding inheritance. But let's start with their syntax.</p>
+	  <hr />
+
+	  <h4><i>Defining a default method</i></h4>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span>;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-comment">/** Default implementation goes here */</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p><i>An interface can have any number of abstract and default methods.</i></p>
+
+	  <p><i>All methods with the keyword default must have a body.</i></p>
+
+	  <p><i>Default methods are public implicitly, just as any other method of an interface.</i></p>
+	  <hr />
+
+	  <p>By making <code>processInParallel()</code> a <i>default</i> method, the implementing class gets it automatically. Here's the complete example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span>;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processing in parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processing in sequence"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Task t = <span class="hljs-keyword">new</span> Task();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; t.processInSequence();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; t.processInParallel(); <span class="hljs-comment">// It compiles just fine</span>&nbsp;<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>This is the most simple scenario, where the implementing class inherits the <i>default</i> method is inherited.</p>
+
+	  <p>Before presenting more complex scenarios, let's see which the restrictions when using <i>default</i> methods are.</p>
+
+	  <p><b>Default methods cannot be final.</b><br />
+	  If a method is <code>final</code>, it cannot be overridden by the implementing classes, which doesn't favor the primary objective of <i>default</i> methods.</p>
+
+	  <p><b>Default methods cannot be synchronized.</b><br />
+	  This was a deliberated decision by the designers of the language. If a method is made synchronized in the interface, it would mean that all the implementing classes would inherit this behavior. But this decision should belong to the implementation; the interface has no reasonable basis for assuming what the synchronization policy should be.</p>
+
+	  <p><b>Default methods are always public.</b><br />
+	  Like other methods of an interface. Contrast this with an abstract class, where you can choose the visibility of the method.</p>
+
+	  <p><b>You cannot have default methods for the <code>Object</code>'s class methods.</b><br />
+	  An interface cannot provide default implementations for:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object o)</span><br />
+	  <span class="hljs-keyword">int</span> <span class="hljs-title">hashCode</span><span class="hljs-params">()</span><br />
+	  String <span class="hljs-title">toString</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p>If an interface has methods with those signatures, the compiler will throw an error. The reason is that those methods are all about the object's state. Since interfaces do not have a state, these methods should be in the implementing classes.</p>
+
+	  <p>And now, to the more complex scenarios.</p>
+
+	  <h2>Class overrides default method</h2>
+
+	  <p>Classes always <b>WIN</b> over interfaces. If a class overrides a default method, the class method will be the one used. For example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span>;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Default parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Processable</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processing in sequence"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Class parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Task t = <span class="hljs-keyword">new</span> Task();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; t. processInParallel();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>The output would be:</p>
+
+	  <p><code class="java hljs">Class parallel</code></p>
+
+	  <p>This is true even if the class redefines the default method as <code>abstract</code>:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span>;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Default parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-comment">// Class Task has to be abstract<br /></span><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Processable</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processing in sequence"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>If for some reason, you need to call the default implementation of the method, you can do it with the name of the interface followed by the keyword <code>super</code>:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; Processable.<span class="hljs-keyword">super</span>.processInParallel();<br />
+	  }</code></p>
+
+	  <p>This only works with default methods. Calling a non-default method in this way will result in a compilation error. Also, <code>super</code> must be used with a direct super interface of the class.</p>
+
+	  <p>Another scenario related to this rule is when an inherited instance method from a class overrides a default interface method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Default parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Process</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Class parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; extends</span> <span class="hljs-title">Process</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Processable</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Task t = <span class="hljs-keyword">new</span> Task();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; t.processInParallel();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>The output is:</p>
+
+	  <p><code class="java hljs">Class parallel</code></p>
+
+	  <p>The method <code>processInParallel()</code> returns the string <code>"Class parallel"</code> since the class <code>Task</code> inherits the method <code>processInParallel()</code> from the class <code>Process</code>, which overrides the default method of the same name in the interface <code>Processable</code>.</p>
+
+	  <h2>Interface inheritance with default methods</h2>
+
+	  <p>More specific interfaces (or classes) always <b>WIN</b> over less specific ones. The default methods of the deeper interfaces in an inheritance hierarchy will be used. For example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span>;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processable parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Parallelizable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Processable</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Parallelizable parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Parallelizable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processing in sequence"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Task t = <span class="hljs-keyword">new</span> Task();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; t.processInParallel();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>The output would be:</p>
+
+	  <p><code class="java hljs">Parallelizable parallel</code></p>
+
+	  <p>The interface <code>Parallelizable</code> inherits the default method <code>processInParallel()</code>, but since it redefines the method when <code>Task</code> implements it, its implementation is the one called.</p>
+
+	  <p>If <code>Parallelizable</code> defined <code>processInParallel()</code> as <code>abstract</code>:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Parallelizable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Procesable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>Then <code>Task</code> would have to implement the method (to not become an <code>abstract</code> class):</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Parallelizable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processing in sequence"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Task parallelizable"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Task t = <span class="hljs-keyword">new</span> Task();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; t.processInParallel();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>The output would be:</p>
+
+	  <p><code class="java hljs">Task parallelizable</code></p>
+
+	  <h2>Multiple interface inheritance with default methods</h2>
+
+	  <p>Classes can implement multiple interfaces. What happens when two interfaces have the same default method? Which one does the implementing class will choose? For example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span>;<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processable parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Parallelizable</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Parallelizable parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; implements</span> <span class="hljs-title">Processable</span>, <span class="hljs-title">Parallelizable</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processing in sequence"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Task t = <span class="hljs-keyword">new</span> Task();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; t.processInParallel();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>It turns out that the result is a compiler error:</p>
+
+	  <p><code class="hljs">Duplicate default methods named processInParallel with the parameters () and () are inherited from the types Parallelizable and Processable.</code></p>
+
+	  <p>The compiler doesn't know which to choose, so it generates an error. In this case, <code>Task</code> has to provide an implementation (honoring the previous rule of <i>more specific interfaces (or classes) always wins over less specific ones)</i> to override the interface <code>default</code> methods and solve the issue:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Parallelizable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processing in sequence"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Task parallelizable"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Task t = <span class="hljs-keyword">new</span> Task();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; t.processInParallel();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>And now, the output would be:</p>
+
+	  <p><code class="java hljs">Task parallelizable</code></p>
+
+	  <p>Of course, we can always call a default implementation with:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; Procesable.<span class="hljs-keyword">super</span>.processInParallel();<br />
+	  }</code></p>
+	  <hr />
+
+	  <h4>Defining a static method</h4>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Processable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">log</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; /** Implementation goes here */</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p><i>Static methods in interfaces are defined just like static methods in classes, with the keyword <code>static</code>.</i></p>
+
+	  <p><i>Static methods are <code>public</code> implicitly, just as any other method of an interface.</i></p>
+
+	  <p><i>An interface can have any number of static methods.</i></p>
+	  <hr />
+
+	  <h2>Static methods</h2>
+
+	  <p>Whenever we refer to something static, we mean that something to belong to a class, not to a particular instance or object of that class. Static methods on interfaces follow the same concept; they belong to the interface where they are declared.</p>
+
+	  <p>They were added to assist default methods and to organize better helper methods, because generally, helper or utility methods are defined in another class (like <code>java.utils.Collections</code>), instead of where they naturally belong.</p>
+
+	  <p>For example, the <code>java.util.Comparator</code> interface defines the static method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">Comparator&lt;T&gt; <span class="hljs-title">comparingInt</span><span class="hljs-params">(ToIntFunction&lt;? <span class="hljs-keyword">super</span> T&gt; keyExtractor)</span></span></code></p>
+
+	  <p>Used by the default method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> Comparator&lt;T&gt; <span class="hljs-title">thenComparingInt</span><span class="hljs-params">(ToIntFunction&lt;? <span class="hljs-keyword">super</span> T&gt; keyExtractor)</span></span></code></p>
+
+	  <p>Interface <code>static</code> methods are not inherited, you must prefix the method with the interface name:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Parallelizable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">log</span><span class="hljs-params">(String s)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(s);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; log(<span class="hljs-string">"Parallelizable parallel"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Parallelizable</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Task t = <span class="hljs-keyword">new</span> Task();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; t.processInParallel();<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // t.log("The end"); Doesn't compile</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Task.log("The end"); Doesn't compile either<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; Parallelizable.log(<span class="hljs-string">"The end"</span>); <span class="hljs-comment">// Compiles!<br /></span>&nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>The output is:</p>
+
+	  <p><code class="java hljs">Parallelizable parallel The end</code></p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li>An interface is a data type that just defines (<code>abstract</code>) methods that one class must implement.</li>
+
+		<li>An interface is defined with the <code>interface</code> keyword. If a class wants to implement an interface, it has to specify it with the <code>implements</code> keyword.</li>
+
+		<li>An interface has either <code>public</code> or <code>default</code> accessibility and is abstract by default.</li>
+
+		<li>The methods defined in an interface are by default <code>public</code> and <code>abstract</code>. The compiler will treat them as such even if you don't specify it.</li>
+
+		<li>Fields declared in an interface are by default <code>public</code>, <code>static</code>, and <code>final</code>. Like methods, the compiler will treat them as such even if you don't specify it.</li>
+
+		<li>This means that fields are constants instead of variables.</li>
+
+		<li>A class can implement (not extend from) any number of interfaces.</li>
+
+		<li>An interface can extend any number of interfaces, but it cannot extend from a class.</li>
+
+		<li><code>@Override</code> indicates that a method overrides a method declaration in a supertype, either in an interface or a parent class.</li>
+
+		<li>If the annotated method doesn't override or implement the method correctly, the compiler will generate an error.</li>
+
+		<li>Java 8 introduced default methods in interfaces to support <i>interface evolution</i>, adding new functionality to interfaces and at the same time, ensuring compatibility with the code written for older versions.</li>
+
+		<li>Default methods are methods marked with the <code>default</code> keyword, and they must have a body. The implemented classes can use and optionally redefine these methods.</li>
+
+		<li>Default methods are always <code>public</code>, but not <code>static</code>.</li>
+
+		<li>Default methods cannot be <code>synchronized</code> or <code>final</code>.</li>
+
+		<li>You cannot define default methods with the same signature as the <code>Object</code> class methods: <code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object o)</span></span>;<br />
+		<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">hashCode</span><span class="hljs-params">()</span></span>;<br />
+		<span class="hljs-function">String <span class="hljs-title">toString</span><span class="hljs-params">()</span></span>;</code></li>
+
+		<li>In an inheritance hierarchy, the most specific method is the one called.</li>
+
+		<li>One case is if a class redefines a default method, the class method is the one that gets called.</li>
+
+		<li>Another case is if an interface redefines a default method inherited from a super interface, the method of the subinterfaces is the one called.</li>
+
+		<li>If a class implements two different interfaces with the same default method (same method signature), the class must redefine the method. Otherwise, a compiler error is generated.</li>
+
+		<li>If you want to call the default method of the interface from the implementing class (or extending interface), do it this way: <code class="java hljs">NameOfTheInteface.<span class="hljs-keyword">super</span>.defaultMethod();</code></li>
+
+		<li>Java 8 also introduced <code>static</code> methods in interfaces so they can contain helper or utility methods.</li>
+
+		<li>Static methods are marked with the <code>static</code> keyword, and they also must have a body.</li>
+
+		<li>Static methods in interfaces have the same meaning that <code>static</code> methods in classes, so they are not inherited.</li>
+
+		<li>If you want to call a default method from a particular interface, do it this way: <code class="java hljs">NameOfTheInteface.staticMethod();</code></li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; default</span> <span class="hljs-keyword">int</span> <span class="hljs-title">aMethod</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; return</span> <span class="hljs-number">0</span>;<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">A</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">long</span> <span class="hljs-title">aMethod</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Test t = <span class="hljs-keyword">new</span> Test();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(t.aMethod());<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>0</code><br />
+	  B. <code>1</code><br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>2. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">B</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"B test"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_4_2</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">B</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Q test"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Question_4_2 q = <span class="hljs-keyword">new</span> Question_4_2();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; q.test();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>B test</code><br />
+	  B. <code>Q test</code><br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>3. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">C</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(C obj)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">return</span> obj == <span class="hljs-keyword">this</span>;<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_4_3</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">C</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Question_4_3 q = <span class="hljs-keyword">new</span> Question_4_3();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(q.equals(q));<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>true</code><br />
+	  B. <code>false</code><br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>4. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">D</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"D"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">E</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">D</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"E"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_4_4</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">E</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; E.<span class="hljs-keyword">super</span>.print();<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Question_4_4 q = <span class="hljs-keyword">new</span> Question_4_4();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; q.print();<br />
+	  &nbsp; &nbsp;}<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>D</code><br />
+	  B. <code>E</code><br />
+	  C. <code>D</code> and then <code>E</code><br />
+	  D. Compilation fails<br />
+	  E. An exception occurs at runtime</p>
+
+	  
+
+	  <p>5. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">F</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"F test"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_4_5</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">F</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Q test"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; F q = <span class="hljs-keyword">new</span> Question_4_5();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; q.test();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>F test</code><br />
+	  B. <code>Q test</code><br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>6. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">G</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doIt</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"G - Do It"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">H</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">doIt</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_4_6</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">G</span>, <span class="hljs-title">H</span></span> {<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doIt</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Do It"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Question_4_6 q = <span class="hljs-keyword">new</span> Question_4_6();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; q.doIt();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>G - Do It</code><br />
+	  B. <code>Do It</code><br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+  
+
+  
+		<div class="answers">
+			<a href="ch04a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch03.html">03. Inner Classes</a>
+			</div>
+			<div class="next">
+				<a href="ch05.html">05. Enumerations</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Part EIGHT</i><br />
+			  Concurrency</h1>
+
+			  <h1><i class="chapter">Chapter TWENTY-SIX</i><br />
+			  Thread Basics</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Create worker threads using Runnable, Callable and use an ExecutorService to concurrently execute tasks.<br /></i><i>Identify potential threading problems among deadlock, starvation, livelock, and race conditions.</i></p>
+			  
+			</div>
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>Threads</h2>
+
+	  <p>In simple words, concurrency means doing things simultaneously, in parallel. In Java, concurrency is done with threads.</p>
+
+	  <p>Threads are units of code that can be executed at the same time. Sometimes are called lightweight processes, although, in fact, a thread is executed within a process (and every process has, at least, one thread, the main thread).</p>
+
+	  <p>At a low level, we can create a thread in two ways.</p>
+
+	  <p>The first (and recommendable way) is to implement the <code>java.lang.Runnable</code> interface, which only has the <code>run()</code> method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RunnableTask</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Running"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>And then, to create a single thread, you have to pass an instance to the constructor of the <code>java.lang.Thread</code> class and <b>REQUEST</b> the thread to start (it might not start immediately. Besides, the order and time of execution of a thread are&nbsp;<b>NOT</b> guaranteed):</p>
+
+	  <p><code class="java hljs">Thread thread = <span class="hljs-keyword">new</span> Thread(<span class="hljs-keyword">new</span> RunnableTask());<br />
+	  thread.start();</code></p>
+
+	  <p>The <code>start()</code> method will call the <code>run()</code> method of the <code>Runnable</code> instance to start executing.</p>
+
+	  <p>Of course, you can use an anonymous class to do it:</p>
+
+	  <p><code class="java hljs">Thread thread = <span class="hljs-keyword">new</span> Thread(<span class="hljs-keyword">new</span> RunnableTask() {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Running"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp;});<br />
+	  thread.start();</code></p>
+
+	  <p>Or since <code>Runnable</code> is a functional interface, a lambda expression:</p>
+
+	  <p><code class="java hljs">Thread thread = <span class="hljs-keyword">new</span> Thread(() -&gt; {<br />
+	  &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Running"</span>);<br />
+	  });<br />
+	  thread.start();</code></p>
+
+	  <p>The other (discouraged) way is to subclass <code>Thread</code>, which implements <code>Runnable</code> so you just have to override <code>run()</code>:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ThreadTask</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Thread</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Running"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>Then create an instance and call the <code>start()</code> method:</p>
+
+	  <p><code class="java hljs">Thread thread = <span class="hljs-keyword">new</span> ThreadTask();<br />
+	  thread.start();</code></p>
+
+	  <p>However, it's better to implement <code>Runnable</code> on your own because with the new concurrency API, you don't have to create <code>Thread</code> objects directly anymore (not to mention that implementing an interface is the recommended object-oriented way to do it).</p>
+
+	  <h2>ExecutorService</h2>
+
+	  <p>Java 5 introduced a high-level API for concurrency, most of it implemented in the <code>java.util.concurrent</code> package.</p>
+
+	  <p>One of the features of this API is the <code>Executor</code> interfaces that provide an alternative (better) way to launch and manage threads.</p>
+
+	  <p>The <code>java.util.concurrent</code> package defines three executor interfaces:</p>
+
+	  <p><b>Executor</b><br />
+	  This interface has the <code>execute()</code> method, which is designed to replace:</p>
+
+	  <p><code class="java hljs">Runnable r = ... Thread t = <span class="hljs-keyword">new</span> Thread(r);<br />
+	  t.start();</code></p>
+
+	  <p>With:</p>
+
+	  <p><code class="java hljs">Runnable r = ...<br />
+	  Executor e = ...<br />
+	  e.execute(r);</code></p>
+
+	  <p><b>ExecutorService</b><br />
+	  This interface extends&nbsp;<code>Executor</code> to provide more features, like the <code>submit()</code> method that accepts <code>Runnable</code> and <code>Callable</code> objects and allow to return a value.</p>
+
+	  <p><b>ScheduledExecutorService</b><br />
+	  This interface extends&nbsp;<code>ExecutorService</code> to execute tasks at repeated intervals or with a particular delay.</p>
+
+	  <p>Executors use thread pools, which use worker threads. These threads are different than the threads you create with the <code>Thread</code> class.</p>
+
+	  <p>When worker threads are created, they just stand idle, waiting for work. When work arrives, the executor assigns it to the idle threads from the thread pool.</p>
+
+	  <p>This way, threads are generic, they exist independently from the <code>Runnable</code> task it executes (in contrast to a traditional thread created with the <code>Thread</code> class).</p>
+
+	  <p>One type of thread pool is the fixed thread pool, which has a fixed number of threads running. If a thread is terminated while it is still in use, it's automatically replaced with a new thread. There are also expandable thread pools.</p>
+
+	  <p>Now, most of the time, you'd want to work with <code>ExecutorService</code>, since it has more functionality than <code>Executor</code>. Since they are interfaces, to create an instance of an <code>Executor</code> you have to use a helper class, <code>java.util.concurrent.Executors</code>.</p>
+
+	  <p>The <code>Executors</code> class has many static methods to create an <code>ExecutorService</code>, like:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> ExecutorService <span class="hljs-title">newSingleThreadExecutor</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p>That creates an <code>Executor</code> that uses a single worker thread</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> ExecutorService<br />
+	  <span class="hljs-title">&nbsp; &nbsp; &nbsp; &nbsp; newFixedThreadPool</span><span class="hljs-params">(<span class="hljs-keyword">int</span> nThreads)</span></span></code></p>
+
+	  <p>That creates a thread pool that reuses a fixed number of threads</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> ScheduledExecutorService<br />
+	  <span class="hljs-title">&nbsp; &nbsp; &nbsp; &nbsp; newScheduledThreadPool</span><span class="hljs-params">(<span class="hljs-keyword">int</span> corePoolSize)</span></span></code></p>
+
+	  <p>That creates a thread pool that can schedule task</p>
+
+	  <p>Let's start by creating an <code>ExecutorService</code> with a single thread pool:</p>
+
+	  <p><code class="java hljs">ExecutorService executor = Executors.newSingleThreadExecutor();<br />
+	  Runnable r = () -&gt; {<br />
+	  &nbsp; &nbsp; IntStream.rangeClosed(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; .forEach(System.out::println);<br />
+	  };<br />
+	  System.out.println(<span class="hljs-string">"before executing"</span>);<br />
+	  executor.execute(r);<br />
+	  System.out.println(<span class="hljs-string">"after executing"</span>);<br />
+	  executor.shutdown();</code></p>
+
+	  <p>A possible output can be:</p>
+
+	  <p><code class="java hljs">before executing<br />
+	  after executing<br />
+	  <span class="hljs-number">1<br /></span> <span class="hljs-number">2<br /></span> <span class="hljs-number">3<br /></span> <span class="hljs-number">4</span></code></p>
+
+	  <p>Since there's only one thread (in addition to the main thread, don't forget that), tasks are guaranteed to be executed in the order they were submitted, and no more than one task will be active at any given time. In a real-world application, you may want to use <code>newFixedThreadPool()</code> with pool size equal to the number of processors available.</p>
+
+	  <p>Once you're done with an <code>ExecutorService</code>, you have shut it down to terminate threads and close resources. We have two methods to do it:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">shutdown</span><span class="hljs-params">()</span><br />
+	  List&lt;Runnable&gt; <span class="hljs-title">shutdownNow</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p>The <code>shutdown()</code> method tells the executor to stop accepting new tasks, but the previous task are allowed to continue until the finish. During this time, the method <code>isTerminated()</code> will return false until all tasks are completed, while the method <code>isShutdown()</code> will return true at all times.</p>
+
+	  <p>The <code>shutdownNow()</code> method will also tell the executor to stop accepting new task but it will <b>TRY</b> to stop all executing tasks immediately (by interrupting the threads, but if the thread doesn't respond to interrupts, it may never terminate) and return a list of the tasks that were never started.</p>
+
+	  <p>For example, if we execute:</p>
+
+	  <p><code class="java hljs">ExecutorService executor = Executors.newSingleThreadExecutor();<br />
+	  Runnable r = () -&gt; {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; try</span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Thread.sleep(<span class="hljs-number">5_000</span>);<br />
+	  &nbsp; &nbsp; } <span class="hljs-keyword">catch</span> (InterruptedException e) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Interrupted"</span>);<br />
+	  &nbsp; &nbsp; }<br />
+	  };<br />
+	  executor.execute(r);<br />
+	  executor.shutdown();</code></p>
+
+	  <p>We will have to wait around five seconds for the program to finish, but if we change <code>shutdown()</code> by <code>shutdownNow()</code>, <code>"Interrupted"</code> will be printed and the program will terminate immediately.</p>
+
+	  <p>Besides, <code>execute()</code>, there are other methods to submit a task. Let's define first the most critical methods and the new classes they use:</p>
+
+	  <p><code class="java hljs">Future&lt;?&gt; submit(Runnable task)</code></p>
+
+	  <p>Executes a <code>Runnable</code> and returns a <code>Future</code> representing that task.</p>
+
+	  <p><code class="java hljs">&lt;T&gt; <span class="hljs-function">Future&lt;T&gt; <span class="hljs-title">submit</span><span class="hljs-params">(Callable&lt;T&gt; task)</span></span></code></p>
+
+	  <p>Executes a <code>Callable</code> and returns a <code>Future</code> representing the result of the task.</p>
+
+	  <p><code class="java hljs">&lt;T&gt; <span class="hljs-function">T <span class="hljs-title">invokeAny</span><span class="hljs-params">(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp;Collection&lt;? extends Callable&lt;T&gt;&gt; tasks)</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;throws</span> InterruptedException, ExecutionException</span></code></p>
+
+	  <p>Executes the given tasks, returning the result of one that has completed without throwing an exception, if any. The other tasks are canceled.</p>
+
+	  <p><code class="java hljs">&lt;T&gt; <span class="hljs-function">List&lt;Future&lt;T&gt;&gt; <span class="hljs-title">invokeAll</span><span class="hljs-params">(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp;Collection&lt;? extends Callable&lt;T&gt;&gt; tasks)</span><br />
+	  <span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;</font>throws</span> InterruptedException</span></code></p>
+
+	  <p>Executes the given tasks returning a list of <code>Future</code> objects holding their status and results when all complete (either normally or by an exception).<br /></p>
+
+	  <p>The <code>java.util.concurrent.Future</code> class has these methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">cancel</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> mayInterruptIfRunning)</span></span></code></p>
+
+	  <p>Attempts to cancel the execution of the task. If the argument is true, the thread is interrupted. Otherwise, the task is allowed to complete.</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">V <span class="hljs-title">get</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException, ExecutionException</span></code></p>
+
+	  <p>Waits for the task to complete (indefinitely), and then retrieves its result.</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">V <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">long</span> timeout, TimeUnit unit)</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; throws</span> InterruptedException,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;ExecutionException,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;TimeoutException</span></code></p>
+
+	  <p>Waits the given time at most and then retrieves the result (if the time is reached and the result is not ready, a <code>TimeoutException</code> is thrown).</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isCancelled</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p>Returns <code>true</code> if this task was canceled before it completed normally.</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">isDone</span><span class="hljs-params">()</span></span></code></p>
+
+	  <p>Returns <code>true</code> if the task is completed.<br /></p>
+
+	  <p><code>java.util.concurrent.TimeUnit</code> is an <code>enum</code> with the following values:</p>
+
+	  <ul>
+		<li><code>TimeUnit.NANOSECONDS</code></li>
+
+		<li><code>TimeUnit.MICROSECOND</code></li>
+
+		<li><code>TimeUnit.MILLISECONDS</code></li>
+
+		<li><code>TimeUnit.SECOND</code></li>
+
+		<li><code>TimeUnit.MINUTES</code></li>
+
+		<li><code>TimeUnit.HOURS</code></li>
+
+		<li><code>TimeUnit.DAYS</code></li>
+	  </ul>
+
+	  <p><code>java.util.concurrent.Callable</code> is a functional interface that defines this method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function">V <span class="hljs-title">call</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception</span>;</code></p>
+
+	  <p>As you can see, the difference with <code>Runnable</code> is that a <code>Callable</code> can return a value and throw a checked exception.</p>
+
+	  <p>Now the code examples. When the <code>submit()</code> method is called with a <code>Runnable</code>, the returned <code>Future</code> object returns <code>null</code> (because <code>Runnable</code> doesn't return a result):</p>
+
+	  <p><code class="java hljs">ExecutorService executor = Executors.newSingleThreadExecutor();<br />
+	  Runnable r = () -&gt; {<br />
+	  &nbsp; &nbsp; IntStream.range(<span class="hljs-number">1</span>, <span class="hljs-number">1_000_000</span>).forEach(System.out::println);<br />
+	  };<br />
+	  Future&lt;?&gt; future = executor.submit(r);<br />
+	  <span class="hljs-keyword">try</span> {<br />
+	  &nbsp; &nbsp; <span class="hljs-comment">// Blocks until the Runnable has finished<br /></span>&nbsp; &nbsp; future.get();<br />
+	  } <span class="hljs-keyword">catch</span> (InterruptedException<br />
+	  &nbsp; &nbsp; | ExecutionException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+	  <p>When this method is called with a <code>Callable</code>, the returned <code>Future</code> object contains the result when it has finished executing:</p>
+
+	  <p><code class="java hljs">ExecutorService executor = Executors.newSingleThreadExecutor();<br />
+	  Callable&lt;Long&gt; c = () -&gt;<br />
+	  &nbsp; &nbsp; LongStream.rangeClosed(<span class="hljs-number">1</span>, <span class="hljs-number">1_000_000</span>).sum();<br />
+	  Future&lt;Long&gt; future = executor.submit(c);<br />
+	  <span class="hljs-keyword">try</span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Blocks 1 second until the Callable has finished</span><br />
+	  &nbsp; &nbsp; Long result = future.get(<span class="hljs-number">1</span>, TimeUnit.SECONDS);<br />
+	  } <span class="hljs-keyword">catch</span> (InterruptedException | ExecutionException<br />
+	  &nbsp; &nbsp; | TimeoutException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+	  <p>Assuming the following list of <code>Callable</code> objects:</p>
+
+	  <p><code class="java hljs">List&lt;Callable&lt;String&gt;&gt; callables = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+	  callables.add(() -&gt; <span class="hljs-string">"Callable 1"</span>);<br />
+	  callables.add(() -&gt; <span class="hljs-string">"Callable 2"</span>);<br />
+	  callables.add(() -&gt; <span class="hljs-string">"Callable 3"</span>);</code></p>
+
+	  <p><code>invokeAny()</code> executes the given tasks returning the result of one that has completed successfully. You have no guarantee about which of the <code>Callable</code>'s results you'll get, just one of the ones that finish:</p>
+
+	  <p><code class="java hljs">ExecutorService executor = Executors.newFixedThreadPool(<span class="hljs-number">3</span>);<br />
+	  <span class="hljs-keyword">try</span> {<br />
+	  &nbsp; &nbsp; String result = executor.invokeAny(callables);<br />
+	  &nbsp; &nbsp; System.out.println(result);<br />
+	  } <span class="hljs-keyword">catch</span>(InterruptedException | ExecutionException e) {<span class="hljs-comment">/** ... */</span>}</code></p>
+
+	  <p>Sometimes this will print <code>"Callable 1"</code>, sometimes <code>"Callable 2"</code>, and other times <code>"Callable 3"</code>.</p>
+
+	  <p><code>invokeAll()</code> executes the given tasks returning a list of <code>Future</code> objects that will hold the status and results until all task are completed. <code>Future.isDone()</code> returns <code>true</code> for each element of the returned list:</p>
+
+	  <p><code class="java hljs">ExecutorService executor = Executors.newFixedThreadPool(<span class="hljs-number">3</span>);<br />
+	  <span class="hljs-keyword">try</span> {<br />
+	  &nbsp; &nbsp; List&lt;Future&lt;String&gt;&gt; futures = executor.invokeAll(callables);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; for</span>(Future&lt;String&gt; f : futures){<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.format(<span class="hljs-string">"%s - %s%n"</span>, f.get(), f.isDone());<br />
+	  &nbsp; &nbsp; }<br />
+	  } <span class="hljs-keyword">catch</span>(InterruptedException | ExecutionException e) {&nbsp;<span class="hljs-comment">/** ... */&nbsp;</span>}</code></p>
+
+	  <p>One possible output:</p>
+
+	  <p><code class="hljs">Callable 1 - true<br />
+	  Callable 2 - true<br />
+	  Callable 3 - true</code></p>
+
+	  <h2>Threading problems</h2>
+
+	  <p>When an application has two or more threads that make it behave in an unexpected way, well, that's a problem.</p>
+
+	  <p>Generally, the cause of this issue is that threads are executed in parallel in such a way that sometimes they have to compete to access resources and other times, the actions of one thread cause side-effects over the actions of another one (like modifying or deleting some shared values).</p>
+
+	  <p>A solution to this problem is the concept of locking, where something like a resource or a block or code is locked with some mechanism in such a way that only one thread at a time can use or access it.</p>
+
+	  <p>However, if we're not careful, locking can turn in one of the following three problems.</p>
+
+	  <p><b>Deadlock</b><br />
+	  In simple words, a deadlock situation occurs when two or more threads are blocked forever, waiting for each other to acquire/release some resource.</p>
+
+	  <p>For example, let's say you and I got into a big discussion, you say concurrency is hard to get it right and I say it's easy. We're really mad at each other.</p>
+
+	  <p>After a while, you're ready to say <i>"All right, it can be easy"</i> to end the discussion, but only if I say I'm wrong. In the same way, I'm willing to say that I'm wrong, that is not easy, but only if you say it can be easy.</p>
+
+	  <p>You hold the lock on <i>"It can be easy"</i> and you're waiting for me to release the lock on <i>"It's not easy."</i></p>
+
+	  <p>I'm holding the lock on <i>"It's not easy"</i> and I'm waiting for you to release the lock on <i>"It can be easy."</i></p>
+
+	  <p>But neither of us is going to admit that he/she is wrong (release the lock we have), because, who does that? So we are going to be waiting for each other (forever?). This is a deadlock situation.</p>
+
+	  <p><br /></p>
+
+	  <p><b>Starvation</b><br />
+	  Starvation occurs when a thread is constantly waiting for a lock, never able to take it because other threads with higher priority are continually acquiring it.</p>
+
+	  <p>Suppose you're in the supermarket, waiting in the checkout line. Then, a customer with a VIP membership arrives and is served first without waiting. And then, another VIP customer comes. And then another. And you just wait, forever. That's starvation.</p>
+
+	  <p><br /></p>
+
+	  <p><b>Livelock</b><br />
+	  A liveLock is like a deadlock in the sense that two (or more) threads are blocking each other, but in a livelock, each thread tries to resolve the problem on its own (live) instead of just waiting (dead). They are not blocked, but they are unable to make further progress.</p>
+
+	  <p>Suppose we are walking in a narrow alley, in opposite directions. When we met, each of us moves aside to let the other pass, but we end up walking the same side at the same time, repeatedly. That's a livelock.</p>
+
+	  <p>There's another threading problem related with how concurrency works and some consider it the root cause of the previous problems.</p>
+
+	  <p><br /></p>
+
+	  <p><b>Race condition</b><br />
+	  A race condition is a situation where two threads compete to access or modify the same resource at the same time in a way that causes unexpected results (generally, invalid data).</p>
+
+	  <p>Let's say there's a movie you and I want to see. Each on its own house goes to the cinema's website to buy a ticket. When we check availability, there's only left. We both hurry and click the buy button at the same time. In theory, there can be three outcomes:</p>
+
+	  <ul>
+		<li>Both of us get to buy the ticket</li>
+
+		<li>Only one of us gets the ticket</li>
+
+		<li>Neither of us gets the ticket (some other person wins it)</li>
+	  </ul>
+
+	  <p>That's a race condition (in most race conditions there's a read and then a write).</p>
+
+	  <p>The definite solution to this problem is never modify a variable (by making them immutable, for example). However, that's not always possible.</p>
+
+	  <p>Another solution to avoid race conditions is to perform the read and write operations atomically (together in a single step). Another solution (also effective for the other problems) is to ensure the part where the problem happens is executed by only one thread at a time properly.</p>
+
+	  <p>In the next chapter, we'll see how to implement these solutions with the concurrency API that Java provides.</p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li>At a low level, we can create a thread in two ways, either by implementing <code>Runnable</code> or by subclassing <code>Thread</code> and overriding the <code>run()</code> method.</li>
+
+		<li>At a high-level, we use <code>Executor</code>s, which use thread pools, which in turn use worker threads.</li>
+
+		<li>One type of thread pool is the fixed thread pool, which has a fixed number of threads running. We can also use single-thread pools.</li>
+
+		<li><code>ExecutorService</code> has methods to execute thread pools that either take a <code>Runnable</code> or <code>Callable</code> task. A <code>Callable</code> returns a result and throws a checked exception.</li>
+
+		<li>The <code>submit()</code> method returns a Future object that represents the result of the task (if the task is a <code>Runnable</code>, <code>null</code> is returned).</li>
+
+		<li>An executor has to be shutdown to close the pool thread with either <code>shutdown()</code> (gracefully) or <code>shutdownNow()</code> (forcefully).</li>
+
+		<li>A deadlock situation occurs when two or more threads are blocked forever, waiting for each other to acquire/release some resource.</li>
+
+		<li>Starvation happens when a thread is constantly waiting for a lock, never able to take it because other threads with higher priority are continually acquiring it.</li>
+
+		<li>A livelock is like a deadlock in the sense that two (or more) threads are blocking each other, but in a livelock, each thread tries to resolve the problem on its own (live) instead of just waiting (dead).</li>
+
+		<li>A race condition is a situation where two threads compete to access or modify the same resource at the same time in a way that causes unexpected results.</li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Given:</p>
+
+	  <p><code class="java hljs">ExecutorService service =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Executors.newFixedThreadPool(<span class="hljs-number">2</span>);<br />
+	  Future result = service.submit(() -&gt; <span class="hljs-number">1</span>);</code></p>
+
+	  <p>Assuming it compiles correctly, what is the type of the lambda expression?<br />
+	  A. <code>Runnable</code><br />
+	  B. <code>Callable</code><br />
+	  C. <code>Supplier</code><br />
+	  D. <code>Function</code></p>
+
+	  
+
+	  <p>2. Which of the following statements are true?<br />
+	  A. When working with <code>Runnable</code>, you cannot use a <code>Future</code> object.<br />
+	  B. <code>Executor</code> implements <code>AutoCloseable</code>, so it can be used in a <code>try-with-resources</code>.<br />
+	  C. A <code>Callable</code> task can be canceled.<br />
+	  D. Thread pools contain generic threads.</p>
+
+	  
+
+	  <p>3. Given:</p>
+
+	  <p><code class="java hljs">Future future = executor.submit(callable);<br />
+	  future.get(<span class="hljs-number">3</span>, TimeUnit.MILLISECONDS);</code></p>
+
+	  <p>What does the <code>get()</code> method do?<br />
+	  A. It can return a value at most, after 3 milliseconds. Otherwise, an exception is thrown.<br />
+	  B. It can return a value at most, after 3 milliseconds. Otherwise, <code>null</code> is returned.<br />
+	  C. It returns a value after exactly 3 milliseconds.<br />
+	  D. It blocks the program for 3 milliseconds without returning anything.</p>
+
+	  
+
+	  <p>4. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_26_1</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> Object A = <span class="hljs-keyword">new</span> Object();<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> Object B = <span class="hljs-keyword">new</span> Object();<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp;new</span> Thread(() -&gt; {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; acquireLock(A);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Just acquired A"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; acquireLock(B);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Just acquired B"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; releaseLock(B);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; releaseLock(A);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; }).start();<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; new</span> Thread(() -&gt; {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; acquireLock(B);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Just acquired B"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; acquireLock(A);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Just acquired A"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; releaseLock(A);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; releaseLock(B);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; }).start();<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">acquireLock</span><span class="hljs-params">(Objec o)</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Code to acquire lock on object o</span><br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">releaseLock</span><span class="hljs-params">(Objec o)</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Code to release lock on object o</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What threading problem is more likely to occur in this code?<br />
+	  A. Race Condition<br />
+	  B. Deadlock<br />
+	  C. Livelock<br />
+	  D. No problem at all</p>
+
+  
+
+  
+
+    
+		<div class="answers">
+			<a href="ch26a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch25.html">25. Files and Streams</a>
+			</div>
+			<div class="next">
+				<a href="ch27.html">27. Concurrency</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

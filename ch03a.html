@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+				<h1><i class="chapter">Chapter THREE</i><br />
+				Inner Classes</h1>
+
+				<p><br /></p>
+
+				<h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+				<p style="text-align: center;"><i>Create inner classes including static inner class, local class, nested class, and anonymous inner class.</i><br /></p>
+			  
+			</div>		
+		</div>
+	</div>
+
+  
+  <div class="container">
+  
+	<div class="column">
+
+	  <h2>Answers</h2>
+
+	  <p><b>1. The correct answer is C.</b><br />
+	  There's nothing wrong with the <code>ITest</code> interface; you can declare inner interfaces without problems. What is wrong is that the declaration of the anonymous class is missing the closing semicolon.</p>
+
+	  <p>Remember, the declaration of an anonymous class is a Java expression, like declaring an <code>int</code> variable, so it has to end with a semicolon after the curly brace.</p>
+
+	  <p><br /></p>
+
+	  <p><b>2. The correct answer is B.</b><br />
+	  Local classes (the ones defined inside a method) and anonymous classes (the ones defined without a name) can only access variables of the enclosing context that are final or effectively final (which means that a variable cannot be modified after its initialization).</p>
+
+	  <p>The variable <code>i</code> is modified after the method call so that it won't qualify as an effectively final variable. However, this is not the variable used inside <code>method()</code>, since in Java, all parameters are passed by value. As the parameter is not modified inside the method, it is effectively final and can be used inside local class <code>A</code>.</p>
+
+	  <p><br /></p>
+
+	  <p><b>3. The correct answer is B.</b><br />
+	  The method <code>main</code> defines an anonymous class that is a subclass of type <code>Question_3_3</code>. Since <code>Question_3_3</code> doesn't define any methods, nothing is overridden and, although the method sum is defined inside the anonymous class, no methods apart from the ones inherited from <code>Object</code> can be called.</p>
+
+	  <p><br /></p>
+
+	  <p><b>4. The correct answer is D.</b><br />
+	  There's nothing wrong with the static inner class declaration or the way it is instantiated. Since all happens in the same class, the <code>main</code> method can access the private members of the inner class, so there's no problem with that neither.</p>
+
+	  <p><br /></p>
+
+	  <p><b>5. The correct answer is A.</b><br />
+	  This program first fails on the line marked as <code>// 2</code> because when instantiating an inner class from outside its enclosing class, you don't use its compound name (in this case <code>A.B</code>) on the right side of the statement. So instead of:</p>
+
+	  <p><code class="hljs"><span class="hljs-literal">A</span>.B b = <span class="hljs-literal">a</span>.new <span class="hljs-literal">A</span>.B()<span class="hljs-comment">;</span></code></p>
+
+	  <p>It's just:</p>
+
+	  <p><code class="hljs"><span class="hljs-literal">A</span>.B b = <span class="hljs-literal">a</span>.new B()<span class="hljs-comment">;</span></code></p>
+
+	  <p>If you want to call method <code>go()</code>, the correct code is:</p>
+
+	  <p><code class="hljs"><span class="hljs-keyword">A</span> a = new <span class="hljs-keyword">A</span>()<span class="hljs-comment">;</span><br />
+	  <span class="hljs-keyword">A</span>.B bb = a.new B()<span class="hljs-comment">;</span><br />
+	  <span class="hljs-keyword">A</span>.B.C cc = bb.new C()<span class="hljs-comment">;</span><br />
+	  cc.go()<span class="hljs-comment">;</span></code></p>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>6. The correct answer is B.</b><br />
+	  The inner class <code>A</code> can be marked as <code>private</code> and method <code>main</code> can access it because both are members of <code>Question_3_6</code> class.</p>
+
+	  <p>However, since <code>main</code> is a <code>static</code> method, nothing guarantees that there will be an instance of <code>Question_3_6</code>, so you must explicitly create one to instantiate the inner class <code>A</code>. So instead of:</p>
+
+	  <p><code class="hljs">Question_3_6.<span class="hljs-literal">A</span> <span class="hljs-literal">a</span> = new <span class="hljs-literal">A</span>()<span class="hljs-comment">;</span></code></p>
+
+	  <p>You have to use:</p>
+
+	  <p><code class="hljs">Question_3_6 q = new Question_1_6()<span class="hljs-comment">;</span><br />
+	  Question_3_6.<span class="hljs-keyword">A</span> a = q.new <span class="hljs-keyword">A</span>()<span class="hljs-comment">;</span></code></p>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>7. The correct answer is C.</b><br />
+	  Local classes cannot have access modifiers. The only allowed modifiers are <code>abstract</code> and <code>final</code>.</p>
+
+	  <p><b><br /></b></p>
+
+	  <p><b>8. The correct answer is B.</b><br />
+	  Method <code>add</code> of the anonymous class returned by method create uses the effectively final (as it's never modified) parameter <code>i</code>, not the instance variable of the same name.</p>
+
+	  <p>Since all the code is valid, <code>12</code> is printed.</p>
+
+	  <p><b><br /></b></p>
+  
+	</div>
+  </div>
+		
+  <footer></footer>
+  
+</body>
+</html>

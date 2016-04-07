@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter NINE</i><br />
+			  Lambda Expressions</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Create and use Lambda expressions.</i></p>
+			  
+			</div>	
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>What is a lambda expression?</h2>
+
+	  <p>In the previous chapter, we saw how passing a piece of code instead of a whole object is very useful.</p>
+
+	  <p>Java 8 has introduced a notation that enables you to write:</p>
+
+	  <p><code class="java hljs">List compactCars = findCars(cars,<br />
+	  &nbsp; &nbsp; &nbsp;(Car c) -&gt;<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; car.getType().equals(CarTypes.COMPACT);</code></p>
+
+	  <p>Instead of:</p>
+
+	  <p><code class="java hljs">List&lt;Car&gt; compactCars = findCars(cars,<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp;new</span> Searchable() {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Car car)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> car.getType().equals(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CarTypes.COMPACT);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+	  });</code></p>
+
+	  <p>These are lambda expressions.</p>
+
+	  <p>The term lambda expression comes from lambda calculus, written as &lambda;-calculus, where &lambda; is the Greek letter lambda. This form of calculus deals with defining and applying functions.</p>
+
+	  <p>With lambdas, you won't be able to do things that you couldn't do before them, but they allow to program in a more simple way with a style called functional programming, a different paradigm than object-oriented programming.</p>
+	  <hr />
+
+	  <h4><i>A Lambda Expression</i></h4>
+
+	  <p><code class="java hljs">(Object arg1, <span class="hljs-keyword">int</span> arg2) -&gt; arg1.equals(arg2);</code></p>
+	  <hr />
+
+	  <p>A lambda expression has three parts:</p>
+
+	  <p><b>A list of parameters</b></p>
+
+	  <p>A lambda expression can have zero (represented by empty parentheses), one or more parameters:</p>
+
+	  <p><code class="java hljs">() -&gt; System.out.println(<span class="hljs-string">"Hi"</span>);<br />
+	  (String s) -&gt; System.out.println(s);<br />
+	  (String s1, String s2) -&gt; System.out.println(s1 + s2);</code></p>
+
+	  <p>The type of the parameters can be declared explicitly, or it can be inferred from the context:</p>
+
+	  <p><code class="java hljs">(s) -&gt; System.out.println(s);</code></p>
+
+	  <p>If there is a single parameter, the type is inferred and is not mandatory to use parentheses:</p>
+
+	  <p><code class="java hljs">s -&gt; System.out.println(s);</code></p>
+
+	  <p>If the lambda expression uses as a parameter name the same as a variable name of the enclosing context, a compile error is generated:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// This doesn't compile<br /></span>String s = <span class="hljs-string">""</span>; s -&gt; System.out.println(s);</code></p>
+
+	  <p><b>An arrow</b></p>
+
+	  <p>Formed by the characters <code>-</code> and <code>&gt;</code> to separate the parameters and the body.</p>
+
+	  <p><b>A body</b></p>
+
+	  <p>The body of the lambda expressions can contain one or more statements.</p>
+
+	  <p>If the body has one statement, curly brackets are not required and the value of the expression (if any) is returned:</p>
+
+	  <p><code class="java hljs">() -&gt; <span class="hljs-number">4</span>; (<span class="hljs-keyword">int</span> a) -&gt; a*<span class="hljs-number">6</span>;</code></p>
+
+	  <p>If the body has more than one statement, curly brackets are required, and if the expression returns a value, it must be returned with a return statement:</p>
+
+	  <p><code class="java hljs">() -&gt; {<br />
+	  &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"Hi"</span>);<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> <span class="hljs-number">4</span>;<br />
+	  }<br />
+	  (<span class="hljs-keyword">int</span> a) -&gt; {<br />
+	  &nbsp; &nbsp; &nbsp;System.out.println(a);<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> a*<span class="hljs-number">6</span>;<br />
+	  }</code></p>
+
+	  <p>If the lambda expression doesn't return a result, a <code>return</code> statement is optional. For example, the following expressions are equivalent:</p>
+
+	  <p><code class="java hljs">() -&gt; System.out.println(<span class="hljs-string">"Hi"</span>);<br />
+	  () -&gt; {<br />
+	  &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"Hi"</span>);<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span>;<br />
+	  }</code></p>
+
+	  <h2>How are functional interfaces related to all this?</h2>
+
+	  <p>The signature of the abstract method of a functional interface provides the signature of a lambda expression (this signature is called a <i>functional descriptor</i>).</p>
+
+	  <p>This means that to use a lambda expression, you first need a functional interface. For example, using the interface of the previous chapter:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Searchable</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Car car)</span></span>;<br />
+	  }</code></p>
+
+	  <p>We can create a lambda expression that takes a <code>Car</code> object as argument and returns a <code>boolean</code>:</p>
+
+	  <p><code class="java hljs">Searchable s = (Car c) -&gt; c.getCostUSD() &gt; <span class="hljs-number">20000</span>;</code></p>
+
+	  <p>In this case, the compiler inferred that the lambda expression can be assigned to a <code>Searchable</code> interface, just by its signature.</p>
+
+	  <p>In fact, lambda expressions don't contain the information about which functional interface are implementing. The type of the expression is deduced from the context in which the lambda is used. This type is called <i>target type</i>.</p>
+
+	  <p>In the previous example, as the lambda expression is being assigned to a <code>Searchable</code> interface, the lambda must take the signature of its abstract method. Otherwise, a compiler error is generated.</p>
+
+	  <p>If we were using the lambda as an argument to a method, the compiler would use the definition of the method to infer the type of the expression:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">find</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;find(c -&gt; c.getCostUSD() &gt; <span class="hljs-number">20000</span>);<br />
+	  &nbsp; &nbsp; &nbsp;}<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">find</span><span class="hljs-params">(Searchable s)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Here goes the implementation<br /></span>&nbsp; &nbsp; &nbsp;}<br />
+	  }</code></p>
+
+	  <p>Because of this, the same lambda expression can be associated with different functional interfaces if they have a compatible abstract method signature. For example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Searchable</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Car car)</span></span>;<br />
+	  }<br />
+	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Saleable</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">approve</span><span class="hljs-params">(Car car)</span></span>;<br />
+	  }<br />
+	  <span class="hljs-comment">//...</span><br />
+	  Searchable s1 = c -&gt; c.getCostUSD() &gt; <span class="hljs-number">20000</span>;<br />
+	  Saleable s2 = c -&gt; c.getCostUSD() &gt; <span class="hljs-number">20000</span>;</code></p>
+
+	  <p>For reference, the contexts where the target type (the functional interface) of a lambda expression can be inferred are:</p>
+
+	  <ul>
+		<li>A variable declaration</li>
+
+		<li>An assignment</li>
+
+		<li>A return statement</li>
+
+		<li>An array initializer</li>
+
+		<li>Method or constructor arguments</li>
+
+		<li>A ternary conditional expression</li>
+
+		<li>A cast expression</li>
+	  </ul>
+
+	  <p>However, if you understand the concept, you don't need to memorize this list.</p>
+
+	  <p>But what is it all about functional programming, functional programming, functional descriptors, functional whatever?</p>
+
+	  <p>A lambda expression is a function. That's a little different than the methods we know because it's actually related to a <i>mathematical function</i>.</p>
+
+	  <p>A mathematical function takes some inputs and produces some outputs, but <b>HAS NO SIDE EFFECTS</b>, meaning that when as long as we call it with the same arguments, it always returns the same result.</p>
+
+	  <p>Of course, in Java, you can't always program in a purely functional style (i.e. without any side effect), only in a <i>functional-style</i>.</p>
+
+	  <p>So for practical terms, it may be safe to think of lambda expressions as anonymous methods (or functions), as they don't have a name, just like anonymous classes.</p>
+
+	  <h2>How are lambda expressions related to anonymous classes?</h2>
+
+	  <p>Lambda expressions are an <b>ALTERNATIVE</b> to anonymous classes, but they are not the same.</p>
+
+	  <p>They have some similarities:</p>
+
+	  <ul>
+		<li>Local variables (variables or parameters defined in a method) can only be used if they are declared final or are effectively final.</li>
+
+		<li>You can access instance or static variables of the enclosing class.</li>
+
+		<li>They must not throw more exceptions than specified in the throws clause of the functional interface method. Only the same type or a supertype.</li>
+	  </ul>
+
+	  <p>And some significant differences:</p>
+
+	  <ul>
+		<li>For an anonymous class, this keyword resolves to the anonymous class itself. For a lambda expression, it resolves to the enclosing class where the lambda is written.</li>
+
+		<li>Default methods of a functional interface cannot be accessed from within lambda expressions. Anonymous classes can.</li>
+
+		<li>Anonymous classes are compiled into, well, inner classes. But lambda expressions and converted into private static (in some cases) methods of their enclosing class and, using the <code>invokedynamic</code> instruction (added in Java 7), they are bound dynamically. Since there's no need to load another class, lambda expressions are more efficient. This is a very simple explanation, but that's the idea.</li>
+	  </ul>
+
+	  <p>By the way, if you really have to know or want to understand why local variables have to be final whereas instance or static variables don't when using them inside an anonymous class or lambda expression, it's because of the way these variables are implemented in Java.</p>
+
+	  <p>Instance variables are stored on the heap (a region of your computer's memory accessible anywhere in your program), while local variables live on the stack (a special region of your computer's memory that stores temporary variables created by each function).</p>
+
+	  <p>Variables on the heap are shared by across threads, but variables on the stack are implicitly confined to the thread they're in.</p>
+
+	  <p>So when you create an instance of an anonymous inner class or a lambda expression, the values of local variables are <b>COPIED</b>. In other words, you're not working with the variable, but with a copied value.</p>
+
+	  <p>First of all, this prevents thread-related problems. Second, since you're working with a copy, if the variable could be modified by the rest of the method, you would be working with an out-of-date variable.</p>
+
+	  <p>A <code>final</code> (or effectively final) variable removes these possibilities since the value can't be changed, you don't need to worry about such changes being visible or causing thread problems.</p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li>Lambda expressions have three parts: a list of parameters, and arrow, and a body:<br />
+		<code class="java hljs">(Object o) -&gt; System.out.println(o);</code></li>
+
+		<li>You can think of lambda expressions as anonymous methods (or functions) as they don't have a name.</li>
+
+		<li>A lambda expression can have zero (represented by empty parentheses), one or more parameters.</li>
+
+		<li>The type of the parameters can be declared explicitly, or it can be inferred from the context.</li>
+
+		<li>If there is a single parameter, the type is inferred and is not mandatory to use parentheses.</li>
+
+		<li>If the lambda expression uses as a parameter name the same as a variable name of the enclosing context, a compile error is generated.</li>
+
+		<li>If the body has one statement, curly brackets are not required, and the value of the expression (if any) is returned.</li>
+
+		<li>If the body has one statement, curly brackets are required, and if the expression returns a value, it must return with a <code>return</code> statement.</li>
+
+		<li>If the lambda expression doesn't return a result, a <code>return</code> statement is optional.</li>
+
+		<li>The signature of the <code>abstract method</code> of a functional interface provides the signature of a lambda expression (this signature is called a <i>functional descriptor</i>).</li>
+
+		<li>This means that to use a lambda expression, you first need a functional interface.</li>
+
+		<li>However, lambda expressions don't contain the information about which functional interface are implementing.</li>
+
+		<li>The type of the expression is deduced from the context in which the lambda is used. This type is called <i>target type</i>.</li>
+
+		<li>The contexts where the target type of a lambda expression can be inferred include an assignment, method or constructor arguments, and a cast expression.</li>
+
+		<li>Like anonymous classes, lambda expressions can access instance and static variables, but only final or effectively final local variables.</li>
+
+		<li>Also, they cannot throw exceptions that are not defined in the <code>throws</code> clause of the function interface method.</li>
+
+		<li>For a lambda expression, this resolves to the enclosing class where the lambda is written.</li>
+
+		<li>Default methods of a functional interface cannot be accessed from within lambda expressions.</li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Which of the following are valid lambda expressions?<br />
+	  A. <code>String a, String b -&gt; System.out.print(a+ b);</code><br />
+	  B. <code>() -&gt; return;</code><br />
+	  C. <code>(int i) -&gt; i;</code><br />
+	  D. <code>(int i) -&gt; i++; return i;</code></p>
+
+	  
+
+	  <p>2. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">aMethod</span><span class="hljs-params">(String s)</span></span>;<br />
+	  }</code></p>
+
+	  <p>Which of the following are valid statements?<br />
+	  A. <code>A a = a -&gt; a.length();</code><br />
+	  B. <code>A x = y -&gt; {return y;};</code><br />
+	  C. <code>A s = "2" -&gt; Integer.parseInt(s);</code><br />
+	  D. <code>A b = (String s) -&gt; 1;</code></p>
+
+	  
+
+	  <p>3. How can be used a lambda expression?<br />
+	  A. As a method argument<br />
+	  B. As a conditional expression in an <code>if</code> statement<br />
+	  C. In a <code>return</code> statement<br />
+	  D. In a <code>throw</code> statement</p>
+
+	  
+
+	  <p>4. Given:</p>
+
+	  <p><code class="java hljs">() -&gt; <span class="hljs-number">7</span> * <span class="hljs-number">12.0</span>;</code></p>
+
+	  <p>Which of the following interfaces can provide the functional descriptor for the above lambda expression?<br />
+	  A.<br /></p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">A</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">double</span> <span class="hljs-title">m</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> <span class="hljs-number">4.5</span>;<br />
+	  &nbsp; &nbsp; &nbsp;}<br />
+	  }</code></p>
+
+	  <p>B.<br /></p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">B</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function">Number <span class="hljs-title">m</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>C.<br /></p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">C</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">m</span><span class="hljs-params">()</span></span>;<br />
+	  }</code></p>
+
+	  <p>D.<br /></p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">D</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">m</span><span class="hljs-params">(Integer... i)</span></span>;<br />
+	  }</code></p>
+
+	  
+
+	  <p>5. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">AnInterface</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">int</span> <span class="hljs-title">aMethod</span><span class="hljs-params">()</span></span> { <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>; }<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">anotherMethod</span><span class="hljs-params">()</span></span>;<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_9_5</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AnInterface</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;AnInterface a = () -&gt; aMethod();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(a.anotherMethod());<br />
+	  &nbsp; &nbsp; &nbsp;}<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-annotation">@Override<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">anotherMethod</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br />
+	  &nbsp; &nbsp; &nbsp;}<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>0</code><br />
+	  B. <code>1</code><br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>6. Which of the following statements are true?<br />
+	  A. Curly brackets are required whenever the <code>return</code> keyword is used in a lambda expression<br />
+	  B. A <code>return</code> keyword is always required in a lambda expression<br />
+	  C. A <code>return</code> keyword is always optional in a lambda expression<br />
+	  D. Lambda expressions don't return values</p>
+
+	  
+
+	  <p>7. How is the this keyword handled inside a lambda expression?<br />
+	  A. You can't use this inside a lambda expression<br />
+	  B. <code>this</code> refers to the functional interface of the lambda expression<br />
+	  C. <code>this</code> refers to the lambda expression itself<br />
+	  D. <code>this</code> refers to the enclosing class of the lambda expression</p>
+
+	  
+
+	  <p>8. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">X</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">test</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span></span>;<br />
+	  }<br />
+	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_9_8</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>;<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;X x = i -&gt; i * <span class="hljs-number">2</span>;<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(x.test(<span class="hljs-number">3</span>));<br />
+	  &nbsp; &nbsp; &nbsp;}<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>0</code><br />
+	  B. <code>3</code><br />
+	  C. <code>6</code><br />
+	  D. Compilation fails</p>
+
+  
+		
+		
+		<div class="answers">
+			<a href="ch09a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch08.html">08. Lambda Expressions</a>
+			</div>
+			<div class="next">
+				<a href="ch10.html">10. Java Built-In Lambda Interfaces</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

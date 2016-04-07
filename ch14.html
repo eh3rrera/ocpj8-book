@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter FOURTEEN</i><br />
+			  Optional Class</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Develop code that uses the Optional class.</i><br /></p>
+			  
+			</div>	
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>The problem with null</h2>
+
+	  <p>Most programming languages have a data type to represent the absence of a value, and it is known by many names:</p>
+
+	  <p><code class="hljs">NULL, nil, None, Nothing</code></p>
+
+	  <p>The <code>null</code> type was introduced in ALGOL W by Tony Hoare in 1965, and it's considered one of the worst mistakes of computer science. In Tony Hoare's own words:</p>
+
+	  <p><i>I call it my billion-dollar mistake. It was the invention of the null reference in 1965. At that time, I was designing the first comprehensive type system for references in an object-oriented language ((ALGOL W)). My goal was to ensure that all use of references should be absolutely safe, with checking performed automatically by the compiler. But I couldn't resist the temptation to put in a null reference, simply because it was so easy to implement. This has led to innumerable errors, vulnerabilities, and system crashes, which have probably caused a billion dollars of pain and damage in the last forty years.<br />
+	  – Tony Hoare</i></p>
+
+	  <p>Still, some may be wondering, what is the problem with <code>null</code>?</p>
+
+	  <p>Well, if you're a little worried by the problems this code might cause, you know the answer already:</p>
+
+	  <p><code class="java hljs">String summary =&nbsp;<br />
+	  &nbsp; book.getChapter(<span class="hljs-number">10</span>)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .getSummary().toUpperCase();</code></p>
+
+	  <p>The problem with that code is that if any of those methods returns a <code>null</code> reference (for example, if the book doesn't have a tenth chapter), a <code>NullPointerException</code> (the most common exception in Java) will be thrown at runtime stopping the program.</p>
+
+	  <p>What can we do to avoid this exception?</p>
+
+	  <p>Perhaps, the easiest way is to check for <code>null</code>. Here's one way to it:</p>
+
+	  <p><code class="java hljs">String summary = <span class="hljs-string">""</span>;<br />
+	  <span class="hljs-keyword">if</span>(book != <span class="hljs-keyword">null</span>) {<br />
+	  &nbsp; &nbsp; Chapter chapter = book.getChapter(<span class="hljs-number">10</span>);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; if</span>(chapter != <span class="hljs-keyword">null</span>) {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; if</span>(chapter.getSummary() != <span class="hljs-keyword">null</span>) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; summary = chapter.getSummary()<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .toUpperCase();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>You don't know if any object in this hierarchy can be <code>null</code>, so you check every object for this value. Obviously, this is not the best solution; it's not very practical and damage readability.</p>
+
+	  <p>There may be another issue. Is checking for <code>null</code> really desirable? I mean, what if those objects should never be <code>null</code>? By checking for <code>null</code>, we will be hiding the error and not be dealing with it.</p>
+
+	  <p>Of course, this is also a design issue. For example, if a chapter has no summary yet, what would be better to use as a default value? An empty string or <code>null</code>?</p>
+
+	  <p>To address this problem, Java 8 introduced the class <code>java.util.Optional&lt;T&gt;</code>.</p>
+
+	  <h2>The Optional class</h2>
+
+	  <p>The job of this class is to <b>ENCAPSULATE</b> an optional value, an object that can be <code>null</code>.</p>
+
+	  <p>Using the previous example, if we know that not all chapters have a summary, instead of modeling the class like this:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Chapter</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> String summary;<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Other attributes and methods</span><br />
+	  }</code></p>
+
+	  <p>We can use the <code>Optional</code> class:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Chapter</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> Optional&lt;String&gt; summary;<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Other attributes and methods</span><br />
+	  }</code></p>
+
+	  <p>So if there's a value, the <code>Optional</code> class just wraps it. Otherwise, an empty value is represented by the method <code>Optional.empty()</code>, that returns a singleton instance of <code>Optional</code>.</p>
+
+	  <p>By using this class instead of <code>null</code>, first, we explicitly declare that the summary attribute is optional. Then, we can avoid <code>NullPointerExceptions</code> while having at our disposal the useful methods of <code>Optional</code> that we'll review up next.</p>
+
+	  <p>First, let's see how to create an instance of this class.</p>
+
+	  <p>To get an empty <code>Optional</code> object, use:</p>
+
+	  <p><code class="java hljs">Optional&lt;String&gt; summary = Optional.empty();</code></p>
+
+	  <p>If you are sure that an object is not <code>null</code>, you can wrap it in an <code>Optional</code> object this way:</p>
+
+	  <p><code class="java hljs">Optional&lt;String&gt; summary = Optional.of(<span class="hljs-string">"A summary"</span>);</code></p>
+
+	  <p>A <code>NullPointerException</code> will be thrown if the object is <code>null</code>. However, you can use:</p>
+
+	  <p><code class="java hljs">Optional&lt;String&gt; summary = Optional.ofNullable(<span class="hljs-string">"A summary"</span>);</code></p>
+
+	  <p>That returns an <code>Optional</code> instance with the specified value if it is non-<code>null</code>. Otherwise, it returns an empty <code>Optional</code>.</p>
+
+	  <p>If you want to know if an <code>Optional</code> contains a value, you can do it like this:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">if</span>( summary.isPresent() ) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Do something</span><br />
+	  }</code></p>
+
+	  <p>Or in a more functional style:</p>
+
+	  <p><code class="java hljs">summary.ifPresent(s -&gt; System.out.println(s));<br />
+	  <span class="hljs-comment">// Or summary.ifPresent(System.out::println);</span></code></p>
+
+	  <p>The <code>ifPresent()</code> method takes a <code>Consumer&lt;T&gt;</code> as an argument that is executed only if the <code>Optional</code> contains a value.</p>
+
+	  <p>To get the value of an <code>Optional</code> use:</p>
+
+	  <p><code class="java hljs">String s = summary.get();</code></p>
+
+	  <p>However, this method will throw a <code>java.util.NoSuchElementException</code> if the <code>Optional</code> doesn't contain a value, so it's better to use the <code>ifPresent(</code>) method.</p>
+
+	  <p>Alternatively, if we want to return something when the <code>Optional</code> doesn't contain a value, there are three other methods we can use:</p>
+
+	  <p><code class="java hljs">String summaryOrDefault = summary.orElse(<span class="hljs-string">"Default summary"</span>);</code></p>
+
+	  <p>The <code>orElse()</code> method returns the argument (that must be of type <code>T</code>, in this case a <code>String</code>) when the <code>Optional</code> is empty. Otherwise, it returns the encapsulated value.</p>
+
+	  <p><code class="java hljs">String summaryOrDefault =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; summary.orElseGet( () -&gt; <span class="hljs-string">"Default summary"</span> );</code></p>
+
+	  <p>The <code>orElseGet()</code> method takes a <code>Supplier&lt;? extends T&gt;</code> as an argument that returns a value when the <code>Optional</code> is empty. Otherwise, it returns the encapsulated value.</p>
+
+	  <p><code class="java hljs">String summaryOrException =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; summary.orElseThrow( () -&gt; <span class="hljs-keyword">new</span> Exception() );</code></p>
+
+	  <p>The <code>orElseThrow()</code> method takes a <code>Supplier&lt;? extends X&gt;</code>, where <code>X</code> is the type of the exception to throw when the <code>Optional</code> is empty. Otherwise, it returns the encapsulated value.</p>
+
+	  <p>Like streams, there are versions of the <code>Optional</code> class to work with primitives, <code>OptionalInt</code>, <code>OptionalLong</code>, and <code>OptionalDouble</code>, so you can use <code>OptionalInt</code> instead of <code>Optional&lt;Integer&gt;</code>:</p>
+
+	  <p><code class="java hljs">OptionalInt optionalInt = OptionalInt.of(<span class="hljs-number">1</span>);<br />
+	  <span class="hljs-keyword">int</span> i = optionalInt.getAsInt();</code></p>
+
+	  <p>However, the use of these primitive versions are not encouraged, especially because they lack three useful methods of <code>Optional</code>: <code>filter()</code>, <code>map()</code>, and <code>flatMap()</code>. And since <code>Optional</code> just contains one value, the overhead of boxing/unboxing a primitive is not significant.</p>
+
+	  <p>The <code>filter()</code> method returns the <code>Optional</code> if a value is present and matches the given predicated. Otherwise, an empty <code>Optional</code> is returned.</p>
+
+	  <p><code class="java hljs">String summaryStr =<br />
+	  &nbsp; &nbsp; summary.filter(s -&gt; s.length() &gt; <span class="hljs-number">10</span>).orElse(<span class="hljs-string">"Short summary"</span>);</code></p>
+
+	  <p>The <code>map()</code> method is generally used to transform from one type to another. If the value is present, it applies the provided <code>Function&lt; ? super T, ? extends U &gt;</code> to it. For example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">int</span> summaryLength = summary.map(s -&gt; s.length()).orElse(<span class="hljs-number">0</span>);</code></p>
+
+	  <p>The <code>flapMap()</code> method is similar to <code>map()</code>, but it takes an argument of type <code>Function&lt;? super T, Optional&lt;U&gt;&gt;</code> and if the value is present, it returns the <code>Optional</code> that results from applying the provided function. Otherwise, it returns an empty <code>Optional</code>.</p>
+
+	  <p>In Chapter 17, we'll review in more detail the methods <code>map()</code> and <code>flatMap()</code> and how they are used with streams.</p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li>The <code>java.util.Optional&lt;T&gt;</code> class <b>ENCAPSULATES</b> an optional value, i.e. an object that can be <code>null</code>.</li>
+
+		<li>An empty value is represented by the method <code>Optional.empty()</code>.</li>
+
+		<li>You can wrap an object in an <code>Optional</code> with the method <code>of()</code>, however, a <code>NullPointerException</code> will be thrown if the object is <code>null</code>.</li>
+
+		<li>The method <code>ofNullable()</code> returns an <code>Optional</code> instance with the specified value if it is non-<code>null</code>. Otherwise, it returns an empty <code>Optional</code>.</li>
+
+		<li>To get the value of an <code>Optional</code> use the method <code>get()</code>, but it will throw a <code>java.util.NoSuchElementException</code> if the <code>Optional</code> doesn't contain a value, so it's better to use the <code>ifPresent()</code> method that takes a <code>Consumer&lt;T&gt;</code> as an argument that is executed only if the <code>Optional</code> contains a value.</li>
+
+		<li>The <code>orElse()</code> method returns the argument when the <code>Optional</code> is empty, otherwise, it returns the encapsulated value.</li>
+
+		<li>The <code>orElseGet()</code> method takes a <code>Supplier</code> that returns a value when the <code>Optional</code> is empty. Otherwise, it returns the encapsulated value.</li>
+
+		<li>The <code>orElseThrow()</code> method takes a <code>Supplier</code> that returns an exception when the <code>Optional</code> is empty. Otherwise, it returns the encapsulated value.</li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_14_1</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Optional opt = Optional.of(<span class="hljs-string">"1"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; String s =&nbsp;opt.orElseGet(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; () -&gt; <span class="hljs-keyword">new</span> RuntimeException()<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; );<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(s);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>1</code><br />
+	  B. Nothing is printed<br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>2. Which of the following statements is true?<br />
+	  A. The method <code>Optional.isPresent()</code> takes a <code>Consumer&lt;T&gt;</code> as an argument that is executed only if the <code>Optional</code> contains a value.<br />
+	  B. The method <code>Optional.of()</code> can create an empty <code>Optional</code>.<br />
+	  C. The method <code>Optional.of()</code> can throw a <code>NullPointerException</code>.<br />
+	  D. The method <code>Optional.ifPresent()</code> takes a <code>Function&lt;T,U&gt;</code> as an argument.</p>
+
+	  
+
+	  <p>3. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_14_3</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(ToInt(<span class="hljs-string">"a"</span>).get());<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Optional&lt;Integer&gt; <span class="hljs-title">ToInt</span><span class="hljs-params">(String s)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; try</span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return</span> Optional.of(Integer.parseInt(s));<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; } <span class="hljs-keyword">catch</span>(Exception e) {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; return</span> Optional.empty();<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>a</code><br />
+	  B. <code>Optional.empty</code><br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+	  
+
+	  <p>4. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_14_4</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Optional.of(<span class="hljs-number">0</span>).orElse(<span class="hljs-number">1</span>)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; );<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. <code>0</code><br />
+	  B. <code>1</code><br />
+	  C. Compilation fails<br />
+	  D. An exception occurs at runtime</p>
+
+  
+
+  
+    
+		<div class="answers">
+			<a href="ch14a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch13.html">13. Iterating and Filtering Collections</a>
+			</div>
+			<div class="next">
+				<a href="ch15.html">15. Data Search</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

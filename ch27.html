@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+
+	<div class="nav"></div>
+
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter TWENTY-SEVEN</i><br />
+			  Concurrency</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Use synchronized keyword and java.util.concurrent.atomic package to control the order of thread execution.<br /></i><i>Use java.util.concurrent collections and classes including CyclicBarrier and CopyOnWriteArrayList.</i></p>
+			  
+			</div>
+		</div>
+	</div>
+	
+	
+
+  <div class="container">
+  
+	<div class="column">
+
+		<h2>Synchronization</h2>
+
+	  <p>In the last chapter, we reviewed some problems that can happen in a concurrent environment and briefly talked about how locking.</p>
+
+	  <p>For example, one solution to avoid a race condition is to ensure that only one thread at a time can access the code that causes the problem, that's known as synchronizing that block of code.</p>
+
+	  <p>Synchronization works with locks. Every object comes with a built-in lock and since there is only lock per object, only one thread can hold that lock at any time. The other threads can only take the lock until the first thread release it. Meanwhile, they are blocked.</p>
+
+	  <p>You acquire a lock by using the <code>synchronized</code> keyword in either a block or a method.</p>
+
+	  <p>In a synchronized block, you use the <code>synchronized</code> keyword followed by either a reference variable:</p>
+
+	  <p><code class="java hljs">Object o = <span class="hljs-keyword">new</span> Object();<br />
+	  <span class="hljs-keyword"><br />
+	  synchronized</span> (o) { <span class="hljs-comment">// Get the lock of Object o</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Code guarded by the lock</span><br />
+	  }</code></p>
+
+	  <p>Or the <code>this</code> keyword:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">// Get the lock of the object this code belongs to</span><br />
+	  <span class="hljs-keyword">synchronized</span> (<span class="hljs-keyword">this</span>) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp;// Code guarded by the lock</span><br />
+	  }</code></p>
+
+	  <p>The lock is released when the block ends.</p>
+
+	  <p>You can also synchronize an entire method:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> synchronize <span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // Code guarded by the lock</span><br />
+	  }</code></p>
+
+	  <p>In this case, the lock belongs to the object on which the method is declared and is released when the method ends.</p>
+
+	  <p>Notice that synchronizing a method is equivalent to this:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; synchronized</span> (<span class="hljs-keyword">this</span>) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // Code guarded by the lock</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>Static code can also be synchronized but instead of using this to acquire the lock of an instance of the class, it is acquired on the class object that every class has associated:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; synchronized</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; /** .. */</span><br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>It's equivalent to:</p>
+
+	  <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; synchronized</span> (MyClass.class) {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; /** ... */</span><br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>Now, for example, if we execute the following code:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; static</span> <span class="hljs-keyword">int</span> n = <span class="hljs-number">0</span>;<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; n++;<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(n);<br />
+	  &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; ExecutorService service = Executors.newFixedThreadPool(<span class="hljs-number">4</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Runnable r = () -&gt; add();<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">4</span>; i++) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; service.execute(r);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; service.shutdown();<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>By looking at one possible output, we can see that we have a race condition problem because five threads are executing the same code:</p>
+
+	  <p><code class="hljs">2<br />
+	  2<br />
+	  3<br />
+	  4</code></p>
+
+	  <p>But when we synchronize the <code>add()</code> method to ensure only one thread can access it, the problem goes away:</p>
+
+	  <p><code class="hljs">1<br />
+	  2<br />
+	  3<br />
+	  4</code></p>
+
+	  <h2>Atomic Classes</h2>
+
+	  <p>The <code>java.concurrent.atomic</code> package contains classes to perform atomic operations, which are performed in a single step without the intervention of more than thread.</p>
+
+	  <p>We have for example:</p>
+
+	  <p><code class="java">AtomicBoolean</code>, <code>AtomicInteger</code>, <code>AtomicLong</code>, and <code>AtomicReference&lt;V&gt;</code><br />
+	  To update a value of the corresponding type (or object reference) atomically.</p>
+
+	  <p><code class="java">AtomicIntegerArray</code>, <code>AtomicLongArray</code>, and <code>AtomicReferenceArray&lt;E&gt;</code><br />
+	  To update the elements of the corresponding array type (or object reference) atomically.</p>
+
+	  <p>Each class has methods that perform operations like increments or updates in an atomic way. Take for example the <code>AtomicInteger</code> class (the other classes have similar methods):</p>
+
+	  <p><code class="java">int addAndGet(int delta)</code><br />
+	  Atomically adds the given value to the current value.</p>
+
+	  <p><code class="java">boolean compareAndSet(int expect, int update</code>)<br />
+	  Atomically sets the value to the given updated value if the current value equals the expected value.</p>
+
+	  <p><code class="java">int decrementAndGet()</code><br />
+	  Atomically decrements by one the current value.</p>
+
+	  <p><code class="java">int get()</code><br />
+	  Gets the current value.</p>
+
+	  <p><code class="java">int getAndAdd(int delta)</code><br />
+	  Atomically adds the given value to the current value.</p>
+
+	  <p><code class="java">int getAndDecrement()</code><br />
+	  Atomically decrements by one the current value.</p>
+
+	  <p><code class="java">int getAndIncrement()</code><br />
+	  Atomically increments by one the current value.</p>
+
+	  <p><code class="java">int getAndSet(int newValue)</code><br />
+	  Atomically sets to the given value and returns the old value.</p>
+
+	  <p><code>int incrementAndGet()</code><br />
+	  Atomically increments by one the current value.</p>
+
+	  <p><code class="java">void set(int newValue)</code><br />
+	  Sets to the given value.</p>
+
+	  <p>The example about incrementing a variable we reviewed before can be rewritten as:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; static</span> AtomicInteger n = <span class="hljs-keyword">new</span> AtomicInteger(<span class="hljs-number">0</span>);<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(n.incrementAndGet());<br />
+	  &nbsp; &nbsp; }<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; ...<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>When we execute this, we'll get all the numbers but not in order, because atomic classes only ensure data consistency:</p>
+
+	  <p><code class="hljs">1<br />
+	  4<br />
+	  2<br />
+	  3</code></p>
+
+	  <h2>Concurrent Collections</h2>
+
+	  <p>The <code>java.util.concurrent</code> package provides some thread-safe classes equivalent to the collection classes of <code>java.util</code>.</p>
+
+	  <p>This way, instead of explicitly synchronizing an operation like this:</p>
+
+	  <p><code class="java hljs">Map&lt;String, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br />
+	  ...<br />
+	  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">putIfNew</span><span class="hljs-params">(String key, Integer val)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; if</span>(map.get(key) == <span class="hljs-keyword">null</span>) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; map.put(key, val);<br />
+	  &nbsp; &nbsp; }<br />
+	  }</code></p>
+
+	  <p>You can use a <code>ConcurrentHashMap</code> like this:</p>
+
+	  <p><code class="java hljs">Map&lt;String, Integer&gt; map = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;();<br />
+	  ...<br />
+	  map.putIfAbsent(key, val);</code></p>
+
+	  <p>So when working in concurrent environments, if you're to modify collections, it's better to use the collections of <code>java.util.concurrent</code> (besides, they often perform better than plain synchronization).</p>
+
+	  <p>In fact, if you only need plain <code>get()</code> and <code>put()</code> methods (when working with a map, for example) you only have to change the implementation:</p>
+
+	  <p><code class="java hljs"><span class="hljs-comment">//Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();</span><br />
+	  Map&lt;String, Integer&gt; map = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;();<br />
+	  map.put(<span class="hljs-string">"one"</span>, <span class="hljs-number">1</span>);<br />
+	  Integer val = map.get(<span class="hljs-string">"one"</span>);</code></p>
+
+	  <p>Java provides a lot of concurrent collections, but we can classify them by the interface they implement:</p>
+
+	  <ul>
+		<li><code>BlockingQueue</code> (for queues)</li>
+
+		<li><code>BlockingDeque</code> (for deques)</li>
+
+		<li><code>ConcurrentMap</code> (for maps)</li>
+
+		<li><code>ConcurrentNavigableMap</code> (for navigable maps like <code>TreeMap</code>)</li>
+
+		<li><code>CopyOnWriteArrayList</code> (for lists)</li>
+	  </ul>
+
+	  <p>Since these interfaces extends from the <code>java.util</code> collection interfaces, they inherit the methods we already know (and behave like one them) so here you'll only find the added methods that support concurrency.</p>
+
+	  <p><b>BlockingQueue</b><br />
+	  It represents a thread-safe queue that waits (with an optional timeout) for an element to be inserted if the queue is empty or for an element to be removed if the queue is full:</p>
+
+	  <table border="1" width="100%">
+		<tr>
+		  <td></td>
+
+		  <td><b>Blocks</b></td>
+
+		  <td><b>Times Out</b></td>
+		</tr>
+
+		<tr>
+		  <td><b>Insert</b></td>
+
+		  <td><code>void put(E e)</code></td>
+
+		  <td><code>boolean offer(E e, long timeout, TimeUnit unit)</code></td>
+		</tr>
+
+		<tr>
+		  <td><b>Remove</b></td>
+
+		  <td><code>E take()</code></td>
+
+		  <td><code>E poll(long timeout, TimeUnit unit)</code></td>
+		</tr>
+	  </table>
+
+	  <p>After the waiting time elapses, <code>offer()</code> returns <code>false</code> and <code>poll()</code> returns <code>null</code>.</p>
+
+	  <p>The main implementations of this interface are:</p>
+
+	  <ul>
+		<li><code>ArrayBlockingQueue</code>. A bounded blocking queue backed by an array.<br /></li>
+
+		<li><code>DelayQueue</code>. An unbounded blocking queue of <code>Delayed</code> elements, in which an element can only be taken when its delay has expired.<br /></li>
+
+		<li><code>LinkedBlockingQueue</code>. An optionally-bounded blocking queue based on linked nodes.<br /></li>
+
+		<li><code>LinkedTransferQueue</code>. An unbounded <code>TransferQueue</code> based on linked nodes.<br /></li>
+
+		<li><code>PriorityBlockingQueue</code>. An unbounded blocking queue that uses the same ordering rules as class <code>PriorityQueue</code> and supplies blocking and retrieval operations.<br /></li>
+
+		<li><code>SynchronousQueue</code>. A blocking queue in which each insert operation must wait for a corresponding remove operation by another thread, and vice versa. You cannot peek at a synchronous queue because an element is only present when you try to remove it.<br /></li>
+	  </ul>
+
+	  <p><b>BlockingDeque</b><br />
+	  It represents a thread-safe deque (a double-ended queue, a queue which you can insert and take elements from in both ends). It extends from <code>BlockingQueue</code> and <code>Deque</code>, and also waits (with an optional timeout, after which, it returns <code>false</code> or <code>null</code> too) for an element to be inserted if the deque is empty or for an element to be removed if the deque is full:</p>
+
+	  <table border="1" width="100%">
+		<tr>
+		  <td colspan="3" style="text-align:center"><b>First Element (head)</b></td>
+		</tr>
+
+		<tr>
+		  <td></td>
+
+		  <td><b>Blocks</b></td>
+
+		  <td><b>Times Out</b></td>
+		</tr>
+
+		<tr>
+		  <td><b>Insert</b></td>
+
+		  <td><code>void putFirst(E e)</code></td>
+
+		  <td><code>boolean offerFirst(E e, long timeout, TimeUnit unit)</code></td>
+		</tr>
+
+		<tr>
+		  <td><b>Remove</b></td>
+
+		  <td><code>E takeFirst()</code></td>
+
+		  <td><code>E pollFirst(long timeout, TimeUnit unit)</code></td>
+		</tr>
+
+		<tr>
+		  <td colspan="3" style="text-align:center"><b>Last Element (tail)</b></td>
+		</tr>
+
+		<tr>
+		  <td></td>
+
+		  <td><b>Blocks</b></td>
+
+		  <td><b>Times Out</b></td>
+		</tr>
+
+		<tr>
+		  <td><b>Insert</b></td>
+
+		  <td><code>void putLast(E e)</code></td>
+
+		  <td><code>boolean offerLast(E e, long timeout, TimeUnit unit)</code></td>
+		</tr>
+
+		<tr>
+		  <td><b>Remove</b></td>
+
+		  <td><code>E takeLast()</code></td>
+
+		  <td><code>E pollLast(long timeout, TimeUnit unit)</code></td>
+		</tr>
+	  </table>
+
+	  <p><b>ConcurrentMap</b><br />
+	  This interface represents a thread-safe map and it's implemented by the <code>ConcurrentHashMap</code> class.</p>
+
+	  <p>Here are some of its most important methods:</p>
+
+	  <p><code class="java">V compute(K key, BiFunction&lt;? super K,? super V,? extends V&gt; remappingFunction)</code><br />
+	  Atomically computes the value of a specified key with a <code>BiFunction</code></p>
+
+	  <p><code class="java">V computeIfAbsent(K key, Function&lt;? super K,? extends V&gt; mappingFunction)</code><br />
+	  Atomically computes the value of a key only if it's not present in the map</p>
+
+	  <p><code class="java">V computeIfPresent(K key, BiFunction&lt;? super K,? super V,? extends V&gt; remappingFunction)</code><br />
+	  Atomically computes the value of a key only if it's present in the map</p>
+
+	  <p><code class="java">V getOrDefault(Object key, V defaultValue)</code><br />
+	  Returns the value of the key or a default value if the key is not present</p>
+
+	  <p><code class="java">V merge(K key, V value, BiFunction&lt;? super V,? super V,? extends V&gt; remappingFunction)</code><br />
+	  If the specified key is not already associated with a (non-<code>null</code>) value, associates it with the given value. Otherwise, replaces the value with the results of the given remapping function, or removes if <code>null</code>. This is performed atomically.</p>
+
+	  <p><code class="java">V putIfAbsent(K key, V value)</code><br />
+	  If the key is not present in the map, it's put with the given value atomically</p>
+
+	  <p><b>ConcurrentNavigableMap</b><br />
+	  It represents a thread-safe <code>NavigableMap</code> (like <code>TreeSet</code>) and is implemented by the <code>ConcurrentSkipListMap</code> class, sorted according to the natural ordering of its keys, or by a <code>Comparator</code> provided in its constructor.</p>
+
+	  <p>A <code>ConcurrentNavigable</code> also implements <code>Map</code> and <code>ConcurrentMap</code>, so it has methods like <code>computeIfAbsent()</code>, <code>getOrDefault()</code>, etc.</p>
+
+	  <p><b>CopyOnWriteArrayList</b><br />
+	  It represents a thread-safe <code>List</code>, similar to an <code>ArrayList</code>, but when it's modified (with methods like <code>add()</code> or <code>set()</code>), a new copy of the underlying array is created (hence the name).</p>
+
+	  <p>When iterating an <code>ArrayList</code>, methods like <code>remove()</code>, <code>add()</code> or <code>set()</code> can throw a <code>java.util.ConcurrentModificationException</code>. With a <code>CopyOnWriteArrayList</code>, this exception is not thrown because the iterator works with an unmodified copy of the list. But this also means that calling, for example, the <code>remove()</code> method on the <code>Iterator</code> is not supported (it throws an <code>UnsupportedOperationException</code>).</p>
+
+	  <p>Consider this example, where the last element of the list is changed in every iteration but the original value is still printed inside the iterator:</p>
+
+	  <p><code class="java hljs">List&lt;Integer&gt; list = <span class="hljs-keyword">new</span> CopyOnWriteArrayList&lt;&gt;();<br />
+	  list.add(<span class="hljs-number">10</span>); list.add(<span class="hljs-number">20</span>); list.add(<span class="hljs-number">30</span>);<br />
+	  Iterator&lt;Integer&gt; it = list.iterator();<br />
+	  <span class="hljs-keyword">while</span>(it.hasNext()) {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; int</span> i = it.next();<br />
+	  &nbsp; &nbsp; System.out.print(i + <span class="hljs-string">" "</span>);<br />
+	  &nbsp; &nbsp; <span class="hljs-comment">// No exception thrown<br /></span>&nbsp; &nbsp; list.set(list.size() -<span class="hljs-number">1</span>, i * <span class="hljs-number">10</span>);<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // it.remove(); throws an exception</span><br />
+	  }<br />
+	  System.out.println(list);</code></p>
+
+	  <p>The output:</p>
+
+	  <p><code class="hljs">10 20 30 [10, 20, 300]</code></p>
+
+	  <p>With a <code>CopyOnWriteArrayList</code>, there is no lock on reads, so this operation is faster. For that reason, <code>CopyOnWriteArrayList</code> is most useful when you have few updates and inserts and many concurrent reads.</p>
+
+	  <p>There are other classes like <code>ConcurrentSkipListSet</code>, which represents a thread-safe <code>NavigableSet</code> (like a <code>TreeSet</code>).</p>
+
+	  <p>Or <code>CopyOnWriteArraySet</code>, which represents a thread-safe <code>Set</code> and internally uses a <code>CopyOnWriteArrayList</code> object for all of its operations (so these classes are very similar).</p>
+
+	  <p>Besides all these classes, for each type of collection, the <code>Collections</code> class has methods like the following that take a normal collection and wrap it in a synchronized one:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">Collection&lt;T&gt; <span class="hljs-title">synchronizedCollection</span><span class="hljs-params">(Collection&lt;T&gt; c)</span><br />
+	  <span class="hljs-keyword">static</span> &lt;T&gt; List&lt;T&gt; <span class="hljs-title">synchronizedList</span><span class="hljs-params">(List&lt;T&gt; list)</span><br />
+	  <span class="hljs-keyword">static</span> &lt;K,V&gt; Map&lt;K,V&gt; <span class="hljs-title">synchronizedMap</span><span class="hljs-params">(Map&lt;K,V&gt; m)</span><br />
+	  <span class="hljs-keyword">static</span> &lt;T&gt; Set&lt;T&gt; <span class="hljs-title">synchronizedSet</span><span class="hljs-params">(Set&lt;T&gt; s)</span></span></code></p>
+
+	  <p>However, it's required to synchronize these collections manually when traversing them via an <code>Iterator</code> or <code>Stream</code>:</p>
+
+	  <p><code class="java hljs">Collection c =<br />
+	  &nbsp; &nbsp;Collections.synchronizedCollection(myCollection);<br />
+	  ...<br />
+	  <span class="hljs-keyword">synchronized</span> (c) {<br />
+	  &nbsp; &nbsp;Iterator i = c.iterator();<br />
+	  &nbsp; &nbsp;...<br />
+	  }</code></p>
+
+	  <p>Also, they throw an exception if they are modified within an iteration.</p>
+
+	  <p>Only use these methods if you have to work with an existing collection in a concurrent environment (otherwise create since the beginning a <code>java.util.concurrent</code> collection).</p>
+
+	  <h2>CyclicBarrier</h2>
+
+	  <p>The <code>synchronized</code> keyword help us to coordinate access by multiple threads to a shared resource.</p>
+
+	  <p>But this work at a very low-level, I mean, it takes a lot of effort to coordinate complex concurrent tasks. Luckily, Java provides high-level classes to implement this kind of synchronization tasks easily.</p>
+
+	  <p>One of these classes is <code>CyclicBarrier</code> that provides a synchronization point (a barrier point) where a thread may need to wait until all other threads reach that point.</p>
+
+	  <p>This class has two constructors:</p>
+
+	  <p><code class="java">CyclicBarrier(int threads)</code><br />
+	  Creates a <code>CyclicBarrier</code> with the specified number of threads waiting for it.</p>
+
+	  <p><code class="java">CyclicBarrier(int parties, Runnable barrierAction)</code><br />
+	  Creates a <code>CyclicBarrier</code> with the specified number of threads waiting upon it, and which will execute the given action when the barrier is reached.</p>
+
+	  <p>The methods:</p>
+
+	  <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">await</span><span class="hljs-params">()</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;throws</span> InterruptedException, BrokenBarrierException<br />
+	  <span class="hljs-keyword">int</span> <span class="hljs-title">await</span><span class="hljs-params">(<span class="hljs-keyword">long</span> timeout, TimeUnit unit)</span><br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;throws</span> InterruptedException,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; BrokenBarrierException,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; TimeoutException</span></code></p>
+
+	  <p>Block a thread until all the other threads have called <code>await()</code> (reached the barrier), or optionally, until the specified waiting time elapses (when this happens, a <code>TimeoutException</code> is thrown).</p>
+
+	  <p>These methods throw an <code>InterruptedException</code> if the current thread was interrupted while waiting and a <code>BrokenBarrierException</code> if another thread was interrupted or timed out, or the barrier was reset (with the <code>reset()</code> method), or the barrier action failed due to an exception.</p>
+
+	  <p>Here's an example:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CyclicBarrierExample</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">checkStep</span><span class="hljs-params">(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; CyclicBarrier barrier, String step)</span></span> {<br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; // Do something to prepare the step</span><br />
+	  &nbsp; &nbsp; &nbsp; System.out.println(step + <span class="hljs-string">" is ready"</span>);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; try</span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Wait the other threads<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;barrier.await();<br />
+	  &nbsp; &nbsp; &nbsp; } <span class="hljs-keyword">catch</span> (Exception e) { <span class="hljs-comment">/** ... */</span> }<br />
+	  &nbsp; &nbsp;}<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; String[] steps = {<span class="hljs-string">"Read the recipe"</span>,<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"Gather the ingredients"</span>,<br />
+	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"Wash hands"</span>};<br />
+	  &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Preparing everything:"</span>);<br />
+	  <br />
+	  &nbsp; &nbsp; &nbsp; Runnable allSet = () -&gt;<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println( <span class="hljs-string">"Everything's ready. Let's begin."</span>);<br />
+	  <br />
+	  &nbsp; &nbsp; &nbsp; ExecutorService executor =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Executors.newFixedThreadPool(steps.length);<br />
+	  &nbsp; &nbsp; &nbsp; CyclicBarrier barrier =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;new</span> CyclicBarrier(steps.length, allSet);<br />
+	  <br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; for</span>(String step : steps) {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;executor.submit(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; () -&gt; checkStep(barrier, step)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;);<br />
+	  &nbsp; &nbsp; &nbsp; }<br />
+	  <br />
+	  &nbsp; &nbsp; &nbsp; executor.shutdown();<br />
+	  &nbsp; &nbsp;}<br />
+	  }</code></p>
+
+	  <p>The output:</p>
+
+	  <p><code class="hljs">Preparing everything:<br />
+	  Gather the ingredients is ready<br />
+	  Read the recipe is ready<br />
+	  Wash hands is ready<br />
+	  Everything's ready. Let's begin.</code></p>
+
+	  <p>We have three steps and one thread to process each one. The threads will print the given step and call the <code>await()</code> method. When the three threads have called that method, the <code>Runnable</code> represented by the <code>allSet</code> variable is executed (the one that prints the <code>"Everything's ready..."</code> message).</p>
+
+	  <p>As you can see, the steps are not printed in order, but the program cannot proceed until all of them are executed.</p>
+
+	  <p>Notice that the <code>CyclicBarrier</code> is created with the same number of threads. It has to be this way. Otherwise, the program will wait forever.</p>
+
+	  <p>If the number of threads is less than the <code>CyclicBarrier</code> expects, it will wait forever for the missing threads.</p>
+
+	  <p>To understand why the program will block when the number of threads is greater, you need to know that a <code>CyclicBarrier</code> can be reused and how that works.</p>
+
+	  <p>When all the expected threads call <code>await()</code>, the number of waiting threads on the <code>CyclicBarrier</code> goes back to zero and it can be used again for a new set of threads. This way, if the <code>CyclicBarrier</code> expects three threads but there are four, a cycle of three will be completed and for the next, two will be missing, which will block the program.</p>
+
+	  
+
+	  <h2>Key Points</h2>
+
+	  <ul>
+		<li>Synchronization works with locks. Every object comes with a built-in lock and since there is only lock per object, only one thread can hold that lock at any time. You acquire a lock by using the <code>synchronized</code> keyword in either a block or a method.</li>
+
+		<li>Static code can also be synchronized but instead of using this to acquire the lock of an instance of the class, it is acquired on the class object that every class has associated.</li>
+
+		<li>The <code>java.concurrent.atomic</code> package contains classes (like <code>AtomicInteger</code>) to perform atomic operations, which are performed in a single step without the intervention of more than thread.</li>
+
+		<li><code>BlockingQueue</code> represents a thread-safe queue and <code>BlockingDeque</code> represents a thread-safe deque. Both wait (with an optional timeout) for an element to be inserted if the queue/deque is empty or for an element to be removed if the queue/deque is full.</li>
+
+		<li><code>ConcurrentMap</code> represents a thread-safe map and it's implemented by the <code>ConcurrentHashMap</code> class. <code>ConcurrentNavigableMap</code> represents a thread-safe <code>NavigableMap</code> (like <code>TreeSet</code>) and is implemented by the <code>ConcurrentSkipListMap</code> class.</li>
+
+		<li><code>CopyOnWriteArrayList</code> represents a thread-safe <code>List</code>, similar to an <code>ArrayList</code>, but when it's modified (with methods like <code>add()</code> or <code>set()</code>), a new copy of the underlying array is created (hence the name).</li>
+
+		<li><code>CyclicBarrier</code> that provides a synchronization point (a barrier point) where a thread may need to wait until all other threads reach that point.</li>
+	  </ul>
+
+	  
+
+	  <h2>Self Test</h2>
+
+	  <p>1. Which of the following statements is true?<br />
+	  A. <code>ConcurrentNavigableMap</code> has two implementations, <code>ConcurrentSkipListMap</code> and <code>ConcurrentSkipListSet</code><br />
+	  B. The <code>remove()</code> method of <code>CopyOnWriteArrayList</code> creates a new copy of the underlying array this class is based.<br />
+	  C. A <code>static</code> method can acquire the lock of an instance variable.<br />
+	  D. Constructors can be synchronized.</p>
+
+	  
+
+	  <p>2. Which of the following options will correctly increment a value inside a map in a thread-safe way?</p>
+
+	  <p>A.</p>
+
+	  <p><code class="java hljs">Map&lt;String, Integer&gt; map = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;();<br />
+	  <span class="hljs-keyword">int</span> i = map.get(key);<br />
+	  map.put(key, ++i);</code></p>
+
+	  <p>B.</p>
+
+	  <p><code class="java hljs">ConcurrentMap&lt;String, Integer&gt; map = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;();<br />
+	  map.put(key, map.get(key)+<span class="hljs-number">1</span>);</code></p>
+
+	  <p>C.</p>
+
+	  <p><code class="java hljs">Map&lt;String, Integer&gt; map = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br />
+	  Map&lt;String, Integer&gt; map2 = Collections.synchronizedMap(map);<br />
+	  <span class="hljs-keyword">int</span> i = map.get(key);<br />
+	  map.put(key, ++i);</code></p>
+
+	  <p>D.</p>
+
+	  <p><code class="java hljs">Map&lt;String, AtomicInteger&gt; map = <span class="hljs-keyword">new</span> ConcurrentHashMap&lt;&gt;();<br />
+	  map.get(key).incrementAndGet();</code></p>
+
+	  
+
+	  <p>3. Given:</p>
+
+	  <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_27_3</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception</span> {<br />
+	  &nbsp; &nbsp; &nbsp; BlockingDeque&lt;Integer&gt; deque =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new</span> LinkedBlockingDeque&lt;&gt;();<br />
+	  &nbsp; &nbsp; &nbsp; deque.offerLast(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>, TimeUnit.SECONDS);<br />
+	  &nbsp; &nbsp; &nbsp; System.out.print(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;deque.pollLast(<span class="hljs-number">5</span>, TimeUnit.SECONDS)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;+ <span class="hljs-string">" "<br /></span>&nbsp; &nbsp; &nbsp; );<br />
+	  &nbsp; &nbsp; &nbsp; System.out.print(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;deque.pollFirst(<span class="hljs-number">5</span>, TimeUnit.SECONDS));<br />
+	  &nbsp; &nbsp;}<br />
+	  }</code></p>
+
+	  <p>What is the result?<br />
+	  A. The program just prints <code>10</code><br />
+	  B. The program prints <code>10</code> and hangs forever<br />
+	  C. After 5 seconds, the program prints <code>10</code> and after another 5 seconds, it prints <code>null</code><br />
+	  D. The program prints <code>10</code> and 5 seconds later, it prints <code>null</code></p>
+
+	  
+
+	  <p>4. In which cases the <code>await()</code> method of <code>CyclicBarrier</code> can throw an exception?<br />
+	  A. If the thread goes to sleep<br />
+	  B. When the last thread calls <code>await()</code><br />
+	  C. If any thread is interrupted<br />
+	  D. If the number of threads that call <code>await()</code> is different than the number of threads <code>CyclicBarrier</code> was created.</p>
+
+  
+
+  
+    
+		<div class="answers">
+			<a href="ch27a.html" target="_blank">Open answers page</a>
+		</div>
+
+		<div class="book-info"></div>
+
+		<div class="linkbox">
+			<div class="previous">
+				<a href="ch26.html">26. Thread Basics</a>
+			</div>
+			<div class="next">
+				<a href="ch28.html">28. Fork/Join Framework</a>
+			</div>
+			<div style="clear:both;"></div>
+		</div>
+  
+	</div>
+  </div>
+  
+  
+	
+</body>
+</html>

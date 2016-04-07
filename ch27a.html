@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+  <link href="css/code.css" rel="stylesheet" type="text/css" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+  
+  <script src="js/common-sections.js"></script>
+</head>
+
+<body>
+	<div class="header">
+		<div class="title-container">
+			<div class="chapter-title">
+			
+			  <h1><i class="chapter">Chapter TWENTY-SEVEN</i><br />
+			  Concurrency</h1>
+
+			  <p><br /></p>
+
+			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+
+			  <p style="text-align: center;"><i>Use synchronized keyword and java.util.concurrent.atomic package to control the order of thread execution.<br /></i><i>Use java.util.concurrent collections and classes including CyclicBarrier and CopyOnWriteArrayList.</i></p>
+			  
+			</div>
+		</div>
+	</div>
+
+  
+  <div class="container">
+  
+	<div class="column">
+
+	  <h2>Answers</h2>
+
+	  <p><b>1. The correct answer is B.</b><br />
+	  Option A is false. <code>ConcurrentSkipListMap</code> is the only implementation of <code>ConcurrentNavigableMap</code>.<br />
+	  Option B is true. Whenever there's a modification to a <code>CopyOnWriteArrayList</code> list, it creates a new copy of the underlying array.<br />
+	  Option C is false. A <code>static</code> method can only use static variables, so it can only acquire the lock of static variables or the lock of variables defined inside the method.<br />
+	  Option D is false. A constructor cannot be synchronized because only one thread has access to the object when is creating it.</p>
+
+	  <p><br /></p>
+
+	  <p><b>2. The correct answer is D.</b><br />
+	  Only option D performs the operation atomically. The other options perform the operation in two steps, which makes it vulnerable to race conditions.</p>
+
+	  <p><br /></p>
+
+	  <p><b>3. The correct answer is D.</b><br />
+	  <code>offerLast()</code> inserts <code>10</code> to the <code>Deque</code> (the timeout value doesn't apply here because the <code>Deque</code> is not full). Then, <code>pollLast()</code> removes that value and returns it. At this point, the deque is empty, so <code>pollFirst()</code> will wait for 5 seconds to see if another thread inserts another value. Since this didn't happen, <code>null</code> is finally returned.</p>
+
+	  <p><br /></p>
+
+	  <p><b>4. The correct answer is C.</b><br />
+	  The <code>await()</code> method throws an <code>InterruptedException</code> if the current thread was interrupted while waiting and a <code>BrokenBarrierException</code> if another thread was interrupted or timed out.</p>
+	  <p><br /></p>
+
+	  
+  
+	</div>
+  </div>
+		
+  <footer></footer>
+  
+</body>
+</html>
