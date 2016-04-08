@@ -96,7 +96,10 @@ $(document).ready(function() {
 	  </div>';
 
     var buy_info = '<p><a href="http://www.amazon.com/dp/B01DXSGHX4" target="_blank">Buying the print/kindle version from Amazon</a></p> \
-		<p><a href="https://leanpub.com/java8-programmer-ii-study-guide/" target="_blank">Buying the PDF/EPUB/MOBI version from Leanpub</a></p>';
+		<p><a href="https://leanpub.com/java8-programmer-ii-study-guide/" target="_blank">Buying the PDF/EPUB/MOBI versions from Leanpub</a></p> \
+		<p><a href="https://itunes.apple.com/us/book/id1101589434" target="_blank">Buying the e-book version from iTunes</a></p> \
+		<p><a href="http://store.kobobooks.com/Search/Query?fcmedia=Book&query=9781533710345" target="_blank">Buying the e-book version from Kobo</a></p> \
+		<p><a href="http://www.scribd.com/book/307398520" target="_blank">Buying the e-book version from Scribd</a></p>';
 
     var problem_info = '<p>Do you have a problem or something to say?</p> \
 		<p><a href="https://github.com/eh3rrera/ocpj8-book/issues" target="_blank">Report an issue with the book</a></p> \
