@@ -2,11 +2,17 @@
 Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam (1Z0-809).
 
 # Buying
-This book is free to read online, but if you like the content and want to support me you can buy the print and e-book version:
+You can read the book for free [here](http://ocpj8.javastudyguide.com/), but if you like the content and want to support me, you can buy the print and e-book version:
 
 <a href="#" target="_blank">Print/Kindle version from Amazon</a>
 
 <a href="https://leanpub.com/java8-programmer-ii-study-guide/" target="_blank">PDF/EPUB/MOBI version from Leanpub</a>
+
+<a href="https://itunes.apple.com/us/book/id1101589434" target="_blank">E-book version from iTunes</a>
+
+<a href="http://store.kobobooks.com/Search/Query?fcmedia=Book&query=9781533710345" target="_blank">E-book version from Kobo</a>
+
+<a href="http://www.scribd.com/book/307398520" target="_blank">E-book version from Scribd</a>
 
 # Contributing
 Any contributions are welcomed. Please have a look at [CONTRIBUTING.md](https://github.com/eh3rrera/ocpj8-book/blob/master/CONTRIBUTING.md).
