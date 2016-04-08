@@ -542,8 +542,12 @@ textarea {
     margin-top: 7px;
 }
 
-.title {
+.nav .title {
     margin-top: 5px;
+}
+.nav .title a {
+    text-decoration: none;
+    color: black;
 }
 
 .chapters {
