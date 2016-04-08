@@ -1,7 +1,7 @@
 $(document).ready(function() {
     var nav = '<div class="container"> \
 		<div class="title pull-left"> \
-			<b>Java 8 Programmer II Study Guide</b> \
+			<a href="index.html"><b>Java 8 Programmer II Study Guide</b></a> \
 		</div> \
 		<div class="menu desktop pull-right"> \
 		  <a class="chapters dropdown-desktop" href="#"><i class="icon-book"></i><span>Chapters</span></a> \
