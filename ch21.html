@@ -355,11 +355,11 @@
             <p>To create an instance, we can use either the static method <code>of()</code> or from a <code>LocalDate</code> or <code>LocalTime</code> instance:</p>
 
             <p><code class="java hljs"><span class="hljs-comment">// Setting seconds and nanoseconds to zero</span><br />
-	  LocalDateTime dt1 = LocalDateTime.of(<span class="hljs-number">2014</span>, <span class="hljs-number">09</span>, <span class="hljs-number">19</span>, <span class="hljs-number">14</span>, <span class="hljs-number">05</span>);<br />
+	  LocalDateTime dt1 = LocalDateTime.of(<span class="hljs-number">2014</span>, <span class="hljs-number">9</span>, <span class="hljs-number">19</span>, <span class="hljs-number">14</span>, <span class="hljs-number">5</span>);<br />
 	  <span class="hljs-comment">// Setting nanoseconds to zero</span><br />
-	  LocalDateTime dt2 = LocalDateTime.of(<span class="hljs-number">2014</span>, <span class="hljs-number">09</span>, <span class="hljs-number">19</span>, <span class="hljs-number">14</span>, <span class="hljs-number">05</span>, <span class="hljs-number">20</span>);<br />
+	  LocalDateTime dt2 = LocalDateTime.of(<span class="hljs-number">2014</span>, <span class="hljs-number">9</span>, <span class="hljs-number">19</span>, <span class="hljs-number">14</span>, <span class="hljs-number">5</span>, <span class="hljs-number">20</span>);<br />
 	  <span class="hljs-comment">// Setting all fields</span><br />
-	  LocalDateTime dt3 = LocalDateTime.of(<span class="hljs-number">2014</span>, <span class="hljs-number">09</span>, <span class="hljs-number">19</span>, <span class="hljs-number">14</span>, <span class="hljs-number">05</span>, <span class="hljs-number">20</span>, <span class="hljs-number">9</span>);<br />
+	  LocalDateTime dt3 = LocalDateTime.of(<span class="hljs-number">2014</span>, <span class="hljs-number">9</span>, <span class="hljs-number">19</span>, <span class="hljs-number">14</span>, <span class="hljs-number">5</span>, <span class="hljs-number">20</span>, <span class="hljs-number">9</span>);<br />
 	  <span class="hljs-comment">// Asumming this date</span> LocalDate date = LocalDate.now();<br />
 	  <span class="hljs-comment">// And this time</span> LocaDate time = LocalTime.now();<br />
 	  <span class="hljs-comment">// Combine the above date with the given time like this</span><br />
@@ -806,7 +806,7 @@
                 <li><code>LocalDate</code>, <code>LocalTime</code>, <code>LocalDateTime</code> and <code>Instant</code> implement interface <code>java.time.temporal.Temporal</code>, so they all have similar methods. While <code>Period</code> and <code>Duration</code> implement interface <code>java.time.temporal.TemporalAmount</code>, which also makes them very similar.<br /></li>
 
                 <li><code>LocalDate</code> represents a date with the year, month, and day of the month information. You can create an instance using:<br />
-                    <code class="java hljs">LocalDate.of(<span class="hljs-number">2015</span>, <span class="hljs-number">08</span>, <span class="hljs-number">01</span>);</code></li>
+                    <code class="java hljs">LocalDate.of(<span class="hljs-number">2015</span>, <span class="hljs-number">8</span>, <span class="hljs-number">1</span>);</code></li>
 
                 <li>Valid <code>ChronoField</code> values to use with the <code>get()</code> method are: <code>DAY_OF_WEEK, ALIGNED_DAY_OF_WEEK_IN_MONTH, ALIGNED_DAY_OF_WEEK_IN_YEAR, DAY_OF_MONTH, DAY_OF_YEAR, EPOCH_DAY, ALIGNED_WEEK_OF_MONTH, ALIGNED_WEEK_OF_YEAR, MONTH_OF_YEAR, PROLEPTIC_MONTH, YEAR_OF_ERA, YEAR,</code> and <code>ERA</code>.<br /></li>
 
@@ -820,7 +820,7 @@
                 <li>Valid <code>ChronoUnits</code> values to use with the <code>plus()</code> and <code>minus()</code> methods are: <code>NANOS, MICROS, MILLIS, SECONDS, MINUTES, HOURS,</code> and <code>HALF_DAYS</code>.<br /></li>
 
                 <li><code>LocalDateTime</code> is a combination of <code>LocalDate</code> or <code>LocalTime</code>. You can create an instance using:<br />
-                    <code class="java hljs">LocalDateTime.of(<span class="hljs-number">2015</span>, <span class="hljs-number">08</span>, <span class="hljs-number">01</span>, <span class="hljs-number">14</span>, <span class="hljs-number">20</span>, <span class="hljs-number">50</span>, <span class="hljs-number">99999</span>);</code></li>
+                    <code class="java hljs">LocalDateTime.of(<span class="hljs-number">2015</span>, <span class="hljs-number">8</span>, <span class="hljs-number">1</span>, <span class="hljs-number">14</span>, <span class="hljs-number">20</span>, <span class="hljs-number">50</span>, <span class="hljs-number">99999</span>);</code></li>
 
                 <li>Valid <code>ChronoField</code> and <code>ChronoUnits</code> values are a combination of the ones used for <code>LocalDate</code> and <code>LocalTime</code>.<br /></li>
 
@@ -846,13 +846,13 @@
 
             <h2>Self Test</h2>
 
-            <p>1. Which of the following are valid ways to create a <code>LocalDate</code> object?<br /> A. <code>LocalDate.of(2014);</code><br /> B. <code>LocalDate.with(2014, 01, 30);</code><br /> C. <code>LocalDate.of(2014, 0, 30);</code><br /> D. <code>LocalDate.now().plusDays(5);</code></p>
+            <p>1. Which of the following are valid ways to create a <code>LocalDate</code> object?<br /> A. <code>LocalDate.of(2014);</code><br /> B. <code>LocalDate.with(2014, 1, 30);</code><br /> C. <code>LocalDate.of(2014, 0, 30);</code><br /> D. <code>LocalDate.now().plusDays(5);</code></p>
 
 
 
             <p>2. Given:</p>
 
-            <p><code class="java hljs">LocalDate.of(<span class="hljs-number">2014</span>, <span class="hljs-number">01</span>, <span class="hljs-number">02</span>).atTime(<span class="hljs-number">14</span>, <span class="hljs-number">30</span>, <span class="hljs-number">59</span>, <span class="hljs-number">999999</span>)</code></p>
+            <p><code class="java hljs">LocalDate.of(<span class="hljs-number">2014</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>).atTime(<span class="hljs-number">14</span>, <span class="hljs-number">30</span>, <span class="hljs-number">59</span>, <span class="hljs-number">999999</span>)</code></p>
 
             <p>Which of the following is the result of executing the above line?<br /> A. A <code>LocalDate</code> of <code>2014-01-02</code><br /> B. A <code>LocalTime</code> of <code>14:30:59:999999</code><br /> C. A <code>LocalDateTime</code> of <code>2014-01-02 14:30:59:999999</code><br /> D. An exception is thrown</p>
 
@@ -886,8 +886,8 @@
 
             <p><code class="java hljs">System.out.println(<br />
 	  &nbsp; &nbsp; Duration.between(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; LocalDateTime.of(<span class="hljs-number">2015</span>, <span class="hljs-number">3</span>, <span class="hljs-number">20</span>, <span class="hljs-number">18</span>, <span class="hljs-number">00</span>),<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; LocalTime.of(<span class="hljs-number">18</span>, <span class="hljs-number">05</span>) )<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; LocalDateTime.of(<span class="hljs-number">2015</span>, <span class="hljs-number">3</span>, <span class="hljs-number">20</span>, <span class="hljs-number">18</span>, <span class="hljs-number">0</span>),<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; LocalTime.of(<span class="hljs-number">18</span>, <span class="hljs-number">5</span>) )<br />
 	  );</code></p>
 
             <p>Which of the following is the result of executing the above line?<br /> A. <code>PT5M</code><br /> B. <code>PT-5M</code><br /> C. <code>PT300S</code><br /> D. An exception is thrown</p>
