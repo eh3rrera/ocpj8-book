@@ -2,71 +2,379 @@
 <html lang="en">
 
 <head>
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
-  <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
-  <link href="css/code.css" rel="stylesheet" type="text/css" />
-  <link href="css/style.css" rel="stylesheet" type="text/css" />
-  <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-  
-  <script src="js/common-sections.js"></script>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam ">
+    <title>Java 8 Programmer II Study Guide: Exam 1Z0-809</title>
+    <link href="css/code.css" rel="stylesheet" type="text/css" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <script src="js/common-sections.js"></script>
 </head>
 
 <body>
 
-	<div class="nav"></div>
+    <div class="nav"></div>
 
-	<div class="header">
-		<div class="title-container">
-			<div class="chapter-title">
-			
-			  <h1><i class="chapter">Appendix A</i><br />
+    <div class="header">
+        <div class="title-container">
+            <div class="chapter-title">
+
+                <h1><i class="chapter">Appendix A</i><br />
 			  From Java 6/7 to Java 8</h1>
 
-			  <p><br /></p>
+                <p><br /></p>
 
-			  <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
+                <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-			  <p style="text-align: center;"><i>Develop code that uses Java SE 8 collection improvements, including Collection.removeIf(), List.replaceAll(), Map.computeIfAbsent(), and Map.computeIfPresent() methods.</i><br /><i>Develop code that uses String objects in the switch statement, binary literals, and numeric literals, including underscores in literals.</i><br /><i>Use Lock, ReadWriteLock, and ReentrantLock classes in the java.util.concurrent.locks.</i><br /><i>Format dates, numbers, and currency values for localization with the NumberFormat and DateFormat classes, including number and date format patterns.</i><br /><i>Recursively access a directory tree by using the DirectoryStream and FileVisitor interfaces</i><br /><i>Find a file by using the PathMatcher interface.</i><br /><i>Observe the changes in a directory by using the WatchService interface.</i></p>
+                <p style="text-align: center;"><i>Develop code that uses Java SE 8 collection improvements, including Collection.removeIf(), List.replaceAll(), Map.computeIfAbsent(), and Map.computeIfPresent() methods.</i><br /><i>Develop code that uses String objects in the switch statement, binary literals, and numeric literals, including underscores in literals.</i><br /><i>Use Lock, ReadWriteLock, and ReentrantLock classes in the java.util.concurrent.locks.</i><br /><i>Format dates, numbers, and currency values for localization with the NumberFormat and DateFormat classes, including number and date format patterns.</i><br /><i>Recursively access a directory tree by using the DirectoryStream and FileVisitor interfaces</i><br /><i>Find a file by using the PathMatcher interface.</i><br /><i>Observe the changes in a directory by using the WatchService interface.</i></p>
 
             </div>
-		</div>
-	</div>
-	
-	
+        </div>
+    </div>
 
-  <div class="container">
-  
-	<div class="column">
 
-		
-		<h4>Soon...</h4>
 
-  
-    
-		<div class="answers">
-			<a href="ch31a.html" target="_blank">Open answers page</a>
-		</div>
+    <div class="container">
 
-		<div class="book-info"></div>
+        <div class="column">
 
-		<div class="linkbox">
-			<div class="previous">
-				<a href="ch30.html">30. Localization</a>
-			</div>
-			<div class="next">
-				&nbsp;
-			</div>
-			<div style="clear:both;"></div>
-		</div>
-  
-	</div>
-  </div>
-  
-  
-	
+
+            <h2>New Methods on Collections</h2>
+            <p>Java 8 brings some new helper methods for <code>Collection</code>s to write less verbose code.</p>
+
+            <p>The first one is <code>forEach()</code> (we talked about it earlier):</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">forEach</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; action)</span></span></code></p>
+
+            <p>That calls the <code>accept()</code> method on each element of the collection. So instead of having something like:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; list.size(); i++) {<br />
+		&nbsp; &nbsp; System.out.println(list.get(i));<br />
+		}</code></p>
+
+            <p>Or:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">for</span>(String s : list) {<br />
+		&nbsp; &nbsp; System.out.println(s);<br />
+		}</code></p>
+
+            <p>Now we can have it as (without creating a stream):</p>
+
+            <p><code class="java hljs">list.forEach(System.out::println);</code></p>
+
+            <p>Another one is <code>removeif()</code>:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">removeIf</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> E&gt; filter)</span></span></code></p>
+
+            <p>That iterates over the elements of the collection and removes an element if it matches the given predicate (if the implementation of the <code>Collection</code> doesn't support removal, an <code>UnsupportedOperationException</code> is thrown). So instead of having something like:</p>
+
+            <p><code class="java hljs">Iterator&lt;String&gt; it = list.iterator();<br />
+		<span class="hljs-keyword">while</span> (it.hasNext()) {<br />
+		&nbsp; &nbsp; String s = it.next();<br />
+		<span class="hljs-keyword">&nbsp; &nbsp; if</span>(s != <span class="hljs-keyword">null</span> &amp;&amp; s.length() &lt; <span class="hljs-number">3</span>) {<br />
+		&nbsp; &nbsp; &nbsp; &nbsp; it.remove();<br />
+		&nbsp; &nbsp; }<br />
+		}</code></p>
+
+            <p>Now we can have just:</p>
+
+            <p><code class="java hljs">list.removeIf( s -&gt; s != <span class="hljs-keyword">null</span> &amp;&amp; s.length() &lt; <span class="hljs-number">3</span> );</code></p>
+
+            <p>We also have <code>replaceAll()</code>:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> <span class="hljs-keyword">void</span> <span class="hljs-title">replaceAll</span><span class="hljs-params">(UnaryOperator&lt;E&gt; operator)</span></span></code></p>
+
+            <p>That replaces each element of this list with the result of applying the operator to the element. So instead of having something like:</p>
+
+            <p><code class="java hljs">Iterator&lt;String&gt; it = list.iterator();<br />
+		<span class="hljs-keyword">while</span> (it.hasNext()) {<br />
+		&nbsp; &nbsp; String s = it.next();<br />
+		&nbsp; &nbsp; it.set(s.toUpperCase());<br />
+		}</code></p>
+
+            <p>Now we just have:</p>
+
+            <p><code class="java hljs">list.replaceAll(s -&gt; s.toUpperCase());</code></p>
+
+
+            <h2>New Methods on Maps</h2>
+            <p>Java 8 also brings new helper methods to <code>Map</code>s. There's two interesting methods in particular.</p>
+
+            <p>One is <code>computeIfAbsent()</code>:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> V <span class="hljs-title">computeIfAbsent</span><span class="hljs-params">(<br />
+		&nbsp; &nbsp; &nbsp; &nbsp; K key,<br />
+		&nbsp; &nbsp; &nbsp; &nbsp; Function&lt;? <span class="hljs-keyword">super</span> K,? extends V&gt; mappingFunction)</span></span></code></p>
+
+            <p>This method calculates the value of the given key, and adds it to the map only if:</p>
+
+            <ul>
+                <li>The key is not already in the map</li>
+
+                <li>The key has a <code>null</code> value associated</li>
+
+                <li>If the calculated value is different than <code>null</code></li>
+            </ul>
+
+            <p>For example:</p>
+
+            <p><code class="java hljs">Map&lt;String, String&gt; letters = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br />
+		letters.put(<span class="hljs-string">"a"</span>, <span class="hljs-string">"a"</span>);<br />
+		letters.put(<span class="hljs-string">"b"</span>, <span class="hljs-keyword">null</span>);<br />
+		<br />
+		Function&lt;String, String&gt; func = k -&gt; {<br />
+		<span class="hljs-keyword">&nbsp; &nbsp; if</span>(k.startsWith(<span class="hljs-string">"d"</span>)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br />
+		<span class="hljs-keyword">&nbsp; &nbsp; return</span> k.toUpperCase();<br />
+		};<br />
+		<span class="hljs-comment"><br />
+		// Won't update,already in map</span><br />
+		letters.computeIfAbsent(<span class="hljs-string">"a"</span>, func);<br />
+		<span class="hljs-comment">// Will update<br /></span> &nbsp;letters.computeIfAbsent(<span class="hljs-string">"b"</span>, func);<br />
+		<span class="hljs-comment">// Will add</span><br />
+		letters.computeIfAbsent(<span class="hljs-string">"c"</span>, func);<br />
+		<span class="hljs-comment">// Won't add</span><br />
+		letters.computeIfAbsent(<span class="hljs-string">"d"</span>, func);<br />
+		<span class="hljs-comment">// Yes, there's also a forEach in Maps</span><br />
+		letters.forEach( (key, value) -&gt;<br />
+		&nbsp; &nbsp; System.out.format(<span class="hljs-string">"%s-%s;"</span>, key, value)<br />
+		);</code></p>
+
+            <p>The output:</p>
+
+            <p><code class="java hljs">a-a;b-B;c-C;</code></p>
+
+            <p>The other method is <code>computeIfPresent()</code>:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> V <span class="hljs-title">computeIfPresent</span><span class="hljs-params">(<br />
+		&nbsp; &nbsp; &nbsp; &nbsp; K key,<br />
+		&nbsp; &nbsp; &nbsp; &nbsp; BiFunction&lt;? <span class="hljs-keyword">super</span> K,? <span class="hljs-keyword">super</span> V,? extends V&gt; remappingFunction)</span></span></code></p>
+
+            <p>This method updates the value of a given key only if:</p>
+
+            <ul>
+                <li>The key is already in the map</li>
+
+                <li>The key has a non-<code>null</code> value associated and the function also returns a non-<code>null</code> value</li>
+            </ul>
+
+            <p>If the key has a non-<code>null</code> associated and the function returns <code>null</code>, the key is removed from the map. For example:</p>
+
+            <p><code class="java hljs">Map&lt;String, String&gt; letters = <span class="hljs-keyword">new</span> HashMap&lt;&gt;();<br />
+		letters.put(<span class="hljs-string">"a"</span>, <span class="hljs-string">"a"</span>);<br />
+		letters.put(<span class="hljs-string">"b"</span>, <span class="hljs-keyword">null</span>);<br />
+		letters.put(<span class="hljs-string">"d"</span>, <span class="hljs-string">"d"</span>);<br />
+		<br />
+		BiFunction&lt;String, String, String&gt; func = (k, v) -&gt; {<br />
+		<span class="hljs-keyword">&nbsp; &nbsp; if</span>(k.startsWith(<span class="hljs-string">"d"</span>)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br />
+		<span class="hljs-keyword">&nbsp; &nbsp; return</span> k.toUpperCase();<br />
+		};<br />
+		<br />
+		<span style="color: rgb(0, 106, 0);">// Will update</span><br />
+		letters.computeIfPresent(<span class="hljs-string">"a"</span>, func);<br />
+		<span style="color: rgb(0, 106, 0);">// Won't update</span>&nbsp;<br />
+		letters.computeIfPresent(<span class="hljs-string">"b"</span>, func);<br />
+		<span style="color: rgb(0, 106, 0);">// Won't add</span>&nbsp;<br />
+		letters.computeIfPresent(<span class="hljs-string">"c"</span>, func); &nbsp;<br />
+		<span style="color: rgb(0, 106, 0);">// Will remove</span><br />
+		letters.computeIfPresent(<span class="hljs-string">"d"</span>, func); &nbsp;<br />
+		letters.forEach( (key, value) -&gt;<br />
+		&nbsp; &nbsp; System.out.format(<span class="hljs-string">"%s-%s;"</span>, key, value)<br />
+		);</code></p>
+
+            <p>In this case, the output will be:</p>
+
+            <p><code class="java hljs">a-A;b-<span class="hljs-keyword">null</span>;</code></p>
+
+
+            <h2>Switch statement</h2>
+            <p>A <code>switch</code> statement is another way to represent an <code>if-else</code> statement. This is its syntax:</p>
+            <p><code class="java hljs">switch(expression) {<br/>
+		&nbsp;&nbsp;&nbsp;case constant_value_1:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;statements;<br/>
+		&nbsp;&nbsp;&nbsp;case constant_value_2:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;statements;<br/>
+		&nbsp;&nbsp;&nbsp;default:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;statements;<br/>
+		}</code></p>
+
+            <p>The switch expression must evaluate to one of the following types:</p>
+            <ul>
+                <li><code>byte</code>, <code>short</code>, <code>char</code>, <code>int</code></li>
+                <li><code>enum</code></li>
+                <li><code>String</code></li>
+            </ul>
+            <p>Anything else, like a <code>float</code>, will generate a compiler error.</p>
+
+            <p>Here's an example of a <code>switch</code> statement:</p>
+
+            <p><code class="java hljs">String s = <span class="hljs-string">"Jack"</span>;<br/>
+		<span class="hljs-keyword">switch</span>(s) {<br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> <span class="hljs-string">"Mike"</span>:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="hljs-string">"Good morning Mr. "</span> + s); <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">break</span>;<br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> <span class="hljs-string">"Laura"</span>:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="hljs-string">"Good morning Mrs. "</span> + s); <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">break</span>;<br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">default</span>:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="hljs-string">"Good morning "</span> + s); <br/>
+		}</code></p>
+
+            <p>There are many things to take into account with a <code>switch</code> statement.</p>
+            <p>First, each case needs either a constant value or a <code>final</code> variable initialized at declaration. Otherwise, a compile time error will be generated:</p>
+            <p><code class="java hljs"><span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> goodFinal = 2;<br/>
+		<span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> badFinal;<br/>
+		badFinal = 3;<br/>
+		<span class="hljs-keyword">int</span> var = 1;<br/>
+		<br/>
+		<span class="hljs-keyword">switch</span>(var) {<br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> 1:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// OK</span><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var *= 2; <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">break;</span><br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> goodFinal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// OK</span><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var++; <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">break;</span><br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> badFinal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// Compiler error!</span><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var--;<br/>
+		}</code></p>
+
+            <p>It's not valid to have more than <code>case</code> with the same value:</p>
+            <p><code class="java hljs"><span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> goodFinal = 2;<br/>
+		<span class="hljs-keyword">int</span> var = 1;<br/>
+		<br/>
+		<span class="hljs-keyword">switch</span>(var) {<br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> 1:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// OK</span><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var *= 2; <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">break;</span><br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> 2:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// Compiler error!</span><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var++; <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">break;</span><br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> goodFinal:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// Compiler error!</span><br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var--;<br/>
+		}</code></p>
+
+            <p>Besides, <code>case</code> labels are evaluated from top to down beginning from the first <code>case</code> constant that matches the <code>switch</code> expression. This means that all the subsequent statements will be executed until the end of the <code>switch</code> statement, or a <code>break</code> is found. For example:</p>
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> var = 1;<br/>
+		<br/>
+		<span class="hljs-keyword">switch</span>(var) {<br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> 1:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="hljs-string">"Shirt"</span>); <br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> 2:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="hljs-string">"Pants"</span>);<br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> 3:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="hljs-string">"Shoes"</span>);<br/>
+		}</code></p>
+
+            <p>Will output:</p>
+            <p><code class="java hljs">Shirt<br/>
+		Pants<br/>
+		Shoes
+		</code></p>
+
+            <p>Because of this, we can have a <span class="hljs-keyword">switch</span> statement like the following:</p>
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> var = 1;<br/>
+		<br/>
+		<span class="hljs-keyword">switch</span>(var) {<br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> 1:<br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> 2:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="hljs-string">"Pants"</span>);<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">break;</span><br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> 3:<br/>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<span class="hljs-string">"Shoes"</span>);<br/>
+		}</code></p>
+
+            <p>Where, if <code>var</code> is <code>1</code> or <code>2</code>, execution will <i>fall through</i>, and <code>Pants</code> will be printed.</p>
+
+            <p>Also, notice that <code>default</code> doesn't need a <code>break</code> because it's the last element of the <code>switch</code> statement. However, <code>default</code> can appear in any position, so watch for it.</p>
+
+            Finally, it may be obvious, but <code>switch</code> statement can only test for equality. This is important when using a <code>String</code> expression because we have to take into account the meaning of object equality. In other words, this won't match:
+            <p><code class="java hljs">String s = <span class="hljs-string">"a"</span>;<br/>
+		<br/>
+		<span class="hljs-keyword">switch</span>(s) {<br/>
+		&nbsp;&nbsp;&nbsp;<span class="hljs-keyword">case</span> <span class="hljs-string">"A"</span>: <span class="hljs-comment">// Strings are case-sensitive, so this case won't match</span><br/>
+		&nbsp;&nbsp;&nbsp;...<br/>
+		}</code></p>
+
+
+            <h2>Numeric Literals</h2>
+            <p>In Java, integers numbers are by default of type <code>int</code> and floating-point numbers are by default of type <code>double</code>.</p>
+
+            <p>Integer numbers are the ones with types <code>byte</code>, <code>short</code>, <code>int</code>, and <code>long</code> and generally expressed in decimal base. However, they can also be expressed as hexadecimal or binary numbers.</p>
+
+            <p>Hexadecimal numbers consist of numbers <code>0</code> through <code>9</code> and letters <code>A</code> through <code>F</code>. To specify a hexadecimal number, you add the <code>0x</code> or <code>0X</code> prefix.</p>
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> hex = 0x2B; <span class="hljs-comment">// The number 43</span>
+		</code></p>
+
+            <p>Binary numbers consist of the numbers <code>0</code> and <code>1</code>. To specify a binary number, you add the <code>0b</code> or <code>0B</code> prefix.</p>
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> bin = 0b0010110; <span class="hljs-comment">// The number 22</span>
+		</code></p>
+
+            <p>These numbers can be cast to <code>float</code> or <code>double</code> types, but we can't express these types as hexadecimal or binary numbers. For example:</p>
+            <p><code class="java hljs"><span class="hljs-keyword">float</span> goodFloat = 0xF2; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// OK, number 242.0</span><br/>
+		<span class="hljs-keyword">double</span> goodDouble = 0b11110110; ;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// OK, number 246.0</span><br/>
+		<span class="hljs-keyword">float</span> badFloat = 0xF2f; <span class="hljs-comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// Compilation error!</span><br/>
+		<span class="hljs-keyword">double</span> badDouble = 0b11110110d; ;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// Compilation error!</span>
+		</code></p>
+
+            <p>From Java 7, you can place any number of underscores between the digits of numbers to separate groups of digits and improve readability.</p>
+
+            <p>You cannot put underscores in the following places:</p>
+            <ul>
+                <li>At the beginning or end of a number</li>
+                <li>Adjacent to a decimal point in a floating point literal</li>
+                <li>Before an F or L suffix</li>
+                <li>In positions where a string of digits is expected</li>
+            </ul>
+
+            <p>Here are some examples:</p>
+            <p><code class="java hljs"><span class="hljs-keyword">int</span> i = 34_765; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// OK</span><br/>
+		<span class="hljs-keyword">float</span> f = 43.987_876; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// OK</span><br/>
+		<span class="hljs-keyword">short</span> s = 0b0000____0101; &nbsp;&nbsp;<span class="hljs-comment">// OK</span><br/>
+		<span class="hljs-keyword">int</span> i2 = 100_; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// Compilation error!</span><br/>
+		<span class="hljs-keyword">int</span> i3 = 0_x1D; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// Compilation error!</span><br/>
+		<span class="hljs-keyword">int</span> i4 = 0x_1D; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// Compilation error!</span><br/>
+		<span class="hljs-keyword">float</span> f2 = 8945.40_f; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// Compilation error!</span><br/>
+		<span class="hljs-keyword">float</span> f3 = 8945_.40f; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// Compilation error!</span><br/>
+		</code></p>
+
+            <h2>java.util.concurrent.locks</h2>
+            <h4>Soon...</h4>
+
+
+            <h2>Formatting dates, numbers, and currency values</h2>
+            <h4>Soon...</h4>
+
+
+            <h2>DirectoryStream and FileVisitor interfaces</h2>
+            <h4>Soon...</h4>
+
+
+            <h2>PathMatcher</h2>
+            <h4>Soon...</h4>
+
+
+            <h2>WatchService </h2>
+            <h4>Soon...</h4>
+
+
+
+            <div class="answers">
+                <a href="ch31a.html" target="_blank">Open answers page</a>
+            </div>
+
+            <div class="book-info"></div>
+
+            <div class="linkbox">
+                <div class="previous">
+                    <a href="ch30.html">30. Localization</a>
+                </div>
+                <div class="next">
+                    &nbsp;
+                </div>
+                <div style="clear:both;"></div>
+            </div>
+
+        </div>
+    </div>
+
+
+
 </body>
+
 </html>
