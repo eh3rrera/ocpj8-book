@@ -39,19 +39,32 @@
 
             <h2>Answers</h2>
 
-            <p><b>1. The correct answer is A.</b><br /> A value of zero for the <code>maxDepth</code> argument means that only the starting directory is visited (no files or subdirectories).</p>
+            <p><b>1. The correct answer is C.</b><br />
+                <code>Path.resolve()</code> doesn't remove redundancy in paths (that's done with <code>Path.normalize()</code> or <code>Path.toRealPath()</code>), it just combine two paths.</p>
 
             <p><br /></p>
 
-            <p><b>2. The correct answer is D.</b><br /> Option A is false. <code>Files.find()</code> doesn't have a default subdirectory depth. This is passed as an argument to the method.<br /> Option B is false. <code>Files.find()</code> follows symbolic links only if <code>FileVisitOption.FOLLOW_LINKS</code> is passed as an argument.<br /> Option C is false. <code>Files.walk()</code> follows symbolic links only if <code>FileVisitOption.FOLLOW_LINKS</code> is passed as an argument.<br /> Option D is true. <code>Files.walk()</code> traverses subdirectories recursively.</p>
+            <p><b>2. The correct answer is B.</b><br />
+                <code>path.getRoot()</code> returns <code>c:\</code><br />
+                <code>path.getName(0)</code> returns <code>Users</code><br />
+                <code>path.getName(1)</code> returns <code>mark</code><br />
+                <code>path.subpath(0,0)</code> throws an exception</p>
+
+            <p><code>getName()</code> returns the element parts of a path. The first element is at index zero (the root doesn't count as an element).</p>
 
             <p><br /></p>
 
-            <p><b>3. The correct answer is D.</b><br /> Option A is not equivalent. <code>Files.list()</code> doesn't traverse subdirectories recursively.<br /> Option B is not equivalent. <code>Files.find()</code> is missing the max depth argument.<br /> Option C is not equivalent. The last argument must be a <code>BiPredicate</code>.</p>
+            <p><b>3. The correct answer is C.</b><br />
+                <code>CopyOption</code> is an enumeration of the values <code>NOFOLLOW_LINKS</code>, <code>REPLACE_EXISTING</code>, <code>COPY_ATTRIBUTES</code>.</p>
 
             <p><br /></p>
 
-            <p><b>4. The correct answer is C.</b><br /> If the file doesn't exist, <code>Files.line(Path)</code> throws an <code>IOException</code> (a <code>java.nio.file.NoSuchFileException</code>) when the method is called, before the stream is created.</p>
+            <p><b>4. The correct answer is D.</b><br />
+                <code>.</code> means the current directory and <code>..</code> means the parent directory. The method <code>toRealPath()</code> turns the redundant path into <code>C:\temp\file.txt. path.subpath(1,2)</code> give us the element at index <code>1</code>, <code>file.txt</code>.</p>
+
+            <p><br /></p>
+
+            <p><b>5. The correct answer is D.</b><br /> A file creation time attribute can only be set with <code>BasicFileAttributeView</code>. The right way to do it is with a <code>FileTime</code> instance as shown in Option D.</p>
 
             <p><br /></p>
 

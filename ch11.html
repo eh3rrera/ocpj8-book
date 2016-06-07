@@ -42,955 +42,576 @@
 
         <div class="column">
 
-            <h2>Why built-in interfaces?</h2>
+            <h2>Using methods like objects</h2>
 
-            <p>A lambda expression must correspond to one functional interface.</p>
+            <p>As we know, in Java we can use references to objects, either by creating new objects:</p>
 
-            <p>We can use any interface as lambda expressions as long as the interface only contains one abstract method.</p>
+            <p><code class="java hljs">List list = <span class="hljs-keyword">new</span> ArrayList();<br />
+  store(<span class="hljs-keyword">new</span> ArrayList());</code></p>
 
-            <p>We also saw that the Java 8 API has many functional interfaces that we can use to construct lambda expressions, like <code>java.lang.Runnable</code> or <code>java.lang.Comparable</code>.</p>
+            <p>Or by using existing objects:</p>
 
-            <p>However, Java 8 contains new functional interfaces to work specifically with lambda expressions, covering the most common scenarios usages.</p>
+            <p><code class="java hljs">List list2 = list;<br />
+  isFull(list2);</code></p>
 
-            <p>For example, two common scenarios are to filter things based on a particular condition and test for some condition on the properties of an object.</p>
+            <p>But what about a reference to a <i>method</i>?</p>
 
-            <p>In the previous chapters, we used:</p>
+            <p>If we only use a method of an object in another method, we still have to pass the full object as an argument. Wouldn't be more practical just to pass the method as an argument? Like this for example:</p>
 
-            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Searchable</span></span> {<br />
-	  &nbsp; &nbsp; <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Car c)</span></span>;<br />
-	  }</code></p>
+            <p><code class="java hljs">isFull(list.size);</code></p>
 
-            <p>But the problem is that we have to write an interface like that in each program that uses it (or link a library that contains it).</p>
+            <p>In Java 8, thanks to lambda expressions, we can do something like that. We can use methods like if they were objects or primitive values.</p>
 
-            <p>Luckily, an interface that does the same but accepts any object type already exists in the language.</p>
+            <p>And that's because a method reference is the shorthand syntax for a lambda expression that executes just <b>ONE</b> method.</p>
+            <hr />
 
-            <p>The new functional interfaces are located inside the <code>java.util.function</code> package.</p>
+            <h4><i>A Method Reference</i></h4>
 
-            <p>There are five of them:</p>
+            <p><code class="java hljs">Object :: methodName</code></p>
+            <hr />
 
-            <ul>
-                <li><code><b>Predicate&lt;T&gt;</b></code></li>
+            <p>We know that we can use lambda expressions instead of using an anonymous class. But sometimes, the lambda expression is really just a call to some method, for example:</p>
 
-                <li><code><b>Consumer&lt;T&gt;</b></code></li>
+            <p><code class="java hljs">Consumer&lt;String&gt; c = s -&gt; System.out.println(s);</code></p>
 
-                <li><code><b>Function&lt;T, R&gt;</b></code></li>
+            <p>To make the code clearer, you can turn that lambda expression into a method reference:</p>
 
-                <li><code><b>Supplier&lt;T&gt;</b></code></li>
+            <p><code class="java hljs">Consumer&lt;String&gt; c = System.out::println;</code></p>
 
-                <li><code><b>UnaryOperator&lt;T&gt;</b></code></li>
-            </ul>
+            <p>In a method reference, you place the object (or class) that contains the method before the <code>::</code> operator and the name of the method after it without arguments.</p>
 
-            <p>Where <code>T</code>&nbsp;and <code>R</code> represent generic types (<code>T</code> represents a parameter type and <code>R</code> the return type).</p>
-
-            <p>Also, they also have specializations for the cases where the input parameter is a primitive type (actually just for <code>int</code>, <code>long</code>, <code>double</code>, and <code>boolean</code> just in the case of <code>Supplier</code>), for example:</p>
+            <p>But you may be thinking:</p>
 
             <ul>
-                <li><code><b>IntPredicate</b></code></li>
+                <li>How is this clearer?</li>
 
-                <li><code><b>LongConsumer</b></code></li>
+                <li>What happen to the arguments?</li>
 
-                <li><code><b>BooleanSupplier</b></code></li>
+                <li>How can this be a valid expression?</li>
+
+                <li>I don't understand how to construct a valid method reference</li>
             </ul>
 
-            <p>Where the name is preceded by the appropriate primitive type.</p>
+            <p>First of all, a methods reference can't be used for any method. <b>They can be used only to replace a single-method lambda expression</b>.</p>
 
-            <p>Plus, four of them have binary versions, which means they take two parameters instead of one:</p>
+            <p>So to use a method reference you first need a lambda expression with one method. And to use a lambda expression you first need a functional interface, an interface with just one abstract method.</p>
 
-            <ul>
-                <li><code><b>BiPredicate&lt;L, R&gt;</b></code></li>
+            <p>In other words:</p>
 
-                <li><code><b>BiConsumer&lt;T, U&gt;</b></code></li>
+            <p style="text-align: center;">Instead of using</p>
 
-                <li><code><b>BiFunction&lt;T, U, R&gt;</b></code></li>
+            <p style="text-align: center;"><br /></p>
 
-                <li><code><b>BinaryOperator&lt;T&gt;</b></code></li>
-            </ul>
+            <p style="text-align: center;"><b>AN ANONYMOUS CLASS</b></p>
 
-            <p>Where <code>T</code>, <code>U</code>, and <code>R</code> represent generic types (<code>T</code> and <code>U</code> represent parameter types and <code>R</code> the return type).</p>
+            <p style="text-align: center;"><br /></p>
 
-            <p>The following tables show the complete list of interfaces.</p>
+            <p style="text-align: center;">you can use</p>
 
-            <p>You don't have to memorize them, just try to understand them.</p>
+            <p style="text-align: center;"><br /></p>
 
-            <p>In the following pages, each interface will be explained.</p>
+            <p style="text-align: center;"><b>A LAMBDA EXPRESSION</b></p>
 
-            <table border="1" cellpadding="3" width="100%">
-                <tr>
-                    <th>Functional Interface</th>
+            <p style="text-align: center;"><br /></p>
 
-                    <th>Primitive Versions</th>
-                </tr>
+            <p style="text-align: center;">And if this just calls one method, you can use</p>
 
-                <tr>
-                    <td><code>Predicate&lt;T&gt;</code></td>
+            <p style="text-align: center;"><br /></p>
 
-                    <td><code>IntPredicate</code><br />
-                        <code>LongPredicate</code><br />
-                        <code>DoublePredicate</code></td>
-                </tr>
-
-                <tr>
-                    <td><code>Consumer&lt;T&gt;</code></td>
-
-                    <td><code>IntConsumer</code><br />
-                        <code>LongConsumer</code><br />
-                        <code>DoubleConsumer</code></td>
-                </tr>
-
-                <tr>
-                    <td><code>Function&lt;T, R&gt;</code></td>
-
-                    <td><code>IntFunction&lt;R&gt;</code><br />
-                        <code>IntToDoubleFunction</code><br />
-                        <code>IntToLongFunctio</code>n<br />
-                        <code>LongFunction&lt;R&gt;</code><br />
-                        <code>LongToDoubleFunction</code><br />
-                        <code>LongToIntFunction</code><br />
-                        <code>DoubleFunction&lt;R&gt;</code><br />
-                        <code>DoubleToIntFunction</code><br />
-                        <code>DoubleToLongFunction</code><br />
-                        <code>ToIntFunction&lt;T&gt;</code><br />
-                        <code>ToDoubleFunction&lt;T&gt;</code><br />
-                        <code>ToLongFunction&lt;T&gt;</code></td>
-                </tr>
-
-                <tr>
-                    <td><code>Supplier&lt;T&gt;</code></td>
-
-                    <td><code>BooleanSupplier</code><br />
-                        <code>IntSupplier</code><br />
-                        <code>LongSupplier</code><br />
-                        <code>DoubleSupplier</code></td>
-                </tr>
-
-                <tr>
-                    <td><code>UnaryOperator&lt;T&gt;</code></td>
-
-                    <td><code>IntUnaryOperator</code><br />
-                        <code>LongUnaryOperator</code><br />
-                        <code>DoubleUnaryOperator</code></td>
-                </tr>
-            </table>
+            <p style="text-align: center;"><b>A METHOD REFERENCE</b></p>
 
             <p><br /></p>
 
-            <table border="1" cellpadding="3" width="100%">
-                <tr>
-                    <th>Functional Interface</th>
-
-                    <th>Primitive Versions</th>
-                </tr>
-
-                <tr>
-                    <td><code>BiPredicate&lt;L, R&gt;</code></td>
-
-                    <td></td>
-                </tr>
-
-                <tr>
-                    <td><code>BiConsumer&lt;T, U&gt;</code></td>
-
-                    <td><code>ObjIntConsumer&lt;T&gt;</code><br />
-                        <code>ObjLongConsumer&lt;T&gt;</code><br />
-                        <code>ObjDoubleConsumer&lt;T&gt;</code></td>
-                </tr>
-
-                <tr>
-                    <td><code>BiFunction&lt;T, U, R&gt;</code></td>
-
-                    <td><code>ToIntBiFunction&lt;T, U&gt;</code><br />
-                        <code>ToLongBiFunction&lt;T, U&gt;</code><br />
-                        <code>ToDoubleBiFunction&lt;T, U&gt;</code></td>
-                </tr>
-
-                <tr>
-                    <td><code>BinaryOperator&lt;T&gt;</code></td>
-
-                    <td><code>IntBinaryOperator</code><br />
-                        <code>LongBinaryOperator</code><br />
-                        <code>DoubleBinaryOperator</code></td>
-                </tr>
-            </table>
-
-            <h2>Predicate</h2>
-
-            <p>A predicate is a statement that may be true or false depending on the values of its variables.</p>
-
-            <p>This functional interface can be used anywhere you need to evaluate a <code>boolean</code> condition.</p>
-
-            <p>This how the interface is defined:</p>
-
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Predicate</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
-	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;&nbsp;boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(T t)</span></span>;<br />
-	  &nbsp; &nbsp;&nbsp;<span class="hljs-comment">// Other default and static methods<br /></span><span class="hljs-comment">&nbsp; &nbsp;&nbsp;// ...</span><br />
-	  }</code></p>
-
-            <p>So the functional descriptor (method signature) is:</p>
-
-            <p><code class="java hljs">T <span class="hljs-subst">-&gt;</span> <span class="hljs-built_in">boolean</span></code></p>
-
-            <p>Here's an example using an anonymous class:</p>
-
-            <p><code class="java hljs">Predicate&lt;String&gt; startsWithA = <span class="hljs-keyword">new</span> Predicate&lt;String&gt;() {<br />
-	  <span class="hljs-annotation">&nbsp; &nbsp;&nbsp;@Override<font color="#000000"><br /></font></span><span class="hljs-function"><span class="hljs-keyword"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(String t)</span></span> {<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp;&nbsp;return</span> t.startsWith(<span class="hljs-string">"A"</span>);<br />
-	  &nbsp; &nbsp; }<br />
-	  };<br />
-	  <span class="hljs-keyword">boolean</span> result = startsWithA.test(<span class="hljs-string">"Arthur"</span>);</code></p>
-
-            <p>And with a lambda expression:</p>
-
-            <p><code class="java hljs">Predicate startsWithA = t -&gt; t.startsWith(<span class="hljs-string">"A"</span>);<br />
-	  <span class="hljs-keyword">boolean</span> result = startsWithA.test(<span class="hljs-string">"Arthur"</span>);</code></p>
-
-            <p>This interface also has the following default methods:</p>
-
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> Predicate&lt;T&gt; <span class="hljs-title">and</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; other)</span><br />
-	  <span class="hljs-keyword">default</span> Predicate&lt;T&gt; <span class="hljs-title">or</span><span class="hljs-params">(Predicate&lt;? <span class="hljs-keyword">super</span> T&gt; other)</span><br />
-	  <span class="hljs-keyword">default</span> Predicate&lt;T&gt; <span class="hljs-title">negate</span><span class="hljs-params">()</span></span></code></p>
-
-            <p>These methods return a composed <code>Predicate</code> that represents a short-circuiting logical <b>AND</b> and <b>OR</b> of this predicate and another and its logical negation.</p>
-
-            <p>Short-circuiting means that the other predicate won't be evaluated if the value of the first predicate can predict the result of the operation (if the first predicate return false in the case of <b>AND</b> or if it returns true in the case of <b>OR</b>).</p>
-
-            <p>These methods are useful to combine predicates and make the code more readable, for example:</p>
-
-            <p><code class="java hljs">Predicate&lt;String&gt; startsWithA = t -&gt; t.startsWith(<span class="hljs-string">"A"</span>);<br />
-	  Predicate&lt;String&gt; endsWithA = t -&gt; t.endsWith(<span class="hljs-string">"A"</span>);<br />
-	  <span class="hljs-keyword">boolean</span> result = startsWithA.and(endsWithA).test(<span class="hljs-string">"Hi"</span>);</code></p>
-
-            <p>Also there's a <code>static</code> method:</p>
-
-            <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">Predicate&lt;T&gt; <span class="hljs-title">isEqual</span><span class="hljs-params">(Object targetRef)</span></span></code></p>
-
-            <p>That returns a <code>Predicate</code> that tests if two arguments are equal according to <code>Objects.equals(Object, Object)</code>.</p>
-
-            <p>There are also primitive versions for <code>int</code>, <code>long</code> and <code>double</code>. They don't extend from <code>Predicate</code>.</p>
-
-            <p>For example, here's the definition of <code>IntPredicate</code>:</p>
-
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">IntPredicate</span></span> {<br />
-	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;&nbsp;boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span></span>;<br />
-	  &nbsp; &nbsp; <span class="hljs-comment">// And the default methods: and, or, negate</span><br />
-	  }</code></p>
-
-            <p>So instead of using:</p>
-
-            <p><code class="java hljs">Predicate&lt;Integer&gt; even = t -&gt; t % <span class="hljs-number">0</span> == <span class="hljs-number">1</span>;<br />
-	  <span class="hljs-keyword">boolean</span> result = even.test(<span class="hljs-number">5</span>);</code></p>
-
-            <p>You can use:</p>
-
-            <p><code class="java hljs">IntPredicate even = t -&gt; t % <span class="hljs-number">0</span> == <span class="hljs-number">1</span>;<br />
-	  <span class="hljs-keyword">boolean</span> result = even.test(<span class="hljs-number">5</span>);</code></p>
-
-            <p>Why?</p>
-
-            <p>Just to avoid the conversion from <code>Integer</code> to <code>int</code> and work directly with primitive types.</p>
-
-            <p>Notice that these primitive versions don't have a generic type. Due to the way generics are implemented, parameters of the functional interfaces can be bound only to object types.</p>
-
-            <p>Since the conversion from the wrapper type (<code>Integer</code>) to the primitive type (<code>int</code>) uses more memory and comes with a performance cost, Java provides these versions to avoid autoboxing operations when inputs or outputs are primitives.</p>
-
-            <h2>Consumer</h2>
-
-            <p>A consumer is an operation that accepts a single input argument and returns no result; it just execute some operations on the argument.</p>
-
-            <p>This how the interface is defined:</p>
-
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Consumer</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(T t)</span></span>;<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// And a default method<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-comment">// ...</span><br />
-	  }</code></p>
-
-            <p>So the functional descriptor (method signature) is:</p>
-
-            <p><code class="java hljs">T -&gt; <span class="hljs-keyword">void</span></code></p>
-
-            <p>Here's an example using an anonymous class:</p>
-
-            <p><code class="java hljs">Consumer&lt;String&gt; consumeStr = <span class="hljs-keyword">new</span> Consumer&lt;String&gt;() {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-annotation">@Override<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(String t)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(t);<br />
-	  &nbsp; &nbsp; &nbsp;}<br />
-	  };<br />
-	  consumeStr.accept(<span class="hljs-string">"Hi"</span>);</code></p>
-
-            <p>And with a lambda expression:</p>
-
-            <p><code class="java hljs">Consumer consumeStr = t -&gt; System.out.println(t);<br />
-	  consumeStr.accept(<span class="hljs-string">"Hi"</span>);</code></p>
-
-            <p>This interface also has the following default method:</p>
-
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">default</span> Consumer&lt;T&gt; <span class="hljs-title">andThen</span><span class="hljs-params">(Consumer&lt;? <span class="hljs-keyword">super</span> T&gt; after)</span></span></code></p>
-
-            <p>This method returns a composed <code>Consumer</code> that performs, in sequence, the operation of the consumer followed by the operation of the parameter.</p>
-
-            <p>These methods are useful to combine <code>Consumer</code>s and make the code more readable, for example:</p>
-
-            <p><code class="java hljs">Consumer first = t -&gt;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"First:"</span> + t);<br />
-	  Consumer second = t -&gt;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"Second:"</span> + t);<br />
-	  first.andThen(second).accept(<span class="hljs-string">"Hi"</span>);</code></p>
-
-            <p>The output is:</p>
-
-            <p><code class="java hljs">First: Hi<br />
-	  Second: Hi</code></p>
-
-            <p>Look how both <code>Consumer</code>s take the same argument and the order of execution.</p>
-
-            <p>There are also primitive versions for <code>int</code>, <code>long</code> and <code>double</code>. They don't extend from <code>Consumer</code>.</p>
-
-            <p>For example, here's the definition of <code>IntConsumer</code>:</p>
-
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">IntConsumer</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span></span>;<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">default</span> IntConsumer <span class="hljs-title">andThen</span><span class="hljs-params">(IntConsumer after)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// ...<br /></span>&nbsp; &nbsp; &nbsp;}<br />
-	  }</code></p>
-
-            <p>So instead of using:</p>
-
-            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] a = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>};<br />
-	  printList(a, t -&gt; System.out.println(t));<br />
-	  <span class="hljs-comment">//...</span><br />
-	  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printList</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] a, Consumer&lt;Integer&gt; c)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i : a) {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;c.accept(i);<br />
-	  &nbsp; &nbsp; &nbsp;}<br />
-	  }</code></p>
-
-            <p>You can use:</p>
-
-            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] a = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>};<br />
-	  printList(a, t -&gt; System.out.println(t));<br />
-	  <span class="hljs-comment">//...</span><br />
-	  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printList</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] a, IntConsumer c)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i : a) {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;c.accept(i);<br />
-	  &nbsp; &nbsp; &nbsp;}<br />
-	  }</code></p>
-
-            <h2>Function</h2>
-
-            <p>A function represents an operation that takes an input argument of a certain type and produces a result of another type.</p>
-
-            <p>A common use is to convert or transform from one object to another.</p>
-
-            <p>This how the interface is defined:</p>
-
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Function</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">R</span>&gt;</span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function">R <span class="hljs-title">apply</span><span class="hljs-params">(T t)</span></span>;<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Other default and static methods<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-comment">// ...</span><br />
-	  }</code></p>
-
-            <p>So the functional descriptor (method signature) is:</p>
-
-            <p><code class="java hljs">T -&gt; R</code></p>
-
-            <p>Assuming a method:</p>
-
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">round</span><span class="hljs-params">(<span class="hljs-keyword">double</span> d, Function&lt;Double, Long&gt; f)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">long</span> result = f.apply(d);<br />
-	  &nbsp; &nbsp; &nbsp;System.out.println(result);<br />
-	  }</code></p>
-
-            <p>Here's an example using an anonymous class:</p>
-
-            <p><code class="java hljs">round(<span class="hljs-number">5.4</span>, <span class="hljs-keyword">new</span> Function&lt;Double, Long&gt;() {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function">Long <span class="hljs-title">apply</span><span class="hljs-params">(Double d)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> Math.round(d);<br />
-	  &nbsp; &nbsp; &nbsp;}<br />
-	  });</code></p>
-
-            <p>And with a lambda expression:</p>
-
-            <p><code class="java hljs">round(<span class="hljs-number">5.4</span>, d -&gt; Math.round(d));</code></p>
-
-            <p>This interface also has the following default methods:</p>
-
-            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;V,R&gt; compose(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> V,? extends T&lt; before)<br />
-	  <span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T,V&gt; andThen(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R,? extends V&gt; after)</code></p>
-
-            <p>The difference between these methods is that <code>compose</code> applies the function represented by the parameter first, and its result serves as the input to the other function. <code>andThen</code> first applies the function that calls the method, and its result acts as the input of the function represented by the parameter.</p>
-
-            <p>For example:</p>
-
-            <p><code class="java hljs">Function&lt;String, String&gt; f1 = s -&gt; {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> s.toUpperCase();<br />
-	  };<br />
-	  Function&lt;String, String&gt; f2 = s -&gt; {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> s.toLowerCase();<br />
-	  };<br />
-	  &nbsp;System.out.println(f1.compose(f2).apply(<span class="hljs-string">"Compose"</span>));<br />
-	  System.out.println(f1.andThen(f2).apply(<span class="hljs-string">"AndThen"</span>));</code></p>
-
-            <p>The output is:</p>
-
-            <p><code class="java hljs">COMPOSE<br />
-	  andthen</code></p>
-
-            <p>In the first case, <code>f1</code> is the last function to be applied.<br /> In the second case, <code>f2</code> is the last function to be applied.</p>
-
-            <p>Also there's a <code>static</code> method:</p>
-
-            <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; Function&lt;T, T&gt; identity()</code></p>
-
-            <p>That returns a function that always returns its input argument.</p>
-
-            <p>In the case of primitive versions, they also apply to <code>int</code>, <code>long</code> and <code>double</code>, but there are more combinations than the previous interfaces:</p>
+            <p>There are four types of method references:</p>
 
             <ul>
-                <li>To indicate that the function returns a generic type and takes a primitive argument, the interface is named <b>XXXFunction</b>, for example,&nbsp;<code>IntFunction</code>: <code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-		<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">IntFunction</span>&lt;<span class="hljs-title">R</span>&gt;</span> {<br />
-		&nbsp; &nbsp; &nbsp;<span class="hljs-function">R <span class="hljs-title">apply</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span></span>;<br />
-		}</code></li>
+                <li>A method reference to a <i>static method</i><br /></li>
 
-                <li>To indicate that the function returns a primitive type and takes a generic argument, the interface is named <b>ToXXXFunction</b>, for example, <code>ToIntFunction</code>: <code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-		<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ToIntFunction</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
-		&nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">applyAsInt</span><span class="hljs-params">(T value)</span></span>;<br />
-		}</code></li>
+                <li>A method reference to an <i>instance method of an object of a particular type</i><br /></li>
 
-                <li>To indicate that the function takes a primitive argument and returns another primitive type, the interface is named <b>XXXToYYYFunction</b>, where <b>XXX</b> is the argument type and <b>YYY</b> is the return type, for example,&nbsp;<code>IntToDoubleFunction</code>: <code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-		<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">IntToDoubleFunction</span></span> {<br />
-		&nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">double</span> <span class="hljs-title">applyAsDouble</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span></span>;<br />
-		}</code></li>
+                <li>A method reference to an <i>instance method of an existing object</i><br /></li>
+
+                <li>A method reference to a <i>constructor</i><br /></li>
             </ul>
 
-            <p>Remember that these interfaces are for convenience, to work directly with primitives, for example:</p>
+            <p>Let's begin by explaining the most natural case, a <i>static method</i>.</p>
 
-            <p><code>DoubleFunction&lt;R&gt;</code> instead of <code>Function&lt;Double, R&gt;</code><br />
-                <code>ToLongFunction&lt;T&gt;</code> instead of <code>Function&lt;T, Long&gt;</code><br />
-                <code>IntToLongFunction</code> instead of <code>Function&lt;Integer, Long&gt;</code></p>
+            <h2>Static Method</h2>
 
-            <h2>Supplier</h2>
+            <p>In this case, we have a lambda expression like the following:</p>
 
-            <p>A supplier does the opposite of a consumer, it takes no arguments and only returns some value.</p>
+            <p><code class="java hljs">(args) -&gt; Class.staticMethod(args)</code></p>
 
-            <p>This how the interface is defined:</p>
+            <p>That can be turned into the following method reference:</p>
 
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Supplier</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function">T <span class="hljs-title">get</span><span class="hljs-params">()</span></span>;<br />
-	  }</code></p>
+            <p><code class="java hljs">Class::staticMethod</code></p>
 
-            <p>So the functional descriptor (method signature) is:</p>
+            <p>Notice that between a static method and a static method reference instead of the . operator, we use the :: operator, and that we don't pass arguments to the method reference.</p>
 
-            <p><code class="java hljs">() -&gt; T</code></p>
+            <p>In general, we don't have to pass arguments to method references. However, arguments are treated depending on the type of method reference.</p>
 
-            <p>Here's an example using an anonymous class:</p>
+            <p>In this case, any arguments (if any) taken by the method are passed automatically behind the curtains.</p>
 
-            <p><code class="java hljs">String t = <span class="hljs-string">"One"</span>;<br />
-	  Supplier&lt;String&gt; supplierStr = <span class="hljs-keyword">new</span> Supplier&lt;String&gt;() {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-annotation">@Override<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">get</span><span class="hljs-params">()</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> t.toUpperCase();<br />
-	  &nbsp; &nbsp; &nbsp;}<br />
-	  };<br />
-	  System.out.println(supplierStr.get());</code></p>
+            <p>Wherever we can pass a lambda expression that just calls a static method, we can use a method reference. For example, assuming this class:</p>
 
-            <p>And with a lambda expression:</p>
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Numbers</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isMoreThanFifty</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n1, <span class="hljs-keyword">int</span> n2)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> (n1 + n2) &gt; <span class="hljs-number">50</span>;<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;Integer&gt; <span class="hljs-title">findNumbers</span><span class="hljs-params">(<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;List&lt;Integer&gt; l, BiPredicate&lt;Integer, Integer&gt; p)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;List&lt;Integer&gt; newList = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">for</span>(Integer i : l) {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">if</span>(p.test(i, i + <span class="hljs-number">10</span>)) {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;newList.add(i);<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> newList;<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  }</code></p>
 
-            <p><code class="java hljs">String t = <span class="hljs-string">"One"</span>;<br />
-	  Supplier&lt;String&gt; supplierStr = () -&gt; t.toUpperCase();<br />
-	  System.out.println(supplierStr.get());</code></p>
+            <p>We can call the <code>findNumbers()</code> method:</p>
 
-            <p>This interface doesn't define default methods.</p>
+            <p><code class="java hljs">List&lt;Integer&gt; list = Arrays.asList(<span class="hljs-number">12</span>,<span class="hljs-number">5</span>,<span class="hljs-number">45</span>,<span class="hljs-number">18</span>,<span class="hljs-number">33</span>,<span class="hljs-number">24</span>,<span class="hljs-number">40</span>);<br />
+  <br />
+  <span class="hljs-comment">// Using an anonymous class</span><br />
+  findNumbers(list, <span class="hljs-keyword">new</span> BiPredicate&lt;Integer, Integer&gt;() {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Integer i1, Integer i2)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> Numbers.isMoreThanFifty(i1, i2);<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  });<br />
+  <br />
+  <span class="hljs-comment">// Using a lambda expression</span><br />
+  findNumbers(list, (i1, i2) -&gt; Numbers.isMoreThanFifty(i1, i2));<br />
+  <br />
+  <span class="hljs-comment">// Using a method reference</span><br />
+  findNumbers(list, Numbers::isMoreThanFifty);</code></p>
 
-            <p>There are also primitive versions for <code>int</code>, <code>long</code> and <code>double</code> and <code>boolean</code>. They don't extend from <code>Supplier</code>.</p>
+            <h2>Instance method of an object of a particular type</h2>
 
-            <p>For example, here's the definition of <code>BooleanSupplier</code>:</p>
+            <p>In this case, we have a lambda expression like the following:</p>
 
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">BooleanSupplier</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">getAsBoolean</span><span class="hljs-params">()</span></span>;<br />
-	  }</code></p>
+            <p><code class="java hljs">(obj, args) -&gt; obj.instanceMethod(args)</code></p>
 
-            <p>That can be used instead of <code>Supplier</code>.</p>
+            <p>Where an instance of an object is passed, and one of its methods is executed with some optional(s) parameter(s).</p>
 
-            <h2>UnaryOperator</h2>
+            <p>That can be turned into the following method reference:</p>
 
-            <p><code>UnaryOperator</code> is just a specialization of the <code>Function</code> interface (in fact, this interface extends from it) for when the argument and the result are of the same type.</p>
+            <p><code class="java hljs">ObjectType::instanceMethod</code></p>
 
-            <p>This how the interface is defined:</p>
+            <p>This time, the conversion is not that straightforward. First, in the method reference, we don't use the instance itself. We use its type.</p>
 
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">UnaryOperator</span>&lt;<span class="hljs-title">T</span>&gt;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">extends</span> <span class="hljs-title">Function</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">T</span>&gt;</span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Just the identity<br />
-	  &nbsp;</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-comment">// method is defined</span><br />
-	  }</code></p>
+            <p>Second, the other argument of the lambda expression, if any, it's not used in the method reference, but it's passed behind the curtains like in the static method case.</p>
 
-            <p>So the functional descriptor (method signature) is:</p>
+            <p>For example, assuming this class:</p>
 
-            <p><code class="java hljs">T -&gt; T</code></p>
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Shipment</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">double</span> <span class="hljs-title">calculateWeight</span><span class="hljs-params">()</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">double</span> weight = <span class="hljs-number">0</span>;<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Calculate weight<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> weight;<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  }</code></p>
 
-            <p>Here's an example using an anonymous class:</p>
+            <p>And this method:</p>
 
-            <p><code class="java hljs">UnaryOperator&lt;String&gt; uOp = <span class="hljs-keyword">new</span> UnaryOperator&lt;String&gt;() {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-annotation">@Override</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">apply</span><span class="hljs-params">(String t)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> t.substring(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>);<br />
-	  &nbsp; &nbsp; &nbsp;}<br />
-	  };<br />
-	  System.out.println(uOp.apply(<span class="hljs-string">"Hello"</span>));</code></p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;Double&gt; <span class="hljs-title">calculateOnShipments</span><span class="hljs-params">(<br />
+  &nbsp; &nbsp; &nbsp;List&lt;Shipment&gt; l, Function&lt;Shipment, Double&gt; f)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;List&lt;Double&gt; results = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">for</span>(Shipment s : l) {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;results.add(f.apply(s));<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> results;<br />
+  }</code></p>
 
-            <p>And with a lambda expression:</p>
+            <p>We can call that method using:</p>
 
-            <p><code class="java hljs">UnaryOperator uOp = t -&gt; t.substring(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>);<br />
-	  System.out.println(uOp.apply(<span class="hljs-string">"Hello"</span>));</code></p>
+            <p><code class="java hljs">List&lt;Shipment&gt; l = <span class="hljs-keyword">new</span> ArrayList&lt;Shipment&gt;();<br />
+  <br />
+  <span class="hljs-comment">// Using an anonymous class</span><br />
+  calculateOnShipments(l, <span class="hljs-keyword">new</span> Function&lt;Shipment, Double&gt;() {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> Double <span class="hljs-title">apply</span><span class="hljs-params">(Shipment s)</span></span> { <span class="hljs-comment">// The object<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> s.calculateWeight(); <span class="hljs-comment">// The method<br /></span>&nbsp; &nbsp; &nbsp;}<br />
+  });<br />
+  <br />
+  <span class="hljs-comment">// Using a lambda expression</span><br />
+  calculateOnShipments(l, s -&gt; s.calculateWeight());<br />
+  <br />
+  <span class="hljs-comment">// Using a method reference</span><br />
+  calculateOnShipments(l, Shipment::calculateWeight);</code></p>
 
-            <p>This interface inherits the default methods of the <code>Function</code> interface:</p>
+            <p>In this example, we don't pass any arguments to the method. The key point here is that an instance of the object is the parameter of the lambda expression, and we form the reference to the instance method with the type of the instance.</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;V,R&gt; compose(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> V,? extends T&gt; before)<br />
-	  <span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T,V&gt; andThen(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R,? extends V&gt; after)</code></p>
+            <p>Here's another example where we pass two arguments to the method reference.</p>
 
-            <p>And just defines the <code>static</code> method <code>identity()</code> for this interface (since <code>static</code> methods are not inherited):</p>
+            <p>Java has a <code>Function</code> interface that takes one parameter, a <code>BiFunction</code> that takes two parameters, but there's no <code>TriFunction</code> that takes three parameters, so let's make one:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">UnaryOperator&lt;T&gt; <span class="hljs-title">identity</span><span class="hljs-params">()</span></span></code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">interface</span> TriFunction&lt;T, U, V, R&gt; {<br />
+  &nbsp; &nbsp; R apply(T t, U u, V v);<br />
+  }</code></p>
 
-            <p>That returns an <code>UnaryOperator</code> that always returns its input argument.</p>
+            <p>Now assume a class with a method that takes two parameters a return a result, like this:</p>
 
-            <p>There are also primitive versions for <code>int</code>, <code>long</code> and <code>double</code>. They don't extend from <code>UnaryOperator</code>.</p>
+            <p><code class="java hljs"><span class="hljs-keyword">class</span> Sum {<br />
+  &nbsp; &nbsp; Integer doSum(String s1, String s2) {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; <span class="hljs-keyword">return</span> Integer.parseInt(s1) + Integer.parseInt(s1);<br />
+  &nbsp; &nbsp; }<br />
+  }</code></p>
 
-            <p>For example, here's the definition of <code>IntUnaryOperator</code>:</p>
+            <p>We can wrap the <code>doSum()</code> method within a <code>TriFunction</code> implementation using an anonymous class:</p>
 
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">IntUnaryOperator</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">applyAsInt</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span></span>;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Definitions for compose, andThen, and identity<br /></span>}</code></p>
+            <p><code class="java hljs">TriFunction&lt;Sum, String, String, Integer&gt; anon =<br />
+  &nbsp; &nbsp; <span class="hljs-keyword">new</span> TriFunction&lt;Sum, String, String, Integer&gt;() {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; @Override<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; <span class="hljs-keyword">public</span> Integer apply(Sum s, String arg1, String arg2) {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> s.doSum(arg1, arg1);<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; }<br />
+  &nbsp; &nbsp; };<br />
+  System.out.println(anon.apply(<span class="hljs-keyword">new</span> Sum(), <span class="hljs-string">"1"</span>, <span class="hljs-string">"4"</span>));</code></p>
 
-            <p>So instead of using:</p>
+            <p>Or using a lambda expression:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] a = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>};<br />
-	  <span class="hljs-keyword">int</span> sum = sumNumbers(a, t -&gt; t * <span class="hljs-number">2</span>);<br />
-	  <span class="hljs-comment">//...</span><br />
-	  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sumNumbers</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] a, UnaryOperator&lt;Integer&gt; unary)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i : a) {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;sum += unary.apply(i);<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> sum;<br />
-	  }</code></p>
+            <p><code class="java hljs">TriFunction&lt;Sum, String, String, Integer&gt; lambda =<br />
+  &nbsp; &nbsp; (Sum s, String arg1, String arg2) -&gt; s.doSum(arg1, arg1);<br />
+  System.out.println(lambda.apply(<span class="hljs-keyword">new</span> Sum(), <span class="hljs-string">"1"</span>, <span class="hljs-string">"4"</span>));</code></p>
 
-            <p>You can use:</p>
+            <p>Or just using a method reference:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] a = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>};<br />
-	  <span class="hljs-keyword">int</span> sum = sumNumbers(a, t -&gt; t * <span class="hljs-number">2</span>);<br />
-	  <span class="hljs-comment">//...</span><br />
-	  <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">sumNumbers</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] a, IntUnaryOperator unary)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">int</span> sum = <span class="hljs-number">0</span>;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i : a) {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;sum += unary.applyAsInt(i);<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> sum;<br />
-	  }</code></p>
+            <p><code class="java hljs">TriFunction&lt;Sum, String, String, Integer&gt; mRef = Sum::doSum;<br />
+  System.out.println(mRef.apply(<span class="hljs-keyword">new</span> Sum(), <span class="hljs-string">"1"</span>, <span class="hljs-string">"4"</span>));</code></p>
 
-            <h2>BiPredicate</h2>
+            <p>Here:</p>
 
-            <p>This interface represents a predicate that takes two arguments.</p>
+            <ul>
+                <li>The first type parameter of <code>TriFunction</code> is the object type that contains the method to execute.</li>
 
-            <p>This how the interface is defined:</p>
+                <li>The second type parameter of <code>TriFunction</code> is the type of the first parameter.</li>
 
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span> <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">BiPredicate</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">U</span>&gt;</span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(T t, U u)</span></span>;<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Default methods are defined also</span><br />
-	  }</code></p>
+                <li>The third type parameter of <code>TriFunction</code> is the type of the second parameter.</li>
 
-            <p>So the functional descriptor (method signature) is:</p>
+                <li>The last type parameter of <code>TriFunction</code> is the return type of the method to execute. Notice how this is omitted (inferred) in the lambda expression and the method reference.</li>
+            </ul>
 
-            <p><code class="java hljs">(T, U) -&gt; <span class="hljs-keyword">boolean</span></code></p>
+            <p>It may seem odd to just see the interface, the class and how they are used with a method reference, but this becomes more evident when you see the anonymous class or even the lambda version.</p>
 
-            <p>Here's an example using an anonymous class:</p>
+            <p>From:</p>
 
-            <p><code class="java hljs">BiPredicate&lt;Integer, Integer&gt; divisible =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">new</span> BiPredicate&lt;Integer, Integer&gt;() {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-annotation">@Override<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">test</span><span class="hljs-params">(Integer t, Integer u)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> t % u == <span class="hljs-number">0</span>;<br />
-	  &nbsp; &nbsp; &nbsp;}<br />
-	  };<br />
-	  <span class="hljs-keyword">boolean</span> result = divisible.test(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>);</code></p>
+            <p><code class="java hljs">(Sum s, String arg1, String arg2) -&gt; s.doSum(arg1, arg1)</code></p>
 
-            <p>And with a lambda expression:</p>
+            <p>To</p>
 
-            <p><code class="java hljs">BiPredicate&lt;Integer, Integer&gt; divisible =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; (t, u) -&gt; t % u == <span class="hljs-number">0</span>;<br />
-	  <span class="hljs-keyword">boolean</span> result = divisible.test(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>);</code></p>
+            <p><code class="java hljs">Sum::doSum</code></p>
 
-            <p>This interface defines the same default methods of the Predicate interface, but with two arguments:</p>
+            <h2>Instance method of an existing object</h2>
 
-            <p><code class="java hljs"><span class="hljs-keyword">default</span> BiPredicate&lt;T, U&gt; and(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BiPredicate&lt;?<span class="hljs-keyword">super</span> T, ? <span class="hljs-keyword">super</span> U&gt; other)<br />
-	  <span class="hljs-keyword">default</span> BiPredicate&lt;T, U&gt; or(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BiPredicate&lt;?<span class="hljs-keyword">super</span> T, ? <span class="hljs-keyword">super</span> U&gt; other)<br />
-	  <span class="hljs-keyword">default</span> BiPredicate&lt;T, U&gt; negate()</code></p>
+            <p>In this case, we have a lambda expression like the following:</p>
 
-            <p>This interface doesn't have primitive versions.</p>
+            <p><code class="java hljs">(args) -&gt; obj.instanceMethod(args)</code></p>
 
-            <h2>BiConsumer</h2>
+            <p>That can be turned into the following method reference:</p>
 
-            <p>This interface represents a consumer that takes two arguments (and don't return a result).</p>
+            <p><code class="java hljs">obj::instanceMethod</code></p>
 
-            <p>This how the interface is defined:</p>
+            <p>This time, an instance defined somewhere else is used, and the arguments (if any) are passed behind the curtains like in the <code>static</code> method case.</p>
 
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">BiConsumer</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">U</span>&gt;</span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(T t, U u)</span></span>;<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// andThen default method is defined</span><br />
-	  }</code></p>
+            <p>For example, assuming these classes:</p>
 
-            <p>So the functional descriptor (method signature) is:</p>
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> id;<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> String color;<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// More properties<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-comment">// And getter and setters<br /></span>}<br />
+  <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Mechanic</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">fix</span><span class="hljs-params">(Car c)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"Fixing car "</span> + c.getId());<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  }</code></p>
 
-            <p><code class="java hljs">(T, U) -&gt; <span class="hljs-keyword">void</span></code></p>
+            <p>And this method:</p>
 
-            <p>Here's an example using an anonymous class:</p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">execute</span><span class="hljs-params">(Car car, Consumer&lt;Car&gt; c)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;c.accept(car);<br />
+  }</code></p>
 
-            <p><code class="java hljs">BiConsumer&lt;String, String&gt; consumeStr =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">new</span> Consumer&lt;String, String&gt;() {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-annotation">@Override<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(String t, String u)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(t + <span class="hljs-string">" "</span> + u);<br />
-	  &nbsp; &nbsp; &nbsp;}<br />
-	  &nbsp;};<br />
-	  consumeStr.accept(<span class="hljs-string">"Hi"</span>, <span class="hljs-string">"there"</span>);</code></p>
+            <p>We can call the above method using:</p>
 
-            <p>And with a lambda expression:</p>
+            <p><code class="java hljs"><span class="hljs-keyword">final</span> Mechanic mechanic = <span class="hljs-keyword">new</span> Mechanic();<br />
+  Car car = <span class="hljs-keyword">new</span> Car();<br />
+  <br />
+  <span class="hljs-comment">// Using an anonymous class</span><br />
+  execute(car, <span class="hljs-keyword">new</span> Consumer&lt;Car&gt;() {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(Car c)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;mechanic.fix(c);<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  });<br />
+  <br />
+  <span class="hljs-comment">// Using a lambda expression</span><br />
+  execute(car, c -&gt; mechanic.fix(c));<br />
+  <br />
+  <span class="hljs-comment">// Using a method reference</span><br />
+  execute(car, mechanic::fix);</code></p>
 
-            <p><code class="java hljs">Consumer consumeStr =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (t, u) -&gt; System.out.println(t + <span class="hljs-string">" "</span> + u);<br />
-	  consumeStr.accept(<span class="hljs-string">"Hi"</span>, <span class="hljs-string">"there"</span>);</code></p>
+            <p>The key, in this case, is to use any object visible by an anonymous class/lambda expression and pass some arguments to an instance method of that object.</p>
 
-            <p>This interface also has the following default method:</p>
+            <p>Here's another quick example using another <code>Consumer</code>:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">default</span> BiConsumer&lt;T, U&gt; andThen(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BiConsumer&lt;? <span class="hljs-keyword">super</span> T, ? <span class="hljs-keyword">super</span> U&gt; after)</code></p>
+            <p><code class="java hljs">Consumer&lt;String&gt; c = System.out::println;<br />
+  c.accept(<span class="hljs-string">"Hello"</span>);</code></p>
 
-            <p>This method returns a composed <code>BiConsumer</code> that performs, in sequence, the operation of the consumer followed by the operation of the parameter.</p>
+            <h2>Constructor</h2>
 
-            <p>As in the case of a <code>Consumer</code>, these methods are useful to combine <code>BiConsumer</code>s and make the code more readable, for example:</p>
+            <p>In this case, we have a lambda expression like the following:</p>
 
-            <p><code class="java hljs">BiConsumer&lt;String, String&gt; first = t, u -&gt; System.out.println(t.toUpperCase() + u.toUpperCase());<br />
-	  BiConsumer&lt;String, String&gt; second = t, u -&gt; System.out.println(t.toLowerCase() + u.toLowerCase());<br />
-	  first.andThen(second).accept(<span class="hljs-string">"Again"</span>, <span class="hljs-string">" and again"</span>);</code></p>
+            <p><code class="java hljs">(args) -&gt; <span class="hljs-keyword">new</span> ClassName(args)</code></p>
 
-            <p>The output is:</p>
+            <p>That can be turned into the following method reference:</p>
 
-            <p><code class="java hljs">AGAIN AND AGAIN again and again</code></p>
+            <p><code class="java hljs">ClassName::<span class="hljs-keyword">new</span></code></p>
 
-            <p>There are also primitive versions for <code>int</code>, <code>long</code> and <code>double</code>. They don't extend from <code>BiConsumer</code>, and instead of taking two <code>int</code>s, for example, they take one object and a primitive value as a second argument. So the naming convention changes to <b>ObjXXXConsumer</b>, where <b>XXX</b> is the primitive type. For example, here's the definition of <code>ObjIntConsumer</code>:</p>
+            <p>The only thing this lambda expression does is to create a new object, so we just reference a constructor of the class with the keyword <code>new</code>. Like in the other cases, arguments (if any) are not passed in the method reference.</p>
 
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ObjIntConsumer</span>&lt;<span class="hljs-title">T</span>&gt;</span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(T t, <span class="hljs-keyword">int</span> value)</span></span>;<br />
-	  }</code></p>
+            <p>Most of the time, we can use this syntax with two (or three) interfaces of the <code>java.util.function</code> package.</p>
 
-            <p>So instead of using:</p>
+            <p>If the constructor takes no arguments, a <code>Supplier</code> will do the job:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] a = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>};<br />
-	  printList(a, (t, i) -&gt; System.out.println(t + i));<br />
-	  <span class="hljs-comment">//...</span><br />
-	  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printList</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] a, BiConsumer&lt;String, Integer&gt; c)</span></span> {<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp;&nbsp;for</span>(<span class="hljs-keyword">int</span> i : a) {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; c.accept(<span class="hljs-string">"Number:"</span>, i);<br />
-	  &nbsp; &nbsp; }<br />
-	  }</code></p>
+            <p><code class="java hljs"><span class="hljs-comment">// Using an anonymous class</span><br />
+  Supplier&lt;List&lt;String&gt;&gt; s = <span class="hljs-keyword">new</span> Supplier() {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;String&gt; <span class="hljs-title">get</span><span class="hljs-params">()</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  };<br />
+  List&lt;String&gt; l = s.get();<br />
+  <br />
+  <span class="hljs-comment">// Using a lambda expression<br /></span>Supplier&lt;List&lt;String&gt;&gt; s = () -&gt; <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();<br />
+  List&lt;String&gt; l = s.get();<br />
+  <br />
+  <span class="hljs-comment">// Using a method reference</span><br />
+  Supplier&lt;List::<span class="hljs-keyword">new</span>;<br />
+  List&lt;String&gt; l = s.get();</code></p>
 
-            <p>You can use:</p>
+            <p>If the constructor takes an argument, we can use the <code>Function</code> interface. For example:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">int</span>[] a = {<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">8</span>};<br />
-	  printList(a, (t, i) -&gt; System.out.println(t + i));<br />
-	  <span class="hljs-comment">//...</span><br />
-	  <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">printList</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] a, ObjIntConsumer&lt;String&gt; c)</span></span> {<br />
-	  &nbsp; &nbsp; <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i : a) {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; c.accept(<span class="hljs-string">"Number:"</span>, i);<br />
-	  &nbsp; &nbsp; }<br />
-	  }</code></p>
+            <p><code class="java hljs"><span class="hljs-comment">// Using a anonymous class</span><br />
+  Function&lt;String, Integer&gt; f =<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">new</span> Function&lt;String, Integer&gt;() {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> Integer <span class="hljs-title">apply</span><span class="hljs-params">(String s)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Integer(s);<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
+  };<br />
+  Integer i = f.apply(<span class="hljs-number">100</span>);<br />
+  <br />
+  <span class="hljs-comment">// Using a lambda expression</span><br />
+  Function&lt;String, Integer&gt; f = s -&gt; <span class="hljs-keyword">new</span> Integer(s);<br />
+  Integer i = f.apply(<span class="hljs-number">100</span>);<br />
+  <br />
+  <span class="hljs-comment">// Using a method reference</span><br />
+  Function&lt;String, Integer&gt; f = Integer::<span class="hljs-keyword">new</span>;<br />
+  Integer i = f.apply(<span class="hljs-number">100</span>);</code></p>
 
-            <h2>BiFunction</h2>
+            <p>If the constructor takes two arguments, we use the <code>BiFunction</code> interface:</p>
 
-            <p>This interface represents a function that takes two arguments of different type and produces a result of another type.</p>
+            <p><code class="java hljs"><span class="hljs-comment">// Using a anonymous class</span><br />
+  BiFunction&lt;String, String, Locale&gt; f = <span class="hljs-keyword">new</span> BiFunction&lt;String, String, Locale&gt;() {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> Locale <span class="hljs-title">apply</span><span class="hljs-params">(String lang, String country)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Locale(lang, country);<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  };<br />
+  Locale loc = f.apply(<span class="hljs-string">"en"</span>,<span class="hljs-string">"UK"</span>);<br />
+  <br />
+  <span class="hljs-comment">// Using a lambda expression</span><br />
+  BiFunction&lt;String, String, Locale&gt; f = (lang, country) -&gt; <span class="hljs-keyword">new</span> Locale(lang, country);<br />
+  Locale loc = f.apply(<span class="hljs-string">"en"</span>,<span class="hljs-string">"UK"</span>);<br />
+  <br />
+  <span class="hljs-comment">// Using a method reference</span><br />
+  BiFunction&lt;String, String, Locale&gt; f = Locale::<span class="hljs-keyword">new</span>;<br />
+  Locale loc = f.apply(<span class="hljs-string">"en"</span>,<span class="hljs-string">"UK"</span>);</code></p>
 
-            <p>This how the interface is defined:</p>
+            <p>If you have a constructor with three or more arguments, you would have to create your own functional interface.</p>
 
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">BiFunction</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">U</span>, <span class="hljs-title">R</span>&gt;</span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function">R <span class="hljs-title">apply</span><span class="hljs-params">(T t, U u)</span></span>; <span class="hljs-comment">// Other default and static methods<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-comment">// ...</span><br />
-	  }</code></p>
+            <p>You can see that referencing a constructor is very similar to referencing a static method. The difference is that the constructor "method name" is <code>new</code>.</p>
 
-            <p>So the functional descriptor (method signature) is:</p>
+            <p>Many of the examples of this chapter are very simple and probably they don't justify the use of lambda expressions or method references.</p>
 
-            <p><code class="java hljs">(T, U) -&gt; R</code></p>
+            <p>As mentioned at the beginning of the chapter, use method reference if they make your code <b>CLEARER</b>.</p>
 
-            <p>Assuming a method:</p>
+            <p>You can avoid the one method restriction by grouping all your code in a static method, for example, and create a reference to that method instead of using a class or a lambda expression with many lines.</p>
 
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">round</span><span class="hljs-params">(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">double</span> d1, <span class="hljs-keyword">double</span> d2, Function&lt;Double, Long&gt; f)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">long</span> result = f.apply(d1, d2);<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(result);<br />
-	  }</code></p>
+            <p>But the real power of lambda expressions and method references comes when they are combined with another new feature of Java 8, streams.</p>
 
-            <p>Here's an example using an anonymous class:</p>
+            <p>That will be the topic of the next section.</p>
 
-            <p><code class="java hljs">round(<span class="hljs-number">5.4</span>, <span class="hljs-number">3.8</span>, <span class="hljs-keyword">new</span> Function&lt;Double, Double, Long&gt;() {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-function">Long <span class="hljs-title">apply</span><span class="hljs-params">(Double d1, Double d2)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> Math.round(d1 + d2);<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
-	  });</code></p>
-
-            <p>And with a lambda expression:</p>
-
-            <p><code class="java hljs">round(<span class="hljs-number">5.4</span>, <span class="hljs-number">3.8</span>, d1, d2 -&gt; Math.round(d1, d2));</code></p>
-
-            <p>This interface, unlike <code>Function</code>, has only one default method:</p>
-
-            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T,V&gt; andThen(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R,? extends V&gt; after)</code></p>
-
-            <p>That returns a composed function that first applies the function that calls <code>andThen</code> to its input, to finally apply the function represented by the argument to the result.</p>
-
-            <p>This interface also has less primitive versions than <code>Function</code>. It only has the versions that take generic types as arguments and return <code>int</code>, <code>long</code> and <code>double</code> primitive types, with the naming convention <b>ToXXXBiFunction</b>, where XXX is the primitive type.</p>
-
-            <p>For example, here's the definition of <code>ToIntBiFunction</code>:</p>
-
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ToIntBiFunction</span>&lt;<span class="hljs-title">T</span>, <span class="hljs-title">U</span>&gt;</span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">applyAsInt</span><span class="hljs-params">(T t, U u)</span></span>;<br />
-	  }</code></p>
-
-            <p>That replaces <code>BiFunction</code>.</p>
-
-            <h2>BinaryOperator</h2>
-
-            <p>This interface is a specialization of the <code>BiFunction</code> interface (in fact, this interface extends from it) for when the arguments and the result are of the same type.</p>
-
-            <p>This how the interface is defined:</p>
-
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">BinaryOperator</span>&lt;<span class="hljs-title">T</span>&gt;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">extends</span> <span class="hljs-title">BiFunction</span>&lt;<span class="hljs-title">T</span>,<span class="hljs-title">T</span>,<span class="hljs-title">T</span>&gt;</span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// Two static method are defined</span><br />
-	  }</code></p>
-
-            <p>So the functional descriptor (method signature) is:</p>
-
-            <p><code class="java hljs">(T, T) -&gt; T</code></p>
-
-            <p>Here's an example using an anonymous class:</p>
-
-            <p><code class="java hljs">BinaryOperator&lt;String&gt; binOp =&nbsp;&nbsp;<span class="hljs-keyword">new</span> BinaryOperator&lt;String&gt;() {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-annotation">@Override<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">apply</span><span class="hljs-params">(String t, String u)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> t.concat(u);<br />
-	  &nbsp; &nbsp; &nbsp;}<br />
-	  };<br />
-	  System.out.println(binOp.apply(<span class="hljs-string">"Hello"</span>, <span class="hljs-string">" there"</span>));</code></p>
-
-            <p>And with a lambda expression:</p>
-
-            <p><code class="java hljs">BinaryOperator binOp = (t, u) -&gt; t.concat(u);<br />
-	  System.out.println(binOp.apply(<span class="hljs-string">"Hello"</span>, <span class="hljs-string">" there"</span>));</code></p>
-
-            <p>This interface inherits the default method of the <code>BiFunction</code> interface:</p>
-
-            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T,V&gt; andThen(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R,? extends V&gt; after)</code></p>
-
-            <p>And defines two new <code>static</code> methods:</p>
-
-            <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">BinaryOperator&lt;T&gt; <span class="hljs-title">minBy</span><span class="hljs-params">(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Comparator&lt;? <span class="hljs-keyword">super</span> T&gt; comparator)</span><br />
-	  <span class="hljs-keyword">static</span> BinaryOperator&lt;T&gt; <span class="hljs-title">maxBy</span><span class="hljs-params">(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Comparator&lt;? <span class="hljs-keyword">super</span> T&gt; comparator)</span></span></code></p>
-
-            <p>That return a <code>BinaryOperator</code>, which returns the lesser or greater of two elements according to the specified <code>Comparator</code>.</p>
-
-            <p>Here's a simple example:</p>
-
-            <p><code class="java hljs">BinaryOperator&lt;Integer&gt; biOp =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BinaryOperator.maxBy(Comparator.naturalOrder());<br />
-	  System.out.println(biOp.apply(<span class="hljs-number">28</span>, <span class="hljs-number">8</span>));</code></p>
-
-            <p>As you can see, these methods are just a wrapper to execute a <code>Comparator</code>.</p>
-
-            <p><code>Comparator.naturalOrder()</code> returns a <code>Comparator</code> that compares <code>Comparable</code> objects in natural order. To execute it, we just call the <code>apply()</code> method with the two arguments needed by the <code>BinaryOperator</code>. Unsurprisingly, the output is:</p>
-
-            <p><code class="java hljs"><span class="hljs-number">28</span></code></p>
-
-            <p>There are also primitive versions for <code>int</code>, <code>long</code> and <code>double</code>, where the two arguments and the return type are of the same primitive type. They don't extend from <code>BinaryOperator</code> or <code>BiFunction</code>.</p>
-
-            <p>For example, here's the definition of <code>IntBinaryOperator</code>:</p>
-
-            <p><code class="java hljs"><span class="hljs-annotation">@FunctionalInterface</span><br />
-	  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">IntBinaryOperator</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">applyAsInt</span><span class="hljs-params">(<span class="hljs-keyword">int</span> left, <span class="hljs-keyword">int</span> right)</span></span>;<br />
-	  }</code></p>
-
-            <p>That you can use instead of <code>BinaryOperator</code>.</p>
-
-
+            <div style="page-break-after:always;"></div>
 
             <h2>Key Points</h2>
 
             <ul>
-                <li>Java 8 contains new functional interfaces to work with lambda expressions that cover the most common scenarios usages located in the <code>java.util.function</code> package.<br /> They are:<br />
+                <li>A method reference is the shorthand syntax to a lambda expression that executes just one method.</li>
+
+                <li>The syntax of a lambda expression is:<br />
+                    <code class="java hljs">ObjectOrClassName :: methodName</code></li>
+
+                <li>In a method reference, you place the object (or class) that contains the method before the <code>::</code> operator and the name of the method after it without arguments.</li>
+
+                <li>There are four types of method references:
 
                     <ul>
-                        <li><code>Predicate</code></li>
+                        <li>A method reference to a <code>static</code> method</li>
 
-                        <li><code>Consumer</code></li>
+                        <li>A method reference to an instance method of an object of a particular type</li>
 
-                        <li><code>Function</code></li>
+                        <li>A method reference to an instance method of an existing object</li>
 
-                        <li><code>Supplier</code></li>
-
-                        <li><code>UnaryOperator</code></li>
+                        <li>A method reference to a constructor</li>
                     </ul>
                 </li>
 
-                <li>These interfaces have versions that work with primitive values for <code>int</code>, <code>long</code> and <code>double</code>, and <code>boolean</code> (only for <code>Supplier</code>) just to avoid the cost of converting a wrapper class to its primitive value, for example, <code>Integer</code> to <code>int</code>.</li>
+                <li>For static methods, we have a lambda expression like the following:<br />
+                    <code class="java hljs">(args) -&gt; Class.staticMethod(args)</code></li>
 
-                <li>These interfaces take one argument (represented by the generic type <code>T</code>), but with the exception of <code>Supplier</code> (that doesn't take any arguments), they have versions that take two arguments called binary versions.</li>
+                <li>That can be turned into the following method reference: <code class="java hljs">Class::staticMethod</code></li>
 
-                <li>A Predicate can be used anywhere you need to evaluate a <code>boolean</code> condition. Its function descriptor (method signature) is:<br />
-                    <code class="java hljs">T -&gt; <span class="hljs-keyword">boolean</span></code></li>
+                <li>For instance methods of objects of a particular type, we have a lambda expression like the following:<br />
+                    <code class="java hljs">(obj, args) -&gt; obj.instanceMethod(args)</code></li>
 
-                <li>It has primitive versions for <code>int</code>, <code>long</code> and <code>double</code>, for example, <code>IntPredicate</code>.</li>
+                <li>Where an instance of an object is passed as an argument and one of its methods is executed with some optional(s) parameter(s).</li>
 
-                <li>A Consumer is an operation that accepts a single input argument and returns no result. Its functional descriptor is:<br />
-                    <code class="java hljs">T -&gt; <span class="hljs-keyword">void</span></code></li>
+                <li>And that can be turned into the following method reference:<br />
+                    <code class="java hljs">ObjectType::instanceMethod</code></li>
 
-                <li>It has primitive versions for <code>int</code>, <code>long</code> and <code>double</code>, for example, <code>IntConsumer</code>.</li>
+                <li>For instance methods of existing objects, we have a lambda expression like the following:<br />
+                    <code class="java hljs">(args) -&gt; obj.instanceMethod(args)</code></li>
 
-                <li>A Function is an operation that takes an input argument of a certain type and produces a result of another type. Its functional descriptor is:<br />
-                    <code class="java hljs">T -&gt; R</code></li>
+                <li>That can be turned into the following method reference:<br />
+                    <code class="java hljs">obj::instanceMethod</code></li>
 
-                <li>It has a lot of primitive versions for <code>int</code>, <code>long</code> and <code>double</code>. We can divide them into three types.</li>
+                <li>For creating objects (calling a constructor), we have a lambda expression like the following:<br />
+                    <code class="java hljs">(args) -&gt; <span class="hljs-keyword">new</span> ClassName(args)</code></li>
 
-                <li>To indicate that the function returns a generic type and takes a primitive argument, the interface is named <b>XXXFunction</b>, for example,&nbsp;<code>IntFunction</code>.</li>
-
-                <li>To indicate that the function returns a primitive type and takes a generic argument, the interface is named <b>ToXXXFunction</b>, for example, <code>ToIntFunction</code>.</li>
-
-                <li>To indicate that the function takes a primitive argument and returns another primitive type, the interface is named <b>XXXToYYYFunction</b>, where XXX is the argument type and YYY is the return type, for example,&nbsp;<code>IntToDoubleFunction</code>.</li>
-
-                <li>A <code>Supplier</code> is an operation that takes no arguments, but it returns some value. Its functional descriptor is:<br />
-                    <code class="java hljs">() -&gt; T</code></li>
-
-                <li>It has primitive versions for <code>int</code>, <code>long</code>, <code>double</code> and <code>boolean</code>, for example, <code>IntSupplier</code>.</li>
-
-                <li><code>UnaryOperator</code> is a specialization of the <code>Function</code> interface (in fact, this interface extends from it) for when the argument and the result are of the same type. So its functional descriptor is:<br />
-                    <code class="java hljs">T -&gt; T</code></li>
-
-                <li>It has primitive versions for <code>int</code>, <code>long</code> and <code>double</code>, for example, <code>IntUnaryOperator</code>.</li>
-
-                <li>A <code>BiPredicate</code> represents a predicate that takes two arguments. Its functional descriptor is:<br />
-                    <code class="java hljs">(T, U) -&gt; T</code></li>
-
-                <li>This interface doesn't have primitive versions.</li>
-
-                <li>A <code>BiConsumer</code> represents a consumer that takes two arguments. Its functional descriptor is:<br />
-                    <code class="java hljs">(T, U) -&gt; <span class="hljs-keyword">void</span></code></li>
-
-                <li>It has primitive versions for <code>int</code>, <code>long</code> and <code>double</code>. They take one object and a primitive value as a second argument. So the naming conventions change to <code>ObjXXXConsumer</code>, where XXX is the primitive type, for example, <code>ObjIntConsumer</code>.</li>
-
-                <li>A <code>BiFunction</code> represents a function that takes two arguments of different type and produces a result of another type. Its functional descriptor is:<br />
-                    <code class="java hljs">(T, U) -&gt; R</code></li>
-
-                <li>It has primitive versions that take generic types as arguments and return <code>int</code>, <code>long</code> and <code>double</code> primitive types, with the naming convention <code>ToXXXBiFunction</code>, where XXX is the primitive type.</li>
-
-                <li>A <code>BinaryOperator</code> is a specialization of the <code>BiFunction</code> interface (in fact, this interface extends from it) for when the arguments and the result are of the same type. Its functional descriptor is:<br />
-                    <code class="java hljs">(T, T) -&gt; T</code></li>
-
-                <li>It defines two static methods:<br />
-                    <code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">BinaryOperator&lt;T&gt; <span class="hljs-title">minBy</span><span class="hljs-params">(<br />
-		&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Comparator&lt;? <span class="hljs-keyword">super</span> T&gt; comparator)<br /></span><span class="hljs-keyword">static</span> &lt;T&gt; BinaryOperator&lt;T&gt; <span class="hljs-title">maxBy</span><span class="hljs-params">(<br />
-		&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Comparator&lt;? <span class="hljs-keyword">super</span> T&gt; comparator)</span></span></code></li>
-
-                <li>It has primitive versions for <code>int</code>, <code>long</code> and <code>double</code>, for example, <code>IntBinaryOperator</code>.</li>
+                <li>That can be turned into the following method reference: <code class="java hljs">ClassName::<span class="hljs-keyword">new</span></code></li>
             </ul>
 
-
+            <div style="page-break-after:always;"></div>
 
             <h2>Self Test</h2>
 
             <p>1. Given:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_10_1</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Predicate&lt;String&gt; p1 = t -&gt; {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.print(<span class="hljs-string">"p1"</span>);<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">return</span> t.startsWith(<span class="hljs-string">" "</span>);<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;};<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Predicate&lt;String&gt; p2 = t -&gt; {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.print(<span class="hljs-string">"p2"</span>);<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">return</span> t.length() &gt; <span class="hljs-number">5</span>;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;};<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;p1.and(p2).test(<span class="hljs-string">"a question"</span>);<br />
-	  &nbsp; &nbsp; &nbsp; }<br />
-	  }</code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_11_1</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Runnable <span class="hljs-title">print</span><span class="hljs-params">()</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> () -&gt; {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"Hi"</span>);<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;};<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Runnable r = Question_11_1::print;<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;r.run();<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  }</code></p>
 
-            <p>What is the result?<br /> A. <code>p1</code><br /> B. <code>p2</code><br /> C. <code>p1p2</code><br /> D. <code>false</code><br /> E. Compilation fails</p>
+            <p>What is the result?<br /> A. <code>Hi</code><br /> B. Nothing is printed<br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
+            <div style="page-break-after:always;"></div>
 
+            <p>2. Given:</p>
 
-            <p>2. Which of the following interfaces is a valid primitive version of <code>BiConsumer&lt;T, U&gt;</code>?<br /> A. <code>IntBiConsumer</code><br /> B. <code>ObjLongConsumer</code><br /> C. <code>ToLongBiConsumer</code><br /> D. <code>IntToDoubleConsumer</code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_11_2</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">print</span><span class="hljs-params">()</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"Hi"</span>);<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Consumer&lt;Question_11_2&gt; c =<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Question_11_2::print;<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;c.accept(<span class="hljs-keyword">new</span> Question_11_2());<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  }</code></p>
 
+            <p>What is the result?<br /> A. <code>Hi</code><br /> B. Nothing is printed<br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
+            <div style="page-break-after:always;"></div>
 
-            <p>3. Given:</p>
+            <p>3. Which of the following statements is true?<br /> A. You can have a method reference to a constructor.<br /> B. Method references replace any lambda expression.<br /> C. Arguments of the method are never passed to a method reference.<br /> D. The <code>::</code> operator can be used in lambda expressions also.</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_10_3</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;IntUnaryOperator u1 = i -&gt; i / <span class="hljs-number">6</span>;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;IntUnaryOperator u2 = i -&gt; i + <span class="hljs-number">12</span>;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; u1.compose(u2).applyAsInt(<span class="hljs-number">12</span>)<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;);<br />
-	  &nbsp; &nbsp; &nbsp; }<br />
-	  }</code></p>
+            <div style="page-break-after:always;"></div>
 
-            <p>What is the result?<br /> A. <code>24</code><br /> B. <code>14</code><br /> C. <code>4</code><br /> D. <code>2</code><br /> E. Compilation fails</p>
+            <p>4. Given:</p>
 
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">drive</span><span class="hljs-params">(<span class="hljs-keyword">int</span> speed)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">//...<br /></span>&nbsp; &nbsp; &nbsp;}<br />
+  }</code></p>
 
+            <p>And:</p>
 
-            <p>4. Which of the following statements is true?<br /> A. A <code>Consumer</code> takes a parameter of type <code>T</code> and returns a result of the same type.<br /> B. <code>UnaryOperator</code> is a specialization of the <code>Operator</code> interface.<br /> C. The <code>BiFunction</code> interface doesn't have primitive versions.<br /> D. A <code>Supplier</code> represents an operation that takes no arguments, but it returns some value.</p>
+            <p><code class="java hljs">Car c = <span class="hljs-keyword">new</span> Car();<br />
+  IntConsumer consumer = (<span class="hljs-keyword">int</span> speed) -&gt; c.drive(speed);</code></p>
 
+            <p>Which of the following method references can replace the above lambda expression?<br /> A. <code>Car.drive</code><br /> B. <code>c.drive(speed)</code><br /> C. <code>Car::drive</code><br /> D. <code>c::drive</code></p>
 
+            <div style="page-break-after:always;"></div>
 
             <p>5. Given:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_10_3</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Supplier&lt;Boolean&gt; s = () -&gt; {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Random generator = <span class="hljs-keyword">new</span> Random();<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">int</span> n = generator.nextInt(<span class="hljs-number">1</span>);<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">return</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;};<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(s.getAsBoolean());<br />
-	  &nbsp; &nbsp; &nbsp; }<br />
-	  }</code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_11_5</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;Question_11_5() {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-number">0</span>);<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Runnable r = Question_11_5::<span class="hljs-keyword">new</span>;<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  }</code></p>
 
-            <p>What is the result?<br /> A. <code>true</code><br /> B. <code>false</code><br /> C. Sometimes <code>true</code>, sometimes <code>false</code><br /> D. Compilation fails</p>
+            <p>What is the result?<br /> A. <code>0</code><br /> B. Nothing is printed<br /> C. Compilation fails<br /> D. An exception occurs at runtime</p>
 
+            <div style="page-break-after:always;"></div>
 
+            <p>6. Given:</p>
 
-            <p>6. Which of the following interfaces is a valid primitive version of <code>BiPredicate&lt;T, U&gt;</code>?<br /> A. <code>IntBiPredicate</code><br /> B. <code>ObjBooleanPredicate</code><br /> C. <code>ToLongBiPredicate</code><br /> D. <code>BiPredicate</code> doesn't have primitive versions</p>
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;Test() {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-number">0</span>);<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  &nbsp; &nbsp; &nbsp;Test(String s) {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-number">1</span>);<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  }<br />
+  <span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_11_6</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BiFunction&lt;String, String, Test&gt; f = Test::<span class="hljs-keyword">new</span>;<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;f.apply(<span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>);<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  }</code></p>
 
+            <p>What is the result?<br /> A. <code>0</code><br /> B. <code>1</code><br /> C. Nothing is printed<br /> D. Compilation fails<br /> E. An exception occurs at runtime</p>
 
+            <div style="page-break-after:always;"></div>
 
-            <p>7. Which of the following primitive version of <code>Function</code> returns a generic type while taking a <code>long</code> argument?<br /> A. <code>ToLongFunction</code><br /> B. <code>LongFunction</code><br /> C. <code>LongToObjectFunction</code><br /> D. There's no primitive version with this characteristic</p>
+            <p>7. Given:</p>
 
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_11_7</span></span> {<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">Question_11_7</span><span class="hljs-params">()</span></span> {}<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Question_11_7 <span class="hljs-title">create</span><span class="hljs-params">()</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Question_11_7();<br />
+  &nbsp; &nbsp; &nbsp;}<br />
+  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String args[])</span></span> {<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// 1<br /></span>&nbsp; &nbsp; &nbsp;}<br />
+  }</code></p>
 
+            <p>Which of the following method references can be used to get instances of class <code>Question_11_7</code> at line <code>// 1</code>?<br /> A.
+                <br /></p>
 
-            <p>8. Which of the following statements is true?<br /> A. The <code>BinaryOperator</code> interface extends from the <code>BiFunction</code> interface.<br /> B. The <code>BiSupplier</code> interface only takes one generic argument.<br /> C. The <code>Supplier</code> interface doesn't define any default methods.<br /> D. <code>minBy</code> and <code>maxBy</code> are two default methods of the <code>BinaryOperator</code> interface.</p>
+            <p><code class="java hljs">Supplier&lt;Question_11_7&gt; s = Question_11_7::<span class="hljs-keyword">new</span>;</code></p>
 
+            <p><br /> B.
+                <br /></p>
+
+            <p><code class="java hljs">UnaryOperator&lt;Question_11_7&gt; u = Question_11_7::create;</code></p>
+
+            <p><br /> C.
+                <br /></p>
+
+            <p><code class="java hljs">Consumer&lt;Question_11_7&gt; c = Question_11_7::create;</code></p>
+
+            <p><br /> D.
+                <br /></p>
+
+            <p><code class="java hljs">Supplier&lt;Question_11_7&gt; s = Question_11_7::create;</code></p>
 
 
 
