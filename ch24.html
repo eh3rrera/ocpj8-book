@@ -42,296 +42,700 @@
 
         <div class="column">
 
-            <h2>New Stream Methods in NIO.2</h2>
+            <h2>NIO.2</h2>
 
-            <p>With the arrival of streams to Java, some difficult file operations to implement in NIO.2 (that often required an entire class) have been simplified..</p>
+            <p>In the last chapter, we reviewed the classes of the <code>java.io</code> package.</p>
 
-            <p><code>java.nio.file.Files</code>, a class with static methods we reviewed in the last chapter, added operations that return implementations of the <code>Stream</code> interface.<br /></p>
+            <p>In the first versions of Java, this package, especially the <code>File</code> class, provided support for file operations. However, it had some problems, like lacking functionality and limited file attribute support.</p>
 
-            <p>The methods are:</p>
+            <p>For that reason, Java 1.4 introduced the NIO (Non-blocking Input/Output) API in the package <code>java.nio</code> implementing new functionality like channels, buffering, and new charsets.</p>
 
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">find</span><span class="hljs-params">(Path start,<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; int</span> maxDepth,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; BiPredicate&lt;Path,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; BasicFileAttributes&gt; matcher,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FileVisitOption... options)</span><br />
-	  <span class="hljs-keyword"><br />
-	  static</span> Stream&lt;Path&gt; <span class="hljs-title">list</span><span class="hljs-params">(Path dir)</span><br />
-	  <span class="hljs-keyword"><br />
-	  static</span> Stream&lt;String&gt; <span class="hljs-title">lines</span><span class="hljs-params">(Path path)</span><br />
-	  <span class="hljs-keyword">static</span> Stream&lt;String&gt; <span class="hljs-title">lines</span><span class="hljs-params">(Path path, Charset cs)</span><br />
-	  <span class="hljs-keyword"><br />
-	  static</span> Stream&lt;Path&gt; <span class="hljs-title">walk</span><span class="hljs-params">(Path start,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileVisitOption... options)</span><br />
-	  <span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">walk</span><span class="hljs-params">(Path start,<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;int</span> maxDepth,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileVisitOption... options)</span></span></code></p>
+            <p>However, this API didn't entirely solve the problems with the <code>java.io</code> package, so in Java 7, the NIO.2 API was added in the <code>java.nio.file</code> package (actually, since this is a new package, NIO.2 is not an update to the NIO API, besides, the focus on different things).</p>
 
-            <p>An important thing to notice is that the returned streams are <b>LAZY</b>, which means that the elements are not loaded (or read) until they are used. This is a great performance enhancement.</p>
+            <p>NIO.2 provides better support for accessing files and the file system, symbolic links, interoperability, and exceptions among others.</p>
 
-            <p>Let's describe each method starting with <code>File.list()</code>.</p>
+            <p>The primary classes of <code>java.nio.file</code>, <code>Path</code>, <code>Paths</code>, and <code>Files</code>, are intended to provide an easier way to work with files and to be a replacement of the <code>java.io.File</code> class.</p>
 
-            <h2>Files.list()</h2>
+            <p>These classes will be the focus of this chapter. Let's start with <code>Path</code> and <code>Paths</code>.</p>
 
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">list</span><span class="hljs-params">(Path dir)</span><br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException</span></code></p>
+            <h2>The Path interface</h2>
 
-            <p>This method iterates over a directory to return a stream which elements are <code>Path</code> objects that represent the entries of that directory.</p>
+            <p>In the previous chapter, we also reviewed concepts like file systems and paths.</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">try</span>(Stream&lt;Path&gt; stream =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; Files.list(Paths.get(<span class="hljs-string">"/temp"</span>))) {<br />
-	  &nbsp; &nbsp; stream.forEach(System.out::println);<br />
-	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
-	  &nbsp; &nbsp; e.printStackTrace();<br />
-	  }</code></p>
+            <p>Well, the <code>Path</code> interface defines an object that represents the path to a file or a directory.</p>
 
-            <p>A possible output:</p>
+            <p>When you think about the fact that a path varies between different file systems, it makes sense that <code>Path</code> is an interface. Thanks to this, Java transparently handles different implementations between platforms.</p>
 
-            <p><code class="java hljs">/temp/dir1<br />
-	  /temp/dir2<br />
-	  /temp/file.txt</code></p>
-
-            <p>The use of a <code>try-with-resources</code> is recommended so the stream's close method can be invoked to close the file system resources.</p>
-
-            <p>As you can see, this method list directories and files in the specified directory. However, it is not recursive, in other words, it <b>DOESN'T</b> traverses subdirectories.</p>
-
-            <p>Another two important considerations about this method:</p>
+            <p>For example, here are some differences between Windows-based and Unix-based systems:</p>
 
             <ul>
-                <li>If the argument doesn't represent a directory, an exception is thrown.</li>
+                <li>Windows-based systems are not case sensitive while Unix-based systems are.</li>
 
-                <li>This method is thread safe but is weakly consistent, meaning that while iterating a directory, updates to it may or may not be reflected in the returned stream.</li>
+                <li>In Windows-based systems, paths are separated by backslashes. In Unix-based systems, by forward slashes.</li>
+
+                <li>In Windows-based systems, the root path is a drive letter (generally <code>c:\</code>). In Unix-based systems, it's a forward slash (<code>/</code>).</li>
+
+                <li>Because of that, in Windows-based systems, an absolute path starts with a drive letter (like <code>c:\temp\file.txt</code>). In Unix-based systems, it starts with a forward slash (like <code>/temp/file.txt</code>).</li>
             </ul>
 
-            <h2>Files.walk()</h2>
+            <p>Since <code>Path</code> is an interface and Java handle its implementations, we have to use a utility class to create <code>Path</code> instances.</p>
 
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">walk</span><span class="hljs-params">(Path start,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileVisitOption... options)</span><br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException<br />
-	  <span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">walk</span><span class="hljs-params">(Path start,<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;int</span> maxDepth,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileVisitOption... options)</span><br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException</span></code></p>
+            <p><code>java.nio.files.Paths</code> is this class. It provides two methods to create a <code>Path</code> object:</p>
 
-            <p>This method also iterates over a directory to return a stream which elements are <code>Path</code> objects that represent the entries of that directory.</p>
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Path <span class="hljs-title">get</span><span class="hljs-params">(String first, String... more)</span><br />
+  <span class="hljs-keyword">static</span> Path <span class="hljs-title">get</span><span class="hljs-params">(URI uri)</span></span></code></p>
 
-            <p>The difference with <code>Files.list()</code> is that <code>Files.walk()</code> <b>DOES</b> recursively traverse the subdirectories.</p>
+            <p>Be very careful with the names:</p>
 
-            <p>It does it with a <i>depth-first</i> strategy, which traverses the directory structure from the root to all the way down a subdirectory before exploring another one.</p>
+            <p><b>Path</b> is the <b>interface</b> with methods to work with paths.</p>
 
-            <p>For example, considering this structure:</p>
+            <p><b>Paths</b> is the <b>class</b> with <code>static</code> methods to create a <code>Path</code> object.</p>
 
-            <p><code class="java hljs">/temp/<br />
-	  &nbsp; &nbsp;/dir1/<br />
-	  &nbsp; &nbsp; &nbsp; /subdir1/<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;111.txt<br />
-	  &nbsp; &nbsp; &nbsp; /subdir2/<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;121.txt<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;122.txt<br />
-	  &nbsp; &nbsp;/dir2/<br />
-	  &nbsp; &nbsp; &nbsp; 21.txt<br />
-	  &nbsp; &nbsp; &nbsp; 22.txt<br />
-	  &nbsp; &nbsp;file.txt</code></p>
+            <p>With the first version of <code>Paths.get()</code> you can create a <code>Path</code> object in these ways:</p>
 
-            <p>The following code:</p>
+            <p><code class="java hljs"><span class="hljs-comment">// With an absolute path in windows</span><br />
+  Path pathWin = Paths.get(<span class="hljs-string">"c:\\temp\\file.txt"</span>);<br />
+  <span class="hljs-comment">// With an absolute path in unix</span><br />
+  Path pathUnix = Paths.get(<span class="hljs-string">"/temp/file.txt"</span>);<br />
+  <span class="hljs-comment">// With a relative path</span><br />
+  Path pathRelative = Paths.get(<span class="hljs-string">"file.txt"</span>);<br />
+  <span class="hljs-comment">//Using the varargs parameter</span><br />
+  <span class="hljs-comment">// (the separator is inserted automatically)</span><br />
+  Path pathByParts = Paths.get(<span class="hljs-string">"c:"</span>, <span class="hljs-string">"temp"</span>, <span class="hljs-string">"file.txt"</span>);</code></p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">try</span>(Stream&lt;Path&gt; stream =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Files.walk(Paths.get(<span class="hljs-string">"c:/temp"</span>))) {<br />
-	  &nbsp; &nbsp; stream.forEach(System.out::println);<br />
-	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
-	  &nbsp; &nbsp; e.printStackTrace();<br />
-	  }</code></p>
+            <p>With the second version, you have to use a <code>java.net.URI</code> instance. Since we're working with files, the URI schema must be <code>file://</code>:</p>
 
-            <p>Will output:</p>
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+  &nbsp; &nbsp; Path fileURI = Paths.get(<span class="hljs-keyword">new</span> URI(<span class="hljs-string">"file:///c:/temp/file.txt"</span>));<br />
+  } <span class="hljs-keyword">catch</span> (URISyntaxException e) {<br />
+  <span class="hljs-comment">&nbsp; &nbsp; //This exception is thrown by the URI constructor</span><br />
+  }</code></p>
 
-            <p><code class="java hljs">/temp<br />
-	  /temp/dir1<br />
-	  /temp/dir1/subdir1<br />
-	  /temp/dir1/subdir1/111.txt<br />
-	  /temp/dir1/subdir2<br />
-	  /temp/dir1/subdir2/121.txt<br />
-	  /temp/dir1/subdir2/122.txt<br />
-	  /temp/dir2<br />
-	  /temp/dir2/21.txt<br />
-	  /temp/dir2/22.txt<br />
-	  /temp/file.txt</code></p>
+            <p>If you don't have to catch <code>URISyntaxException</code>, you can use the <code>static</code> method <code>URI.create(String)</code>, that wraps that exception in a <code>IllegalArgumentException</code> (a subclass of <code>RuntimeException</code>):</p>
 
-            <p>By default, this method uses a maximum subdirectory depth of <code>Integer.MAX_VALUE</code>. But you can use the overloaded version that takes the maximum depth as the second parameter:</p>
+            <p><code class="java hljs">Path fileURI = Paths.get(URI.create(<span class="hljs-string">"file:///c:/temp/file.txt"</span>));</code></p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">try</span>(Stream&lt;Path&gt; stream =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; Files.walk(Paths.get(<span class="hljs-string">"/temp"</span>), <span class="hljs-number">1</span>)) {<br />
-	  &nbsp; &nbsp; stream.forEach(System.out::println);<br />
-	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
-	  &nbsp; &nbsp; e.printStackTrace();<br />
-	  }</code></p>
+            <p>Notice the three slashes. <code>file:///</code> represents an absolute path (the <code>file://</code> schema plus another slash for the root directory). We can test this with the help of the <code>toAbsolutePath()</code> method, which returns the absolute path representation of a <code>Path</code> object:</p>
 
-            <p>The output is:</p>
+            <p><code class="java hljs">Path fileURI = Paths.get(URI.create(<span class="hljs-string">"file:///file.txt"</span>));<br />
+  System.out.println(fileURI.toAbsolutePath());</code></p>
 
-            <p><code class="java hljs">/temp<br />
-	  /temp/dir1<br />
-	  /temp/dir2<br />
-	  /temp/file.txt</code></p>
+            <p>This will print either:</p>
 
-            <p>A value of <code>0</code> means that only the starting directory is visited.</p>
+            <p><code class="java hljs">C:\file.txt <span class="hljs-comment">// in Windows-based systems</span><br />
+  /file.txt <span class="hljs-comment">// Or in Unix-based systems</span></code></p>
 
-            <p>Also, this method doesn't follow symbolic links by default.</p>
+            <p>We can also create a <code>Path</code> from a <code>File</code> and vice-versa:</p>
 
-            <p>Symbolic links can cause a <i>cycle</i>, an infinite circular dependency between directories. However, this method is smart enough to detect a cycle and throw a <code>FileSystemLoopException</code>.</p>
+            <p><code class="java hljs">File file = <span class="hljs-keyword">new</span> File(<span class="hljs-string">"/file.txt"</span>);<br />
+  Path path = file.toPath();<br />
+  <br />
+  path = Paths.get(<span class="hljs-string">"/file.txt"</span>);<br />
+  file = path.toFile();</code></p>
 
-            <p>To follow symbolic links, just use the argument of type <code>FileVisitOption</code> (preferably, also using the maximum depth argument) this way:</p>
+            <p>And just to make clear that the <code>Path</code> instance is system-dependent, let me tell you that <code>Paths.get()</code> is actually equivalent to:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">try</span>(Stream&lt;Path&gt; stream =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; Files.walk(Paths.get(<span class="hljs-string">"/temp"</span>),<br />
-	  <span class="hljs-number">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;2</span>,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileVisitOption.FOLLOW_LINKS)<br />
-	  ) {<br />
-	  &nbsp; &nbsp; stream.forEach(System.out::println);<br />
-	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
-	  &nbsp; &nbsp; e.printStackTrace();<br />
-	  }</code></p>
+            <p><code class="java hljs">Path path = FileSystems.getDefault().getPath(<span class="hljs-string">"c://temp"</span>);</code></p>
 
-            <p>Just like <code>Files.list()</code>, it's recommended to use <code>Files.walk()</code> with <code>try-with-resources</code>, if the argument doesn't represent a directory, an exception is thrown and it's considered a <i>weakly consistent</i> method.</p>
+            <p>As you can see from the examples, the absolute path representation of a <code>Path</code> object has a root component (either <code>c:\</code> or <code>/</code>) and a sequence of names separated by a (forward o backward) slash.</p>
 
-            <h2>Files.find()</h2>
+            <p>These names represent the directories needed to navigate to the target file or directory. The last name in the sequence represents the name of the target file or directory.</p>
 
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">find</span><span class="hljs-params">(Path start,<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; int</span> maxDepth,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; BiPredicate&lt;Path,BasicFileAttributes&gt; matcher,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; FileVisitOption... options)</span><br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; throws</span> IOException</span></code></p>
+            <p>For example, the elements of the path <code>c:\temp\dir1\file.txt</code> (or its Unix equivalent, <code>/temp/dir1/file.txt</code>) are:</p>
 
-            <p>This method is similar to <code>Files.walk()</code>, but takes an additional argument of type <code>BiPredicate</code> that is used to filter the files and directories.</p>
+            <p><code class="hljs"><b>Root:</b> c:\ (or /)<br />
+  <b>Name 1:</b> temp<br />
+  <b>Name 2:</b> dir1<br />
+  <b>Name 3:</b> file.txt</code></p>
 
-            <p>Remember that a <code>BiPredicate</code> takes two arguments and returns a <code>boolean</code>. In this case:</p>
+            <p>The <code>Path</code> object has some methods to get this information (except for <code>toString()</code> and <code>getNameCount()</code>, all method return a <code>Path</code> object):</p>
+
+            <p><code class="java hljs">Path path = Paths.get(<span class="hljs-string">"C:\\temp\\dir1\\file.txt"</span>);<br />
+  <span class="hljs-comment">// Or Path path = Paths.get("/temp/dir1/file.txt");</span><br />
+  System.out.println(<span class="hljs-string">"toString(): "</span> + path.toString());<br />
+  System.out.println(<span class="hljs-string">"getFileName(): "</span> + path.getFileName());<br />
+  System.out.println(<span class="hljs-string">"getNameCount(): "</span> +path.getNameCount());<br />
+  <span class="hljs-comment">// Indexes start from zero</span>&nbsp;<br />
+  System.out.println(<span class="hljs-string">"getName(0): "</span> + path.getName(<span class="hljs-number">0</span>));<br />
+  System.out.println(<span class="hljs-string">"getName(1): "</span> + path.getName(<span class="hljs-number">1</span>));<br />
+  System.out.println(<span class="hljs-string">"getName(2): "</span> + path.getName(<span class="hljs-number">2</span>));<br />
+  <span class="hljs-comment">// subpath(beginIndex, endIndex) from beginIndex to endIndex-1</span><br />
+  System.out.println(<span class="hljs-string">"subpath(0,2): "</span> + path.subpath(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>));<br />
+  System.out.println(<span class="hljs-string">"getParent(): "</span> + path.getParent());<br />
+  System.out.println(<span class="hljs-string">"getRoot(): "</span> + path.getRoot());</code></p>
+
+            <p>The output:</p>
+
+            <p><code class="java hljs">toString(): C:\temp\dir1\file.txt <span class="hljs-comment">// Or /temp/dir1/file.txt</span><br />
+  getFileName(): file.<span class="hljs-function">txt<br />
+  <span class="hljs-title">getNameCount</span><span class="hljs-params">()</span>: 3<br />
+  <span class="hljs-title">getName</span><span class="hljs-params">(<span class="hljs-number">0</span>)</span>: temp<br />
+  <span class="hljs-title">getName</span><span class="hljs-params">(<span class="hljs-number">1</span>)</span>: dir1<br />
+  <span class="hljs-title">getName</span><span class="hljs-params">(<span class="hljs-number">2</span>)</span>: file.txt<br />
+  <span class="hljs-title">subpath</span><span class="hljs-params">(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>)</span>: temp\dir1 <span class="hljs-comment">// Or temp/dir1</span><br />
+  <span class="hljs-title">getParent</span><span class="hljs-params">()</span>: C:\temp\dir1 <span class="hljs-comment">// Or /temp/dir1</span><br />
+  <span class="hljs-title">getRoot</span><span class="hljs-params">()</span>: C:\ <span class="hljs-comment">// Or /</span></span></code></p>
+
+            <p>Passing an invalid index to <code>getName()</code> and <code>subpath()</code> will throw an <code>IllegalArgumentException</code> (a <code>RuntimeException</code>).</p>
+
+            <p>If the path is specified as a relative one (and assuming this code is executed from the <code>c:\temp</code> directory):</p>
+
+            <p><code class="java hljs">Path path = Paths.get(<span class="hljs-string">"dir1\\file.txt"</span>);<span class="hljs-comment">// Or dir1/file.txt</span>&nbsp;<br />
+  System.out.println(<span class="hljs-string">"toString(): "</span> + path.toString());<br />
+  System.out.println(<span class="hljs-string">"getFileName(): "</span> + path.getFileName());<br />
+  System.out.println(<span class="hljs-string">"getNameCount(): "</span> + path.getNameCount());<br />
+  System.out.println(<span class="hljs-string">"getName(0): "</span> + path.getName(<span class="hljs-number">0</span>));<br />
+  System.out.println(<span class="hljs-string">"getName(1): "</span> + path.getName(<span class="hljs-number">1</span>));<br />
+  System.out.println(<span class="hljs-string">"subpath(0,2): "</span> + path.subpath(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>));<br />
+  System.out.println(<span class="hljs-string">"getParent(): "</span> + path.getParent());<br />
+  System.out.println(<span class="hljs-string">"getRoot(): "</span> + path.getRoot());</code></p>
+
+            <p>The output:</p>
+
+            <p><code class="java hljs">toString(): dir1\file.txt <span class="hljs-comment">// Or dir1/file.txt</span><br />
+  getFileName(): file.<span class="hljs-function">txt<br />
+  <span class="hljs-title">getNameCount</span><span class="hljs-params">()</span>: 2<br />
+  <span class="hljs-title">getName</span><span class="hljs-params">(<span class="hljs-number">0</span>)</span>: dir1<br />
+  <span class="hljs-title">getName</span><span class="hljs-params">(<span class="hljs-number">1</span>)</span>: file.txt<br />
+  <span class="hljs-title">subpath</span><span class="hljs-params">(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>)</span>: dir1\file.txt <span class="hljs-comment">// Or dir1/file.txt</span><br />
+  <span class="hljs-title">getParent</span><span class="hljs-params">()</span>: dir1<br />
+  <span class="hljs-title">getRoot</span><span class="hljs-params">()</span>: <span class="hljs-keyword">null</span></span></code></p>
+
+            <p>When working with paths you can use:</p>
 
             <ul>
-                <li>The first argument is the <code>Path</code> object that represents the file or directory.</li>
+                <li><code>.</code> to refer to the current directory</li>
 
-                <li>The second argument is a <code>BasicFileAttributes</code> object that represents the attributes of the file or directory in the file system (like creation time, if it's a file, directory or symbolic link, size, etc.).</li>
-
-                <li>The returned <code>boolean</code> indicates if the file should be included in the returned stream.</li>
+                <li><code>..</code> to refer to the parent directory</li>
             </ul>
-
-            <p>The following example returns a stream that includes just directories:</p>
-
-            <p><code class="java hljs">BiPredicate&lt;Path, BasicFileAttributes&gt; predicate =<br />
-	  &nbsp; &nbsp; (path, attrs) -&gt; {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; <span class="hljs-keyword">return</span> attrs.isDirectory();<br />
-	  };<br />
-	  <span class="hljs-keyword">int</span> maxDepth = <span class="hljs-number">2</span>;<br />
-	  <span class="hljs-keyword">try</span>(Stream&lt;Path&gt; stream =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; Files.find(Paths.get(<span class="hljs-string">"/temp"</span>),<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; maxDepth, predicate)) {<br />
-	  &nbsp; &nbsp; stream.forEach(System.out::println);<br />
-	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
-	  &nbsp; &nbsp; e.printStackTrace();<br />
-	  }</code></p>
-
-            <p>A possible output can be:</p>
-
-            <p><code class="java hljs">/temp<br />
-	  /temp/dir1<br />
-	  /temp/dir1/subdir1<br />
-	  /temp/dir1/subdir2<br />
-	  /temp/dir2</code></p>
-
-            <p>Like <code>Files.walk()</code>, it can also take a <code>FileVisitOption</code> for visiting symbolic links, it's recommended to use it in a <code>try-with-resources</code> and throws an exception if it cannot read a file or directory.</p>
-
-            <h2>Files.lines()</h2>
-
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Stream&lt;String&gt; <span class="hljs-title">lines</span><span class="hljs-params">(Path path, Charset cs)</span><br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException<br />
-	  <span class="hljs-keyword">static</span> Stream&lt;String&gt; <span class="hljs-title">lines</span><span class="hljs-params">(Path path)</span><br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException</span></code></p>
-
-            <p>This method reads all the lines of a file as a stream of <code>String</code>s.</p>
-
-            <p>As the stream is lazy, it doesn't load all the lines into memory, only the line read at any given time. If the file doesn't exist, an exception is thrown.</p>
-
-            <p>The file's bytes are decoded using the specified charset or with <code>UTF-8</code> by default.</p>
 
             <p>For example:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">try</span>(Stream&lt;String&gt; stream =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Files.lines(Paths.get(<span class="hljs-string">"/temp/file.txt"</span>))) {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; stream.forEach(System.out::println);<br />
-	  } <span class="hljs-keyword">catch</span>(IOException e) {<br />
-	  &nbsp; &nbsp; e.printStackTrace();<br />
-	  }</code></p>
+            <p><code class="java hljs"><span style="color: rgb(0, 106, 0);">// refers to /temp/file.txt<br /></span>Path p1 = Paths.get(<span class="hljs-string">"/temp/./file.txt"</span>); &nbsp;<br />
+  <span style="color: rgb(0, 106, 0);">// refers to /temp//file.txt<br /></span>Path p2 = Paths.get( <span class="hljs-string">"/temp/dir1/../file.txt"</span>);&nbsp;</code></p>
 
-            <p>In Java 8, a <code>lines()</code> method was added to <code>java.io.BufferedReader</code> as well:</p>
+            <p>In these cases, you can use the <code>normalize()</code> method to remove redundancies like <code>.</code> and <code>..</code> (in other words, to "normalize" it):</p>
 
-            <p><code class="java hljs"><span class="hljs-function">Stream&lt;String&gt; <span class="hljs-title">lines</span><span class="hljs-params">()</span></span></code></p>
+            <p><code class="java hljs">Path path = Paths.get(<span class="hljs-string">"/temp/dir1/../file.txt"</span>);<br />
+  System.out.println(path); <span class="hljs-comment">// /temp/dir1/../file.txt</span><br />
+  Path path2 = path.normalize();<br />
+  System.out.println(path2); <span class="hljs-comment">// /temp/file.txt</span></code></p>
 
-            <p>The stream is lazy and its elements are the lines read from the <code>BufferedReader</code>.</p>
+            <p>This method does not access the file system to know if a file exists, so removing <code>..</code> and a preceding name from a path may result in a path that no longer references the original file. This can happen when that previous name is a symbolic link (a reference to another file).</p>
 
+            <p>It's better to use the <code>toRealPath()</code> method:</p>
 
+            <p><code class="java hljs"><span class="hljs-function">Path <span class="hljs-title">toRealPath</span><span class="hljs-params">(LinkOption... options)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>This method does the following:</p>
+
+            <ul>
+                <li>If <code>LinkOption.NOFOLLOW_LINKS</code> is passed as an argument, symbolic links are not followed (by default it does).</li>
+
+                <li>If the path is relative, it returns an absolute path.</li>
+
+                <li>It returns a <code>Path</code> with redundant elements removed (if any).</li>
+            </ul>
+
+            <p>We can combine two paths. There are two cases.</p>
+
+            <p>First case. If we have an absolute path and we want to combine it with a second path that doesn't have a root element (a partial path), the second path is appended:</p>
+
+            <p><code class="java hljs">Path path = Paths.get(<span class="hljs-string">"/temp"</span>);<br />
+  System.out.println(path.resolve(<span class="hljs-string">"newDir"</span>)); <span class="hljs-comment">// /temp/newDir</span></code></p>
+
+            <p>Second case. If we have a partial or relative path, and we want to combine it with an absolute path, this absolute path is returned:</p>
+
+            <p><code class="java hljs">Path path = Paths.get(<span class="hljs-string">"newDir"</span>);<br />
+  System.out.println(path.resolve(<span class="hljs-string">"/temp"</span>)); <span class="hljs-comment">// /temp</span></code></p>
+
+            <p><code>relativize()</code> is another interesting method.</p>
+
+            <p><code>path1.relativize(path2)</code> is like saying <i>give me a path that shows how to get from path1 to path2</i>.</p>
+
+            <p>For example, if we are in directory <code>/temp</code> and we want to go to <code>/temp/dir1/subdir</code>, we have to go first to dir1 and then to subdir:</p>
+
+            <p><code class="java hljs">Path path1 = Paths.get(<span class="hljs-string">"temp"</span>);<br />
+  Path path2 = Paths.get(<span class="hljs-string">"temp/dir1/file.txt"</span>);<br />
+  Path path1ToPath2 = path1.relativize(path2); <span class="hljs-comment">// dir1/file.txt</span></code></p>
+
+            <p>If the paths represent two relatives paths without any other information, they are considered siblings, so you have to go to the parent directory and then go to the other directory:</p>
+
+            <p><code class="java hljs">Path path1 = Paths.get(<span class="hljs-string">"dir1"</span>);<br />
+  Path path1ToPath2 = path1.relativize(Paths.get(<span class="hljs-string">"dir2"</span>)); <span class="hljs-comment">// ../dir2</span></code></p>
+
+            <p>Notice that both examples use relative paths.</p>
+
+            <p>If one of the paths is an absolute path, a relative path cannot be constructed because of the lack of information and a <code>llegalArgumentException</code> will be thrown.</p>
+
+            <p>If both paths are absolute, the result is system-dependent.</p>
+
+            <p><code>Path</code> implements the <code>Iterable</code> interface so you can do something like this:</p>
+
+            <p><code class="java hljs">Path path = Paths.get(<span class="hljs-string">"c:\\temp\\dir1\file.txt"</span>);<br />
+  <span class="hljs-keyword">for</span>(Path name : path) {<br />
+  &nbsp; &nbsp; System.out.println(name);<br />
+  }</code></p>
+
+            <p>The output:</p>
+
+            <p><code class="hljs">temp<br />
+  dir1<br />
+  file.txt</code></p>
+
+            <p><code>Path</code> implements the <code>Comparable</code> interface and the <code>equals()</code> method to test two paths for equality.</p>
+
+            <p><code>compareTo()</code> compares two paths lexicographically. It returns:</p>
+
+            <ul>
+                <li>Zero if the argument is equal to the path,</li>
+
+                <li>A value less than zero if this path is lexicographically less than the argument, or</li>
+
+                <li>A value greater than zero if this path is lexicographically greater than the argument.</li>
+            </ul>
+
+            <p>The <code>equals()</code> implementation is system-dependent (for example, it's case insensitive on Windows systems). However, it returns <code>false</code> if the argument is not a <code>Path</code> or if it belongs to a different file system.</p>
+
+            <p>In addition, the methods <code>startsWith()</code> and <code>endsWith()</code> test whether a path begins or ends with some <code>String</code> or <code>Path</code> respectively. So given:</p>
+
+            <p><code class="java hljs">Path absPath = Paths.get(<span class="hljs-string">"c:\\temp\\dir1\\file.txt"</span>);<br />
+  Path relPath = Paths.get(<span class="hljs-string">"temp\\dir1\\file.txt"</span>);</code></p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">boolean</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(Path other)</span><br />
+  absPath.<span class="hljs-title">startsWith</span><span class="hljs-params">(Paths.get(<span class="hljs-string">"c:\\temp\\file.txt"</span>)</span>); <span class="hljs-comment">// false</span><br />
+  absPath.startsWith(Paths.get(<span class="hljs-string">"c:\\temp\\dir1\\img.jpg"</span>)); <span class="hljs-comment">// false</span><br />
+  absPath.startsWith(Paths.get(<span class="hljs-string">"c:\\temp\\dir1\\"</span>)) <span class="hljs-comment">// true</span><br />
+  absPath.startsWith(relPath); <span class="hljs-comment">// false</span><br />
+  <span class="hljs-function"><span class="hljs-keyword"><br />
+  boolean</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(String other)</span><br />
+  relPath.startsWith<span class="hljs-params">(<span class="hljs-string">"t"</span>)</span></span>; <span class="hljs-comment">// false</span><br />
+  relPath.startsWith(<span class="hljs-string">"temp"</span>); <span class="hljs-comment">// true</span><br />
+  relPath.startsWith(<span class="hljs-string">"temp\\d"</span>); <span class="hljs-comment">// false</span><br />
+  relPath.startsWith(<span class="hljs-string">"temp\\dir1"</span>); <span class="hljs-comment">// true</span><br />
+  <span class="hljs-function"><span class="hljs-keyword"><br />
+  boolean</span> <span class="hljs-title">endsWith</span><span class="hljs-params">(Path other)</span><br />
+  absPath.endsWith<span class="hljs-params">(<span class="hljs-string">"file.txt"</span>)</span></span>; <span class="hljs-comment">// true</span><br />
+  absPath.endsWith(<span class="hljs-string">"d:\\temp\\dir1\\file.txt"</span>); <span class="hljs-comment">// false</span><br />
+  relPath.endsWith(absPath); <span class="hljs-comment">// false</span><br />
+  <span class="hljs-function"><span class="hljs-keyword"><br />
+  boolean</span> <span class="hljs-title">endsWith</span><span class="hljs-params">(String other)</span><br />
+  relPath.endsWith<span class="hljs-params">(<span class="hljs-string">"txt"</span>)</span></span>; <span class="hljs-comment">// false</span><br />
+  relPath.endsWith(<span class="hljs-string">"file.txt"</span>); <span class="hljs-comment">// true</span><br />
+  relPath.endsWith(<span class="hljs-string">"\\dir1\\file.txt"</span>); <span class="hljs-comment">// false</span><br />
+  relPath.endsWith(<span class="hljs-string">"dir1\\file.txt"</span>); <span class="hljs-comment">// true</span></code></p>
+
+            <p>These methods don't take into account trailing separators, so if we have the <code>Path</code> <code>temp/dir1</code>, invoking, for example, <code>endsWith()</code> with <code>dir1/</code> returns <code>true</code>.</p>
+
+            <h2>The Files class</h2>
+
+            <p>The <code>java.nio.file.Files</code> class has <code>static</code> methods for common operations on files and directories. In contrast with the <code>java.io.File</code> class, all methods of <code>Files</code> work with <code>Path</code> objects (so don't confuse <code>File</code> and <code>Files</code>).</p>
+
+            <p>For example, we can check if a path actually exists (or doesn't exist) with the methods:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">exists</span><span class="hljs-params">(Path path, LinkOption... options)</span><br />
+  <span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">notExists</span><span class="hljs-params">(Path path, LinkOption... options)</span></span></code></p>
+
+            <p>If <code>LinkOption.NOFOLLOW_LINKS</code> is present, symbolic links are not followed (by default they are).</p>
+
+            <p>We can check if a path is readable (it's not if the file doesn't exist or if the JVM doesn't have the privileges to access it):</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isReadable</span><span class="hljs-params">(Path path)</span></span></code></p>
+
+            <p>We can check if a path is writable (it's not if the file doesn't exist or if the JVM doesn't have the privileges to access it):</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isWritable</span><span class="hljs-params">(Path path)</span></span></code></p>
+
+            <p>We can check if a file exists and is executable:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isExecutable</span><span class="hljs-params">(Path path)</span></span></code></p>
+
+            <p>Or even check if two paths refer to the same file (useful if one path represents a symbolic link). If both <code>Path</code> objects are equal then this method returns <code>true</code> without checking if the file exists:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isSameFile</span><span class="hljs-params">(Path path,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Path path2)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>To read a file, we can load the entire file into memory (only useful for small files) with the methods:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">static</span> <span class="hljs-keyword">byte</span>[] readAllBytes(Path path)<br />
+  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException<br />
+  <span class="hljs-keyword">static</span> List&lt;String&gt; <span class="hljs-title">readAllLines</span><span class="hljs-params">(Path path)</span><br />
+  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException<br />
+  <span class="hljs-keyword">static</span> List&lt;String&gt; <span class="hljs-title">readAllLines</span><span class="hljs-params">(Path path, Charset cs)</span><br />
+  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException</span></code></p>
+
+            <p>For example:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+  <span class="hljs-comment">&nbsp; &nbsp; // By default it uses StandardCharsets.UTF_8</span><br />
+  &nbsp; &nbsp; List&lt;String&gt; lines = Files.readAllLines(<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Paths.get(<span class="hljs-string">"file.txt"</span>));<br />
+  &nbsp; &nbsp; lines.forEach(System.out::println); }<br />
+  } <span class="hljs-keyword">catch</span> (IOException e) { <span class="hljs-comment">/** */</span> }</code></p>
+
+            <p>Or to read a file in an efficient way:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> BufferedReader <span class="hljs-title">newBufferedReader</span><span class="hljs-params">(Path path)</span><br />
+  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException<br />
+  <span class="hljs-keyword">static</span> BufferedReader <span class="hljs-title">newBufferedReader</span><span class="hljs-params">(Path path, Charset cs)</span><br />
+  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException</span></code></p>
+
+            <p>For example:</p>
+
+            <p><code class="java hljs">Path path = Paths.get(<span class="hljs-string">"/temp/dir1/files.txt"</span>);<br />
+  <span class="hljs-comment">// By default it uses StandardCharsets.UTF_8</span><br />
+  <span class="hljs-keyword">try</span> (BufferedReader reader = Files.newBufferedReader(path,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; StandardCharsets.ISO_8859_1)) {<br />
+  &nbsp; &nbsp; String line = <span class="hljs-keyword">null</span>;<br />
+  <span class="hljs-keyword">&nbsp; &nbsp; while</span>((line = reader.readLine()) != <span class="hljs-keyword">null</span>)<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(line);<br />
+  } <span class="hljs-keyword">catch</span> (IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+            <p>The <code>Files</code> class has two methods to delete files/directories.</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">delete</span><span class="hljs-params">(Path path)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>It removes the file/directory or throws an exception if something fails:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+  &nbsp; &nbsp; Files.delete(Paths.get(<span class="hljs-string">"/temp/dir1/file.txt"</span>));<br />
+  &nbsp; &nbsp; Files.delete(Paths.get(<span class="hljs-string">"/temp/dir1"</span>));<br />
+  } <span class="hljs-keyword">catch</span> (NoSuchFileException nsfe) {<br />
+  <span class="hljs-comment">&nbsp; &nbsp; // If the file/directory doesn't exists</span><br />
+  } <span class="hljs-keyword">catch</span> (DirectoryNotEmptyException dnee) {<br />
+  <span class="hljs-comment">&nbsp; &nbsp; // To delete a directory, it must be empty,</span><br />
+  <span class="hljs-comment">&nbsp; &nbsp; // otherwise, this exception is thrown</span><br />
+  } <span class="hljs-keyword">catch</span> (IOException ioe) {<br />
+  <span class="hljs-comment">&nbsp; &nbsp; // File permission or other problems</span><br />
+  }</code></p>
+
+            <p>The second method is:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">deleteIfExists</span><span class="hljs-params">(Path path)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>This method returns <code>true</code> if the file was deleted or false if the file could not be removed because it did not exist, in other words, unlike the first method, this doesn't throw a <code>NoSuchFileException</code> (but it still throws a <code>DirectoryNotEmptyException</code> and an <code>IOException</code> for other problems):</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+  &nbsp; &nbsp; Files.delete(Paths.get(<span class="hljs-string">"/temp/dir1/file.txt"</span>));<br />
+  } <span class="hljs-keyword">catch</span> (DirectoryNotEmptyException dnee) {<br />
+  <span class="hljs-comment">&nbsp; &nbsp; // To delete a directory, it must be empty,</span><br />
+  } <span class="hljs-keyword">catch</span> (IOException ioe) {<br />
+  <span class="hljs-comment">&nbsp; &nbsp; // File permission or other problems</span><br />
+  }</code></p>
+
+            <p>To copy files/directories, we have the method:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Path <span class="hljs-title">copy</span><span class="hljs-params">(Path source, Path target,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CopyOption... options)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>It returns the path to the target file, and when copying a directory, its content won't be copied.</p>
+
+            <p>By default, the copy fails if the destination file already exists. Also, file attributes won't be copied, and when copying a symbolic link, its target will be copied.</p>
+
+            <p>We can customize this behavior with the following <code>CopyOption</code> enums:</p>
+
+            <ul>
+                <li><b>StandardCopyOption.REPLACE_EXISTING</b><br /> Performs the copy when the target already exists. If the target is a symbolic link, the link itself is copied and If the target is a non-empty directory, a <code>FileAlreadyExistsException</code> is thrown.</li>
+
+                <li><b>StandardCopyOption.COPY_ATTRIBUTES</b><br /> Copies the file attributes associated with the file to the target file. The exact attributes supported are file system and platform dependent, except for last-modified-time, which is supported across platforms.</li>
+
+                <li><b>LinkOption.NOFOLLOW_LINKS</b><br /> Indicates that symbolic links should not be followed, just copied.</li>
+            </ul>
+
+            <p>Here's an example:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> java.nio.file.StandardCopyOption. REPLACE_EXISTING;<br />
+  ...<br />
+  <span class="hljs-keyword">try</span> {<br />
+  &nbsp; &nbsp; Files.copy(Paths.get(<span class="hljs-string">"in.txt"</span>),<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Paths.get(<span class="hljs-string">"out.txt"</span>),<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;REPLACE_EXISTING);<br />
+  } <span class="hljs-keyword">catch</span> (IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+            <p>There are methods to copy between a stream and a <code>Path</code> also:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-title">copy</span><span class="hljs-params">(InputStream in, Path target,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CopyOption... options)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>Copies all bytes from an input stream to a file. By default, the copy fails if the target already exists or is a symbolic link. If the <code>StandardCopyOption.REPLACE_EXISTING</code> option is specified</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-title">copy</span><span class="hljs-params">(Path source,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;OutputStream out)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>Copies all bytes from a file to an output stream.</p>
+
+            <p>For example:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> (InputStream in = <span class="hljs-keyword">new</span> FileInputStream(<span class="hljs-string">"in.csv"</span>);<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; OutputStream out = <span class="hljs-keyword">new</span> FileOutputStream(<span class="hljs-string">"out.csv"</span>)) {<br />
+  &nbsp; &nbsp; Path path = Paths.get(<span class="hljs-string">"/temp/in.txt"</span>);<br />
+  <span class="hljs-comment">&nbsp; &nbsp; // Copy stream data to a file</span><br />
+  &nbsp; &nbsp; Files.copy(in, path);<br />
+  <span class="hljs-comment">&nbsp; &nbsp; // Copy the file data to a stream</span><br />
+  &nbsp; &nbsp; Files.copy(path, out);<br />
+  } <span class="hljs-keyword">catch</span> (IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+            <p>To move or rename a file/directory, we have the method:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Path <span class="hljs-title">move</span><span class="hljs-params">(Path source, Path target,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CopyOption... options)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>By default, this method will follow links, throw an exception if the file already exists, and not perform an atomic move.</p>
+
+            <p>We can customize this behavior with the following <code>CopyOption</code> enums:</p>
+
+            <ul>
+                <li><b>StandardCopyOption.REPLACE_EXISTING</b><br /> Performs the move when the target already exists. If the target is a symbolic link, only the link itself is moved.</li>
+
+                <li><b>StandardCopyOption.ATOMIC_MOVE</b><br /> Performs the move as an atomic file operation. If the file system does not support an atomic move, an exception is thrown.</li>
+            </ul>
+
+            <p>This method can move a non-empty directory. However, if the target exists, trying to move a non-empty directory will throw a <code>DirectoryNotEmptyException</code>. This exception will also be thrown when trying to move a non-empty directory across a drives or partitions.</p>
+
+            <p>For example:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+  <span class="hljs-comment">&nbsp; &nbsp; // Move or rename dir1 to dir2</span><br />
+  &nbsp; &nbsp; Files.move(Paths.get(<span class="hljs-string">"c:\\temp\\dir1|"</span>),<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Paths.get(<span class="hljs-string">"c:\\temp\\dir2"</span>);<br />
+  } <span class="hljs-keyword">catch</span> (IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+            <h2>Managing metadata</h2>
+
+            <p>When talking about a file system, metadata give us information about a file or directory, like its size, permissions, creation date, etc. This information is referred as attributes, and some of them are system-dependent.</p>
+
+            <p>The <code>Files</code> class has some methods to get or set some attributes from a <code>Path</code> object:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-title">size</span><span class="hljs-params">(Path path)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>Returns the size of a file (in bytes).</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isDirectory</span><span class="hljs-params">(Path path, LinkOption... options)</span></span></code></p>
+
+            <p>Tests whether a file is a director.</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isRegularFile</span><span class="hljs-params">(Path path, LinkOption... options)</span></span></code></p>
+
+            <p>Tests whether a file is a regular file.</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isSymbolicLink</span><span class="hljs-params">(Path path)</span></span></code></p>
+
+            <p>Tests whether a file is a symbolic link.</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isHidden</span><span class="hljs-params">(Path path)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>Tells whether a file is considered hidden.</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> FileTime <span class="hljs-title">getLastModifiedTime</span><span class="hljs-params">(Path path,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LinkOption... options)</span> <span class="hljs-keyword">throws</span> IOException<br />
+  <span class="hljs-keyword">static</span> Path <span class="hljs-title">setLastModifiedTime</span><span class="hljs-params">(Path path,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; FileTime time)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>Returns or updates a file's last modified time.</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> UserPrincipal <span class="hljs-title">getOwner</span><span class="hljs-params">(Path path,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LinkOption... options)</span> <span class="hljs-keyword">throws</span> IOException<br />
+  <span class="hljs-keyword">static</span> Path <span class="hljs-title">setOwner</span><span class="hljs-params">(Path path,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; UserPrincipal owner)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
+
+            <p>Returns or updates the owner of the file.</p>
+
+            <p>In methods that take an optional <code>LinkOption.NOFOLLOW_LINKS</code>, symbolic links are not followed (by default they are).</p>
+
+            <p>In the case of <code>getLastModifiedTime()</code> and <code>setLastModifiedTime()</code> the class <code>java.nio.file.attribute.FileTime</code> represents the value of a file's time stamp attribute.</p>
+
+            <p>We can create an instance of <code>FileTime</code> with these <code>static</code> methods:</p>
+
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> FileTime <span class="hljs-title">from</span><span class="hljs-params">(Instant instant)<br /></span> <span class="hljs-keyword">static</span> FileTime <span class="hljs-title">from</span><span class="hljs-params">(<span class="hljs-keyword">long</span> value, TimeUnit unit)</span><br />
+  <span class="hljs-keyword">static</span> FileTime <span class="hljs-title">fromMillis</span><span class="hljs-params">(<span class="hljs-keyword">long</span> value)</span></span></code></p>
+
+            <p>And from a <code>FileTime</code> we can get an <code>Instant</code> or milliseconds as <code>long</code>:</p>
+
+            <p><code class="java hljs"><span class="hljs-function">Instant <span class="hljs-title">toInstant</span><span class="hljs-params">()</span><br />
+  <span class="hljs-keyword">long</span> <span class="hljs-title">toMillis</span><span class="hljs-params">()</span></span></code></p>
+
+            <p>For example:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+  &nbsp; &nbsp; Path path = Paths.get(<span class="hljs-string">"/temp/dir1/file.txt"</span>);<br />
+  &nbsp; &nbsp; FileTime ft = Files.getLastModifiedTime(path);<br />
+  &nbsp; &nbsp; Files.setLastModifiedTime(path,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; FileTime.fromMillis(ft.toMillis + <span class="hljs-number">1000</span>)); <span class="hljs-comment">// adds a second</span><br />
+  } <span class="hljs-keyword">catch</span> (IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+            <p>In the case of <code>getOwner()</code> and <code>setOwner()</code> the interface <code>java.nio.file.attribute.UserPrincipal</code> is an abstract representation of an identity that can be used like this:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+  &nbsp; &nbsp; Path path = Paths.get(<span class="hljs-string">"/temp/dir1/file.txt"</span>);<br />
+  <span class="hljs-comment">&nbsp; &nbsp; // FileSystems.getDefault() also gets a FileSystem object</span><br />
+  &nbsp; &nbsp; UserPrincipal owner = path.getFileSystem()<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .getUserPrincipalLookupService()<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .lookupPrincipalByName(<span class="hljs-string">"jane"</span>);<br />
+  &nbsp; &nbsp; Files.setOwner(path, owner);<br />
+  } <span class="hljs-keyword">catch</span> (IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+            <p>These methods are useful to get or update a single attribute. But we can also get a group of related attributes by functionality or by a particular systems implementation as a view.</p>
+
+            <p>The three most common view classes are:</p>
+
+            <ul>
+                <li><b>java.nio.file.attribute.BasicFileAttributeView</b><br /> Provides a view of basic attributes supported by all file systems.</li>
+
+                <li><b>java.nio.file.attribute. DosFileAttributeView</b><br /> Extends <code>BasicFileAttributeView</code> to support additionally a set of DOS attribute flags that are used to indicate if the file is read-only, hidden, a system file, or archived.</li>
+
+                <li><b>java.nio.file.attribute. PosixFileAttributeView</b><br /> Extends <code>BasicFileAttributeView</code> with attributes supported on POSIX systems, such as Linux and Mac. Examples of these attributes are file owner, group owner, and related access permissions.</li>
+            </ul>
+
+            <p>You can get a file attribute view of a given type to read or update a set of attributes with the method:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;V extends FileAttributeView&gt; <span class="hljs-function">V <span class="hljs-title">getFileAttributeView</span><span class="hljs-params">(<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Path path, Class&lt;V&gt; type,LinkOption... options)</span></span></code></p>
+
+            <p>For example, <code>BasicFileAttributeView</code> has only one update method:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+  &nbsp; &nbsp;Path path = Paths.get(<span class="hljs-string">"/temp/dir/file.txt"</span>);<br />
+  &nbsp; &nbsp;BasicFileAttributeView view =<br />
+  &nbsp; &nbsp; &nbsp; Files.getFileAttributeView(path,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BasicFileAttributeView.class);<br />
+  <span class="hljs-comment">&nbsp; &nbsp;// Get a class with read-only attributes</span><br />
+  &nbsp; &nbsp;BasicFileAttributes readOnlyAttrs =<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;view.readAttributes();<br />
+  &nbsp; &nbsp;FileTime lastModifiedTime =<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileTime.from(Instant.now());<br />
+  &nbsp; &nbsp;FileTime lastAccessTime =<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileTime.from(Instant.now());<br />
+  &nbsp; &nbsp;FileTime createTime =<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileTime.from(Instant.now());<br />
+  <span class="hljs-comment">&nbsp; &nbsp;//If any argument is null,<br />
+  &nbsp; &nbsp;//the corresponding value is not changed</span><br />
+  &nbsp; &nbsp;view.setTimes(lastModifiedTime,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;lastAccessTime,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;createTime);<br />
+  } <span class="hljs-keyword">catch</span> (IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
+
+            <p>Most of the time, you'll work with the read-only versions of the file views. In this case, you can use the following method to get them directly:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;A extends BasicFileAttributes&gt; <span class="hljs-function">A<br />
+  <span class="hljs-title">&nbsp; &nbsp;readAttributes</span><span class="hljs-params">(Path path, Class&lt;A&gt; type,<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; LinkOption... options)</span><br />
+  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException</span></code></p>
+
+            <p>The second parameter is the return type of the method, the class that contains the attributes to use (notice that all attributes classes extend from <code>BasicFileAttributes</code> because it contains attributes common to all file systems). The third argument is when you want to follow symbolic links.</p>
+
+            <p>Here's an example of how to access the file attributes of a file using the <code>java.nio.file.attribute.BasicFileAttributes</code> class:</p>
+
+            <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+  &nbsp; &nbsp;Path path = Paths.get(<span class="hljs-string">"/temp/dir1/file.txt"</span>);<br />
+  &nbsp; &nbsp;BasicFileAttributes attr = Files.readAttributes(<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;path, BasicFileAttributes.class);<br />
+  <span class="hljs-comment">&nbsp; &nbsp;// Size in bytes<br /></span> &nbsp; &nbsp;System.out.println(<span class="hljs-string">"size(): "</span> + attr.size());<br />
+  <span class="hljs-comment">&nbsp; &nbsp;// Unique file identifier (or null if not available)</span><br />
+  &nbsp; &nbsp;System.out.println(<span class="hljs-string">"fileKey(): "</span> + attr.fileKey());<br />
+  <br />
+  &nbsp; &nbsp;System.out.println(<span class="hljs-string">"isDirectory(): "</span> + attr.isDirectory());<br />
+  &nbsp; &nbsp;System.out.println(<span class="hljs-string">"isRegularFile(): "</span> + attr.isRegularFile());<br />
+  &nbsp; &nbsp;System.out.println(<span class="hljs-string">"isSymbolicLink(): "</span> + attr.isSymbolicLink());<br />
+  <span class="hljs-comment">&nbsp; &nbsp;// Is something other than a file, directory, or symbolic link?</span><br />
+  &nbsp; &nbsp;System.out.println(<span class="hljs-string">"isOther(): "</span> + attr.isOther());<br />
+  <span class="hljs-comment"><br />
+  &nbsp; &nbsp;// The following methods return a FileTime instance</span><br />
+  &nbsp; &nbsp;System.out.println(<span class="hljs-string">"creationTime(): "</span> + attr.creationTime());<br />
+  &nbsp; &nbsp;System.out.println(<span class="hljs-string">"lastModifiedTime():"</span>+attr.lastModifiedTime());<br />
+  &nbsp; &nbsp;System.out.println(<span class="hljs-string">"lastAccessTime(): "</span> + attr.lastAccessTime());<br />
+  } <span class="hljs-keyword">catch</span> (IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
 
             <h2>Key Points</h2>
 
             <ul>
-                <li>In Java 8, new methods that return implementations of the <code>Stream</code> interface have been added to <code>java.nio.file.Files</code>.</li>
+                <li>The primary classes of <code>java.nio.file</code> are <code>Path</code>, <code>Paths</code>, and <code>Files</code>. They are intended to be a replacement of the <code>java.io.File</code> class.</li>
 
-                <li>The returned streams are <b>LAZY</b>, which means that the elements are not loaded (or read) until they are used.</li>
+                <li>The <code>Path</code> interface defines an object that represents the path to a file or a directory.</li>
 
-                <li>The use of a <code>try-with-resources</code> in this methods is recommended so the stream's <code>close</code> method can be invoked to close the file system resources.</li>
+                <li><code>java.nio.files.Paths</code> provides methods to create a <code>Path</code> object.</li>
 
-                <li><code>Files.list()</code> iterates over a directory to return a stream which elements are <code>Path</code> objects that represent the entries of that directory.</li>
+                <li>The absolute path representation of a <code>Path</code> object has a root component (either <code>c:\</code> or <code>/</code>) and a sequence of names separated by a (forward o backward) slash.</li>
 
-                <li>This method lists directories and files of the specified directory. However, it is not recursive, in other words, it <b>DOESN'T</b> traverses subdirectories.</li>
+                <li>The <code>Path</code> interface has methods to get attributes of the file, normalize paths, get the elements of the path, among others. It also implements <code>Comparable</code> and <code>equals()</code> to test for equality.</li>
 
-                <li><code>Files.walk()</code> also iterates over a directory in a depth-first strategy to return a stream which elements are<code>Path</code> objects that represent the entries of that directory.</li>
+                <li>The <code>java.nio.file.Files</code> class has static methods for common operations on files and directories. In contrast with the <code>java.io.File class</code>, all methods of <code>Files</code> work with <code>Path</code> objects.</li>
 
-                <li>The difference with <code>Files.list()</code> is that <code>Files.walk()</code> <b>DOES</b> recursively traverse the subdirectories. You can also pass the maximum traversal depth and an option to follow symbolic links.</li>
+                <li>Examples of these operations are checking the existence of a file, copying, moving, deleting, and reading.</li>
 
-                <li><code>Files.find()</code> is similar to <code>Files.walk()</code>, but takes an additional argument of type <code>BiPredicate&lt;Path,BasicFileAttributes&gt;</code> that is used to filter the files and directories.</li>
+                <li>You can also get attributes of a file individually (with methods like <code>isHidden()</code>) or in a group through views.</li>
 
-                <li><code>Files.lines()</code> reads all the lines of a file as a stream of Strings without loading them all into memory.</li>
+                <li>The three most common view classes are <code>BasicFileAttributeView</code>, <code>DosFileAttributeView</code>, and <code>PosixFileAttributeView</code>.</li>
+
+                <li>You can get a file attribute view of a given type to read or update a set of attributes with the method <code>getFileAttributeView()</code>.</li>
+
+                <li>You can get a class that is a read-only version of the view with the method <code>readAttributes()</code>.</li>
             </ul>
 
-
+            <div style="page-break-after:always;"></div>
 
             <h2>Self Test</h2>
 
-            <p>1. Given the following structure and class:</p>
+            <p>1. Given:</p>
 
-            <p><code class="java hljs">/temp/<br />
-	  &nbsp; &nbsp;/dir1/<br />
-	  &nbsp; &nbsp; &nbsp; 1.txt<br />
-	  &nbsp; &nbsp;0.txt</code></p>
+            <p><code class="java hljs">Path path1 = Paths.get(<span class="hljs-string">"/projects/work/../fun"</span>);<br />
+  Path path2 = Paths.get(<span class="hljs-string">"games"</span>);<br />
+  System.out.println(path1.resolve(path2));</code></p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_25_1</span></span> {<br />
-	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; try</span>(Stream&lt;Path&gt; stream =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Files.walk(Paths.get(<span class="hljs-string">"/temp"</span>), <span class="hljs-number">0</span>)) {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; stream.forEach(System.out::println);<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; } <span class="hljs-keyword">catch</span>(IOException e) { }<br />
-	  &nbsp; &nbsp; }<br />
-	  }</code></p>
+            <p>Which of the following is the result of executing the above lines?<br /> A. <code>/project/work/fun/games</code><br /> B. <code>/project/fun/games</code><br /> C. <code>/project/work/../fun/games</code><br /> D. <code>games</code></p>
 
-            <p>What is the result?<br /> A. <code>/temp</code><br /> B. <code>/temp/dir1<br />
-	  /temp/0.txt</code><br /> C. <code>/temp/0.txt</code><br /> D. Nothing is printed</p>
+            <div style="page-break-after:always;"></div>
 
+            <p>2. Given:</p>
 
+            <p><code class="java hljs">Path path = Paths.get(<span class="hljs-string">"c:\\Users\\mark"</span>);</code></p>
 
-            <p>2. Which of the following statements is true?<br /> A. <code>Files.find()</code> has a default subdirectory depth of <code>Integer.MAX_VALUE</code>.<br /> B. <code>Files.find()</code> follows symbolic links by default.<br /> C. <code>Files.walk()</code> follows symbolic links by default.<br /> D. <code>Files.walk()</code> traverses subdirectories recursively.</p>
+            <p>Which of the following will return <code>Users</code>?<br /> A. <code>path.getRoot()</code><br /> B. <code>path.getName(0)</code><br /> C. <code>path.getName(1)</code><br /> D. <code>path.subpath(0, 0);</code></p>
 
-            <p>3. Which of the following options is equivalent to</p>
+            <div style="page-break-after:always;"></div>
 
-            <p><code class="java hljs">Files.walk(Paths.get(<span class="hljs-string">"."</span>))<br />
-	  &nbsp; &nbsp; .filter(p -&gt; p.toString().endsWith(<span class="hljs-string">"txt"</span>));</code></p>
+            <p>3. Which of the following is not a valid <code>CopyOption</code> for <code>Files.copy()</code>?<br /> A. <code>NOFOLLOW_LINKS</code><br /> B. <code>REPLACE_EXISTING</code><br /> C. <code>ATOMIC_MOVE</code><br /> D. <code>COPY_ATTRIBUTES</code></p>
 
-            <p>A. <code class="hljs">Files.list(Paths.get("."))<br />
-	  &nbsp; &nbsp; .filter(p -&gt; p.toString().endsWith("txt"));</code><br /> B. <code class="hljs">Files.find(Paths.get("."),<br />
-	  &nbsp; &nbsp; (p,a) -&gt; p.toString().endsWith("txt"));</code><br /> C. <code class="hljs">Files.find(Paths.get("."), Integer.MAX_VALUE,<br />
-	  &nbsp; &nbsp; &nbsp;p -&gt; p.toString().endsWith("txt"));</code><br /> D. <code class="hljs">Files.find(Paths.get("."), Integer.MAX_VALUE,<br />
-	  &nbsp; &nbsp; (p,a) -&gt; p.toString().endsWith("txt"));</code></p>
+            <div style="page-break-after:always;"></div>
 
+            <p>4. Given:</p>
 
+            <p><code class="java hljs">Path path =<br />
+  &nbsp; Paths.get(<span class="hljs-string">"c:\\.\\temp\\data\\..\\.\\dir\\..\\file.txt"</span>);<br />
+  <span class="hljs-keyword">try</span> {<br />
+  &nbsp; &nbsp;path = path.toRealPath();<br />
+  } <span class="hljs-keyword">catch</span> (IOException e) { }<br />
+  System.out.println(path.subpath(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>));</code></p>
 
-            <p>4. Which is the behavior of <code>Files.lines(Path)</code> if the <code>Path</code> object represents a file that doesn't exist?<br /> A. It returns an empty stream.<br /> B. It creates the file.<br /> C. It throws an <code>IOException</code> when the method is called.<br /> D. It throws an <code>IOException</code> when the stream is first used.</p>
+            <p>Which is the result?<br /> A. <code>temp</code><br /> B. <code>data</code><br /> C. <code>dir</code><br /> D. <code>file.txt</code></p>
 
+            <div style="page-break-after:always;"></div>
 
+            <p>5. Which of the following is a valid way to set a file's create time?</p>
+
+            <p>A.</p>
+
+            <p><code class="java hljs">FileTime time = FileTime.from(Instance.now());<br />
+  Files.getFileAttributeView(path,<br />
+  &nbsp; &nbsp; &nbsp; BasicFileAttributeView.class)<br />
+  &nbsp; &nbsp;.setTimes(<span class="hljs-keyword">null</span>, time, <span class="hljs-keyword">null</span>);</code></p>
+
+            <p>B.</p>
+
+            <p><code class="java hljs">Files.setCreateTime(path,<br />
+  &nbsp; &nbsp;FileTime.from(Instance.now());</code></p>
+
+            <p>C.</p>
+
+            <p><code class="java hljs">Files.getFileAttributeView(path,<br />
+  &nbsp; &nbsp; &nbsp; BasicFileAttributeView.class)<br />
+  &nbsp; &nbsp;.setTimes(<span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>, Instance.now());</code></p>
+
+            <p>D.</p>
+
+            <p><code class="java hljs">FileTime time = FileTime.from(Instance.now());<br />
+  Files.getFileAttributeView(path,<br />
+  &nbsp; &nbsp; &nbsp; BasicFileAttributeView.class)<br />
+  &nbsp; &nbsp;.setTimes(<span class="hljs-keyword">null</span>, <span class="hljs-keyword">null</span>, time);</code></p>
 
 
 
