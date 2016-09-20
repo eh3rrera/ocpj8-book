@@ -270,7 +270,7 @@
 
                 <li>A <code>ForkJoinTask</code> object has three main methods, <code>fork()</code>, <code>join()</code>, and <code>compute()</code>. The <b>ORDER</b> in which you call the methods is <b>IMPORTANT</b>.</li>
 
-                <li>You must first call <code>join()</code> (to queue the first subtask, then <code>compute()</code> (on the second subtask to process it recursively, and then <code>join()</code> to get the result of the first subtask).</li>
+                <li>You must first call <code>fork()</code> to queue the first subtask, then <code>compute()</code> on the second subtask to process it recursively, and then <code>join()</code> to get the result of the first subtask.</li>
             </ul>
 
 
