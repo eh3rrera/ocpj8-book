@@ -243,7 +243,7 @@
 
                 <li><code>BlueHouse bh = new BlueHouse()</code> doesn't compile because the class has default (package) access.</li>
 
-                <li><code>bh.getColor()</code> doesn't compile because although the method is <code>public</code>, the class that contains is not.</li>
+                <li><code>bh.getColor()</code> doesn't compile because although the method is <code>public</code>, the class that contains it, it's not.</li>
             </ul>
 
             <p>Now, can you see why some modifiers apply to certain elements, and others don't?</p>
@@ -337,8 +337,6 @@
             <ul>
                 <li><code>java.lang.Runtime</code></li>
 
-                <li><code>java.awt.Toolkit</code></li>
-
                 <li><code>java.awt.Desktop</code></li>
             </ul>
 
@@ -376,7 +374,7 @@
 
             <p>And it has to be <code>final</code> so a new instance cannot be created later.</p>
 
-            <p>A variation of this implementation is to use a <code>static</code> inner class (we will review the on Chapter 3):</p>
+            <p>A variation of this implementation is to use a <code>static</code> inner class (we will review this type of class on Chapter 3):</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
@@ -394,7 +392,7 @@
             <p>However, there will times when for example, creating the object is not as simple as calling <code>new</code>, so the other way is to create the instance inside the <code>get</code> method:</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> instance = <span class="hljs-keyword">new</span> Singleton();<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> Singleton instance;<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span>&nbsp;<span class="hljs-keyword">static</span> Singleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; if</span>(instance == <span class="hljs-keyword">null</span>) {<br />
@@ -410,7 +408,7 @@
             <p>One solution is to synchronize the method so only one thread at a time can access it.</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> instance = <span class="hljs-keyword">new</span> Singleton();<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> Singleton instance;<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span>&nbsp;<span class="hljs-keyword">static</span> <span class="hljs-keyword">synchronized</span> Singleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; if</span>(instance == <span class="hljs-keyword">null</span>) {<br />
@@ -427,7 +425,7 @@
             <p>Here's how this look:</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> instance = <span class="hljs-keyword">new</span> Singleton();<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> Singleton instance;<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span>&nbsp;<span class="hljs-keyword">static</span> Singleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; if</span>(instance == <span class="hljs-keyword">null</span>) {<br />
@@ -446,8 +444,7 @@
             <p>The solution is to use the <code>volatile</code> keyword, which guarantees that any read/write operation of a variable shared by many threads would be atomic and not cached.</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">volatile</span> instance =<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new</span> Singleton();<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">volatile</span> Singleton instance;<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-title">Singleton</span><span class="hljs-params">()</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> Singleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; if</span>(instance == <span class="hljs-keyword">null</span>) {<br />
@@ -594,7 +591,7 @@
 
             <p>A block is executed when the class is initialized and in the order they are declared (if there's more than one).</p>
 
-            <p>Just like <code>static</code> methods, they cannot reference instance attributes, keywords this and super.</p>
+            <p>Just like <code>static</code> methods, they cannot reference instance attributes, or the keywords this and super.</p>
 
             <p>In addition to that, <code>static</code> blocks cannot contain a <code>return</code> statement, and it's a compile-time error if the block cannot complete normally (for example, due to an uncaught exception).</p>
 
