@@ -233,7 +233,7 @@
 
             <p>When you write to an <code>OutputStream</code>, the data may get cached internally in memory and written to disk at a later time. If you want to make sure that all data is written to disk without having to close the <code>OutputStream</code>, you can call the <code>flush()</code> method every once in a while.</p>
 
-            <p><code>FileOutputStream</code> also contains overloaded versions of <code>write()</code> that allows you to write to a byte array.</p>
+            <p><code>FileOutputStream</code> also contains overloaded versions of <code>write()</code> that allow you to write data contained in a byte array.</p>
 
             <h2>FileReader</h2>
 
@@ -285,7 +285,7 @@
 
             <p>Just like an <code>OutputStream</code>, the data may get cached internally in memory and written to disk at a later time. If you want to make sure that all data is written to disk without having to close the <code>FileWriter</code>, you can call the <code>flush()</code> method every once in a while.</p>
 
-            <p><code>FileWriter</code> also contains overloaded versions of <code>write()</code> that allows you to write to a <code>char</code> array and to a <code>String</code>.</p>
+            <p><code>FileWriter</code> also contains overloaded versions of <code>write()</code> that allow you to write data contained in a <code>char</code> array, or in a <code>String</code>.</p>
 
             <p><code>FileWriter</code> assumes that you want to encode the characters in the file using the default character encoding of the machine your program is running on.</p>
 
@@ -333,13 +333,13 @@
 
             <h2>ObjectInputStream/ ObjectOutputStream</h2>
 
-            <p>The process of converting an object to a data format that can be stored (in a file for example) is called serialization and converting that stored data format into an object is called deserialization.</p>
+            <p>The process of converting an object to a data format that can be stored (in a file for example) is called <i>serialization</i> and converting that stored data format into an object is called <i>deserialization</i>.</p>
 
             <p>If you want to serialize an object, its class must implement the <code>java.io.Serializable</code> interface, which has no methods to implement, it only tags the objects of that class as serializable.</p>
 
             <p>If you try to serialize a class that doesn't implement that interface, a <code>java.io.NotSerializableException</code> (a subclass of <code>IOException</code>) will be thrown at runtime.</p>
 
-            <p><code>ObjectOutputStream</code> allows you to serialize objects to an <code>OutputStream</code> while <code>ObjectInputStream</code> allows you to deserialized objects from an <code>InputStream</code>. So both are considered wrapper classes.</p>
+            <p><code>ObjectOutputStream</code> allows you to serialize objects to an <code>OutputStream</code> while <code>ObjectInputStream</code> allows you to deserialize objects from an <code>InputStream</code>. So both are considered wrapper classes.</p>
 
             <p>Here's the constructor of the <code>ObjectOutputStream</code> class:</p>
 
@@ -658,7 +658,8 @@
 
                     <td style="text-align: center;">
                         <ul>
-                            <li style="text-align: left;"><code>File String</code></li>
+                            <li style="text-align: left;"><code>File</code></li>
+                            <li style="text-align: left;"><code>String</code></li>
                         </ul>
                     </td>
 
@@ -844,7 +845,7 @@
 
             <h2>Self Test</h2>
 
-            <p>1. Which of the following is a valid way to create a <code>PrintWriter</code> object? A. <code>new PrintWriter(new Writer("file.txt"));</code><br /> B. <code>new PrintWriter();</code><br /> C. <code>new PrintWriter(new FileReader("file.txt"));</code><br /> D. <code>new PrintWriter(new OutputStream("file.txt"));</code></p>
+            <p>1. Which of the following is a valid way to create a <code>PrintWriter</code> object?<br /> A. <code>new PrintWriter(new Writer("file.txt"));</code><br /> B. <code>new PrintWriter();</code><br /> C. <code>new PrintWriter(new FileReader("file.txt"));</code><br /> D. <code>new PrintWriter(new OutputStream("file.txt"));</code></p>
 
 
 
@@ -883,7 +884,7 @@
 
 
 
-            <p>5. What does the <code>flush()</code> method does?<br /> A. It marks the stream as ready to be written.<br /> B. It closes the stream.<br /> C. It writes the data stored in disk to a cache.<br /> D. It writes the data stored in a cache to disk.</p>
+            <p>5. What does the <code>flush()</code> method do?<br /> A. It marks the stream as ready to be written.<br /> B. It closes the stream.<br /> C. It writes the data stored in disk to a cache.<br /> D. It writes the data stored in a cache to disk.</p>
 
 
 
