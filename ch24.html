@@ -108,10 +108,10 @@
             <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
   &nbsp; &nbsp; Path fileURI = Paths.get(<span class="hljs-keyword">new</span> URI(<span class="hljs-string">"file:///c:/temp/file.txt"</span>));<br />
   } <span class="hljs-keyword">catch</span> (URISyntaxException e) {<br />
-  <span class="hljs-comment">&nbsp; &nbsp; //This exception is thrown by the URI constructor</span><br />
+  <span class="hljs-comment">&nbsp; &nbsp; //This checked exception is thrown by the URI constructor</span><br />
   }</code></p>
 
-            <p>If you don't have to catch <code>URISyntaxException</code>, you can use the <code>static</code> method <code>URI.create(String)</code>, that wraps that exception in a <code>IllegalArgumentException</code> (a subclass of <code>RuntimeException</code>):</p>
+            <p>If you don't want to catch <code>URISyntaxException</code>, you can use the <code>static</code> method <code>URI.create(String)</code>. It wraps the <code>URISyntaxException</code> exception in an <code>IllegalArgumentException</code> (a subclass of <code>RuntimeException</code>):</p>
 
             <p><code class="java hljs">Path fileURI = Paths.get(URI.create(<span class="hljs-string">"file:///c:/temp/file.txt"</span>));</code></p>
 
