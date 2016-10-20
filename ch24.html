@@ -1,4 +1,4 @@
-<!doctype html>
+ <!doctype html>
 <html lang="en">
 
 <head>
@@ -54,7 +54,7 @@
 
             <p>NIO.2 provides better support for accessing files and the file system, symbolic links, interoperability, and exceptions among others.</p>
 
-            <p>The primary classes of <code>java.nio.file</code>, <code>Path</code>, <code>Paths</code>, and <code>Files</code>, are intended to provide an easier way to work with files and to be a replacement of the <code>java.io.File</code> class.</p>
+            <p>The primary classes of <code>java.nio.file</code>, <code>Path</code>, <code>Paths</code>, and <code>Files</code>, are intended to provide an easier way to work with files and to be a replacement for the <code>java.io.File</code> class.</p>
 
             <p>These classes will be the focus of this chapter. Let's start with <code>Path</code> and <code>Paths</code>.</p>
 
@@ -78,7 +78,7 @@
                 <li>Because of that, in Windows-based systems, an absolute path starts with a drive letter (like <code>c:\temp\file.txt</code>). In Unix-based systems, it starts with a forward slash (like <code>/temp/file.txt</code>).</li>
             </ul>
 
-            <p>Since <code>Path</code> is an interface and Java handle its implementations, we have to use a utility class to create <code>Path</code> instances.</p>
+            <p>Since <code>Path</code> is an interface and Java handles its implementations, we have to use a utility class to create <code>Path</code> instances.</p>
 
             <p><code>java.nio.files.Paths</code> is this class. It provides two methods to create a <code>Path</code> object:</p>
 
@@ -108,10 +108,10 @@
             <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
   &nbsp; &nbsp; Path fileURI = Paths.get(<span class="hljs-keyword">new</span> URI(<span class="hljs-string">"file:///c:/temp/file.txt"</span>));<br />
   } <span class="hljs-keyword">catch</span> (URISyntaxException e) {<br />
-  <span class="hljs-comment">&nbsp; &nbsp; //This exception is thrown by the URI constructor</span><br />
+  <span class="hljs-comment">&nbsp; &nbsp; //This checked exception is thrown by the URI constructor</span><br />
   }</code></p>
 
-            <p>If you don't have to catch <code>URISyntaxException</code>, you can use the <code>static</code> method <code>URI.create(String)</code>, that wraps that exception in a <code>IllegalArgumentException</code> (a subclass of <code>RuntimeException</code>):</p>
+            <p>If you don't want to catch <code>URISyntaxException</code>, you can use the <code>static</code> method <code>URI.create(String)</code>. It wraps the <code>URISyntaxException</code> exception in an <code>IllegalArgumentException</code> (a subclass of <code>RuntimeException</code>):</p>
 
             <p><code class="java hljs">Path fileURI = Paths.get(URI.create(<span class="hljs-string">"file:///c:/temp/file.txt"</span>));</code></p>
 
@@ -137,7 +137,7 @@
 
             <p><code class="java hljs">Path path = FileSystems.getDefault().getPath(<span class="hljs-string">"c://temp"</span>);</code></p>
 
-            <p>As you can see from the examples, the absolute path representation of a <code>Path</code> object has a root component (either <code>c:\</code> or <code>/</code>) and a sequence of names separated by a (forward o backward) slash.</p>
+            <p>As you can see from the examples, the absolute path representation of a <code>Path</code> object has a root component (either <code>c:\</code> or <code>/</code>) and a sequence of names separated by a (forward or backward) slash.</p>
 
             <p>These names represent the directories needed to navigate to the target file or directory. The last name in the sequence represents the name of the target file or directory.</p>
 
@@ -148,7 +148,7 @@
   <b>Name 2:</b> dir1<br />
   <b>Name 3:</b> file.txt</code></p>
 
-            <p>The <code>Path</code> object has some methods to get this information (except for <code>toString()</code> and <code>getNameCount()</code>, all method return a <code>Path</code> object):</p>
+            <p>The <code>Path</code> object has some methods to get this information. Except for <code>toString()</code> and <code>getNameCount()</code>, each of these methods returns a <code>Path</code> object):</p>
 
             <p><code class="java hljs">Path path = Paths.get(<span class="hljs-string">"C:\\temp\\dir1\\file.txt"</span>);<br />
   <span class="hljs-comment">// Or Path path = Paths.get("/temp/dir1/file.txt");</span><br />
@@ -201,7 +201,7 @@
   <span class="hljs-title">getParent</span><span class="hljs-params">()</span>: dir1<br />
   <span class="hljs-title">getRoot</span><span class="hljs-params">()</span>: <span class="hljs-keyword">null</span></span></code></p>
 
-            <p>When working with paths you can use:</p>
+            <p>When working with paths, you can use:</p>
 
             <ul>
                 <li><code>.</code> to refer to the current directory</li>
@@ -297,7 +297,7 @@
 
             <p>The <code>equals()</code> implementation is system-dependent (for example, it's case insensitive on Windows systems). However, it returns <code>false</code> if the argument is not a <code>Path</code> or if it belongs to a different file system.</p>
 
-            <p>In addition, the methods <code>startsWith()</code> and <code>endsWith()</code> test whether a path begins or ends with some <code>String</code> or <code>Path</code> respectively. So given:</p>
+            <p>In addition, the methods <code>startsWith()</code> and <code>endsWith()</code> both test whether a path begins or ends with some <code>String</code> or <code>Path</code>. So given:</p>
 
             <p><code class="java hljs">Path absPath = Paths.get(<span class="hljs-string">"c:\\temp\\dir1\\file.txt"</span>);<br />
   Path relPath = Paths.get(<span class="hljs-string">"temp\\dir1\\file.txt"</span>);</code></p>
@@ -325,7 +325,7 @@
   relPath.endsWith(<span class="hljs-string">"\\dir1\\file.txt"</span>); <span class="hljs-comment">// false</span><br />
   relPath.endsWith(<span class="hljs-string">"dir1\\file.txt"</span>); <span class="hljs-comment">// true</span></code></p>
 
-            <p>These methods don't take into account trailing separators, so if we have the <code>Path</code> <code>temp/dir1</code>, invoking, for example, <code>endsWith()</code> with <code>dir1/</code> returns <code>true</code>.</p>
+            <p>These methods don't take into account trailing separators, so if we have the <code>Path</code> <code>temp/dir1</code>, invoking, for example, <code>endsWith()</code> with <code>dir1/</code>, it returns <code>true</code>.</p>
 
             <h2>The Files class</h2>
 
@@ -512,7 +512,7 @@
 
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isDirectory</span><span class="hljs-params">(Path path, LinkOption... options)</span></span></code></p>
 
-            <p>Tests whether a file is a director.</p>
+            <p>Tests whether a file is a directory.</p>
 
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isRegularFile</span><span class="hljs-params">(Path path, LinkOption... options)</span></span></code></p>
 
@@ -654,9 +654,9 @@
 
                 <li><code>java.nio.files.Paths</code> provides methods to create a <code>Path</code> object.</li>
 
-                <li>The absolute path representation of a <code>Path</code> object has a root component (either <code>c:\</code> or <code>/</code>) and a sequence of names separated by a (forward o backward) slash.</li>
+                <li>The absolute path representation of a <code>Path</code> object has a root component (either <code>c:\</code> or <code>/</code>) and a sequence of names separated by a (forward or backward) slash.</li>
 
-                <li>The <code>Path</code> interface has methods to get attributes of the file, normalize paths, get the elements of the path, among others. It also implements <code>Comparable</code> and <code>equals()</code> to test for equality.</li>
+                <li>The <code>Path</code> interface has methods get the elements of the path, normalize paths, and get attributes of the path (isAbsolute(), getFileSystem(), etc), among others. It also implements <code>Comparable</code> and <code>equals()</code> to test for equality.</li>
 
                 <li>The <code>java.nio.file.Files</code> class has static methods for common operations on files and directories. In contrast with the <code>java.io.File class</code>, all methods of <code>Files</code> work with <code>Path</code> objects.</li>
 
