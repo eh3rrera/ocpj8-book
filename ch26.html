@@ -173,9 +173,9 @@
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">shutdown</span><span class="hljs-params">()</span><br />
 	  List&lt;Runnable&gt; <span class="hljs-title">shutdownNow</span><span class="hljs-params">()</span></span></code></p>
 
-            <p>The <code>shutdown()</code> method tells the executor to stop accepting new tasks, but the previous task are allowed to continue until the finish. During this time, the method <code>isTerminated()</code> will return false until all tasks are completed, while the method <code>isShutdown()</code> will return true at all times.</p>
+            <p>The <code>shutdown()</code> method tells the executor to stop accepting new tasks, but the previous tasks are allowed to continue until the finish. During this time, the method <code>isTerminated()</code> will return false until all tasks are completed, while the method <code>isShutdown()</code> will return true at all times.</p>
 
-            <p>The <code>shutdownNow()</code> method will also tell the executor to stop accepting new task but it will <b>TRY</b> to stop all executing tasks immediately (by interrupting the threads, but if the thread doesn't respond to interrupts, it may never terminate) and return a list of the tasks that were never started.</p>
+            <p>The <code>shutdownNow()</code> method will also tell the executor to stop accepting new tasks but it will <b>TRY</b> to stop all executing tasks immediately (by interrupting the threads, but if the thread doesn't respond to interrupts, it may never terminate) and return a list of the tasks that were never started.</p>
 
             <p>For example, if we execute:</p>
 
