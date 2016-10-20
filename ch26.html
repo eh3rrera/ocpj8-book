@@ -190,7 +190,7 @@
 	  executor.execute(r);<br />
 	  executor.shutdown();</code></p>
 
-            <p>We will have to wait around five seconds for the program to finish, but if we change <code>shutdown()</code> by <code>shutdownNow()</code>, <code>"Interrupted"</code> will be printed and the program will terminate immediately.</p>
+            <p>We will have to wait around five seconds for the program to finish, but if we change <code>shutdown()</code> to <code>shutdownNow()</code>, <code>"Interrupted"</code> will be printed and the program will terminate immediately.</p>
 
             <p>Besides, <code>execute()</code>, there are other methods to submit a task. Let's define first the most critical methods and the new classes they use:</p>
 
