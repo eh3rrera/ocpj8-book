@@ -48,7 +48,7 @@
 
             <p>For example, one solution to avoid a race condition is to ensure that only one thread at a time can access the code that causes the problem; a process known as <i>synchronizing</i> that block of code.</p>
 
-            <p>Synchronization works with locks. Every object comes with a built-in lock and since there is only lock per object, only one thread can hold that lock at any time. The other threads can only take the lock until the first thread release it. Meanwhile, they are blocked.</p>
+            <p>Synchronization works with locks. Every object comes with a built-in lock and since there is only lock per object, only one thread can hold that lock at any time. The other threads cannot take the lock until the first thread releases it. Meanwhile, they are blocked.</p>
 
             <p>You acquire a lock by using the <code>synchronized</code> keyword in either a block or a method.</p>
 
