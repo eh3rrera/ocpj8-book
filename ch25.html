@@ -46,7 +46,7 @@
 
             <p>With the arrival of streams to Java, some difficult file operations to implement in NIO.2 (that often required an entire class) have been simplified.</p>
 
-            <p><code>java.nio.file.Files</code>, a class with static methods we reviewed in the last chapter, added operations that return implementations of the <code>Stream</code> interface.<br /></p>
+            <p><code>java.nio.file.Files</code>, a class with static methods that we reviewed in the last chapter, added operations that return implementations of the <code>Stream</code> interface.<br /></p>
 
             <p>The methods are:</p>
 
@@ -76,7 +76,7 @@
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> Stream&lt;Path&gt; <span class="hljs-title">list</span><span class="hljs-params">(Path dir)</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException</span></code></p>
 
-            <p>This method iterates over a directory to return a stream which elements are <code>Path</code> objects that represent the entries of that directory.</p>
+            <p>This method iterates over a directory to return a stream whose elements are <code>Path</code> objects that represent the entries of that directory.</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">try</span>(Stream&lt;Path&gt; stream =<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Files.list(Paths.get(<span class="hljs-string">"/temp"</span>))) {<br />
@@ -93,7 +93,7 @@
 
             <p>The use of a <code>try-with-resources</code> is recommended so the stream's close method can be invoked to close the file system resources.</p>
 
-            <p>As you can see, this method list directories and files in the specified directory. However, it is not recursive, in other words, it <b>DOESN'T</b> traverses subdirectories.</p>
+            <p>As you can see, this method lists directories and files in the specified directory. However, it is not recursive, in other words, it <b>DOESN'T</b> traverse subdirectories.</p>
 
             <p>Another two important considerations about this method:</p>
 
@@ -113,7 +113,7 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FileVisitOption... options)</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException</span></code></p>
 
-            <p>This method also iterates over a directory to return a stream which elements are <code>Path</code> objects that represent the entries of that directory.</p>
+            <p>This method also iterates over a directory to return a stream whose elements are <code>Path</code> objects that represent the entries of that directory.</p>
 
             <p>The difference with <code>Files.list()</code> is that <code>Files.walk()</code> <b>DOES</b> recursively traverse the subdirectories.</p>
 
@@ -274,13 +274,13 @@
 
                 <li>The returned streams are <b>LAZY</b>, which means that the elements are not loaded (or read) until they are used.</li>
 
-                <li>The use of a <code>try-with-resources</code> in this methods is recommended so the stream's <code>close</code> method can be invoked to close the file system resources.</li>
+                <li>The use of a <code>try-with-resources</code> with these methods is recommended so that the stream's <code>close</code> method can be invoked to close the file system resources.</li>
 
-                <li><code>Files.list()</code> iterates over a directory to return a stream which elements are <code>Path</code> objects that represent the entries of that directory.</li>
+                <li><code>Files.list()</code> iterates over a directory to return a stream whose elements are <code>Path</code> objects that represent the entries of that directory.</li>
 
-                <li>This method lists directories and files of the specified directory. However, it is not recursive, in other words, it <b>DOESN'T</b> traverses subdirectories.</li>
+                <li>This method lists directories and files of the specified directory. However, it is not recursive, in other words, it <b>DOESN'T</b> traverse subdirectories.</li>
 
-                <li><code>Files.walk()</code> also iterates over a directory in a depth-first strategy to return a stream which elements are<code>Path</code> objects that represent the entries of that directory.</li>
+                <li><code>Files.walk()</code> also iterates over a directory in a depth-first strategy to return a stream whose elements are<code>Path</code> objects that represent the entries of that directory.</li>
 
                 <li>The difference with <code>Files.list()</code> is that <code>Files.walk()</code> <b>DOES</b> recursively traverse the subdirectories. You can also pass the maximum traversal depth and an option to follow symbolic links.</li>
 
