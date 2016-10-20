@@ -324,9 +324,9 @@
 
             <p>When an application has two or more threads that make it behave in an unexpected way, well, that's a problem.</p>
 
-            <p>Generally, the cause of this issue is that threads are executed in parallel in such a way that sometimes they have to compete to access resources and other times, the actions of one thread cause side-effects over the actions of another one (like modifying or deleting some shared values).</p>
+            <p>Generally, the cause of this issue is that threads are executed in parallel in such a way that sometimes they have to compete to access resources and other times, the actions of one thread will cause side-effects over the actions of another one (like modifying or deleting some shared values).</p>
 
-            <p>A solution to this problem is the concept of locking, where something like a resource or a block or code is locked with some mechanism in such a way that only one thread at a time can use or access it.</p>
+            <p>A solution to this problem is the concept of locking, where something like a resource or a block of code is locked with some mechanism in such a way that only one thread at a time can use or access it.</p>
 
             <p>However, if we're not careful, locking can turn in one of the following three problems.</p>
 
