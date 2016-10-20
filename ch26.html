@@ -168,7 +168,7 @@
 
             <p>Since there's only one thread (in addition to the main thread, don't forget that), tasks are guaranteed to be executed in the order they were submitted, and no more than one task will be active at any given time. In a real-world application, you may want to use <code>newFixedThreadPool()</code> with pool size equal to the number of processors available.</p>
 
-            <p>Once you're done with an <code>ExecutorService</code>, you have shut it down to terminate threads and close resources. We have two methods to do it:</p>
+            <p>Once you're done with an <code>ExecutorService</code>, you have to shut it down to terminate threads and close resources. We have two methods to do it:</p>
 
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">shutdown</span><span class="hljs-params">()</span><br />
 	  List&lt;Runnable&gt; <span class="hljs-title">shutdownNow</span><span class="hljs-params">()</span></span></code></p>
