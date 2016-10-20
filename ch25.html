@@ -274,7 +274,7 @@
 
                 <li>The returned streams are <b>LAZY</b>, which means that the elements are not loaded (or read) until they are used.</li>
 
-                <li>The use of a <code>try-with-resources</code> in this methods is recommended so the stream's <code>close</code> method can be invoked to close the file system resources.</li>
+                <li>The use of a <code>try-with-resources</code> with these methods is recommended so that the stream's <code>close</code> method can be invoked to close the file system resources.</li>
 
                 <li><code>Files.list()</code> iterates over a directory to return a stream whose elements are <code>Path</code> objects that represent the entries of that directory.</li>
 
