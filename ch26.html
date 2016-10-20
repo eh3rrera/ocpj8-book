@@ -126,7 +126,7 @@
 
             <p>When worker threads are created, they just stand idle, waiting for work. When work arrives, the executor assigns it to the idle threads from the thread pool.</p>
 
-            <p>This way, threads are generic, they exist independently from the <code>Runnable</code> task it executes (in contrast to a traditional thread created with the <code>Thread</code> class).</p>
+            <p>This way, threads are generic, they exist independently from the <code>Runnable</code> tasks they execute (in contrast to a traditional thread created with the <code>Thread</code> class).</p>
 
             <p>One type of thread pool is the fixed thread pool, which has a fixed number of threads running. If a thread is terminated while it is still in use, it's automatically replaced with a new thread. There are also expandable thread pools.</p>
 
