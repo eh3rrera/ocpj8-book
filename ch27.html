@@ -50,7 +50,7 @@
 
             <p>Synchronization works with locks. Every object comes with a built-in lock and since there is only lock per object, only one thread can hold that lock at any time. The other threads cannot take the lock until the first thread releases it. Meanwhile, they are blocked.</p>
 
-            <p>You acquire a lock by using the <code>synchronized</code> keyword in either a block or a method.</p>
+            <p>You define a lock by using the <code>synchronized</code> keyword on either a block or a method. That lock is acquired when a thread enters an unoccupied synchronized block or method.</p>
 
             <p>In a synchronized block, you use the <code>synchronized</code> keyword followed by either a reference variable:</p>
 
@@ -85,7 +85,7 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-            <p>Static code can also be synchronized but instead of using this to acquire the lock of an instance of the class, it is acquired on the class object that every class has associated:</p>
+            <p>Static code can also be synchronized but instead of using <code>this</code> to acquire the lock of an instance of the class, it is acquired on the single class object that every instance of the class has associated:</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; synchronized</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {<br />
@@ -93,7 +93,7 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-            <p>It's equivalent to:</p>
+            <p>Is equivalent to:</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">()</span></span> {<br />
