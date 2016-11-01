@@ -70,7 +70,7 @@
 
             <p>Both of them extend from the abstract class <code>java.util.concurrent.ForkJoinTask</code>.</p>
 
-            <p>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing another work.</p>
+            <p>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing other work.</p>
 
             <p>To implement this, a <code>ForkJoinTask</code> object has three methods:</p>
 
