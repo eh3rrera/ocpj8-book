@@ -294,7 +294,7 @@
 
             <p>If you don't specify a locale, the <code>ResourceBundle</code> class will use the default locale of your system:</p>
 
-            <p><code class="java hljs">ResourceBundle rb = ResourceBundle.getBundle(<span class="hljs-string">"MyClass"</span>);<br />
+            <p><code class="java hljs">ResourceBundle rb = ResourceBundle.getBundle(<span class="hljs-string">"MyBundle"</span>);<br />
 	  System.out.format(<span class="hljs-string">"%s %s\n"</span>,<br />
 	  &nbsp; &nbsp; rb.getString(<span class="hljs-string">"hi"</span>), rb.getString(<span class="hljs-string">"s"</span>));</code></p>
 
@@ -402,7 +402,7 @@
             <ul>
                 <li><i>Localization</i> (abbreviated as l10N because of the number of characters between the first and the last letter) is the mechanism by which an application is adapted to a particular language and region.</li>
 
-                <li>The <code>java.util.Locale</code> class basically represents a language and a country and is the starting point for localization in Java.</li>
+                <li>The <code>java.util.Locale</code> class basically represents a language and a country, and is the starting point for localization in Java.</li>
 
                 <li>You can get the default locale of your machine with: <code class="java hljs">Locale locale = Locale.getDefault();</code></li>
 
