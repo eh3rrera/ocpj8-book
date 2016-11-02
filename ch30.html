@@ -129,7 +129,7 @@
 
             <p>For example:</p>
 
-            <p><code class="java hljs">Locale chinese = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"zh"</span>); ]<br />
+            <p><code class="java hljs">Locale chinese = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"zh"</span>);<br />
 	  Locale CHINA = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"zh"</span>, <span class="hljs-string">"CN"</span>);</code></p>
 
             <p><b>2. Using the forLanguageTag(String) factory method</b><br /> This method expects a language code, for example:</p>
@@ -143,7 +143,7 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.setLanguage(<span class="hljs-string">"jp"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.build();</code></p>
 
-            <p>Passing an invalid(s) argument(s) to any of the above three methods will not throw an exception, it will just create an object with invalid options that will make your program not behave correctly:</p>
+            <p>Passing an invalid argument to any of the above three methods will not throw an exception, it will just create an object with invalid options that will make your program behave incorrectly:</p>
 
             <p><code class="java hljs">Locale badLocale = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"a"</span>, <span class="hljs-string">"A"</span>); <span class="hljs-comment">// No error</span><br />
 	  System.out.println(badLocale); <span class="hljs-comment">// It prints a_A</span></code></p>
