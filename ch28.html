@@ -87,7 +87,7 @@
 
             <p>This way, the first subtask will wait in the queue to be processed or stolen by an idle thread to repeat the process. The second subtask will be processed immediately (also repeating the process).</p>
 
-            <p>Of course, you have to divide the task enough times to keep all threads busy (preferably into a number of tasks greater that the number of threats to ensure this).</p>
+            <p>Of course, you have to divide the task enough times to keep all threads busy (preferably into a number of tasks greater that the number of threads to ensure this).</p>
 
             <p>All right, let's review this. The first subtask is waiting in a queue to be processed, and the second one is processed immediately. So when or how do you get the result of the first subtask?</p>
 
