@@ -266,7 +266,7 @@
 
                 <li>Just like an <code>ExecutorService</code> executes a task represented by a <code>Runnable</code> or a <code>Callable</code>, in the Fork/Join framework a task is represented by a subclass of either <code>RecursiveAction</code> (that <b>DOESN'T</b> return a value) or <code>RecursiveTask&lt;V&gt;</code> (that <b>DOES</b> return a value).</li>
 
-                <li>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing another work.</li>
+                <li>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing other work.</li>
 
                 <li>A <code>ForkJoinTask</code> object has three main methods, <code>fork()</code>, <code>join()</code>, and <code>compute()</code>. The <b>ORDER</b> in which you call the methods is <b>IMPORTANT</b>.</li>
 
