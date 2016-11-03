@@ -54,9 +54,9 @@
 
             <p>We create a <code>ForkJoinPool</code> instance mostly through two constructors:</p>
 
-            <p><code class="java hljs">ForkJoinPool() ForkJoinPool(<span class="hljs-keyword">int</span> parallelism)</code></p>
+            <p><code class="java hljs">ForkJoinPool()<br/>ForkJoinPool(<span class="hljs-keyword">int</span> parallelism)</code></p>
 
-            <p>The first version creates an instance with a number of threads equal to the number of processors of your machine (using the method <code>Runtime.getRuntime().availableProcessors(</code>)), which is the recommend way.</p>
+            <p>The first version is the recommended way. It creates an instance with a number of threads equal to the number of processors of your machine (using the method <code>Runtime.getRuntime().availableProcessors()</code>).</p>
 
             <p>The other version allows you to define the number of threads that will be used.</p>
 
@@ -70,16 +70,16 @@
 
             <p>Both of them extend from the abstract class <code>java.util.concurrent.ForkJoinTask</code>.</p>
 
-            <p>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing another work.</p>
+            <p>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing other work.</p>
 
-            <p>To implement this, a <code>ForkJoinTask</code> object has three methods:</p>
+            <p>To implement this, three methods of your <code>ForkJoinTask</code>-based class are important to the framework:</p>
 
             <p><code class="java hljs"><span class="hljs-function">ForkJoinTask&lt;V&gt; <span class="hljs-title">fork</span><span class="hljs-params">()</span><br />
 	  V <span class="hljs-title">join</span><span class="hljs-params">()</span><br />
-	  <span class="hljs-comment">// for RecursiveAction<br /></span><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">compute</span><span class="hljs-params">()</span><br />
-	  <span class="hljs-comment">// for RecursiveTask<br /></span><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> V <span class="hljs-title">compute</span><span class="hljs-params">()</span></span></code></p>
+	  <span class="hljs-comment">// if you extend RecursiveAction<br /></span><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">compute</span><span class="hljs-params">()</span><br />
+	  <span class="hljs-comment">// if you extend RecursiveTask<br /></span><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> V <span class="hljs-title">compute</span><span class="hljs-params">()</span></span></code></p>
 
-            <p>And each thread has a queue of tasks.</p>
+            <p>And each thread in the <code>ForkJoinPool</code> has a queue of these tasks.</p>
 
             <p>In the beginning, you have a large task. This task is divided into (generally) two smaller tasks recursively until the base case is reached.</p>
 
@@ -87,7 +87,7 @@
 
             <p>This way, the first subtask will wait in the queue to be processed or stolen by an idle thread to repeat the process. The second subtask will be processed immediately (also repeating the process).</p>
 
-            <p>Of course, you have to divide the task enough times to keep all threads busy (preferably into a number of tasks greater that the number of threats to ensure this).</p>
+            <p>Of course, you have to divide the task enough times to keep all threads busy (preferably into a number of tasks greater that the number of threads to ensure this).</p>
 
             <p>All right, let's review this. The first subtask is waiting in a queue to be processed, and the second one is processed immediately. So when or how do you get the result of the first subtask?</p>
 
@@ -266,7 +266,7 @@
 
                 <li>Just like an <code>ExecutorService</code> executes a task represented by a <code>Runnable</code> or a <code>Callable</code>, in the Fork/Join framework a task is represented by a subclass of either <code>RecursiveAction</code> (that <b>DOESN'T</b> return a value) or <code>RecursiveTask&lt;V&gt;</code> (that <b>DOES</b> return a value).</li>
 
-                <li>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing another work.</li>
+                <li>However, unlike the worker threads that an <code>ExecutorService</code> uses, the threads of a <code>ForkJoinPool</code> use a work-stealing algorithm, which means that when a thread is free, it <b>STEALS</b> the pending work of other threads that are still busy doing other work.</li>
 
                 <li>A <code>ForkJoinTask</code> object has three main methods, <code>fork()</code>, <code>join()</code>, and <code>compute()</code>. The <b>ORDER</b> in which you call the methods is <b>IMPORTANT</b>.</li>
 
