@@ -55,9 +55,9 @@
 
             <p>This chapter assumes you know how to use SQL to select, insert, update, and delete records from a database entity.</p>
 
-            <p>Also, for this chapter, it's recommended (although not required) to have access to a database to do some practices and test some concepts, however, it won't teach how to install or use a one.</p>
+            <p>Also, for this chapter, it's recommended (although not required) to have access to a database to do some practices and test some concepts, however, it won't teach how to install or use one.</p>
 
-            <p>If you don't have a database installed (or access to one), perhaps the easiest way is to use <code>JavaDB</code>, a database that is shipped with Java that can be used as an embedded or network server database and you can find in the db directory of the JDK installation.</p>
+            <p>If you don't have a database installed (or access to one), perhaps the easiest way is to use <code>JavaDB</code>, a database that is shipped with Java that can be used as an embedded or network server database. You can find it in the db directory of the JDK installation.</p>
 
             <p>For the exam, you are expected to know the main interfaces of JDBC, how to connect to a database, read results of a query, and perform some operations such as inserts or updates.</p>
 
@@ -74,7 +74,7 @@
 
                 <li><code>java.sql.Connection</code><br /> The implementation provides methods for getting information about the database, create statements, and managing connections.</li>
 
-                <li><code>java.sql.Statement</code><br /> The implementation is used to execute SQL statements and returning results.</li>
+                <li><code>java.sql.Statement</code><br /> The implementation is used to execute SQL statements and to return results.</li>
 
                 <li><code>java.sql.ResultSet</code><br /> The implementation is used for retrieving and updating the results of a query.</li>
             </ul>
@@ -85,7 +85,7 @@
 
             <p>First, to work with a database, you need to connect to it. This is done using the <code>DriverManager</code> class.</p>
 
-            <p>Before attempting to establish a connection, the <code>DriverManager</code> class has to load and register the implementation(s) of <code>java.sql.Driver</code> (that knows how to establish the connection).</p>
+            <p>Before attempting to establish a connection, the <code>DriverManager</code> class has to load and register any implementations of <code>java.sql.Driver</code> (which know how to establish the connection).</p>
 
             <p>Maybe you've seen in some program a line like this:</p>
 
@@ -132,7 +132,7 @@
 	  jdbc:sqlserver://localhost\SQLEXPRESS;databasename=db<br />
 	  jdbc:derby:db;create=true</code></p>
 
-            <p>We can connect to the database calling this method to get a <code>Connection</code> object:</p>
+            <p>We can connect to the database by calling this method to get a <code>Connection</code> object:</p>
 
             <p><code class="java hljs">Connection con =<br />
 	  &nbsp; &nbsp; DriverManager.getConnection(<span class="hljs-string">"jdbc:mysql://localhost/db"</span>);</code></p>
@@ -153,7 +153,7 @@
 	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "db_user"</span>,<br />
 	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "db_p4assw0rd"</span>);</code></p>
 
-            <p>Before you program finishes, you need to close the connection (otherwise you can run out of connections).</p>
+            <p>Before your program finishes, you need to close the connection (otherwise you can run out of connections).</p>
 
             <p>Luckily, <code>Connection</code> implements <code>AutoCloseable</code>, which means you can use a <code>try-with-resources</code> to automatically close the connection:</p>
 
