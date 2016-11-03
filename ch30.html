@@ -50,7 +50,7 @@
 
             <p>The most common things that can be customized by language and/or region are messages, dates, and numbers.</p>
 
-            <p>In Java, it all starts with one class <code>java.util.Locale</code>.</p>
+            <p>In Java, it all starts with one class, <code>java.util.Locale</code>.</p>
 
             <p>The <code>Locale</code> class basically represents a language and a country although, to be precise, a locale can have the following information:</p>
 
@@ -123,13 +123,13 @@
 
             <p><b>1. Using a constructor</b><br /> There are three constructors:</p>
 
-            <p><code>Locale(String language)<br />
-	  Locale(String language, String country)<br />
-	  Locale(String language, String country, String variant)</code></p>
+            <p><code class="java hljs">Locale(String language)<br />
+	   Locale(String language, String country)<br />
+	   Locale(String language, String country, String variant)</code></p>
 
             <p>For example:</p>
 
-            <p><code class="java hljs">Locale chinese = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"zh"</span>); ]<br />
+            <p><code class="java hljs">Locale chinese = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"zh"</span>);<br />
 	  Locale CHINA = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"zh"</span>, <span class="hljs-string">"CN"</span>);</code></p>
 
             <p><b>2. Using the forLanguageTag(String) factory method</b><br /> This method expects a language code, for example:</p>
@@ -143,7 +143,7 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.setLanguage(<span class="hljs-string">"jp"</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.build();</code></p>
 
-            <p>Passing an invalid(s) argument(s) to any of the above three methods will not throw an exception, it will just create an object with invalid options that will make your program not behave correctly:</p>
+            <p>Passing an invalid argument to any of the above three methods will not throw an exception, it will just create an object with invalid options that will make your program behave incorrectly:</p>
 
             <p><code class="java hljs">Locale badLocale = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"a"</span>, <span class="hljs-string">"A"</span>); <span class="hljs-comment">// No error</span><br />
 	  System.out.println(badLocale); <span class="hljs-comment">// It prints a_A</span></code></p>
@@ -218,7 +218,7 @@
 
             <p><i><code style="color:black"><b style="font-size:160%">com.example.MyBundle_fr_FR</b></code></i></p>
 
-            <p>Only the resource bundle name is required (and the name of the package if is not the default one).</p>
+            <p>Only the resource bundle name is required (and the name of the package if it is not the default one).</p>
 
             <p>For example, we can have bundles with the following names (assuming we're working with property files, although it's the same with classes):</p>
 
@@ -256,7 +256,7 @@
             <p><code class="java hljs">MyBundle_es<br />
 	  MyBundle</code></p>
 
-            <p>For example, let's assume the default locale <code>en_US</code>, using those and another property files (all in the default package) with the values:</p>
+            <p>For example, let's assume the default locale <code>en_US</code>, and that your program is using those and other property files, all in the default package, with the values:</p>
 
             <p><code class="java hljs"><b>MyBundle_EN.properties</b><br />
 	  s = buddy</code></p>
@@ -294,7 +294,7 @@
 
             <p>If you don't specify a locale, the <code>ResourceBundle</code> class will use the default locale of your system:</p>
 
-            <p><code class="java hljs">ResourceBundle rb = ResourceBundle.getBundle(<span class="hljs-string">"MyClass"</span>);<br />
+            <p><code class="java hljs">ResourceBundle rb = ResourceBundle.getBundle(<span class="hljs-string">"MyBundle"</span>);<br />
 	  System.out.format(<span class="hljs-string">"%s %s\n"</span>,<br />
 	  &nbsp; &nbsp; rb.getString(<span class="hljs-string">"hi"</span>), rb.getString(<span class="hljs-string">"s"</span>));</code></p>
 
@@ -402,14 +402,14 @@
             <ul>
                 <li><i>Localization</i> (abbreviated as l10N because of the number of characters between the first and the last letter) is the mechanism by which an application is adapted to a particular language and region.</li>
 
-                <li>The <code>java.util.Locale</code> class basically represents a language and a country and is the starting point for localization in Java.</li>
+                <li>The <code>java.util.Locale</code> class basically represents a language and a country, and is the starting point for localization in Java.</li>
 
                 <li>You can get the default locale of your machine with: <code class="java hljs">Locale locale = Locale.getDefault();</code></li>
 
                 <li>You can also get all the locales supported by Java: <code class="java hljs">Locale [] locales = Locale.getAvailableLocales();</code></li>
 
                 <li>You can create a <code>Locale</code> object using a constructor:<br />
-                    <code>Locale(String language)<br />
+                    <code class="java hljs">Locale(String language)<br />
 		Locale(String language, String country)<br />
 		Locale(String language, String country, String variant)</code></li>
 
