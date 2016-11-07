@@ -668,7 +668,7 @@
 
                 <li>If something is defined as <code>protected</code>, it can be only accessed by the class that defines it, its subclasses and classes of the same package. It doesn't matter if the subclass is in another package, which makes this modifier, less restrictive than <code>private</code>.</li>
 
-                <li>If something doesn't have a modifier, it has default access also known as package access, because it can only be accessed by classes within the same package. If a subclass is defined in another package, it cannot see it, that's the only difference with the <code>protected</code> modifier, making it more restrictive.</li>
+                <li>If something doesn't have a modifier, it has default access also known as package access, because it can only be accessed by classes within the same package. If a subclass is defined in another package, it cannot see the default access attribute or method. That is the only difference with the <code>protected</code> modifier, making it more restrictive.</li>
 
                 <li>A singleton class guarantees that there's only one instance of the class during the lifetime of the application.</li>
 
