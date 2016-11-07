@@ -187,7 +187,7 @@
 
             <p>Instances of an inner class only exist <b>WITHIN</b> an instance of the enclosing class. It's the same that when you want to use a method of a class, you <b>FIRST</b> need an instance of that class.</p>
 
-            <p>Once you have an instance of the enclosing class, you use the new operator in a (weird) different way than you typically use it.</p>
+            <p>Once you have an instance of the enclosing class, you use the <code>new</code> operator in a (weird) different way than you typically use it.</p>
 
             <p><code class="hljs"><span class="hljs-type">Computer</span> computer = <span class="hljs-keyword">new</span> <span class="hljs-type">Computer</span><span class="hljs-literal">()</span>;<br />
 	  <span class="hljs-type">Computer</span>.<span class="hljs-type">HardDrive</span> hardDrive = computer.<span class="hljs-keyword">new</span> <span class="hljs-type">HardDrive</span><span class="hljs-literal">()</span>;</code></p>
@@ -283,7 +283,7 @@
             <p>Local classes are local because they can only be used in the method or block where they are declared. Blocks are practically anything between curly braces.</p>
 
             <p><code class="hljs">void <span class="hljs-function"><span class="hljs-keyword">method</span><span class="hljs-params">()</span> {<br />
-	  &nbsp; &nbsp; class MethodLocalClass { }<br />
+	  &nbsp; &nbsp; <span class="hljs-keyword">class</span> MethodLocalClass { }<br />
 	  &nbsp; &nbsp; MethodLocalClass mlc = <span class="hljs-keyword">new</span> MethodLocalClass<span class="hljs-params">()</span>;<br /></span>&nbsp; &nbsp; <span class="hljs-keyword">if</span> ( <span class="hljs-number">1</span> == <span class="hljs-number">1</span> ) {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> IfLocalClass { }<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;IfLocalClass ilc = <span class="hljs-keyword">new</span> IfLocalClass();<br />
