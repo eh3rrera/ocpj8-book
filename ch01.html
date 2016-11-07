@@ -672,19 +672,20 @@
 
                 <li>A singleton class guarantees that there's only one instance of the class during the lifetime of the application.</li>
 
-                <li>An immutable object cannot change its values after it is created and it can be made by:
+                <li>An immutable object cannot change its values after it is created.</li>
+                <li>An immutable object...
 
-                    <ul>
-                        <li>Setting all its properties through a constructor</li>
+            <ul>
+                <li>Sets all of its properties through a constructor</li>
 
-                        <li>Don't defining setter methods</li>
+                <li>Does not define setter methods</li>
 
-                        <li>Declaring all its attributes as private</li>
+                <li>Declares all its attributes <code>private</code> (and sometimes <code>final</code>)</li>
 
-                        <li>Declaring the class as <code>final</code></li>
+                <li>Has a class declared <code>final</code> to prevent inheritance</li>
 
-                        <li>If it has mutable types (for example a <code>List</code>), either the reference cannot be accessible outside the object or a copy must be returned (the same applies if the object's content must change)</li>
-                    </ul>
+                <li>Protects access to any mutable state. For example, if it has a <code>List</code> member, either the reference cannot be accessible outside the object or a copy must be returned (the same applies if the object's content must change)</li>
+            </ul>
                 </li>
 
                 <li>The <code>static</code> keyword can be applied to attributes, methods, blocks and classes. A <code>static</code> member belongs to the class where is declared, not to a particular instance.</li>
