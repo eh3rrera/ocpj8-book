@@ -320,7 +320,7 @@
 
             <p>Why?</p>
 
-            <p>Because an instance of a local class can be alive even after the method or block in which is defined has finished its execution (for example, if a reference is saved in an object with greater scope). For this reason, the local class must keep an internal copy of the variables it uses, and the only way to ensure that both copies always hold the same value it's by making the variable <code>final</code>.</p>
+            <p>Because an instance of a local class can be alive even after the method or block in which it is defined has finished its execution (for example, if a reference is saved in an object with greater scope). For this reason, the local class must keep an internal copy of the variables it uses, and the only way to ensure that both copies always hold the same value it's by making the variable <code>final</code>.</p>
 
             <p>So, the following code is valid because <code>taskName</code> is declared final while n doesn't change and it's considered <i>effectively final</i>.</p>
 
