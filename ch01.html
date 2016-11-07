@@ -422,7 +422,7 @@
 
             <p>An improvement is to lock only the portion of the code that creates the instance. For this to work properly, we have to double check if the instance is <code>null</code>, one without locking (to check if the instance is already created), and then another one inside a <code>synchronized</code> block (to safely create the instance).</p>
 
-            <p>Here's how this look:</p>
+            <p>Here's how this would look:</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> Singleton instance;<br />
