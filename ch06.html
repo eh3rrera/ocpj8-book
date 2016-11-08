@@ -350,7 +350,7 @@
 
             <p>The reason is the same. The compiler still can't know for sure what type will the list hold (we could add any type).</p>
 
-            <p>Notice than, for example, <code>List&lt;Number&gt;</code> is more restrictive than <code>List&lt;? extends Number&gt;</code>, in the sense that the former only accepts direct assignments of type <code>List&lt;Number&gt;</code>, but the latter, accepts direct assignments of <code>List&lt;Integer&gt;</code>, <code>List&lt;Float&gt;</code>, etc., for example:</p>
+            <p>Notice then, that <code>List&lt;Number&gt;</code> is more restrictive than <code>List&lt;? extends Number&gt;</code>, in the sense that the former only accepts direct assignments of type <code>List&lt;Number&gt;</code>, but the latter, accepts direct assignments of <code>List&lt;Integer&gt;</code>, <code>List&lt;Float&gt;</code>, etc. For example:</p>
 
             <p><code class="java hljs">List&lt;Integer&gt; listInteger = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
 	  List&lt;Float&gt; listFloat = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
