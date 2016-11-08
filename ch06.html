@@ -93,7 +93,7 @@
 
             <p><code class="java hljs">List&lt;<span class="hljs-keyword">int</span>&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;<span class="hljs-keyword">int</span>&gt;();</code></p>
 
-            <p>Finally, a class that accepts generics but it's declared without one is called raw type:</p>
+            <p>Finally, a class that accepts generics but is declared without one is said to be using a <i>raw type</i>:</p>
 
             <p><code class="java hljs"><span style="color: rgb(0, 106, 0);">// Raw type<br /></span>List raw = <span class="hljs-keyword">new</span> ArrayList();<br />
 	  <span style="color: rgb(0, 106, 0);">// Generic type<br /></span>List&lt;String&gt; generic = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();&nbsp;</code></p>
@@ -115,7 +115,7 @@
             <p><code class="java hljs"><span class="hljs-comment">// Without the diamond operator, the raw type is used</span><br />
 	  List&lt;List&lt;String&gt;&gt; generic = <span class="hljs-keyword">new</span> ArrayList();</code></p>
 
-            <p>You can only use the diamond operator if the compiler can infer the parameter type(s) from the context, the good news is that in Java 8, type inference was improved:</p>
+            <p>You can only use the diamond operator if the compiler can infer the parameter type(s) from the context. The good news is that in Java 8, type inference was improved:</p>
 
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testGenericParam</span><span class="hljs-params">(List&lt;String&gt; list)</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><br />
