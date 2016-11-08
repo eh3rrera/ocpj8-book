@@ -85,7 +85,7 @@
             <p>Like a class, an interface has either <code>public</code> or default accessibility:</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">PublicAccessInterface</span></span> {<br />
-	  <span class="hljs-comment"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>// ...<br /></span>}</code><code class="java hljs"><span class="hljs-keyword">interface</span> <span class="hljs-title">DefaultAccessInterface</span> {<br />
+                <span class="hljs-comment"><font color="#000000">&nbsp; &nbsp;&nbsp;</font>// ...<br /></span>}</code><code class="java hljs"><span class="hljs-keyword">interface</span> <span class="hljs-class"><span class="hljs-title">DefaultAccessInterface</span></span> {<br />
 	  &nbsp; &nbsp; <span class="hljs-comment">// ...<br /></span> }</code></p>
 
             <p>Interfaces are <code>abstract</code> by default (you don't have to specify it):</p>
@@ -128,7 +128,7 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-comment">// Implementation<br /></span>&nbsp; &nbsp; }<br />
 	  }</code></p>
 
-            <p>Also, that's the reason if one or more of the interface's methods are not implemented, you must mark the class (and the methods) as <code>abstract</code>:</p>
+            <p>Also, that's the reason that, if one or more of the interface's methods are not implemented, you must mark the class (and the methods) as <code>abstract</code>:</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Server</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Monitorable</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span> {<br />
@@ -255,7 +255,7 @@
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">(<span class="hljs-keyword">int</span> speed)</span></span>;<br />
 	  }</code></p>
 
-            <p>They're considered two different methods because the method's signature is different, so the implemented class has to implement both versions of the methods:</p>
+            <p>They're considered two different methods because the method's signature is different, so the implementing class has to implement both versions of the methods:</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Car</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Truck</span>, <span class="hljs-title">CompactCar</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accelerate</span><span class="hljs-params">()</span></span> {<br />
@@ -322,11 +322,11 @@
 	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Pluggable</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">plug</span><span class="hljs-params">()</span></span>;<br />
 	  }<br />
-	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Resource</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Monitoreable</span>, <span class="hljs-title">Pluggable</span></span> {<br />
+	  <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Resource</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Monitorable</span>, <span class="hljs-title">Pluggable</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; void</span> <span class="hljs-title">printInfo</span><span class="hljs-params">()</span></span>;<br />
 	  }</code></p>
 
-            <p>A non-abstract class implementing <code>Resource</code>, must have to implement all methods of the three interfaces:</p>
+            <p>A non-abstract class implementing <code>Resource</code>, must implement all the methods of the three interfaces:</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Disk</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Resource</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">monitor</span><span class="hljs-params">()</span></span> {<br />
@@ -356,7 +356,7 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-            <p>We know that when a class implements an interface, unless it is marked as <code>abstract</code>, it has to implement <b>ALL</b> the methods of that interface.</p>
+            <p>We know that when a class implements an interface, unless the class is marked as <code>abstract</code>, it has to implement <b>ALL</b> the methods of that interface.</p>
 
             <p>So if we add another method to <code>Processable</code>, for example:</p>
 
@@ -396,7 +396,7 @@
 
             <p>The main reason for adding <i>default</i> methods to interfaces was to support <i>interface evolution</i>, to add new functionality to interfaces and at the same time, ensuring compatibility with the code written for older versions.</p>
 
-            <p>There are other two side effects worth mentioning:</p>
+            <p>There are two other side effects worth mentioning:</p>
 
             <ul>
                 <li><b>We can now design <i>optional</i> methods</b>. We can have methods with limited or default functionality so the classes implementing the interfaces can decide if they keep that functionality or provide another one.</li>
@@ -450,13 +450,13 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-            <p>This is the most simple scenario, where the implementing class inherits the <i>default</i> method is inherited.</p>
+            <p>This is the most simple scenario, where the implementing class inherits the <i>default</i> method.</p>
 
-            <p>Before presenting more complex scenarios, let's see which the restrictions when using <i>default</i> methods are.</p>
+            <p>Before presenting more complex scenarios, let's see what the restrictions are when using <i>default</i> methods.</p>
 
             <p><b>Default methods cannot be final.</b><br /> If a method is <code>final</code>, it cannot be overridden by the implementing classes, which doesn't favor the primary objective of <i>default</i> methods.</p>
 
-            <p><b>Default methods cannot be synchronized.</b><br /> This was a deliberated decision by the designers of the language. If a method is made synchronized in the interface, it would mean that all the implementing classes would inherit this behavior. But this decision should belong to the implementation; the interface has no reasonable basis for assuming what the synchronization policy should be.</p>
+            <p><b>Default methods cannot be synchronized.</b><br /> This was a deliberate decision by the designers of the language. If a method is made synchronized in the interface, it would mean that all the implementing classes would inherit this behavior. But this decision should belong to the implementation; the interface has no reasonable basis for assuming what the synchronization policy should be.</p>
 
             <p><b>Default methods are always public.</b><br /> Like other methods of an interface. Contrast this with an abstract class, where you can choose the visibility of the method.</p>
 
@@ -579,7 +579,7 @@
 
             <p>If <code>Parallelizable</code> defined <code>processInParallel()</code> as <code>abstract</code>:</p>
 
-            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Parallelizable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Procesable</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Parallelizable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Processable</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span>;<br />
 	  }</code></p>
 
@@ -654,7 +654,7 @@
             <p>Of course, we can always call a default implementation with:</p>
 
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
-	  &nbsp; &nbsp; Procesable.<span class="hljs-keyword">super</span>.processInParallel();<br />
+	  &nbsp; &nbsp; Processable.<span class="hljs-keyword">super</span>.processInParallel();<br />
 	  }</code></p>
             <hr />
 
@@ -675,9 +675,9 @@
 
             <h2>Static methods</h2>
 
-            <p>Whenever we refer to something static, we mean that something to belong to a class, not to a particular instance or object of that class. Static methods on interfaces follow the same concept; they belong to the interface where they are declared.</p>
+            <p>Whenever we refer to something static, we mean something that belongs to a class, not to a particular instance or object of that class. Static methods on interfaces follow the same concept; they belong to the interface where they are declared.</p>
 
-            <p>They were added to assist default methods and to organize better helper methods, because generally, helper or utility methods are defined in another class (like <code>java.utils.Collections</code>), instead of where they naturally belong.</p>
+            <p>They were added to assist default methods and to better organize helper methods, because generally, helper or utility methods are defined in another class (like <code>java.utils.Collections</code>), instead of where they naturally belong.</p>
 
             <p>For example, the <code>java.util.Comparator</code> interface defines the static method:</p>
 
