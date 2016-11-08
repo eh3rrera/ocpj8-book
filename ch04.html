@@ -579,7 +579,7 @@
 
             <p>If <code>Parallelizable</code> defined <code>processInParallel()</code> as <code>abstract</code>:</p>
 
-            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Parallelizable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Procesable</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Parallelizable</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Processable</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span>;<br />
 	  }</code></p>
 
@@ -654,7 +654,7 @@
             <p>Of course, we can always call a default implementation with:</p>
 
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInParallel</span><span class="hljs-params">()</span></span> {<br />
-	  &nbsp; &nbsp; Procesable.<span class="hljs-keyword">super</span>.processInParallel();<br />
+	  &nbsp; &nbsp; Processable.<span class="hljs-keyword">super</span>.processInParallel();<br />
 	  }</code></p>
             <hr />
 
