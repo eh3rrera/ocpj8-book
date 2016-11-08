@@ -499,7 +499,7 @@
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">m1</span><span class="hljs-params">(List&lt;?&gt; l)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; m2(l); <span class="hljs-comment">// 1</span><br />
 	  &nbsp; &nbsp; }<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> &gt;T&lt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m2</span><span class="hljs-params">(List&lt;T&gt; l)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> &lt;T&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m2</span><span class="hljs-params">(List&lt;T&gt; l)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; l.set(<span class="hljs-number">1</span>, l.get(<span class="hljs-number">0</span>)); <span class="hljs-comment">// 2</span><br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(l);<br />
 	  &nbsp; &nbsp; }<br />
