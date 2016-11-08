@@ -225,7 +225,7 @@
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printDescription</span><span class="hljs-params">()</span></span>;<br />
 	  }</code></p>
 
-            <p>In the case of <code>printValue()</code>, <code>MEDIUM</code> and <code>LOW</code> will use the version that just print the value while <code>HIGH</code> will use its own version. If the method is abstract, every <code>enum</code> has to implement it. Otherwise, a compile-time error will be thrown.</p>
+            <p>In the case of <code>printValue()</code>, <code>MEDIUM</code> and <code>LOW</code> will use the enum-level version that just prints the value while <code>HIGH</code> will use its own version. If the method is abstract, every <code>enum</code> has to implement it. Otherwise, a compile-time error will be thrown.</p>
 
             <h2>Enums as Singletons</h2>
 
