@@ -264,7 +264,7 @@
 
             <p>But it doesn't compile. An <code>ArrayList&lt;String&gt;</code> cannot be cast to <code>List&lt;Object&gt;</code> because when working with generics, you cannot assign a derived type to a base type; both types should be the same (either explicitly or by using the diamond operator).</p>
 
-            <p>Think about it this way. A list of type <code>List&lt;Object&gt;</code> can hold instances of <code>Object</code> and its subclasses, in other words, every object in Java, not just strings, so you could have a list of strings and integers for example, which clearly violates type safety.</p>
+            <p>Think about it this way: a list of type <code>List&lt;Object&gt;</code> can hold instances of <code>Object</code> and its subclasses. In other words, the list could hold any object type, not only strings. So you could have a list of strings and integers for example, which clearly violates type safety.</p>
 
             <p>But if you change the declaration to use a wildcard parameter:</p>
 
