@@ -90,7 +90,7 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-            <p>You make this hiding by using access modifiers.</p>
+            <p>You implement this attribute hiding by using access modifiers.</p>
 
             <p>Java supports four access modifiers:</p>
 
@@ -187,15 +187,15 @@
                 </tr>
             </table>
 
-            <p>As you can see, all the access modifiers can be applied to attributes and methods of a class but not to their interface counterparts. Classes and interfaces can only have a <code>public</code> or default modifier. Why? Let's define first these access modifiers.</p>
+            <p>As you can see, all the access modifiers can be applied to attributes and methods of a class, but not necessarily to their interface counterparts. Also, class and interface definitions can only have a <code>public</code> or default modifier. Why? Let's define first these access modifiers.</p>
 
-            <p>If something is declared as <code>public</code>, it can be accessed from any other class of our application, regardless of the package or the module it is defined.</p>
+            <p>If something is declared as <code>public</code>, it can be accessed from any other class in our application, regardless of the package or the module in which it is defined.</p>
 
             <p>If something is defined as <code>private</code>, it can only be accessed inside the class that defines it, not from other classes in the same packages and not from classes that inherit the class. <code>private</code> is the most restrictive access modifier.</p>
 
             <p>If something is defined as <code>protected</code>, it can be only accessed by the class that defines it, its subclasses and classes of the same package. It doesn't matter if the subclass is in another package, which makes this modifier less restrictive than <code>private</code>.</p>
 
-            <p>If something doesn't have a modifier, it has default access also known as package access, because it can only be accessed by classes within the same package. If a subclass is defined in another package, it cannot see it, that's the only difference with the <code>protected</code> modifier, which makes it more restrictive.</p>
+            <p>If something doesn't have a modifier, it has default access also known as package access, because it can only be accessed by classes within the same package. If a subclass is defined in another package, it cannot see the default access attribute or method. That is the only difference with the <code>protected</code> modifier, which makes it more restrictive.</p>
 
             <p>A code example may explain this better:</p>
 
@@ -250,7 +250,7 @@
 
             <p>Would a <code>private</code> or <code>protected</code> class make sense in an object-oriented language?</p>
 
-            <p>A <code>private</code> method makes sense inside an interface where most, if not all methods, have no implementation?</p>
+            <p>How about a <code>private</code> method inside an interface where most, if not all methods, have no implementation?</p>
 
             <p>Think about it.</p>
 
@@ -422,7 +422,7 @@
 
             <p>An improvement is to lock only the portion of the code that creates the instance. For this to work properly, we have to double check if the instance is <code>null</code>, one without locking (to check if the instance is already created), and then another one inside a <code>synchronized</code> block (to safely create the instance).</p>
 
-            <p>Here's how this look:</p>
+            <p>Here's how this would look:</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> Singleton instance;<br />
@@ -485,15 +485,15 @@
             <p>In summary, an immutable object:</p>
 
             <ul>
-                <li>Set all its properties through a constructor</li>
+                <li>Sets all of its properties through a constructor</li>
 
-                <li>Doesn't define setter methods</li>
+                <li>Does not define setter methods</li>
 
-                <li>All its attributes are <code>private</code> (and sometimes <code>final</code>)</li>
+                <li>Declares all its attributes <code>private</code> (and sometimes <code>final</code>)</li>
 
-                <li>The class is declared <code>final</code> to prevent inheritance</li>
+                <li>Has a class declared <code>final</code> to prevent inheritance</li>
 
-                <li>If it has mutable types (for example a <code>List</code>), either the reference cannot be accessible outside the object or a copy must be returned (the same applies if the object's content must change)</li>
+                <li>Protects access to any mutable state. For example, if it has a <code>List</code> member, either the reference cannot be accessible outside the object or a copy must be returned (the same applies if the object's content must change)</li>
             </ul>
 
             <h2>The static Keyword</h2>
@@ -550,7 +550,7 @@
 
             <p>As you can see, the value is retained when another instance uses the <code>static</code> variable.</p>
 
-            <p>When talking about methods, the method belongs to the class, which means that we don't need an instance to call it (the same applies to attributes, by the way.</p>
+            <p>When talking about static methods, the method belongs to the class, which means that we don't need an instance to call it (the same applies to attributes, by the way.)</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Example</span></span> {<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> attr = <span class="hljs-number">0</span>;<br />
@@ -591,7 +591,7 @@
 
             <p>A block is executed when the class is initialized and in the order they are declared (if there's more than one).</p>
 
-            <p>Just like <code>static</code> methods, they cannot reference instance attributes, or the keywords this and super.</p>
+            <p>Just like <code>static</code> methods, they cannot reference instance attributes, or use the keywords <code>super</code> and <code>this</code>.</p>
 
             <p>In addition to that, <code>static</code> blocks cannot contain a <code>return</code> statement, and it's a compile-time error if the block cannot complete normally (for example, due to an uncaught exception).</p>
 
@@ -668,26 +668,27 @@
 
                 <li>If something is defined as <code>protected</code>, it can be only accessed by the class that defines it, its subclasses and classes of the same package. It doesn't matter if the subclass is in another package, which makes this modifier, less restrictive than <code>private</code>.</li>
 
-                <li>If something doesn't have a modifier, it has default access also known as package access, because it can only be accessed by classes within the same package. If a subclass is defined in another package, it cannot see it, that's the only difference with the <code>protected</code> modifier, making it more restrictive.</li>
+                <li>If something doesn't have a modifier, it has default access also known as package access, because it can only be accessed by classes within the same package. If a subclass is defined in another package, it cannot see the default access attribute or method. That is the only difference with the <code>protected</code> modifier, making it more restrictive.</li>
 
                 <li>A singleton class guarantees that there's only one instance of the class during the lifetime of the application.</li>
 
-                <li>An immutable object cannot change its values after it is created and it can be made by:
+                <li>An immutable object cannot change its values after it is created.</li>
+                <li>An immutable object...
 
-                    <ul>
-                        <li>Setting all its properties through a constructor</li>
+            <ul>
+                <li>Sets all of its properties through a constructor</li>
 
-                        <li>Don't defining setter methods</li>
+                <li>Does not define setter methods</li>
 
-                        <li>Declaring all its attributes as private</li>
+                <li>Declares all its attributes <code>private</code> (and sometimes <code>final</code>)</li>
 
-                        <li>Declaring the class as <code>final</code></li>
+                <li>Has a class declared <code>final</code> to prevent inheritance</li>
 
-                        <li>If it has mutable types (for example a <code>List</code>), either the reference cannot be accessible outside the object or a copy must be returned (the same applies if the object's content must change)</li>
-                    </ul>
+                <li>Protects access to any mutable state. For example, if it has a <code>List</code> member, either the reference cannot be accessible outside the object or a copy must be returned (the same applies if the object's content must change)</li>
+            </ul>
                 </li>
 
-                <li>The <code>static</code> keyword can be applied to attributes, methods, blocks and classes. A <code>static</code> member belongs to the class where is declared, not to a particular instance.</li>
+                <li>The <code>static</code> keyword can be applied to attributes, methods, blocks and classes. A <code>static</code> member belongs to the class where it is declared, not to a particular instance.</li>
 
                 <li>The <code>final</code> keyword can be applied to variables (so they cannot change their value after initialized), methods (so they cannot be overridden), and classes (so they cannot be subclassed).</li>
             </ul>
