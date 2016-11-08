@@ -69,7 +69,7 @@
 
             <p>From the previous chapter, we know that only <code>private</code> and members with default visibility when the subclass is defined in a different package than the superclass, are not inherited.</p>
 
-            <p>An attribute or method is inherited with the same visibility level that the one defined in the superclass. However, in the case of methods, you can change them to be more visible, but you cannot make them less visible:</p>
+            <p>An attribute or method is inherited with the same visibility level as the one defined in the superclass. However, in the case of methods, you can change them to be more visible, but you cannot make them less visible:</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tool</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">int</span> size;<br />
@@ -101,7 +101,7 @@
 
                 <li>New methods that are not in the superclass can be declared in the subclass.</li>
 
-                <li>A constructor can be declared in the subclass that invokes the constructor of the superclass, either implicitly or by using the keyword super.</li>
+                <li>A constructor can be declared in the subclass that invokes the constructor of the superclass, either implicitly or by using the keyword <code>super</code>.</li>
             </ul>
 
             <p>So for methods, reducing their visibility is not allowed because they are handled in a different way, in other words, methods are either overridden or overloaded.</p>
@@ -114,9 +114,9 @@
 
             <p>The difference between overloading and overriding has to do a lot with method signatures.</p>
 
-            <p>In a few words, the method signature is the name of the method and the list (types and names included) of its parameters. Note that return types are not included in this definition.</p>
+            <p>In a few words, the <i>method signature</i> is the name of the method and the list (types and names included) of its parameters. Note that return types are not included in this definition.</p>
 
-            <p>We talk about overloading when a method changes the list of parameters of another one (that might be inherited) while keeping the same name.</p>
+            <p>We talk about overloading when a method changes the method signature, by changing the list of parameters of another method (that might be inherited) while keeping the same name.</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Hotel</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reserveRoom</span><span class="hljs-params">(<span class="hljs-keyword">int</span> rooms)</span></span> { ... }<br />
@@ -323,7 +323,7 @@
                 <li><code class="java">public String toString()</code></li>
             </ul>
 
-            <p>The most significant methods, the ones you almost always would want to redefine are <code>hashCode</code>, <code>equals</code>, and <code>toString</code>.</p>
+            <p>The most significant methods, the ones you almost always would want to redefine, are <code>hashCode</code>, <code>equals</code>, and <code>toString</code>.</p>
 
             <p><b>public int hashCode()</b><br /> It returns a hash code value for the object. The returned value must have the following contract:</p>
 
@@ -335,19 +335,20 @@
                 <li>It is not required that if two objects are not equal according to the equals(<code>java.lang.Object)</code> method, then calling the <code>hashCode</code> method on each of the two objects must produce distinct integer results. However, the programmer should be aware that producing distinct integer results for unequal objects may improve the performance of hash tables.</li>
             </ul>
 
-            <p><b>public boolean equals(Object obj)</b><br /> Indicates whether another object is equal to the object that calls the method. It's necessary to override the <code>hashCode</code> method whenever this method is overridden since the contract for the <code>hashCode</code> method states that equal objects must have equal hash codes. This method:</p>
+            <p><b>public boolean equals(Object obj)</b><br /> Indicates whether another object is equal to the object that calls the method. It's necessary to override the <code>hashCode</code> method whenever this method is overridden since the contract for the <code>hashCode</code> method states that equal objects must have equal hash codes. This method is:</p>
 
             <ul>
-                <li>It's reflexive: for any non-<code>null</code> reference value <code>x</code>, <code>x.equals(x)</code> should return <code>true</code>.</li>
+                <li>reflexive: for any non-<code>null</code> reference value <code>x</code>, <code>x.equals(x)</code> should return <code>true</code>.</li>
 
-                <li>It's symmetric: for any non-<code>null</code> reference values <code>x</code> and <code>y</code>, <code>x.equals(y)</code> should return <code>true</code> if and only if <code>y.equals(x)</code> returns <code>true</code>.</li>
+                <li>symmetric: for any non-<code>null</code> reference values <code>x</code> and <code>y</code>, <code>x.equals(y)</code> should return <code>true</code> if and only if <code>y.equals(x)</code> returns <code>true</code>.</li>
 
-                <li>It's transitive: for any non-<code>null</code> reference values <code>x</code>, <code>y</code>, and <code>z</code>, if <code>x.equals(y)</code> returns <code>true</code> and <code>y.equals(z)</code> returns <code>true</code>, then <code>x.equals(z)</code> should return <code>true</code>.</li>
+                <li>transitive: for any non-<code>null</code> reference values <code>x</code>, <code>y</code>, and <code>z</code>, if <code>x.equals(y)</code> returns <code>true</code> and <code>y.equals(z)</code> returns <code>true</code>, then <code>x.equals(z)</code> should return <code>true</code>.</li>
 
-                <li>It's consistent: for any non-<code>null</code> reference values <code>x</code> and <code>y</code>, multiple invocations of <code>x.equals(y)</code> consistently return true or <code>false</code>, provided no information used in equals comparisons on the objects is modified.</li>
+                <li>consistent: for any non-<code>null</code> reference values <code>x</code> and <code>y</code>, multiple invocations of <code>x.equals(y)</code> consistently return true or <code>false</code>, provided no information used in equals comparisons on the objects is modified.</li>
 
-                <li>For any non-<code>null</code> reference value <code>x</code>, <code>x.equals(null)</code> should return <code>false</code>.</li>
             </ul>
+
+            <p>For any non-<code>null</code> reference value <code>x</code>, <code>x.equals(null)</code> should return <code>false</code>.</p>
 
             <p><b>public String toString()</b><br /> It returns a string representation of the object. The <code>toString</code> method for class <code>Object</code> returns a string consisting of the name of the class of which the object is an instance, the at-sign character '@', and the unsigned hexadecimal representation of the hash code of the object.</p>
 
@@ -495,7 +496,7 @@
 
                         <li>New methods that are not in the superclass can be declared in the subclass.</li>
 
-                        <li>A constructor can be declared in the subclass that invokes the constructor of the superclass, either implicitly or by using the keyword super.</li>
+                        <li>A constructor can be declared in the subclass that invokes the constructor of the superclass, either implicitly or by using the keyword <code>super</code>.</li>
                     </ul>
                 </li>
 
@@ -516,7 +517,7 @@
                     </ul>
                 </li>
 
-                <li>With polymorphism, subclasses can define their own behaviors (different that the ones of the methods of the superclass), and the JVM will call the appropriate method for the object. This behavior is referred to as virtual method invocation.</li>
+                <li>With polymorphism, subclasses can define their own behaviors (different than the ones of the methods of the superclass), and the JVM will call the appropriate method for the object. This behavior is referred to as virtual method invocation.</li>
 
                 <li>Abstract classes <b>CANNOT</b> be instantiated, only subclassed. Abstract methods are declared <b>WITHOUT</b> an implementation (body).</li>
 
