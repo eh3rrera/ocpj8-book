@@ -175,7 +175,7 @@
 
             <h4><i>Using a non-static inner class</i></h4>
 
-            <p><i>NON-Static inner classes are accessed through An instance of their enclosing class</i></p>
+            <p><i>NON-Static inner classes are accessed through an instance of their enclosing class</i></p>
 
             <p><i><code class="hljs"><span class="hljs-type">Computer</span> c = <span class="hljs-keyword">new</span> <span class="hljs-type">Computer</span><span class="hljs-literal">()</span>;<br />
 	  <span class="hljs-type">Computer</span>.<span class="hljs-type">HardDrive</span> hd = c.<span class="hljs-keyword">new</span> <span class="hljs-type">HardDrive</span><span class="hljs-literal">()</span>;</code></i></p>
@@ -187,7 +187,7 @@
 
             <p>Instances of an inner class only exist <b>WITHIN</b> an instance of the enclosing class. It's the same that when you want to use a method of a class, you <b>FIRST</b> need an instance of that class.</p>
 
-            <p>Once you have an instance of the enclosing class, you use the new operator in a (weird) different way you typically use it.</p>
+            <p>Once you have an instance of the enclosing class, you use the <code>new</code> operator in a (weird) different way than you typically use it.</p>
 
             <p><code class="hljs"><span class="hljs-type">Computer</span> computer = <span class="hljs-keyword">new</span> <span class="hljs-type">Computer</span><span class="hljs-literal">()</span>;<br />
 	  <span class="hljs-type">Computer</span>.<span class="hljs-type">HardDrive</span> hardDrive = computer.<span class="hljs-keyword">new</span> <span class="hljs-type">HardDrive</span><span class="hljs-literal">()</span>;</code></p>
@@ -283,7 +283,7 @@
             <p>Local classes are local because they can only be used in the method or block where they are declared. Blocks are practically anything between curly braces.</p>
 
             <p><code class="hljs">void <span class="hljs-function"><span class="hljs-keyword">method</span><span class="hljs-params">()</span> {<br />
-	  &nbsp; &nbsp; class MethodLocalClass { }<br />
+	  &nbsp; &nbsp; <span class="hljs-keyword">class</span> MethodLocalClass { }<br />
 	  &nbsp; &nbsp; MethodLocalClass mlc = <span class="hljs-keyword">new</span> MethodLocalClass<span class="hljs-params">()</span>;<br /></span>&nbsp; &nbsp; <span class="hljs-keyword">if</span> ( <span class="hljs-number">1</span> == <span class="hljs-number">1</span> ) {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">class</span> IfLocalClass { }<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;IfLocalClass ilc = <span class="hljs-keyword">new</span> IfLocalClass();<br />
@@ -316,13 +316,13 @@
 
             <p>If the local class is declared inside a method, it can access the variables and parameters of the method <b>ONLY</b> if they are declared final or are effectively final.</p>
 
-            <p><i>Effectively final</i> is a term that means that a variable or parameter is not changed after it's initialized, even if there is not declared as final.</p>
+            <p><i>Effectively final</i> is a term that means that a variable or parameter is not changed after it's initialized, even if its declaration does not use the <code>final</code> keyword.</p>
 
             <p>Why?</p>
 
-            <p>Because an instance of a local class can be alive even after the method or block in which is defined has finished its execution (for example, if a reference is saved in an object with greater scope). For this reason, the local class must keep an internal copy of the variables it uses, and the only way to ensure that both copies always hold the same value it's by making the variable <code>final</code>.</p>
+            <p>Because an instance of a local class can be alive even after the method or block in which it is defined has finished its execution (for example, if a reference is saved in an object with greater scope). For this reason, the local class must keep an internal copy of the variables it uses, and the only way to ensure that both copies always hold the same value it's by making the variable <code>final</code>.</p>
 
-            <p>So, the following code is valid because <code>taskName</code> is declared final while n doesn't change and it's considered <i>effectively final</i>.</p>
+            <p>So, the following code is valid because <code>taskName</code> is declared <code>final</code> while <code>n</code> doesn't change and is considered <i>effectively final</i>.</p>
 
             <p><code class="hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">process</span>(<span class="hljs-params"><span class="hljs-keyword">int</span> n</span>)</span> {<br />
 	  &nbsp; &nbsp; &nbsp;final String taskName = <span class="hljs-string">"Task #1"</span>;<br />
@@ -386,7 +386,7 @@
 
             <p><code class="hljs"><span class="hljs-tag">new</span> <span class="hljs-tag">Computer</span>() { }</code></p>
 
-            <p>It's like writing</p>
+            <p>is like writing</p>
 
             <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> [<span class="hljs-title">NO_NAME_CLASS</span>] <span class="hljs-keyword">extends</span> <span class="hljs-title">Computer</span></span> { }</code></p>
 
@@ -394,7 +394,7 @@
 
             <p><code class="hljs"><span class="hljs-keyword">new</span> Runnable() { }</code></p>
 
-            <p>It's like writing</p>
+            <p>is like writing</p>
 
             <p><code class="hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> [<span class="hljs-title">NO_NAME_CLASS</span>] <span class="hljs-keyword">implements</span> <span class="hljs-title">Runnable</span></span> { }</code></p>
 
@@ -424,7 +424,7 @@
             <ul>
                 <li style="list-style: none">&nbsp;&nbsp;&nbsp;&nbsp;</li>
 
-                <li>They can access the members of its enclosing class<br /></li>
+                <li>They can access the members of their enclosing class<br /></li>
 
                 <li style="list-style: none">&nbsp;&nbsp;&nbsp;&nbsp;</li>
 
@@ -435,7 +435,7 @@
                 <li>They can only access local variables (variables or parameters defined in a method) if they are final or <i>effectively final</i>.<br /></li>
             </ul>
 
-            <p>But one thing you have to be careful is inheritance.</p>
+            <p>But one thing you have to be careful with, is inheritance.</p>
 
             <p>When you use an anonymous class (a subclass object), you're using a superclass reference. With this reference, you can use the attributes and methods declared in that type.</p>
 
@@ -458,7 +458,7 @@
 
             <p>Typically, you would cast the type to the subclass where the new method is defined.</p>
 
-            <p><code class="hljs"><span class="hljs-type">SubClass</span> <span class="hljs-class"><span class="hljs-keyword">object</span> =</span> (<span class="hljs-type">Subclass</span>) objectWithSuperClassReference;<br />
+            <p><code class="hljs"><span class="hljs-type">SubClass</span> <span class="hljs-class"><span class="hljs-keyword">object</span> =</span> (<span class="hljs-type">SubClass</span>) objectWithSuperClassReference;<br />
 	  <span class="hljs-class"><span class="hljs-keyword">object</span>.<span class="hljs-title">methodOnlyDefinedInTheSubclass</span>(</span>);</code></p>
 
             <p>But with an anonymous class, how does the cast is done?</p>
@@ -469,7 +469,7 @@
 
             <h2>Shadowing</h2>
 
-            <p>An important concept to take into account when working with inner classes (of any type) is what happens with a member of the inner class has the same name of a member of the enclosing class.</p>
+            <p>An important concept to take into account when working with inner classes (of any type) is what happens when a member of the inner class has the same name of a member of the enclosing class.</p>
 
             <p><code class="hljs"><span class="hljs-keyword">class</span> Computer {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> String serialNumber = <span class="hljs-string">"1234XXX"</span>;<br />
@@ -487,9 +487,9 @@
 
             <p>We know that when an object wants to refer to itself, we need to use the keyword <code>this</code>.</p>
 
-            <p>So, if we use this inside an inner class, it will refer to the inner class itself.</p>
+            <p>So, if we use <code>this</code> inside an inner class, it will refer to the inner class itself.</p>
 
-            <p>If we need to reference the enclosing class, inside the inner class we can also use this, but in this way <code>NameOfTheEnclosingClass.this</code>.</p>
+            <p>If we need to reference the enclosing class, inside the inner class we can also use <code>this</code>, but in this way <code>NameOfTheEnclosingClass.this</code>.</p>
 
             <p><code class="hljs"><span class="hljs-keyword">class</span> <span class="hljs-title">Computer</span> {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">private</span> String serialNumber = <span class="hljs-string">"1234XXX"</span>;<br />
@@ -519,12 +519,12 @@
             <ul>
                 <li>Inner classes are declared inside another class. There are four types of them: static, non-static, local and anonymous classes.<br /></li>
 
-                <li>Static classes are just inner classes marked with the <code>static</code> keyword. However, it behaves more like a top-level class than an inner class.<br /></li>
+                <li>Static classes are just inner classes marked with the <code>static</code> keyword. However, they behave more like a top-level class than an inner class.<br /></li>
 
                 <li>You don't need an instance of the enclosing class to instantiate a static class:<br />
                     <code class="hljs"><span class="hljs-type">EnclosingClass</span>.<span class="hljs-type">StaticClass</span> sc = <span class="hljs-keyword">new</span> <span class="hljs-type">EnclosingClass</span>.<span class="hljs-type">StaticClass</span><span class="hljs-literal">()</span>;</code></li>
 
-                <li>A static class cannot access non-static members of the enclosing class since it doesn't require having an instance of the enclosing class to using it.<br /></li>
+                <li>A static class cannot access non-static members of the enclosing class since it doesn't require having an instance of the enclosing class to use it.<br /></li>
 
                 <li>A (non-static) inner class is like any other member of the enclosing class so that it can be marked with any access modifier.<br /></li>
 
@@ -536,7 +536,7 @@
 
                 <li>The only modifiers that apply to a local class are abstract and final (but not at the same time).<br /></li>
 
-                <li>You can only use a local class in the method or block where you define it, but only after its declaration.<br /></li>
+                <li>You can only use a local class in the method or block where you define it, and only after its declaration.<br /></li>
 
                 <li>A local class can access the members of a class just like any other member of the class (static rules still apply).<br /></li>
 
@@ -551,9 +551,9 @@
 
                 <li>Anonymous classes cannot have constructors.<br /></li>
 
-                <li>Anonymous classes have the same rules than local classes regarding accessing members of the enclosing class and local variables of a method.<br /></li>
+                <li>Anonymous classes have the same rules as local classes regarding accessing members of the enclosing class and local variables of a method.<br /></li>
 
-                <li>The only methods you can call on an anonymous class are those defined in the reference type (the superclass or the interface), even though anonymous class can define their own methods.<br /></li>
+                <li>The only methods you can call on an anonymous class are those defined in the reference type (the superclass or the interface), even though anonymous classes can define their own methods.<br /></li>
             </ul>
 
             <div style="page-break-after:always;"></div>
