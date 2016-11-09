@@ -189,7 +189,7 @@
 
             <p>For each operation, there's a version that throws an exception and another that returns <code>false</code> or <code>null</code>. For example, when the queue is empty, the <code>remove()</code> method throws an exception, while the <code>poll()</code> method returns <code>null</code>.</p>
 
-            <p><code class="java hljs">Queue&lt;String&gt; queue = <span class="hljs-keyword">new</span> ArrayDeque&gt;&lt;();<br />
+            <p><code class="java hljs">Queue&lt;String&gt; queue = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();<br />
 	  System.out.println(queue.offer(<span class="hljs-string">"a"</span>)); <span class="hljs-comment">// true [a]</span><br />
 	  System.out.println(queue.offer(<span class="hljs-string">"b"</span>)); <span class="hljs-comment">// true [a, b]</span><br />
 	  System.out.println(queue.peek()); <span class="hljs-comment">// a [a, b]</span><br />
