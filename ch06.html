@@ -53,7 +53,7 @@
 
             <p><code class="java hljs">List list = <span class="hljs-keyword">new</span> ArrayList();</code></p>
 
-            <p>As by default, a <code>List</code> accepts objects of any type, you can add elements of different type to list:</p>
+            <p>Because a <code>List</code>, by default, accepts objects of any type, you can add elements of different types to it:</p>
 
             <p><code class="java hljs">list.add(<span class="hljs-string">"a"</span>);<br />
 	  list.add(<span class="hljs-keyword">new</span> Integer(<span class="hljs-number">1</span>));<br />
@@ -93,7 +93,7 @@
 
             <p><code class="java hljs">List&lt;<span class="hljs-keyword">int</span>&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;<span class="hljs-keyword">int</span>&gt;();</code></p>
 
-            <p>Finally, a class that accepts generics but it's declared without one is called raw type:</p>
+            <p>Finally, a class that accepts generics but is declared without one is said to be using a <i>raw type</i>:</p>
 
             <p><code class="java hljs"><span style="color: rgb(0, 106, 0);">// Raw type<br /></span>List raw = <span class="hljs-keyword">new</span> ArrayList();<br />
 	  <span style="color: rgb(0, 106, 0);">// Generic type<br /></span>List&lt;String&gt; generic = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();&nbsp;</code></p>
@@ -115,13 +115,13 @@
             <p><code class="java hljs"><span class="hljs-comment">// Without the diamond operator, the raw type is used</span><br />
 	  List&lt;List&lt;String&gt;&gt; generic = <span class="hljs-keyword">new</span> ArrayList();</code></p>
 
-            <p>You can only use the diamond operator if the compiler can infer the parameter type(s) from the context, the good news is that in Java 8, type inference was improved:</p>
+            <p>You can only use the diamond operator if the compiler can infer the parameter type(s) from the context. The good news is that in Java 8, type inference was improved:</p>
 
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">testGenericParam</span><span class="hljs-params">(List&lt;String&gt; list)</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><br />
 	  void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span></span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // In Java 7, this line generates a compile error</span><br />
-	  <span class="hljs-comment">&nbsp; &nbsp; // In Java 8, this lines compiles fine</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // In Java 8, this line compiles fine</span><br />
 	  &nbsp; &nbsp; testGenericParam(<span class="hljs-keyword">new</span> ArrayList&lt;&gt;());<br />
 	  }</code></p>
 
@@ -136,7 +136,7 @@
 
             <p>We can see how a generic type is defined for classes and interfaces. It's just a matter of declaring a <i>type parameter</i> next to the class (or interface) name.</p>
 
-            <p>By the way, <code>E</code> is just and identifier, like a named variable. It can be anything you want. However, the convention is to use single uppercase letters. Some common letters are:</p>
+            <p>By the way, <code>E</code> is just an identifier, like a named variable. It can be anything you want. However, the convention is to use single uppercase letters. Some common letters are:</p>
 
             <ul>
                 <li><code>E</code> for element</li>
@@ -209,7 +209,7 @@
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
-            <p>Now, we an instance is created, we just specify the type of <code>T</code> for that instance:</p>
+            <p>Now, when an instance is created, we just specify the type of <code>T</code> for that instance:</p>
 
             <p><code class="java hljs">Holder&lt;String&gt; h1 = <span class="hljs-keyword">new</span> Holder&lt;&gt;(<span class="hljs-string">"Hi"</span>);<br />
 	  Holder&lt;Integer&gt; h2 = <span class="hljs-keyword">new</span> Holder&lt;&gt;(<span class="hljs-number">1</span>);<br />
@@ -258,13 +258,13 @@
 
             <p>Generics are useful in many cases, but not all. We have two main problems.</p>
 
-            <p>You could think that since <code>ArrayList</code> implements <code>List</code> and <code>String</code> is a subclass of <code>Object</code>, something like this is fine:</p>
+            <p>You could think that since <code>ArrayList</code> implements <code>List</code>, and because <code>String</code> is a subclass of <code>Object</code>, that something like this is fine:</p>
 
             <p><code class="java hljs">List&lt;Object&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;String&gt;();</code></p>
 
-            <p>But it doesn't compile, an <code>ArrayList&lt;String&gt;</code> cannot be cast to <code>List&lt;Object&gt;</code> because when working with generics, you cannot assign a derived type to a base type, both types should be the same (either explicitly or by using the diamond operator).</p>
+            <p>But it doesn't compile. An <code>ArrayList&lt;String&gt;</code> cannot be cast to <code>List&lt;Object&gt;</code> because when working with generics, you cannot assign a derived type to a base type; both types should be the same (either explicitly or by using the diamond operator).</p>
 
-            <p>Think about it this way. A list of type <code>List&lt;Object&gt;</code> can hold instances of <code>Object</code> and its subclasses, in other words, every object in Java, not just strings, so you could have a list of strings and integers for example, which clearly violates type safety.</p>
+            <p>Think about it this way: a list of type <code>List&lt;Object&gt;</code> can hold instances of <code>Object</code> and its subclasses. In other words, the list could hold any object type, not only strings. So you could have a list of strings and integers for example, which clearly violates type safety.</p>
 
             <p>But if you change the declaration to use a wildcard parameter:</p>
 
@@ -350,7 +350,7 @@
 
             <p>The reason is the same. The compiler still can't know for sure what type will the list hold (we could add any type).</p>
 
-            <p>Notice than, for example, <code>List&lt;Number&gt;</code> is more restrictive than <code>List&lt;? extends Number&gt;</code>, in the sense that the former only accepts direct assignments of type <code>List&lt;Number&gt;</code>, but the latter, accepts direct assignments of <code>List&lt;Integer&gt;</code>, <code>List&lt;Float&gt;</code>, etc., for example:</p>
+            <p>Notice then, that <code>List&lt;Number&gt;</code> is more restrictive than <code>List&lt;? extends Number&gt;</code>, in the sense that the former only accepts direct assignments of type <code>List&lt;Number&gt;</code>, but the latter, accepts direct assignments of <code>List&lt;Integer&gt;</code>, <code>List&lt;Float&gt;</code>, etc. For example:</p>
 
             <p><code class="java hljs">List&lt;Integer&gt; listInteger = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
 	  List&lt;Float&gt; listFloat = <span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br />
@@ -396,7 +396,7 @@
 
             <h2>Generic limitations</h2>
 
-            <p>We have talked about some of the limitations of generics, and other can be inferred from what we've reviewed, but anyway, here's a summary of all of them:</p>
+            <p>We have talked about some of the limitations of generics, and others can be inferred from what we've reviewed, but anyway, here's a summary of all of them:</p>
 
             <p>Generics don't work with primitive types:</p>
 
@@ -499,7 +499,7 @@
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">m1</span><span class="hljs-params">(List&lt;?&gt; l)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; m2(l); <span class="hljs-comment">// 1</span><br />
 	  &nbsp; &nbsp; }<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> &gt;T&lt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m2</span><span class="hljs-params">(List&lt;T&gt; l)</span></span> {<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> &lt;T&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m2</span><span class="hljs-params">(List&lt;T&gt; l)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; l.set(<span class="hljs-number">1</span>, l.get(<span class="hljs-number">0</span>)); <span class="hljs-comment">// 2</span><br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(l);<br />
 	  &nbsp; &nbsp; }<br />
