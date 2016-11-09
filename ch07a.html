@@ -46,11 +46,11 @@
             <p><br /></p>
 
             <p><b>2. The correct answer is A.</b><br />
-                <code>TreeSet</code> doesn't allow null values because when you add an object if no <code>Comparator</code> is passed to the constructor of the <code>TreeSet</code> (like in this case), this class assumes that the object implements <code>Comparable</code> and tries to call the <code>compareTo()</code> method.</p>
+                <code>TreeSet</code> doesn't allow null values because when you add an object, if no <code>Comparator</code> is passed to the constructor of the <code>TreeSet</code> (like in this case), this class assumes that the object implements <code>Comparable</code> and tries to call the <code>compareTo()</code> method.</p>
 
             <p><br /></p>
 
-            <p><b>3. The correct answer is B.</b><br /> The <code>remove()</code> method has two version, one that takes the index of the element to remove, and another that takes the object to remove.</p>
+            <p><b>3. The correct answer is B.</b><br /> The <code>remove()</code> method has two versions, one that takes the index of the element to remove, and another that takes the object to remove.</p>
 
             <p>Since we are passing an <code>int</code>, the version that takes an index is chosen and the second element is removed. If we want to remove the first element (with value <code>1</code>), we have to call the <code>remove()</code> method like this: <code>list.remove(new Integer(1))</code>.</p>
 
