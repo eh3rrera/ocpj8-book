@@ -160,7 +160,7 @@
 
             <p>The only restriction is the constructor must be <code>private</code>. Otherwise, the compiler will throw an error. Notice that a getter method was also added.</p>
 
-            <p>We can add a setter method also, but generally, is not need it, since enums work more like constants. However, keep in mind that changing the value of the instance variable is allowed, while reassigning the <code>enum</code> is not because they are implicitly <code>final</code> and cannot be changed after its creation:</p>
+            <p>We can add a setter method also, but generally, it is not needed since enums work more like constants. However, keep in mind that changing the value of the instance variable is allowed, while reassigning the <code>enum</code> is not because they are implicitly <code>final</code> and cannot be changed after their creation:</p>
 
             <p><code class="java hljs"><span class="hljs-comment">// Compile-time error<br /></span>Volume.HIGH = Volume.MEDIUM;</code></p>
 
@@ -194,12 +194,12 @@
 
             <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Volume implements AnInterface { ... }</code></p>
 
-            <p>The closer we can go to extending a class when working with enums is overriding methods and implementing abstract methods. For example:</p>
+            <p>The closest we can get to extending a class when working with enums is overriding methods and implementing abstract methods. For example:</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">enum</span> Volume {<br />
 	  &nbsp; &nbsp; HIGH(<span class="hljs-number">100</span>) {<br />
-	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printValue</span><span class="hljs-params">()</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"** Highest value**"</span>);<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp;public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printValue</span><span class="hljs-params">()</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"** Highest value**"</span>);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp;}<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp;public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printDescription</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"High Volume"</span>);<br />
@@ -225,7 +225,7 @@
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title">printDescription</span><span class="hljs-params">()</span></span>;<br />
 	  }</code></p>
 
-            <p>In the case of <code>printValue()</code>, <code>MEDIUM</code> and <code>LOW</code> will use the version that just print the value while <code>HIGH</code> will use its own version. If the method is abstract, every <code>enum</code> has to implement it. Otherwise, a compile-time error will be thrown.</p>
+            <p>In the case of <code>printValue()</code>, <code>MEDIUM</code> and <code>LOW</code> will use the enum-level version that just prints the value while <code>HIGH</code> will use its own version. If the method is abstract, every <code>enum</code> has to implement it. Otherwise, a compile-time error will be thrown.</p>
 
             <h2>Enums as Singletons</h2>
 
@@ -250,13 +250,13 @@
             <h2>Key Points</h2>
 
             <ul>
-                <li>An <i>enum</i> is a type that represents a <b>FIXED</b> list of values (you can think of these as constants) providing type safety.</li>
+                <li>An <i>enum</i> is a type that represents a <b>FIXED</b> list of values (you can think of these as constants), providing type safety.</li>
 
                 <li>Enums can define constructors, but they must be <code>private</code>. Otherwise, a compile-time error will be thrown.</li>
 
                 <li>Enums are implicitly <code>public</code>, <code>static</code> and <code>final</code>.</li>
 
-                <li>An <code>enum</code> can be created from a String using the <code>valueOf()</code> method.</li>
+                <li>An <code>enum</code> can be created from a String using the case-sensitive <code>valueOf()</code> method.</li>
 
                 <li>To get all the enums of a certain type use the method <code>values()</code>, that returns an array of enums in the same order in which they were declared.</li>
 
@@ -314,7 +314,7 @@
 
 
 
-            <p>3. Which of the following statements is true?<br /> A. Enums are thread-safe.<br /> B. Enums can't neither extend from a class nor implement an interface.<br /> C. Enums cannot define constructors.<br /> D. Enums cannot have setter methods.</p>
+            <p>3. Which of the following statements is true?<br /> A. Enums are thread-safe.<br /> B. Enums can neither extend from a class nor implement an interface.<br /> C. Enums cannot define constructors.<br /> D. Enums cannot have setter methods.</p>
 
 
 
