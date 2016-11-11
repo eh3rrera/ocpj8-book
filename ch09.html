@@ -66,7 +66,7 @@
 
             <p>The term lambda expression comes from lambda calculus, written as &lambda;-calculus, where &lambda; is the Greek letter lambda. This form of calculus deals with defining and applying functions.</p>
 
-            <p>With lambdas, you won't be able to do things that you couldn't do before them, but they allow to program in a more simple way with a style called functional programming, a different paradigm than object-oriented programming.</p>
+            <p>With lambdas, you won't be able to do things that you couldn't do before them, but they allow you to program in a more simple way with a style called functional programming, a different paradigm than object-oriented programming.</p>
             <hr />
 
             <h4><i>A Lambda Expression</i></h4>
@@ -88,11 +88,11 @@
 
             <p><code class="java hljs">(s) -&gt; System.out.println(s);</code></p>
 
-            <p>If there is a single parameter, the type is inferred and is not mandatory to use parentheses:</p>
+            <p>If there is a single parameter, the type is inferred and it is not mandatory to use parentheses:</p>
 
             <p><code class="java hljs">s -&gt; System.out.println(s);</code></p>
 
-            <p>If the lambda expression uses as a parameter name the same as a variable name of the enclosing context, a compile error is generated:</p>
+            <p>If the lambda expression uses a parameter name which is the same as a variable name of the enclosing context, a compile error is generated:</p>
 
             <p><code class="java hljs"><span class="hljs-comment">// This doesn't compile<br /></span>String s = <span class="hljs-string">""</span>; s -&gt; System.out.println(s);</code></p>
 
@@ -143,7 +143,7 @@
 
             <p>In this case, the compiler inferred that the lambda expression can be assigned to a <code>Searchable</code> interface, just by its signature.</p>
 
-            <p>In fact, lambda expressions don't contain the information about which functional interface are implementing. The type of the expression is deduced from the context in which the lambda is used. This type is called <i>target type</i>.</p>
+            <p>In fact, lambda expressions don't contain information about which functional interface they are implementing. The type of the expression is deduced from the context in which the lambda is used. This type is called <i>target type</i>.</p>
 
             <p>In the previous example, as the lambda expression is being assigned to a <code>Searchable</code> interface, the lambda must take the signature of its abstract method. Otherwise, a compiler error is generated.</p>
 
@@ -189,11 +189,11 @@
 
             <p>However, if you understand the concept, you don't need to memorize this list.</p>
 
-            <p>But what is it all about functional programming, functional programming, functional descriptors, functional whatever?</p>
+            <p>But what is it all about functional programming, functional descriptors, functional whatever?</p>
 
             <p>A lambda expression is a function. That's a little different than the methods we know because it's actually related to a <i>mathematical function</i>.</p>
 
-            <p>A mathematical function takes some inputs and produces some outputs, but <b>HAS NO SIDE EFFECTS</b>, meaning that when as long as we call it with the same arguments, it always returns the same result.</p>
+            <p>A mathematical function takes some inputs and produces some outputs, but <b>HAS NO SIDE EFFECTS</b>, meaning that as long as we call it with the same arguments, it always returns the same result.</p>
 
             <p>Of course, in Java, you can't always program in a purely functional style (i.e. without any side effect), only in a <i>functional-style</i>.</p>
 
@@ -233,7 +233,7 @@
 
             <p>First of all, this prevents thread-related problems. Second, since you're working with a copy, if the variable could be modified by the rest of the method, you would be working with an out-of-date variable.</p>
 
-            <p>A <code>final</code> (or effectively final) variable removes these possibilities since the value can't be changed, you don't need to worry about such changes being visible or causing thread problems.</p>
+            <p>A <code>final</code> (or effectively final) variable removes these possibilities. Since the value can't be changed, you don't need to worry about such changes being visible or causing thread problems.</p>
 
 
 
@@ -251,11 +251,11 @@
 
                 <li>If there is a single parameter, the type is inferred and is not mandatory to use parentheses.</li>
 
-                <li>If the lambda expression uses as a parameter name the same as a variable name of the enclosing context, a compile error is generated.</li>
+                <li>If the lambda expression uses as a parameter name which is the same as a variable name of the enclosing context, a compile error is generated.</li>
 
                 <li>If the body has one statement, curly brackets are not required, and the value of the expression (if any) is returned.</li>
 
-                <li>If the body has one statement, curly brackets are required, and if the expression returns a value, it must return with a <code>return</code> statement.</li>
+                <li>If the body has more than one statement, curly brackets are required, and if the expression returns a value, it must return with a <code>return</code> statement.</li>
 
                 <li>If the lambda expression doesn't return a result, a <code>return</code> statement is optional.</li>
 
@@ -296,7 +296,7 @@
 
 
 
-            <p>3. How can be used a lambda expression?<br /> A. As a method argument<br /> B. As a conditional expression in an <code>if</code> statement<br /> C. In a <code>return</code> statement<br /> D. In a <code>throw</code> statement</p>
+            <p>3. A lambda expression can be used...<br /> A. As a method argument<br /> B. As a conditional expression in an <code>if</code> statement<br /> C. In a <code>return</code> statement<br /> D. In a <code>throw</code> statement</p>
 
 
 
@@ -357,7 +357,7 @@
 
 
 
-            <p>7. How is the this keyword handled inside a lambda expression?<br /> A. You can't use this inside a lambda expression<br /> B. <code>this</code> refers to the functional interface of the lambda expression<br /> C. <code>this</code> refers to the lambda expression itself<br /> D. <code>this</code> refers to the enclosing class of the lambda expression</p>
+            <p>7. How is the <code>this</code> keyword handled inside a lambda expression?<br /> A. You can't use this inside a lambda expression<br /> B. <code>this</code> refers to the functional interface of the lambda expression<br /> C. <code>this</code> refers to the lambda expression itself<br /> D. <code>this</code> refers to the enclosing class of the lambda expression</p>
 
 
 
