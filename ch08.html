@@ -93,7 +93,7 @@
 
             <p>Since Java is an object-oriented let's leverage this by solving the problem using a popular design pattern, Strategy.</p>
 
-            <p>This pattern does what we just need, encapsulate the behavior that varies (algorithm) and makes all these behavior interchangeable.</p>
+            <p>This pattern does just what we need, encapsulate the behavior that varies (algorithm) and makes all these behaviors interchangeable.</p>
 
             <p>The recommended way to implement the Strategy pattern in Java is with an interface so we can create implementations with for each algorithm (in our case, the conditions to test)</p>
 
@@ -161,7 +161,7 @@
 	  });<br />
 	  List&lt;Car&gt; compactCars = findCars(cars, compactCarSearch);</code></p>
 
-            <p>Not bad, but wouldn't be great to just pass the condition to the method? Like this for example:</p>
+            <p>Not bad, but wouldn't it be great to just pass the condition to the method? Like this for example:</p>
 
             <p><code class="java hljs"><span class="hljs-comment">// Don't even try, it won't work</span><br />
 	  List&lt;Car&gt; compactCars = findCars(cars,<br />
@@ -238,7 +238,7 @@
 
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">(List l)</span></span>;</code></p>
 
-            <p>By the way, neither an empty interface is not considered functional.</p>
+            <p>By the way, neither is an empty interface considered functional.</p>
 
             <p>The key here is to have <b>EXACTLY ONE ABSTRACT</b> method; that's why these interfaces are also called Single Abstract Method interfaces (SAM Interfaces).</p>
 
@@ -262,7 +262,7 @@
                 <li><code>java.awt.event.ActionListener</code></li>
             </ul>
 
-            <p>But remember, this annotation is just to help you, having it won't make an interface functional.</p>
+            <p>But remember, this annotation is just to help you; having it won't make an interface functional.</p>
 
             <p>In the next chapter, will see how functional interfaces and lambda expressions are related.</p>
 
@@ -302,7 +302,7 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-            <p>What of the following statements are true?<br /> A. Compilation fails<br /> B. It compiles successfully<br /> C. It compiles only if interface <code>B</code> declares a default method<br /> D. An exception occurs at runtime if this interface is implemented by a class</p>
+            <p>Which of the following statements are true?<br /> A. Compilation fails<br /> B. It compiles successfully<br /> C. It compiles only if interface <code>B</code> declares a default method<br /> D. An exception occurs at runtime if this interface is implemented by a class</p>
 
 
 
@@ -313,7 +313,7 @@
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">long</span> <span class="hljs-title">m</span><span class="hljs-params">(<span class="hljs-keyword">long</span> i)</span></span>;<br />
 	  }</code></p>
 
-            <p>What of the following statements are true?<br /> A. This code compiles successfully<br /> B. If we remove the annotation, this code will compile<br /> C. If we remove one method, this code will compile<br /> D. The <code>@FunctionalInterface</code> annotation makes this interface functional</p>
+            <p>Which of the following statements are true?<br /> A. This code compiles successfully<br /> B. If we remove the annotation, this code will compile<br /> C. If we remove one method, this code will compile<br /> D. The <code>@FunctionalInterface</code> annotation makes this interface functional</p>
 
 
 
@@ -326,7 +326,7 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-            <p>What of the following statements are true?<br /> A. This code compiles successfully<br /> B. This code doesn't compile<br /> C. This is an example of a functional interface<br /> D. Removing the sum method would make this interface functional</p>
+            <p>Which of the following statements are true?<br /> A. This code compiles successfully<br /> B. This code doesn't compile<br /> C. This is an example of a functional interface<br /> D. Removing the sum method would make this interface functional</p>
 
 
 
@@ -340,7 +340,7 @@
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-            <p>What of the following statements are true?<br /> A. This code doesn't compile<br /> B. This code compiles successfully<br /> C. This is an example of a functional interface<br /> D. Adding the <code>@FunctionalInterface</code> annotation would make this interface functional</p>
+            <p>Which of the following statements are true?<br /> A. This code doesn't compile<br /> B. This code compiles successfully<br /> C. This is an example of a functional interface<br /> D. Adding the <code>@FunctionalInterface</code> annotation would make this interface functional</p>
 
 
 

@@ -50,7 +50,7 @@
 
             <p>For that reason, Java 1.4 introduced the NIO (Non-blocking Input/Output) API in the package <code>java.nio</code> implementing new functionality like channels, buffering, and new charsets.</p>
 
-            <p>However, this API didn't entirely solve the problems with the <code>java.io</code> package, so in Java 7, the NIO.2 API was added in the <code>java.nio.file</code> package (actually, since this is a new package, NIO.2 is not an update to the NIO API, besides, the focus on different things).</p>
+            <p>However, this API didn't entirely solve the problems with the <code>java.io</code> package, so in Java 7, the NIO.2 API was added in the <code>java.nio.file</code> package (actually, since this is a new package, NIO.2 is not an update to the NIO API, besides, they focus on different things).</p>
 
             <p>NIO.2 provides better support for accessing files and the file system, symbolic links, interoperability, and exceptions among others.</p>
 
@@ -297,12 +297,12 @@
 
             <p>The <code>equals()</code> implementation is system-dependent (for example, it's case insensitive on Windows systems). However, it returns <code>false</code> if the argument is not a <code>Path</code> or if it belongs to a different file system.</p>
 
-            <p>In addition, the methods <code>startsWith()</code> and <code>endsWith()</code> both test whether a path begins or ends with some <code>String</code> or <code>Path</code>. So given:</p>
+            <p>In addition, the methods <code>startsWith()</code> and <code>endsWith()</code> both test whether a path begins or ends with some <code>String</code> (in this case, the methods return <code>true</code> only if the string represents an actual element) or <code>Path</code>. So given:</p>
 
             <p><code class="java hljs">Path absPath = Paths.get(<span class="hljs-string">"c:\\temp\\dir1\\file.txt"</span>);<br />
   Path relPath = Paths.get(<span class="hljs-string">"temp\\dir1\\file.txt"</span>);</code></p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">boolean</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(Path other)</span><br />
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">startsWith</span><span class="hljs-params">(Path other)</span></span><br />
   absPath.<span class="hljs-title">startsWith</span><span class="hljs-params">(Paths.get(<span class="hljs-string">"c:\\temp\\file.txt"</span>)</span>); <span class="hljs-comment">// false</span><br />
   absPath.startsWith(Paths.get(<span class="hljs-string">"c:\\temp\\dir1\\img.jpg"</span>)); <span class="hljs-comment">// false</span><br />
   absPath.startsWith(Paths.get(<span class="hljs-string">"c:\\temp\\dir1\\"</span>)) <span class="hljs-comment">// true</span><br />
@@ -357,8 +357,8 @@
 
             <p>To read a file, we can load the entire file into memory (only useful for small files) with the methods:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">static</span> <span class="hljs-keyword">byte</span>[] readAllBytes(Path path)<br />
-  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException<br />
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">byte</span>[] <span class="hljs-title">readAllBytes</span><span class="hljs-params">(Path path)</span><br />
+  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException<br />
   <span class="hljs-keyword">static</span> List&lt;String&gt; <span class="hljs-title">readAllLines</span><span class="hljs-params">(Path path)</span><br />
   <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throws</span> IOException<br />
   <span class="hljs-keyword">static</span> List&lt;String&gt; <span class="hljs-title">readAllLines</span><span class="hljs-params">(Path path, Charset cs)</span><br />
@@ -457,7 +457,7 @@
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-title">copy</span><span class="hljs-params">(InputStream in, Path target,<br />
   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;CopyOption... options)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>
 
-            <p>Copies all bytes from an input stream to a file. By default, the copy fails if the target already exists or is a symbolic link. If the <code>StandardCopyOption.REPLACE_EXISTING</code> option is specified</p>
+            <p>Copies all bytes from an input stream to a file. By default, the copy fails if the target already exists or is a symbolic link. If the <code>StandardCopyOption.REPLACE_EXISTING</code> option is specified, and the target file already exists, then it is replaced if it's not a non-empty directory. If the target file exists and is a symbolic link, then the symbolic link is replaced. Actually, in Java 8, the <code>REPLACE_EXISTING</code> option is the only option required to be supported by this method.</p>
 
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">long</span> <span class="hljs-title">copy</span><span class="hljs-params">(Path source,<br />
   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;OutputStream out)</span> <span class="hljs-keyword">throws</span> IOException</span></code></p>

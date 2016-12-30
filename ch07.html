@@ -46,33 +46,33 @@
 
             <p>A <i>collection</i> is a generic term that refers to a container of objects.</p>
 
-            <p>The <i>Java Collection Framework</i> is a library of classes and interfaces in the <code>java.util</code> package that provides collections with different characteristics.</p>
+            <p>The <i>Java Collections Framework</i> is a library of classes and interfaces in the <code>java.util</code> package that provides collections with different characteristics.</p>
 
             <p>The most important interfaces are:</p>
 
             <ul>
-                <li><code>Collection</code><br /> This is the base interface of the collection hierarchy and contain methods like <code>add()</code>, <code>remove()</code>, <code>clear()</code>, and <code>size()</code>.</li>
+                <li><code>Collection</code><br /> This is the base interface of the collection hierarchy and it contains methods like <code>add()</code>, <code>remove()</code>, <code>clear()</code>, and <code>size()</code>.</li>
 
                 <li><code>Iterable</code><br /> Implementing this interface allows an object to be "iterable" with a for-each loop, through an <code>Iterator</code>, and with the new <code>forEach()</code> method.</li>
 
-                <li><code>List</code><br /> Interface for collections that store a group of elements that can be accessed using an index and accepts duplicates.</li>
+                <li><code>List</code><br /> Interface for collections which, one, store a group of elements that can be accessed using an index, and two, accept duplicates.</li>
 
-                <li><code>Set</code><br /> Interface for collections that don't allow duplicate elements.</li>
+                <li><code>Set</code><br /> Interface for collections which do not allow duplicate elements.</li>
 
-                <li><code>Queue</code><br /> Interface for collections that store a group of elements in a particular order, commonly in a first-in, first-out order.</li>
+                <li><code>Queue</code><br /> Interface for collections which store a group of elements in a particular order, commonly in a first-in, first-out order.</li>
 
-                <li><code>Map</code><br /> Interface for collections which elements are stored as key/value pairs.</li>
+                <li><code>Map</code><br /> Interface for collections whose elements are stored as key/value pairs.</li>
             </ul>
 
-            <p>Of the last four, <code>Map</code> is the only one that doesn't implement neither the <code>Collection</code> nor the <code>Iterable</code> interfaces, but still, it's considered a collection, because it contains a group elements.</p>
+            <p>Of the last four, <code>Map</code> is the only one that implements neither the <code>Collection</code> nor the <code>Iterable</code> interface, but still, it's considered a collection, because it contains a group elements.</p>
 
             <h2>List</h2>
 
-            <p>List is the most common collection. You use when you want (or don't care) to allow duplicate elements. You can even insert <code>null</code> elements (not all collections allow it).</p>
+            <p>List is the most common collection. You use when you want to allow (or do not care if there are) duplicate elements. You can even insert <code>null</code> elements (not all collections allow it).</p>
 
             <p>Elements have an insertion order, but you can add elements at any position, since this position is based on a zero-based index, like an array.</p>
 
-            <p>In fact, the most used implementation, <code>ArrayList</code>, it's actually implemented as an <code>Object</code> array under the hood.</p>
+            <p>In fact, the most used implementation, <code>ArrayList</code>, is actually implemented as an <code>Object</code> array under the hood.</p>
 
             <p>The difference with using an array is that a <code>List</code> can grow automatically when elements are added. However, since it does that by copying the elements to a bigger array, adding (and removing) is slower.</p>
 
@@ -119,7 +119,7 @@
 
             <p>The main feature of a <code>Set</code> is that it doesn't allow duplicates.</p>
 
-            <p>The two most used implementations are <code>HashSet</code> and <code>TreeSet</code>. The difference between them is that <code>TreeSet</code> sorts the elements, while <code>HashSet</code> doesn't guarantee the order or that it will remain constant over time.</p>
+            <p>The two most used implementations are <code>HashSet</code> and <code>TreeSet</code>. The difference between them is that <code>TreeSet</code> sorts the elements, while <code>HashSet</code> doesn't guarantee the order or that the order will remain constant over time.</p>
 
             <p><code>HashSet</code> stores the elements in a hash table (using a <code>HashMap</code> instance). Because of that, elements are not kept in order, but adding and looking up elements is fast.</p>
 
@@ -127,7 +127,7 @@
 
             <p>Here's an example of <code>HashSet</code>:</p>
 
-            <p><code class="java hljs"><span class="hljs-comment">// Creating a HashSset with an initial capacity of 10</span><br />
+            <p><code class="java hljs"><span class="hljs-comment">// Creating a HashSet with an initial capacity of 10</span><br />
 	  Set&lt;String&gt; set = <span class="hljs-keyword">new</span> HashSet&lt;&gt;(<span class="hljs-number">10</span>);<br />
 	  <span class="hljs-comment">// add() returns true if the element is not already in the set</span><br />
 	  System.out.println(set.add(<span class="hljs-string">"b"</span>)); <span class="hljs-comment">// true</span><br />
@@ -189,7 +189,7 @@
 
             <p>For each operation, there's a version that throws an exception and another that returns <code>false</code> or <code>null</code>. For example, when the queue is empty, the <code>remove()</code> method throws an exception, while the <code>poll()</code> method returns <code>null</code>.</p>
 
-            <p><code class="java hljs">Queue&lt;String&gt; queue = <span class="hljs-keyword">new</span> ArrayDeque&gt;&lt;();<br />
+            <p><code class="java hljs">Queue&lt;String&gt; queue = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();<br />
 	  System.out.println(queue.offer(<span class="hljs-string">"a"</span>)); <span class="hljs-comment">// true [a]</span><br />
 	  System.out.println(queue.offer(<span class="hljs-string">"b"</span>)); <span class="hljs-comment">// true [a, b]</span><br />
 	  System.out.println(queue.peek()); <span class="hljs-comment">// a [a, b]</span><br />
@@ -219,7 +219,7 @@
 
             <p>Therefore, a map cannot contain duplicate keys, and a key is associated with one value (which can be any object, even another map, or <code>null</code>).</p>
 
-            <p>The two most used implementations are <code>HashMap</code> and <code>TreeMap</code>. The difference between them is that <code>TreeMap</code> sorts the keys, but adds and retrieves keys in log(n) time while <code>HashSet</code> doesn't guarantee the order but adds and retrieves keys faster.</p>
+            <p>The two most used implementations are <code>HashMap</code> and <code>TreeMap</code>. The difference between them is that <code>TreeMap</code> sorts the keys, but adds and retrieves keys in log(n) time while <code>HashMap</code> doesn't guarantee the order but adds and retrieves keys faster.</p>
 
             <p>It is important that the objects used as keys have the methods <code>equals()</code> and <code>hashCode()</code> implemented.</p>
 
@@ -297,17 +297,17 @@
             <h2>Key Points</h2>
 
             <ul>
-                <li><code>Collection</code><br /> This is the base interface of the collection hierarchy and contain methods like <code>add()</code>, <code>remove()</code>, <code>clear()</code>, and <code>size()</code>.</li>
+                <li><code>Collection</code><br /> This is the base interface of the collection hierarchy and it contains methods like <code>add()</code>, <code>remove()</code>, <code>clear()</code>, and <code>size()</code>.</li>
 
                 <li><code>Iterable</code><br /> Implementing this interface allows an object to be "iterable" with a for-each loop, through an <code>Iterator</code>, and with the new <code>forEach()</code> method.</li>
 
-                <li><code>List</code><br /> Interface for collections that store a group of elements that can be accessed using an index and accepts duplicates.</li>
+                <li><code>List</code><br /> Interface for collections which, one, store a group of elements that can be accessed using an index, and two, accept duplicates.</li>
 
-                <li><code>Set</code><br /> Interface for collections that don't allow duplicate elements.</li>
+                <li><code>Set</code><br /> Interface for collections which do not allow duplicate elements.</li>
 
-                <li><code>Queue</code><br /> Interface for collections that store a group of elements in a particular order, commonly in a first-in, first-out order.</li>
+                <li><code>Queue</code><br /> Interface for collections which store a group of elements in a particular order, commonly in a first-in, first-out order.</li>
 
-                <li><code>Map</code><br /> Interface for collections which elements are stored as key/value pairs.</li>
+                <li><code>Map</code><br /> Interface for collections whose elements are stored as key/value pairs.</li>
             </ul>
 
             <p>The following table compares the collections reviewed in this chapter:</p>
