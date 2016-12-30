@@ -395,8 +395,8 @@
 	  &nbsp; &nbsp; Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; .collect(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;() -&gt; <span class="hljs-keyword">new</span> ArrayList&lt;&gt;(),<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(l, i) -&gt; l.add(i),<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(l1, l2) -&gt; l1.addAll(l2)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(List&lt;Integer&gt; l, Integer i) -&gt; l.add(i),<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(List&lt;Integer&gt; l1, List&lt;Integer&gt; l2) -&gt; l1.addAll(l2)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; );</code></p>
 
             <p>Or we can also use method references:</p>
