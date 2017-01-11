@@ -309,7 +309,7 @@
 	  <span class="hljs-comment">&nbsp; &nbsp; // Compiler will mark an error about method</span><br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // "acelerate" not overriding or implementing something</span><br />
 	  <span class="hljs-annotation">&nbsp; &nbsp; @Override</span><br />
-	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">acelerate</span><span class="hljs-params">()</span></span> {<br />
+	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">acelerate</span><span class="hljs-params">()</span></span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; // implementation</span><br />
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
@@ -634,7 +634,8 @@
 
             <p>The compiler doesn't know which to choose, so it generates an error. In this case, <code>Task</code> has to provide an implementation (honoring the previous rule of <i>more specific interfaces (or classes) always wins over less specific ones)</i> to override the interface <code>default</code> methods and solve the issue:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Parallelizable</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Task</span><br />
+  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; implements</span> <span class="hljs-title">Processable</span>, <span class="hljs-title">Parallelizable</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">processInSequence</span><span class="hljs-params">()</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Processing in sequence"</span>);<br />
 	  &nbsp; &nbsp; }<br />
