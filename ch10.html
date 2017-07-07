@@ -30,7 +30,7 @@
 
                 <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-                <p style="text-align: center;"><i>Use &nbsp;the built-in interfaces included in the java.util.function package such as Predicate, Consumer, Function, and Supplier.<br />
+                <p style="text-align: center;"><i>Use&nbsp;the built-in interfaces included in the java.util.function package such as Predicate, Consumer, Function, and Supplier.<br />
 				Develop code that uses primitive versions of functional interfaces.<br />
 				Develop code that uses binary versions of functional interfaces.<br />
 				Develop code that uses the UnaryOperator interface.</i></p>
@@ -145,7 +145,7 @@
 
                     <td><code>IntFunction&lt;R&gt;</code><br />
                         <code>IntToDoubleFunction</code><br />
-                        <code>IntToLongFunctio</code>n<br />
+                        <code>IntToLongFunction</code><br />
                         <code>LongFunction&lt;R&gt;</code><br />
                         <code>LongToDoubleFunction</code><br />
                         <code>LongToIntFunction</code><br />
@@ -244,7 +244,7 @@
 
             <p>And with a lambda expression:</p>
 
-            <p><code class="java hljs">Predicate startsWithA = t -&gt; t.startsWith(<span class="hljs-string">"A"</span>);<br />
+            <p><code class="java hljs">Predicate&lt;String&gt; startsWithA = t -&gt; t.startsWith(<span class="hljs-string">"A"</span>);<br />
 	  <span class="hljs-keyword">boolean</span> result = startsWithA.test(<span class="hljs-string">"Arthur"</span>);</code></p>
 
             <p>This interface also has the following default methods:</p>
@@ -324,7 +324,7 @@
 
             <p>And with a lambda expression:</p>
 
-            <p><code class="java hljs">Consumer consumeStr = t -&gt; System.out.println(t);<br />
+            <p><code class="java hljs">Consumer&lt;String&gt; consumeStr = t -&gt; System.out.println(t);<br />
 	  consumeStr.accept(<span class="hljs-string">"Hi"</span>);</code></p>
 
             <p>This interface also has the following default method:</p>
@@ -335,9 +335,9 @@
 
             <p>These methods are useful to combine <code>Consumer</code>s and make the code more readable, for example:</p>
 
-            <p><code class="java hljs">Consumer first = t -&gt;<br />
+            <p><code class="java hljs">Consumer&lt;String&gt; first = t -&gt;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"First:"</span> + t);<br />
-	  Consumer second = t -&gt;<br />
+	  Consumer&lt;String&gt; second = t -&gt;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"Second:"</span> + t);<br />
 	  first.andThen(second).accept(<span class="hljs-string">"Hi"</span>);</code></p>
 
@@ -421,7 +421,7 @@
             <p>This interface also has the following default methods:</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;V,R&gt; compose(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> V,? extends T&lt; before)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> V,? extends T&gt; before)<br />
 	  <span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T,V&gt; andThen(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R,? extends V&gt; after)</code></p>
 
