@@ -248,11 +248,11 @@
   &nbsp; &nbsp; R apply(T t, U u, V v);<br />
   }</code></p>
 
-            <p>Now assume a class with a method that takes two parameters a return a result, like this:</p>
+            <p>Now assume a class with a method that takes two parameters and return a result, like this:</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">class</span> Sum {<br />
   &nbsp; &nbsp; Integer doSum(String s1, String s2) {<br />
-  &nbsp; &nbsp; &nbsp; &nbsp; <span class="hljs-keyword">return</span> Integer.parseInt(s1) + Integer.parseInt(s1);<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; <span class="hljs-keyword">return</span> Integer.parseInt(s1) + Integer.parseInt(s2);<br />
   &nbsp; &nbsp; }<br />
   }</code></p>
 
@@ -262,7 +262,7 @@
   &nbsp; &nbsp; <span class="hljs-keyword">new</span> TriFunction&lt;Sum, String, String, Integer&gt;() {<br />
   &nbsp; &nbsp; &nbsp; &nbsp; @Override<br />
   &nbsp; &nbsp; &nbsp; &nbsp; <span class="hljs-keyword">public</span> Integer apply(Sum s, String arg1, String arg2) {<br />
-  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> s.doSum(arg1, arg1);<br />
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> s.doSum(arg1, arg2);<br />
   &nbsp; &nbsp; &nbsp; &nbsp; }<br />
   &nbsp; &nbsp; };<br />
   System.out.println(anon.apply(<span class="hljs-keyword">new</span> Sum(), <span class="hljs-string">"1"</span>, <span class="hljs-string">"4"</span>));</code></p>
@@ -270,7 +270,7 @@
             <p>Or using a lambda expression:</p>
 
             <p><code class="java hljs">TriFunction&lt;Sum, String, String, Integer&gt; lambda =<br />
-  &nbsp; &nbsp; (Sum s, String arg1, String arg2) -&gt; s.doSum(arg1, arg1);<br />
+  &nbsp; &nbsp; (Sum s, String arg1, String arg2) -&gt; s.doSum(arg1, arg2);<br />
   System.out.println(lambda.apply(<span class="hljs-keyword">new</span> Sum(), <span class="hljs-string">"1"</span>, <span class="hljs-string">"4"</span>));</code></p>
 
             <p>Or just using a method reference:</p>
@@ -294,7 +294,7 @@
 
             <p>From:</p>
 
-            <p><code class="java hljs">(Sum s, String arg1, String arg2) -&gt; s.doSum(arg1, arg1)</code></p>
+            <p><code class="java hljs">(Sum s, String arg1, String arg2) -&gt; s.doSum(arg1, arg2)</code></p>
 
             <p>To</p>
 
@@ -383,7 +383,7 @@
   List&lt;String&gt; l = s.get();<br />
   <br />
   <span class="hljs-comment">// Using a method reference</span><br />
-  Supplier&lt;List::<span class="hljs-keyword">new</span>;<br />
+  Supplier&lt;List&lt;String&gt;&gt; s = ArrayList::<span class="hljs-keyword">new</span>;<br />
   List&lt;String&gt; l = s.get();</code></p>
 
             <p>If the constructor takes an argument, we can use the <code>Function</code> interface. For example:</p>
@@ -433,7 +433,7 @@
 
             <p>You can avoid the one method restriction by grouping all your code in a static method, for example, and create a reference to that method instead of using a class or a lambda expression with many lines.</p>
 
-            <p>But the real power of lambda expressions and method references comes when they are combined with another new feature of Java 8, streams.</p>
+            <p>But the real power of lambda expressions and method references comes when they are combined with another new feature of Java 8 &ndash; streams.</p>
 
             <p>That will be the topic of the next section.</p>
 

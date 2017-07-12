@@ -220,7 +220,7 @@
 
                 <li>Default methods of a functional interface cannot be accessed from within lambda expressions. Anonymous classes can.</li>
 
-                <li>Anonymous classes are compiled into, well, inner classes. But lambda expressions and converted into private static (in some cases) methods of their enclosing class and, using the <code>invokedynamic</code> instruction (added in Java 7), they are bound dynamically. Since there's no need to load another class, lambda expressions are more efficient. This is a very simple explanation, but that's the idea.</li>
+                <li>Anonymous classes are compiled into, well, inner classes. But lambda expressions are converted into private static (in some cases) methods of their enclosing class and, using the <code>invokedynamic</code> instruction (added in Java 7), they are bound dynamically. Since there's no need to load another class, lambda expressions are more efficient. This is a very simple explanation, but that's the idea.</li>
             </ul>
 
             <p>By the way, if you really have to know or want to understand why local variables have to be final whereas instance or static variables don't when using them inside an anonymous class or lambda expression, it's because of the way these variables are implemented in Java.</p>

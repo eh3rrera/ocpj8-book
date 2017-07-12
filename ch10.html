@@ -30,7 +30,7 @@
 
                 <h3 style="text-align: center;"><i>Exam Objectives</i></h3>
 
-                <p style="text-align: center;"><i>Use &nbsp;the built-in interfaces included in the java.util.function package such as Predicate, Consumer, Function, and Supplier.<br />
+                <p style="text-align: center;"><i>Use&nbsp;the built-in interfaces included in the java.util.function package such as Predicate, Consumer, Function, and Supplier.<br />
 				Develop code that uses primitive versions of functional interfaces.<br />
 				Develop code that uses binary versions of functional interfaces.<br />
 				Develop code that uses the UnaryOperator interface.</i></p>
@@ -145,7 +145,7 @@
 
                     <td><code>IntFunction&lt;R&gt;</code><br />
                         <code>IntToDoubleFunction</code><br />
-                        <code>IntToLongFunctio</code>n<br />
+                        <code>IntToLongFunction</code><br />
                         <code>LongFunction&lt;R&gt;</code><br />
                         <code>LongToDoubleFunction</code><br />
                         <code>LongToIntFunction</code><br />
@@ -244,7 +244,7 @@
 
             <p>And with a lambda expression:</p>
 
-            <p><code class="java hljs">Predicate startsWithA = t -&gt; t.startsWith(<span class="hljs-string">"A"</span>);<br />
+            <p><code class="java hljs">Predicate&lt;String&gt; startsWithA = t -&gt; t.startsWith(<span class="hljs-string">"A"</span>);<br />
 	  <span class="hljs-keyword">boolean</span> result = startsWithA.test(<span class="hljs-string">"Arthur"</span>);</code></p>
 
             <p>This interface also has the following default methods:</p>
@@ -324,7 +324,7 @@
 
             <p>And with a lambda expression:</p>
 
-            <p><code class="java hljs">Consumer consumeStr = t -&gt; System.out.println(t);<br />
+            <p><code class="java hljs">Consumer&lt;String&gt; consumeStr = t -&gt; System.out.println(t);<br />
 	  consumeStr.accept(<span class="hljs-string">"Hi"</span>);</code></p>
 
             <p>This interface also has the following default method:</p>
@@ -335,9 +335,9 @@
 
             <p>These methods are useful to combine <code>Consumer</code>s and make the code more readable, for example:</p>
 
-            <p><code class="java hljs">Consumer first = t -&gt;<br />
+            <p><code class="java hljs">Consumer&lt;String&gt; first = t -&gt;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"First:"</span> + t);<br />
-	  Consumer second = t -&gt;<br />
+	  Consumer&lt;String&gt; second = t -&gt;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(<span class="hljs-string">"Second:"</span> + t);<br />
 	  first.andThen(second).accept(<span class="hljs-string">"Hi"</span>);</code></p>
 
@@ -421,7 +421,7 @@
             <p>This interface also has the following default methods:</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;V,R&gt; compose(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> V,? extends T&lt; before)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> V,? extends T&gt; before)<br />
 	  <span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T,V&gt; andThen(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R,? extends V&gt; after)</code></p>
 
@@ -540,7 +540,7 @@
             <p>Here's an example using an anonymous class:</p>
 
             <p><code class="java hljs">UnaryOperator&lt;String&gt; uOp = <span class="hljs-keyword">new</span> UnaryOperator&lt;String&gt;() {<br />
-	  &nbsp; &nbsp; &nbsp;<span class="hljs-annotation">@Override</span> &nbsp;&nbsp;&nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">apply</span><span class="hljs-params">(String t)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp;<span class="hljs-annotation">@Override</span><br /><span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">apply</span><span class="hljs-params">(String t)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> t.substring(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>);<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
 	  };<br />
@@ -548,7 +548,7 @@
 
             <p>And with a lambda expression:</p>
 
-            <p><code class="java hljs">UnaryOperator uOp = t -&gt; t.substring(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>);<br />
+            <p><code class="java hljs">UnaryOperator&lt;String&gt; uOp = t -&gt; t.substring(<span class="hljs-number">0</span>,<span class="hljs-number">2</span>);<br />
 	  System.out.println(uOp.apply(<span class="hljs-string">"Hello"</span>));</code></p>
 
             <p>This interface inherits the default methods of the <code>Function</code> interface:</p>
@@ -633,9 +633,9 @@
             <p>This interface defines the same default methods of the Predicate interface, but with two arguments:</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">default</span> BiPredicate&lt;T, U&gt; and(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BiPredicate&lt;?<span class="hljs-keyword">super</span> T, ? <span class="hljs-keyword">super</span> U&gt; other)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BiPredicate&lt;? <span class="hljs-keyword">super</span> T, ? <span class="hljs-keyword">super</span> U&gt; other)<br />
 	  <span class="hljs-keyword">default</span> BiPredicate&lt;T, U&gt; or(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BiPredicate&lt;?<span class="hljs-keyword">super</span> T, ? <span class="hljs-keyword">super</span> U&gt; other)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;BiPredicate&lt;? <span class="hljs-keyword">super</span> T, ? <span class="hljs-keyword">super</span> U&gt; other)<br />
 	  <span class="hljs-keyword">default</span> BiPredicate&lt;T, U&gt; negate()</code></p>
 
             <p>This interface doesn't have primitive versions.</p>
@@ -668,7 +668,7 @@
 
             <p>And with a lambda expression:</p>
 
-            <p><code class="java hljs">Consumer consumeStr =<br />
+            <p><code class="java hljs">BiConsumer&lt;String&gt; consumeStr =<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (t, u) -&gt; System.out.println(t + <span class="hljs-string">" "</span> + u);<br />
 	  consumeStr.accept(<span class="hljs-string">"Hi"</span>, <span class="hljs-string">"there"</span>);</code></p>
 
@@ -681,8 +681,8 @@
 
             <p>As in the case of a <code>Consumer</code>, these methods are useful to combine <code>BiConsumer</code>s and make the code more readable, for example:</p>
 
-            <p><code class="java hljs">BiConsumer&lt;String, String&gt; first = t, u -&gt; System.out.println(t.toUpperCase() + u.toUpperCase());<br />
-	  BiConsumer&lt;String, String&gt; second = t, u -&gt; System.out.println(t.toLowerCase() + u.toLowerCase());<br />
+            <p><code class="java hljs">BiConsumer&lt;String, String&gt; first = (t, u) -&gt; System.out.println(t.toUpperCase() + u.toUpperCase());<br />
+	  BiConsumer&lt;String, String&gt; second = (t, u) -&gt; System.out.println(t.toLowerCase() + u.toLowerCase());<br />
 	  first.andThen(second).accept(<span class="hljs-string">"Again"</span>, <span class="hljs-string">" and again"</span>);</code></p>
 
             <p>The output is:</p>
@@ -736,14 +736,14 @@
             <p>Assuming a method:</p>
 
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">round</span><span class="hljs-params">(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">double</span> d1, <span class="hljs-keyword">double</span> d2, Function&lt;Double, Long&gt; f)</span></span> {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">double</span> d1, <span class="hljs-keyword">double</span> d2, BiFunction&lt;Double, Double, Long&gt; f)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">long</span> result = f.apply(d1, d2);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(result);<br />
 	  }</code></p>
 
             <p>Here's an example using an anonymous class:</p>
 
-            <p><code class="java hljs">round(<span class="hljs-number">5.4</span>, <span class="hljs-number">3.8</span>, <span class="hljs-keyword">new</span> Function&lt;Double, Double, Long&gt;() {<br />
+            <p><code class="java hljs">round(<span class="hljs-number">5.4</span>, <span class="hljs-number">3.8</span>, <span class="hljs-keyword">new</span> BiFunction&lt;Double, Double, Long&gt;() {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-function">Long <span class="hljs-title">apply</span><span class="hljs-params">(Double d1, Double d2)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> Math.round(d1 + d2);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
@@ -751,12 +751,12 @@
 
             <p>And with a lambda expression:</p>
 
-            <p><code class="java hljs">round(<span class="hljs-number">5.4</span>, <span class="hljs-number">3.8</span>, d1, d2 -&gt; Math.round(d1, d2));</code></p>
+            <p><code class="java hljs">round(<span class="hljs-number">5.4</span>, <span class="hljs-number">3.8</span>, (d1, d2) -&gt; Math.round(d1, d2));</code></p>
 
             <p>This interface, unlike <code>Function</code>, has only one default method:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T,V&gt; andThen(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R,? extends V&gt; after)</code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T, V&gt; andThen(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R, ? extends V&gt; after)</code></p>
 
             <p>That returns a composed function that first applies the function that calls <code>andThen</code> to its input, to finally apply the function represented by the argument to the result.</p>
 
@@ -798,19 +798,19 @@
 
             <p>And with a lambda expression:</p>
 
-            <p><code class="java hljs">BinaryOperator binOp = (t, u) -&gt; t.concat(u);<br />
+            <p><code class="java hljs">BinaryOperator&lt;String&gt; binOp = (t, u) -&gt; t.concat(u);<br />
 	  System.out.println(binOp.apply(<span class="hljs-string">"Hello"</span>, <span class="hljs-string">" there"</span>));</code></p>
 
             <p>This interface inherits the default method of the <code>BiFunction</code> interface:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T,V&gt; andThen(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R,? extends V&gt; after)</code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T, V&gt; andThen(<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R, ? extends V&gt; after)</code></p>
 
             <p>And defines two new <code>static</code> methods:</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">static</span> &lt;T&gt; <span class="hljs-function">BinaryOperator&lt;T&gt; <span class="hljs-title">minBy</span><span class="hljs-params">(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Comparator&lt;? <span class="hljs-keyword">super</span> T&gt; comparator)</span><br />
-	  <span class="hljs-keyword">static</span> BinaryOperator&lt;T&gt; <span class="hljs-title">maxBy</span><span class="hljs-params">(<br />
+	  <span class="hljs-keyword">static</span> &lt;T&gt; BinaryOperator&lt;T&gt; <span class="hljs-title">maxBy</span><span class="hljs-params">(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Comparator&lt;? <span class="hljs-keyword">super</span> T&gt; comparator)</span></span></code></p>
 
             <p>That return a <code>BinaryOperator</code>, which returns the lesser or greater of two elements according to the specified <code>Comparator</code>.</p>
