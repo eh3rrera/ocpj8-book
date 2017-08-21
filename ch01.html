@@ -388,7 +388,7 @@
 
             <p>The advantage of this is that the instance won't be created until the inner class is referenced for the first time.</p>
 
-            <p>However, there will times when for example, creating the object is not as simple as calling <code>new</code>, so the other way is to create the instance inside the <code>get</code> method:</p>
+            <p>However, there will be times when for example, creating the object is not as simple as calling <code>new</code>, so the other way is to create the instance inside the <code>get</code> method:</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Singleton</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; private</span> <span class="hljs-keyword">static</span> Singleton instance;<br />
@@ -634,7 +634,7 @@
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sleep</span><span class="hljs-params">()</span></span> { }<br />
 	  }</code></p>
 
-            <p>In turn, when <code>final</code> is applied to a class, you cannot subclass it. This is used when you don't want someone to change the behavior of a class by subclassing it. Two examples in the JDK are <code>java.lang.String</code> and <code>java.lang.Number</code>.</p>
+            <p>In turn, when <code>final</code> is applied to a class, you cannot subclass it. This is used when you don't want someone to change the behavior of a class by subclassing it. Two examples in the JDK are <code>java.lang.String</code> and <code>java.lang.Integer</code>.</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Human</span></span> {<br />
 	  &nbsp; &nbsp; ...<br />
