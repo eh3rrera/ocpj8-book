@@ -61,7 +61,7 @@
 
             <p><code>RuntimeException</code> and its subclasses are not required to be caught since they're not expected all the time. They're also called unchecked.</p>
 
-            <p>Exception and its subclasses (except for <code>RuntimeException</code>) are known as checked exceptions because they have to be caught at some point by a <code>try-catch</code> statement.</p>
+            <p>Exception and its subclasses (except for <code>RuntimeException</code>) are known as checked exceptions because the compiler has to check if they are caught at some point by a <code>try-catch</code> statement.</p>
             <hr />
 
             <h4><i>Try-Catch Block</i></h4>
@@ -311,17 +311,17 @@
 	  <span class="hljs-keyword">&nbsp; &nbsp; throw</span> e;<br />
 	  }</code></p>
 
-            <p>One last rule. You can only combine exceptions in a <code>multi-catch</code> block that are not directly related (regarding inheritance):</p>
+            <p>One last rule. You cannot combine subclasses and their superclasses in the same <code>multi-catch</code> block:</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 	  &nbsp; &nbsp; ...<br />
 	  } <span class="hljs-keyword">catch</span> (ArithmeticException | RuntimeException e) {<br />
-	  <span class="hljs-comment">&nbsp; &nbsp; // The above line generates a compile-time error</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // The above line generates a compile-time error<br/>&nbsp; &nbsp; // because ArithmeticException is a subclass of<br/>&nbsp; &nbsp; // RuntimeException</span><br/>
 	  &nbsp; &nbsp; e.printStackTrace();<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; return</span> res;<br />
 	  }</code></p>
 
-            <p>This is similar to the case when a superclass is declared in a <code>catch</code> block before the subclass. The code is redundant, the superclass will always catch the exception. Only use the <code>multi-catch</code> block for exceptions that are not related.</p>
+            <p>This is similar to the case when a superclass is declared in a <code>catch</code> block before the subclass. The code is redundant, the superclass will always catch the exception.</p>
 
             <p>Back to this piece of code:</p>
 
@@ -563,7 +563,7 @@
 
                 <li><code>RuntimeException</code> and its subclasses are not required to be caught since they're not expected all the time. They're also called unchecked.</li>
 
-                <li><code>Exception</code> and its subclasses (except for <code>RuntimeException</code>) are known as checked exceptions because they have to be caught at some point by a <code>try-catch</code> statement.</li>
+                <li><code>Exception</code> and its subclasses (except for <code>RuntimeException</code>) are known as checked exceptions because the compiler has to check if they are caught at some point by a <code>try-catch</code> statement.</li>
 
                 <li>If an exception can be caught in more than one block, the exception will be caught in the first block defined.</li>
 
@@ -573,7 +573,7 @@
 
                 <li>In this case, the caller of the method must either catch the exception or also declare it in the <code>throws</code> clause and so on until the main method of the program is reached.</li>
 
-                <li>The <code>multi-catch</code> block allows us to catch two or more unrelated exception with a single <code>catch</code> block: <code class="java hljs"><span class="hljs-keyword">try</span> {<br />
+                <li>The <code>multi-catch</code> block allows us to catch two or more unrelated exceptions with a single <code>catch</code> block: <code class="java hljs"><span class="hljs-keyword">try</span> {<br />
 		<span class="hljs-comment">&nbsp; &nbsp; // ...</span><br />
 		} <span class="hljs-keyword">catch</span>(Exception1 | Exception2 e) {<br />
 		<span class="hljs-comment">&nbsp; &nbsp; // ...</span><br />
