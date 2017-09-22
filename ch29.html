@@ -364,7 +364,7 @@
             <p><code class="java hljs">Result rs = stmt.executeQuery(<br />
 	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; "SELECT id, name FROM user"<br /></span>);<br />
 	  <span class="hljs-keyword">while</span>(rs.next()) {<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp;int</span> id = rs.getString(<span class="hljs-string">"id"</span>);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;int</span> id = rs.getInt(<span class="hljs-string">"id"</span>);<br />
 	  &nbsp; &nbsp;String name = rs.getString(<span class="hljs-string">"name"</span>);<br />
 	  <span class="hljs-comment">&nbsp; &nbsp;// Do something</span><br />
 	  }</code></p>
@@ -374,7 +374,7 @@
             <p><code class="java hljs">Result rs = stmt.executeQuery(<br />
 	  <span class="hljs-string">&nbsp; &nbsp; &nbsp; "SELECT id, name FROM user"<br /></span>);<br />
 	  <span class="hljs-keyword">while</span>(rs.next()) {<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp;int</span> id = rs.getString(<span class="hljs-number">1</span>);<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp;int</span> id = rs.getInt(<span class="hljs-number">1</span>);<br />
 	  &nbsp; &nbsp;String name = rs.getString(<span class="hljs-number">2</span>);<br />
 	  <span class="hljs-comment">&nbsp; &nbsp;// Do something</span><br />
 	  }</code></p>
