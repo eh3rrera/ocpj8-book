@@ -962,12 +962,12 @@
 
             <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_17_7</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; Map&lt;Integer, Map&lt;String, List&lt;Integer&gt;&gt;&gt; map =<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Map&lt;Integer, Map&lt;Boolean, List&lt;Integer&gt;&gt;&gt; map =<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Stream.of(<span class="hljs-number">56</span>, <span class="hljs-number">54</span>, <span class="hljs-number">1</span>, <span class="hljs-number">31</span>, <span class="hljs-number">98</span>, <span class="hljs-number">98</span>, <span class="hljs-number">16</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;.collect(groupingBy(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;i -&gt; i%<span class="hljs-number">10</span>,<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(Integer i) -&gt; i%<span class="hljs-number">10</span>,<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;TreeMap::<span class="hljs-keyword">new</span>,<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;partitioningBy(i -&gt; i &gt; <span class="hljs-number">5</span>)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;partitioningBy((Integer i) -&gt; i &gt; <span class="hljs-number">5</span>)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; )<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(map);<br />

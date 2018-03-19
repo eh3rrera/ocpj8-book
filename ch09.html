@@ -50,7 +50,7 @@
 
             <p><code class="java hljs">List compactCars = findCars(cars,<br />
 	  &nbsp; &nbsp; &nbsp;(Car c) -&gt;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; car.getType().equals(CarTypes.COMPACT);</code></p>
+	  &nbsp; &nbsp; &nbsp; &nbsp; car.getType().equals(CarTypes.COMPACT)<br/>);</code></p>
 
             <p>Instead of:</p>
 
@@ -210,7 +210,7 @@
 
                 <li>You can access instance or static variables of the enclosing class.</li>
 
-                <li>They must not throw more exceptions than specified in the throws clause of the functional interface method. Only the same type or a supertype.</li>
+                <li>They must not throw more checked exceptions than specified in the throws clause of the functional interface method. Only the same type or a subtype.</li>
             </ul>
 
             <p>And some significant differences:</p>
