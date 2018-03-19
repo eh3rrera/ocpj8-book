@@ -116,7 +116,7 @@
 
             <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">get</span><span class="hljs-params">(java.time.TemporalField field)</span> <span class="hljs-comment">// value as int<font color="#000000"><br /></font></span><span class="hljs-keyword">long</span> <span class="hljs-title">getLong</span><span class="hljs-params">(java.time.TemporalField field)</span> <span class="hljs-comment">// value as long</span></span></code></p>
 
-            <p>Which takes an implementation of the interface <code>java.time.TemporalField</code> to access a specific field of a date. <code>java.time.ChronoField</code> is an enumeration that implements this interface, so we can have for example:</p>
+            <p>Which takes an implementation of the interface <code>java.time.temporal.TemporalField</code> to access a specific field of a date. <code>java.time.temporal.ChronoField</code> is an enumeration that implements this interface, so we can have for example:</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">int</span> year = today.get(ChronoField.YEAR);<br />
 	  <span class="hljs-keyword">int</span> month = today.get(ChronoField.MONTH_OF_YEAR);<br />
@@ -189,7 +189,7 @@
 	  LocalDate lastWeekDec2001 = newYear2001.minusWeeks(<span class="hljs-number">1</span>);<br />
 	  LocalDate newYear1999 = newYear2001.minus(<span class="hljs-number">2</span>, ChronoUnit.YEARS);</code></p>
 
-            <p>Notice that the plus and minus versions take a <code>java.time.temporal.ChronoUnit</code> enumeration, different than <code>java.time.ChronoField</code>. The supported values are:</p>
+            <p>Notice that the plus and minus versions take a <code>java.time.temporal.ChronoUnit</code> enumeration, different than <code>java.time.temporal.ChronoField</code>. The supported values are:</p>
 
             <ul>
                 <li><code>DAYS</code></li>
@@ -324,7 +324,7 @@
 	  LocalTime minusNanos = fiveThirty.minusNanos(<span class="hljs-number">1</span>);<br />
 	  LocalTime fiveTwenty = fiveThirty.minus(<span class="hljs-number">10</span>, ChronoUnit.MINUTES);</code></p>
 
-            <p>Notice that the plus and minus versions take a <code>java.time.temporal.ChronoUnit</code> enumeration, different than <code>java.time.ChronoField</code>. The supported values are:</p>
+            <p>Notice that the plus and minus versions take a <code>java.time.temporal.ChronoUnit</code> enumeration, different than <code>java.time.temporal.ChronoField</code>. The supported values are:</p>
 
             <ul>
                 <li><code>NANOS</code></li>
