@@ -468,7 +468,7 @@
 
             <p>3. Assuming a default locale <code>de_DE</code>, which of the following resource bundles will be loaded first with</p>
 
-            <p><code class="java hljs">ResourceBundle rb = <span class="hljs-keyword">new</span> ResourceBundle(<span class="hljs-string">"MyBundle"</span>);</code></p>
+            <p><code class="java hljs">ResourceBundle rb = ResourceBundle.getBundle(<span class="hljs-string">"MyBundle"</span>);</code></p>
 
             <p>A. <code>MyBundle.class</code><br /> B. <code>MyBundle.properties</code><br /> C. <code>MyBundle_de.class</code><br /> D. <code>MyBundle_de.properties</code></p>
 
@@ -479,7 +479,7 @@
             <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_30_4</span></span> {<br />
 	  &nbsp; &nbsp;&nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; Locale locale = <span class="hljs-keyword">new</span> Locale(<span class="hljs-string">"en"</span>, <span class="hljs-string">"CA"</span>);<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(rb.getString(locale));<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(locale.toLanguageTag());<br />
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
 
