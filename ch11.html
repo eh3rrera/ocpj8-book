@@ -395,15 +395,15 @@
   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Integer(s);<br />
   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;}<br />
   };<br />
-  Integer i = f.apply(<span class="hljs-number">100</span>);<br />
+  Integer i = f.apply(<span class="hljs-string">"100"</span>);<br />
   <br />
   <span class="hljs-comment">// Using a lambda expression</span><br />
   Function&lt;String, Integer&gt; f = s -&gt; <span class="hljs-keyword">new</span> Integer(s);<br />
-  Integer i = f.apply(<span class="hljs-number">100</span>);<br />
+  Integer i = f.apply(<span class="hljs-string">"100"</span>);<br />
   <br />
   <span class="hljs-comment">// Using a method reference</span><br />
   Function&lt;String, Integer&gt; f = Integer::<span class="hljs-keyword">new</span>;<br />
-  Integer i = f.apply(<span class="hljs-number">100</span>);</code></p>
+  Integer i = f.apply(<span class="hljs-string">"100"</span>);</code></p>
 
             <p>If the constructor takes two arguments, we use the <code>BiFunction</code> interface:</p>
 
