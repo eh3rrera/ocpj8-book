@@ -114,7 +114,7 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;arr[i] = i * <span class="hljs-number">2</span>;<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; }<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; } <span class="hljs-keyword">catch</span>(ArrayIndexOutOfBoundsException e) {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Exception caught"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.err.println(<span class="hljs-string">"Exception caught"</span>);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; }<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Done"</span>);<br />
 	  &nbsp; &nbsp; }<br />
@@ -140,7 +140,7 @@
 	  &nbsp; &nbsp; Date date = sdf.parse(<span class="hljs-string">"01-10"</span>);<br />
 	  &nbsp; &nbsp; System.out.println(date);<br />
 	  } <span class="hljs-keyword">catch</span> (ParseException e) {<br />
-	  &nbsp; &nbsp; System.out.println(<span class="hljs-string">"ParseException caught"</span>);<br />
+	  &nbsp; &nbsp; System.err.println(<span class="hljs-string">"ParseException caught"</span>);<br />
 	  }</code></p>
 
             <p>Since, according to its signature, the parse method throws a <code>java.text.ParseException</code> (that extends directly from <code>java.lang.Exception</code>):</p>
@@ -163,7 +163,7 @@
 	  &nbsp; &nbsp; SimpleDateFormat sdf = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">"MM/dd"</span>);<br />
 	  &nbsp; &nbsp; Date date = sdf.parse(<span class="hljs-string">"01-10"</span>); System.out.println(date);<br />
 	  } <span class="hljs-keyword">catch</span> (Exception e) {<br />
-	  &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Exception caught"</span>);<br />
+	  &nbsp; &nbsp; System.err.println(<span class="hljs-string">"Exception caught"</span>);<br />
 	  }</code></p>
 
             <p>Although this is not recommended, since the above catch block will catch every exception (checked or unchecked) that could be possibly thrown by the code.</p>
@@ -175,8 +175,8 @@
 	  &nbsp; &nbsp; Date date = sdf.parse(<span class="hljs-string">"01-10"</span>);<br />
 	  &nbsp; &nbsp; System.out.println(date);<br />
 	  } <span class="hljs-keyword">catch</span> (ParseException e) {<br />
-	  &nbsp; &nbsp; System.out.println(<span class="hljs-string">"ParseException caught"</span>);<br />
-	  } <span class="hljs-keyword">catch</span> (Exception e) {<span class="hljs-number"><br /></span>&nbsp; &nbsp; System.out.println(<span class="hljs-string">"Exception caught"</span>);<br />
+	  &nbsp; &nbsp; System.err.println(<span class="hljs-string">"ParseException caught"</span>);<br />
+	  } <span class="hljs-keyword">catch</span> (Exception e) {<span class="hljs-number"><br /></span>&nbsp; &nbsp; System.err.println(<span class="hljs-string">"Exception caught"</span>);<br />
 	  }</code></p>
 
             <p>If an exception can be caught in more than one block, the exception will be caught in the first block defined.</p>
@@ -188,9 +188,9 @@
 	  &nbsp; &nbsp; Date date = sdf.parse(<span class="hljs-string">"01-10"</span>);<br />
 	  &nbsp; &nbsp; System.out.println(date);<br />
 	  } <span class="hljs-keyword">catch</span> (Exception e) {<br />
-	  &nbsp; &nbsp; System.out.println(<span class="hljs-string">"Exception caught"</span>);<br />
+	  &nbsp; &nbsp; System.err.println(<span class="hljs-string">"Exception caught"</span>);<br />
 	  } <span class="hljs-keyword">catch</span> (ParseException e) {<font color="#1C00CF"><br />
-	  &nbsp; &nbsp;</font> System.out.println(<span class="hljs-string">"ParseException caught"</span>);<br />
+	  &nbsp; &nbsp;</font> System.err.println(<span class="hljs-string">"ParseException caught"</span>);<br />
 	  }</code></p>
 
             <p>An error is also generated if a <code>catch</code> block is defined for an exception that couldn't be thrown by the code in the <code>try</code> block:</p>
@@ -199,7 +199,7 @@
 	  &nbsp; &nbsp; SimpleDateFormat sdf = <span class="hljs-keyword">new</span> SimpleDateFormat(<span class="hljs-string">"MM/dd"</span>);<br />
 	  &nbsp; &nbsp; Date date = sdf.parse(<span class="hljs-string">"01-10"</span>);<br />
 	  &nbsp; &nbsp; System.out.println(date);<br />
-	  } <span class="hljs-keyword">catch</span> (SQLException e) { <span class="hljs-comment">// Compile-time error<br /></span>&nbsp; &nbsp; System.out.println(<span class="hljs-string">"ParseException caught"</span>);<br />
+	  } <span class="hljs-keyword">catch</span> (SQLException e) { <span class="hljs-comment">// Compile-time error<br /></span>&nbsp; &nbsp; System.err.println(<span class="hljs-string">"ParseException caught"</span>);<br />
 	  }</code></p>
 
             <p>The reason of these two errors is that the code of both <code>catch</code> blocks will never be executed (it's unreachable, as the compiler says).</p>
@@ -468,9 +468,9 @@
 	  &nbsp; &nbsp; r.useResource();<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; throw</span> <span class="hljs-keyword">new</span> Exception(<span class="hljs-string">"Exception inside try"</span>);<br />
 	  } <span class="hljs-keyword">catch</span> (Exception e) {<br />
-	  &nbsp; &nbsp; System.out.println(e.getMessage());<br />
+	  &nbsp; &nbsp; System.err.println(e.getMessage());<br />
 	  &nbsp; &nbsp; Stream.of(e.getSuppressed())<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; .forEach(t -&gt; System.out.println(t.getMessage()));<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; .forEach(t -&gt; System.err.println(t.getMessage()));<br />
 	  }</code></p>
 
             <p>The output (assuming the <code>close()</code> method throws an exception):</p>
@@ -646,7 +646,7 @@
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; try</span> (Connection c = <span class="hljs-keyword">new</span> Connection()) {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">"RuntimeException"</span>);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; } <span class="hljs-keyword">catch</span> (IOException e) {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.out.println(e.getMessage());<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; System.err.println(e.getMessage());<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; }<br />
 	  &nbsp; &nbsp; }<br />
 	  }</code></p>
