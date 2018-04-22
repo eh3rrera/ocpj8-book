@@ -153,7 +153,7 @@
 
             <p><code class="java hljs">a97 b98 c99 d100 e101 f102 g103</code></p>
 
-            <p>This way, with <code>flatMap()</code> you can convert a <code>Stream&lt;List&lt;Object&gt;&gt;</code> to <code>Stream&lt;Object&gt;</code>. However, the important concept is that this method returns a stream and not a single element (as <code>map()</code> does).</p>
+            <p>This way, with <code>flatMap()</code> you can convert a <code>Stream&lt;List&lt;T&gt;&gt;</code> to <code>Stream&lt;T&gt;</code>. However, the important concept is that the function used by this method returns a stream and not a single element (as <code>map()</code> does).</p>
 
             <h2>Reduction</h2>
 
