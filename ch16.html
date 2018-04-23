@@ -120,8 +120,8 @@
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object other)</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; if</span> (<span class="hljs-keyword">this</span> == other) <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; if</span> (!(other <span class="hljs-keyword">instanceof</span> Computer)) <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; return</span> <span class="hljs-keyword">this</span>.brand.equals(other)<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &amp;&amp; <span class="hljs-keyword">this</span>.id == ((Computer)other).id;<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; return</span> <span class="hljs-keyword">this</span>.brand.equals(((Computer) other).brand)<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &amp;&amp; <span class="hljs-keyword">this</span>.id == ((Computer) other).id;<br />
 	  &nbsp; &nbsp; }<br />
 	  <span class="hljs-function"><span class="hljs-keyword"><br />
 	  &nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
