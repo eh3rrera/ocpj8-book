@@ -147,7 +147,7 @@
             <p><code class="java hljs">Stream.of(wordList).forEach(t -&gt; System.out.println(t.length()));<br />
 	  Stream.of(wordList).forEach(System.out::println);</code></p>
 
-            <p>Or wrap the code inside one lambda:</p>
+            <p>Or wrap the two calls to <code>System.out.println</code> into one lambda expression:</p>
 
             <p><code class="java hljs">Consumer&lt;String&gt; print = t -&gt; {<br />
 	  &nbsp; &nbsp; System.out.println(t.length());<br />
