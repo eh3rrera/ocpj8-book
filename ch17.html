@@ -871,7 +871,10 @@
 
                 <li><code>map()</code> is used to transform the value or the type of the elements of a stream through a provided <code>Function</code>.</li>
 
-                <li><code>flatMap()</code> is used to "flatten" (or combine) the elements of a stream into one (new) stream. In contrast to <code>map()</code> (that returns a single value), <code>flatMap()</code> must return a <code>Stream</code>.</li>
+                <li><code>flatMap()</code> is used to "flatten" or combine the contents of a stream into
+                    another (new) stream. In contrast to <code>map()</code>, <code>flatMap()</code> takes a <code>Function</code> on a <code>Stream</code>
+                    object, per se; whereas  <code>map()</code> takes a <code>Function</code> on the objects within its
+                    stream. Both <code>map()</code> and <code>flatMap()</code>return some kind of <code>Stream</code>.</li>
 
                 <li>A reduction is an operation that takes many elements and combines them (o reduce them) into a single value or object.</li>
 
