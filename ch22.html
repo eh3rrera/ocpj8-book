@@ -220,14 +220,14 @@
 
             <p>From a <code>ZonedDateTime</code> you can get <code>LocalDate</code>, <code>LocalTime</code>, or a <code>LocalDateTime</code> (without the time zone part) with:</p>
 
-            <p><code class="java hljs">LocalDateTime currentDate = now.toLocalDate();<br />
-	  LocalDateTime currentTime = now.toLocalTime();<br />
+            <p><code class="java hljs">LocalDate currentDate = now.toLocalDate();<br />
+                LocalTime currentTime = now.toLocalTime();<br />
 	  LocalDateTime currentDateTime = now.toLocalDateTime();</code></p>
 
             <p><code>ZonedDateTime</code> also have most of the methods of <code>LocalDateTime</code> that we reviewed in the previous chapter:</p>
 
             <p><code class="java hljs"><span class="hljs-comment">//To get the value of a specified field</span><br />
-	  <span class="hljs-keyword">int</span> day = now.getDayofMonth();<br />
+	  <span class="hljs-keyword">int</span> day = now.getDayOfMonth();<br />
 	  <span class="hljs-keyword">int</span> dayYear = now.getDayOfYear();<br />
 	  <span class="hljs-keyword">int</span> nanos = now.getNano();<br />
 	  Month monthEnum = now.getMonth();<br />
