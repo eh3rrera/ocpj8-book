@@ -630,7 +630,7 @@
 	  <span class="hljs-comment">// be in days (1 week = 7 days). Years and months will be zero</span><br />
 	  Period period14d = Period.ofWeeks(<span class="hljs-number">2</span>);<br />
 	  <span class="hljs-comment">// Setting years (can be negative), days and months will be zero</span><br />
-	  Period period2y = Period.ofDays(<span class="hljs-number">2</span>);</code></p>
+	  Period period2y = Period.ofYears(<span class="hljs-number">2</span>);</code></p>
 
             <p>A <code>Period</code> can be also thought as the difference between two <code>LocalDates</code>. Luckily, there's a method that support this concept:</p>
 
@@ -787,7 +787,7 @@
 	  Duration minus3Millis = oneSecond.minusMillis(<span class="hljs-number">3</span>);<br />
 	  Duration minus3Nanos = oneSecond.minusNanos(<span class="hljs-number">3</span>);<br />
 	  Duration minusAnotherDuration = oneSecond.minus(twoSeconds);<br />
-	  Duration minusChronoUnits = oneSecond.pminus(<span class="hljs-number">1</span>, ChronoUnit.DAYS);</code></p>
+	  Duration minusChronoUnits = oneSecond.minus(<span class="hljs-number">1</span>, ChronoUnit.DAYS);</code></p>
 
             <p>Methods <code>plus</code> and <code>minus</code> take either another <code>Duration</code> or a valid <code>ChronoUnit</code> value (the same values used to create an instance).</p>
 
