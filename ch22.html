@@ -242,7 +242,7 @@
 	  <span class="hljs-comment">// Returns a copy of this date/time with a different time zone,<font color="#000000"><br /></font></span><span class="hljs-comment">// retaining the local date/time if it's valid for the new time zone<br /></span>ZonedDateTime zdt5 = now.withZoneSameLocal(australiaZone);<br />
 	  <span class="hljs-comment"><font color="#000000"><br /></font>// Adding<br /></span>ZonedDateTime zdt6 = now.plusDays(<span class="hljs-number">4</span>);<br />
 	  ZonedDateTime zdt7 = now.plusWeeks(<span class="hljs-number">3</span>);<br />
-	  ZonedDateTime zdt8 = newYear2001.plus(<span class="hljs-number">2</span>, ChronoUnit.HOURS);<br />
+	  ZonedDateTime zdt8 = now.plus(<span class="hljs-number">2</span>, ChronoUnit.HOURS);<br />
 	  <span class="hljs-comment"><font color="#000000"><br /></font>// Subtracting<br /></span>ZonedDateTime zdt9 = now.minusMinutes(<span class="hljs-number">20</span>);<br />
 	  ZonedDateTime zdt10 = now.minusNanos(<span class="hljs-number">99999</span>);<br />
 	  ZonedDateTime zdt11 = now.minus(<span class="hljs-number">10</span>, ChronoUnit.SECONDS);</code></p>
