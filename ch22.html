@@ -220,14 +220,14 @@
 
             <p>From a <code>ZonedDateTime</code> you can get <code>LocalDate</code>, <code>LocalTime</code>, or a <code>LocalDateTime</code> (without the time zone part) with:</p>
 
-            <p><code class="java hljs">LocalDateTime currentDate = now.toLocalDate();<br />
-	  LocalDateTime currentTime = now.toLocalTime();<br />
+            <p><code class="java hljs">LocalDate currentDate = now.toLocalDate();<br />
+                LocalTime currentTime = now.toLocalTime();<br />
 	  LocalDateTime currentDateTime = now.toLocalDateTime();</code></p>
 
             <p><code>ZonedDateTime</code> also have most of the methods of <code>LocalDateTime</code> that we reviewed in the previous chapter:</p>
 
             <p><code class="java hljs"><span class="hljs-comment">//To get the value of a specified field</span><br />
-	  <span class="hljs-keyword">int</span> day = now.getDayofMonth();<br />
+	  <span class="hljs-keyword">int</span> day = now.getDayOfMonth();<br />
 	  <span class="hljs-keyword">int</span> dayYear = now.getDayOfYear();<br />
 	  <span class="hljs-keyword">int</span> nanos = now.getNano();<br />
 	  Month monthEnum = now.getMonth();<br />
@@ -252,7 +252,7 @@
             <p><code class="java hljs"><span class="hljs-comment">// Prints 2014-09-19T00:30Z<br /></span>System.out.println(<br />
 	  &nbsp; &nbsp; ZonedDateTime.of(<span class="hljs-number">2014</span>,<span class="hljs-number">9</span>,<span class="hljs-number">19</span>,<span class="hljs-number">0</span>,<span class="hljs-number">30</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,ZoneId.of(<span class="hljs-string">"Z"</span>)));<br />
 	  <span class="hljs-comment">// Prints 2015-08-31T12:39:27.492-04:00[America/Montreal]<br /></span>System.out.println(<br />
-	  &nbsp; &nbsp; ZonedDateTime.now(ZoneId.of(<span class="hljs-string">"America/Montreal"</span>)));</code></p>
+	  &nbsp; &nbsp; ZonedDateTime.now(ZoneId.of(<span class="hljs-string">"America/Montreal"</span>));</code></p>
 
             <h2>Daylight savings</h2>
 
@@ -425,7 +425,7 @@
                         </div>
 
                         <div style="text-align: center;">
-                            <code>ISO_LOCAL_DATETIME</code>
+                            <code>ISO_LOCAL_DATE_TIME</code>
                         </div>
                     </td>
 
@@ -457,7 +457,7 @@
                         </div>
 
                         <div style="text-align: center;">
-                            <code>ISO_OFFSET_DATETIME</code>
+                            <code>ISO_OFFSET_DATE_TIME</code>
                         </div>
                     </td>
 
@@ -497,7 +497,7 @@
                         </div>
 
                         <div style="text-align: center;">
-                            <code>ISO_DATETIME</code>
+                            <code>ISO_DATE_TIME</code>
                         </div>
                     </td>
 
