@@ -723,7 +723,7 @@
 	  Duration oneSecondFromNanos = Duration.ofNanos(<span class="hljs-number">1000000000</span>);<br />
 	  Duration oneSecond = Duration.of(<span class="hljs-number">1</span>, ChronoUnit.SECONDS);</code></p>
 
-            <p>Valid values of <code>ChronoUnit</code> are:</p>
+            <p>Valid values of <code>ChronoUnit</code> for the method <code>Duration.of(long amount, TemporalUnit unit)</code> are:</p>
 
             <ul>
                 <li><code>NANOS</code></li>
@@ -760,9 +760,9 @@
 	  <span class="hljs-comment">// Supports SECONDS and NANOS.Other units throw an exception</span><br />
 	  <span class="hljs-keyword">int</span> oneSec = oneSecond.get(ChronoUnit.SECONDS);</code></p>
 
-            <p>Once an instance of <code>Duration</code> is created, we cannot modify it, but we can create another instance from an existing one.</p>
+            <p>Notice that the method <code>get(TemporalUnit)</code> only supports <code>SECONDS</code> and <code>NANOS</code>. </p>
 
-            <p>One way is through the with method and its versions:</p>
+            <p>Once an instance of <code>Duration</code> is created, we cannot modify it, but we can create another instance from an existing one. One way is to use the <code>with</code> method and its versions:</p>
 
             <p><code class="java hljs">Duration duration1sec8nan = oneSecond.withNanos(<span class="hljs-number">8</span>);<br />
 	  Duration duration2sec1nan = oneSecond.withSeconds(<span class="hljs-number">2</span>).withNanos(<span class="hljs-number">1</span>);</code></p>
@@ -839,7 +839,7 @@
                 <li><code>Duration</code> represents an amount of time in terms of seconds and nanoseconds. You can create an instance using:<br />
                     <code class="java hljs">Duration.ofSeconds(<span class="hljs-number">50</span>, <span class="hljs-number">999999</span>);</code></li>
 
-                <li>Valid <code>ChronoUnits</code> values to use with the constructor and the <code>get()</code>, <code>plus()</code>, and <code>minus()</code> methods are: <code>NANOS, MICROS, MILLIS, SECONDS, MINUTES, HOURS, HALF_DAYS,</code> and <code>DAYS</code>.<br /></li>
+                <li>Valid <code>ChronoUnits</code> values to use with the the&nbsp;<code>of()</code> method are: <code>NANOS, MICROS, MILLIS, SECONDS, MINUTES, HOURS, HALF_DAYS,</code> and <code>DAYS</code>. With the <code>get()</code> method, only <code>NANOS</code> and <code>SECONDS</code> are valid.<br/></li>
             </ul>
 
 
