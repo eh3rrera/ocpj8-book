@@ -366,7 +366,7 @@
 	  LocalDateTime dt4 = date.atTime(<span class="hljs-number">14</span>, <span class="hljs-number">30</span>, <span class="hljs-number">59</span>, <span class="hljs-number">999999</span>);<br />
 	  <span class="hljs-comment">// Or this</span> LocalDateTime dt5 = date.atTime(time);<br />
 	  <span class="hljs-comment">// Combine this time with the given date. Notice that LocalTime</span><br />
-	  <span class="hljs-comment">// only has this constructor to be combined with a LocalDate</span><br />
+	  <span class="hljs-comment">// only has this method to be combined with a LocalDate</span><br />
 	  LocalDateTime dt6 = time.atDate(date);</code></p>
 
             <p>If you try to create an instance with an invalid value or date, an exception will be thrown. To get the current date/time use <code>now()</code>:</p>
