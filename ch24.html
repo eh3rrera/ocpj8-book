@@ -416,7 +416,7 @@
             <p>This method returns <code>true</code> if the file was deleted or false if the file could not be removed because it did not exist, in other words, unlike the first method, this doesn't throw a <code>NoSuchFileException</code> (but it still throws a <code>DirectoryNotEmptyException</code> and an <code>IOException</code> for other problems):</p>
 
             <p><code class="java hljs"><span class="hljs-keyword">try</span> {<br />
-  &nbsp; &nbsp; Files.delete(Paths.get(<span class="hljs-string">"/temp/dir1/file.txt"</span>));<br />
+  &nbsp; &nbsp; Files.deleteIfExists(Paths.get(<span class="hljs-string">"/temp/dir1/file.txt"</span>));<br />
   } <span class="hljs-keyword">catch</span> (DirectoryNotEmptyException dnee) {<br />
   <span class="hljs-comment">&nbsp; &nbsp; // To delete a directory, it must be empty,</span><br />
   } <span class="hljs-keyword">catch</span> (IOException ioe) {<br />
