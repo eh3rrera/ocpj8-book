@@ -4,7 +4,7 @@ Study guide for the Oracle Certified Professional, Java SE 8 Programmer Exam (1Z
 # Buying
 You can read the book for free [here](http://ocpj8.javastudyguide.com/), but if you like the content and want to support me, you can buy the print and e-book version:
 
-<a href="#" target="_blank">Print/Kindle version from Amazon</a>
+<a href="http://www.amazon.com/dp/B01DXSGHX4" target="_blank">Print/Kindle version from Amazon</a>
 
 <a href="https://leanpub.com/java8-programmer-ii-study-guide/" target="_blank">PDF/EPUB/MOBI version from Leanpub</a>
 
