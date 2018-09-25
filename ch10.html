@@ -281,12 +281,12 @@
 
             <p>So instead of using:</p>
 
-            <p><code class="java hljs">Predicate&lt;Integer&gt; even = t -&gt; t % <span class="hljs-number">0</span> == <span class="hljs-number">1</span>;<br />
+            <p><code class="java hljs">Predicate&lt;Integer&gt; even = t -&gt; t % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>;<br />
 	  <span class="hljs-keyword">boolean</span> result = even.test(<span class="hljs-number">5</span>);</code></p>
 
             <p>You can use:</p>
 
-            <p><code class="java hljs">IntPredicate even = t -&gt; t % <span class="hljs-number">0</span> == <span class="hljs-number">1</span>;<br />
+            <p><code class="java hljs">IntPredicate even = t -&gt; t % <span class="hljs-number">2</span> == <span class="hljs-number">1</span>;<br />
 	  <span class="hljs-keyword">boolean</span> result = even.test(<span class="hljs-number">5</span>);</code></p>
 
             <p>Why?</p>
@@ -659,7 +659,7 @@
             <p>Here's an example using an anonymous class:</p>
 
             <p><code class="java hljs">BiConsumer&lt;String, String&gt; consumeStr =<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">new</span> Consumer&lt;String, String&gt;() {<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">new</span> BiConsumer&lt;String, String&gt;() {<br />
 	  &nbsp; &nbsp; &nbsp;<span class="hljs-annotation">@Override<br /></span>&nbsp; &nbsp; &nbsp;<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(String t, String u)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(t + <span class="hljs-string">" "</span> + u);<br />
 	  &nbsp; &nbsp; &nbsp;}<br />
