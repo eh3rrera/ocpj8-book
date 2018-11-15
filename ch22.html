@@ -365,10 +365,10 @@
 
             <p><code>OffsetTime</code> represents a time with an offset from UTC, for example, <i>11:30-06:00</i>. The common way to create an instance of these classes is:</p>
 
-            <p><code class="java hljs">OffsetDateTime odt = OffsetDateTime.of(<br />
-	  &nbsp; &nbsp; LocalDateTime.now(), ZoneOffset.of(+<span class="hljs-number">03</span>:<span class="hljs-number">00</span>));<br />
-	  OffsetTime ot = OffsetTime.of(<br />
-	  &nbsp; &nbsp; LocalTime.now(), ZoneOffset.of(-<span class="hljs-number">08</span>:<span class="hljs-number">00</span>));</code></p>
+            <p><code class="java hljs">OffsetDateTime odt = OffsetDateTime.of(<br/>
+  &nbsp; &nbsp; LocalDateTime.now(), ZoneOffset.of(<span class="hljs-string">"+03:00"</span>));<br/>
+  OffsetTime ot = OffsetTime.of(<br/>
+  &nbsp; &nbsp; LocalTime.now(), ZoneOffset.of(<span class="hljs-string">"-08:00"</span>));</code></p>
 
             <p>Both classes have practically the same methods that their <code>LocalDateTime</code>, <code>ZonedDateTime</code>, and <code>LocalTime</code> counterparts. With an offset from UTC and without time zone variations, they always represent an exact instant in time, which may be more suited for certain types of applications (the Java documentation recommends <code>OffsetDateTime</code> when communicating with a database or in a network protocol).</p>
 
