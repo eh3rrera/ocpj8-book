@@ -306,7 +306,7 @@
 	  LocalTime twelveThirty = noon.withMinute(<span class="hljs-number">30</span>);<br />
 	  LocalTime thirtyTwoSeconds = noon.withSecond(<span class="hljs-number">32</span>);<br />
 	  <span class="hljs-comment">// Since these methods return a new instance, we can chain them!</span><br />
-	  LocalTime secondsNano = nooon.withSecond(<span class="hljs-number">20</span>).withNano(<span class="hljs-number">999999</span>);</code></p>
+	  LocalTime secondsNano = noon.withSecond(<span class="hljs-number">20</span>).withNano(<span class="hljs-number">999999</span>);</code></p>
 
             <p>Of course, another way is by adding or subtracting hours, minutes, seconds, or nanoseconds:</p>
 
@@ -361,7 +361,7 @@
 	  <span class="hljs-comment">// Setting all fields</span><br />
 	  LocalDateTime dt3 = LocalDateTime.of(<span class="hljs-number">2014</span>, <span class="hljs-number">9</span>, <span class="hljs-number">19</span>, <span class="hljs-number">14</span>, <span class="hljs-number">5</span>, <span class="hljs-number">20</span>, <span class="hljs-number">9</span>);<br />
 	  <span class="hljs-comment">// Asumming this date</span> LocalDate date = LocalDate.now();<br />
-	  <span class="hljs-comment">// And this time</span> LocaDate time = LocalTime.now();<br />
+	  <span class="hljs-comment">// And this time</span> LocalTime time = LocalTime.now();<br />
 	  <span class="hljs-comment">// Combine the above date with the given time like this</span><br />
 	  LocalDateTime dt4 = date.atTime(<span class="hljs-number">14</span>, <span class="hljs-number">30</span>, <span class="hljs-number">59</span>, <span class="hljs-number">999999</span>);<br />
 	  <span class="hljs-comment">// Or this</span> LocalDateTime dt5 = date.atTime(time);<br />
