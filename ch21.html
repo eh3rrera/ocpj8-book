@@ -720,7 +720,7 @@
 	  <span class="hljs-comment">// 0 to 999,999,999, the seconds will be altered, like below)</span><br />
 	  Duration twoSeconds = Duration.ofSeconds(<span class="hljs-number">1</span>, <span class="hljs-number">1000000000</span>);<br />
 	  <span class="hljs-comment">// Seconds and nanoseconds are extracted from the passed milisecs</span><br />
-	  Duration oneSecondFromMilis = Duration.ofMilis(<span class="hljs-number">2</span>);<br />
+	  Duration oneSecondFromMilis = Duration.ofMillis(<span class="hljs-number">2</span>);<br />
 	  <span class="hljs-comment">// Seconds and nanoseconds are extracted from the passed nanos</span><br />
 	  Duration oneSecondFromNanos = Duration.ofNanos(<span class="hljs-number">1000000000</span>);<br />
 	  Duration oneSecond = Duration.of(<span class="hljs-number">1</span>, ChronoUnit.SECONDS);</code></p>
