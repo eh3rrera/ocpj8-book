@@ -452,7 +452,7 @@
             <p>You cannot overload a method where type erasure will leave the parameters with the same type:</p>
 
             <p><code class="java hljs"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span> {<br />
-	  <span class="hljs-comment">&nbsp; &nbsp; // List&lt;Integer&gt; and List&lt;Integer&gt;</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; // List&lt;String&gt; and List&lt;Integer&gt;</span><br />
 	  <span class="hljs-comment">&nbsp; &nbsp; // will be converted to List at runtime</span><br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">(List&lt;String&gt; list)</span></span> { }<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">method</span><span class="hljs-params">(List&lt;Integer&gt; list)</span></span> { }<br />
