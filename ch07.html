@@ -167,7 +167,7 @@
 
             <p>Besides having the methods of <code>Collection</code>, <code>ArrayDeque</code> has other methods that are unique to queues. We can classify these methods into two groups:</p>
 
-            <p>Methods that throw an exception if something goes wrong:</p>
+            <p>Methods that throw an exception (<code>ClassCastException</code>, <code>NullPointerException</code>, <code>IllegalStateException</code> or <code>IllegalArgumentException</code>) if something goes wrong:</p>
 
             <ul>
                 <li><code>boolean add(E e)</code><br /> Adds an element to the end of the queue and returns true if successful or throws an exception otherwise.</li>
@@ -175,13 +175,13 @@
                 <li><code>E remove()</code><br /> Removes and returns the first element of the queue or throws an exception if it's empty.</li>
 
                 <li><code>E element()</code><br /> Returns the next element of the queue or throws an exception if it's empty.</li>
+              
+                <li><code>boolean offer(E e)</code><br /> Adds an element to the end of the queue and returns <code>true</code> if successful or <code>false</code> otherwise.</li>
             </ul>
 
             <p>Methods that return <code>null</code> if something goes wrong:</p>
 
             <ul>
-                <li><code>boolean offer(E e)</code><br /> Adds an element to the end of the queue and returns <code>true</code> if successful or <code>false</code> otherwise.</li>
-
                 <li><code>E poll()</code><br /> Removes and returns the first element of the queue or <code>null</code> if it's empty.</li>
 
                 <li><code>E peek()</code><br /> Returns the next element of the queue or <code>null</code> if it's empty.</li>
