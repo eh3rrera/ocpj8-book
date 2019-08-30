@@ -303,15 +303,6 @@
 
             <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">03</span>-<span class="hljs-number">29</span>T02:<span class="hljs-number">30</span>+<span class="hljs-number">02</span>:<span class="hljs-number">00</span>[UTC+<span class="hljs-number">02</span>:<span class="hljs-number">00</span>] <span class="hljs-number">2015</span>-<span class="hljs-number">03</span>-<span class="hljs-number">29</span>T02:<span class="hljs-number">30</span>+<span class="hljs-number">02</span>:<span class="hljs-number">00</span></code></p>
 
-            <p>When DST ends, something similar happens</p>
-
-            <p><code class="java hljs">LocalDateTime ldt = LocalDateTime.of(<span class="hljs-number">2015</span>, <span class="hljs-number">10</span>, <span class="hljs-number">25</span>, <span class="hljs-number">3</span>, <span class="hljs-number">30</span>);<br />
-	  System.out.println(ldt);</code></p>
-
-            <p>The result will be:</p>
-
-            <p><code class="java hljs"><span class="hljs-number">2015</span>-<span class="hljs-number">10</span>-<span class="hljs-number">25</span>T02:<span class="hljs-number">30</span></code></p>
-
             <p>When we create an instance of <code>ZonedDateTime</code> for Italy, we have to add an hour to see the effect (otherwise we we'll be creating the <code>ZonedDateTime</code> at 3:00 of the new time):</p>
 
             <p><code class="java hljs">ZonedDateTime zdt = ZonedDateTime.of(<br />
