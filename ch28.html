@@ -237,8 +237,8 @@
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new</span> FindMinimumAction(data, mid, end);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// queue the first task<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;firstSubtask.fork();<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Return the miminum of all subtasks</span><br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return</span> Math.min(firstSubtask.compute(),<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;secondSubtask.join());<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return</span> Math.min(secondSubtask.compute(),<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;firstSubtask.join());<br />
 	  &nbsp; &nbsp; &nbsp; }<br />
 	  &nbsp; &nbsp;}<br />
 	  <span class="hljs-comment">&nbsp; &nbsp;// ...</span><br />

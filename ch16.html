@@ -107,7 +107,8 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-comment">// If the objects are equal, compare by id</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; if</span>(result == <span class="hljs-number">0</span>) {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // Let's do the comparison "manually"</span><br />
-	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // instead of using Integer.compareTo()</span><br />
+	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // instead of using Integer.valueOf(this.id).compareTo(other.id)</span><br/>
+      <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // or Integer.compare(this.id, other.id)</span><br/>
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; if</span>(<span class="hljs-keyword">this</span>.id &gt; other.id) result = <span class="hljs-number">1</span>;<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; else</span> <span class="hljs-keyword">if</span>( <span class="hljs-keyword">this</span>.id &lt; other.id) result = -<span class="hljs-number">1</span>;<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // else result = 0;</span><br />
