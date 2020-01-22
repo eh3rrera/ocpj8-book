@@ -270,7 +270,7 @@
 
             <p>If both paths are absolute, the result is system-dependent.</p>
 
-            <p><code>Path</code> implements the <code>Iterable</code> interface so you can do something like this:</p>
+            <p><code>Path</code> extends the <code>Iterable</code> interface so you can do something like this:</p>
 
             <p><code class="java hljs">Path path = Paths.get(<span class="hljs-string">"c:\\temp\\dir1\\file.txt"</span>);<br />
   <span class="hljs-keyword">for</span>(Path name : path) {<br />
@@ -283,7 +283,7 @@
   dir1<br />
   file.txt</code></p>
 
-            <p><code>Path</code> implements the <code>Comparable</code> interface and the <code>equals()</code> method to test two paths for equality.</p>
+            <p><code>Path</code> extends the <code>Comparable</code> interface and the <code>equals()</code> method to test two paths for equality.</p>
 
             <p><code>compareTo()</code> compares two paths lexicographically. It returns:</p>
 
@@ -656,7 +656,7 @@
 
                 <li>The absolute path representation of a <code>Path</code> object has a root component (either <code>c:\</code> or <code>/</code>) and a sequence of names separated by a (forward or backward) slash.</li>
 
-                <li>The <code>Path</code> interface has methods get the elements of the path, normalize paths, and get attributes of the path (isAbsolute(), getFileSystem(), etc), among others. It also implements <code>Comparable</code> and <code>equals()</code> to test for equality.</li>
+                <li>The <code>Path</code> interface has methods get the elements of the path, normalize paths, and get attributes of the path (isAbsolute(), getFileSystem(), etc), among others. It also extends <code>Comparable</code> and <code>equals()</code> to test for equality.</li>
 
                 <li>The <code>java.nio.file.Files</code> class has static methods for common operations on files and directories. In contrast with the <code>java.io.File class</code>, all methods of <code>Files</code> work with <code>Path</code> objects.</li>
 
