@@ -1011,9 +1011,10 @@
 
                 <li>If you want to create a specific <code>ZoneId</code> object use the method <code>of</code>:<br />
                     <code class="java hljs">ZoneId.of(<span class="hljs-string">"Asia/Singapore"</span>);<br />
-		ZoneId.of(<span class="hljs-string">"+3"</span>)</code></li>
+		                ZoneId.of(<span class="hljs-string">"+3"</span>);<br />
+                        ZoneId.of(<span class="hljs-string">"Z"</span>);</code></li>
 
-                <li>The first two of the above methods produce an object of type <code>ZoneRegion</code>. The last one, an object of type <code>ZoneOffset</code>.</li>
+                <li>The first one of the above methods produces an object of type <code>ZoneRegion</code>. The other two produce an object of type <code>ZoneOffset</code>.</li>
 
                 <li>A <code>java.time.ZonedDateTime</code> object represents a point in time relative to a time zone.</li>
 
