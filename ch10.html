@@ -735,8 +735,7 @@
 
             <p>Assuming a method:</p>
 
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">round</span><span class="hljs-params">(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;<span class="hljs-keyword">double</span> d1, <span class="hljs-keyword">double</span> d2, BiFunction&lt;Double, Double, Long&gt; f)</span></span> {<br />
+            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">round</span><span class="hljs-params">(<span class="hljs-keyword">double</span> d1, <span class="hljs-keyword">double</span> d2, BiFunction&lt;Double, Double, Long&gt; f)</span></span> {<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-keyword">long</span> result = f.apply(d1, d2);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;System.out.println(result);<br />
 	  }</code></p>
@@ -755,8 +754,7 @@
 
             <p>This interface, unlike <code>Function</code>, has only one default method:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T, V&gt; andThen(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R, ? extends V&gt; after)</code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; BiFunction&lt;T, U, V&gt; andThen(Function&lt;? <span class="hljs-keyword">super</span> R, ? extends V&gt; after)</code></p>
 
             <p>That returns a composed function that first applies the function that calls <code>andThen</code> to its input, to finally apply the function represented by the argument to the result.</p>
 
