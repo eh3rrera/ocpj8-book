@@ -264,7 +264,7 @@
 	  &nbsp; &nbsp; &nbsp; &nbsp; Comparator.comparing((Computer c) -&gt; c.id)<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; .thenComparing(c -&gt; c.brand);</code></p>
 
-            <p>Finally, the default method <code>reverse()</code> will create a <code>Comparator</code> that reverses the order of the original <code>Comparator</code>:</p>
+            <p>Finally, the default method <code>reversed()</code> will create a <code>Comparator</code> that reverses the order of the original <code>Comparator</code>:</p>
 
             <p><code class="java hljs">List&lt;Computer&gt; list = Arrays.asList(c1, c2, c3, c4);<br />
 	  Collections.sort(list,<br />
@@ -413,7 +413,7 @@
                     </ul>
                 </li>
 
-                <li><code>comparing()</code>, <code>thenComparing()</code>, and <code>reverse()</code> are helper methods of the <code>Comparator</code> interface added in Java 8.</li>
+                <li><code>comparing()</code>, <code>thenComparing()</code>, and <code>reversed()</code> are helper methods of the <code>Comparator</code> interface added in Java 8.</li>
 
                 <li>The <code>sorted()</code> method of the <code>Stream</code> interface returns a stream with the elements sorted according to its natural order. You can also pass a <code>Comparator</code> as an argument.</li>
 
