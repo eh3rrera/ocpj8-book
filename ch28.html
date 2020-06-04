@@ -227,14 +227,14 @@
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp;<span class="hljs-comment">//Return type matches the generic<br /></span>&nbsp; &nbsp;protected</span> Integer <span class="hljs-title">compute</span><span class="hljs-params">()</span></span> {<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; int</span> length = end - start;<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; if</span> (length &lt;= SEQUENTIAL_THRESHOLD) { <span class="hljs-comment">// base case</span><br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return</span> min = computeMinimumDirectly();<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return</span> computeMinimumDirectly();<br />
 	  &nbsp; &nbsp; &nbsp; } <span class="hljs-keyword">else</span> { <span class="hljs-comment">// recursive case</span><br />
 	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Calcuate new subtasks range</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;int</span> mid = start + length / <span class="hljs-number">2</span>;<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FindMinimumAction firstSubtask =<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new</span> FindMinimumAction(data, start, mid);<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FindMinimumAction secondSubtask =<br />
-	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new</span> FindMinimumAction(data, mid, end);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FindMinimumTask firstSubtask =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new</span> FindMinimumTask(data, start, mid);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;FindMinimumTask secondSubtask =<br />
+	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; new</span> FindMinimumTask(data, mid, end);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<span class="hljs-comment">// queue the first task<br /></span>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;firstSubtask.fork();<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;// Return the miminum of all subtasks</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;return</span> Math.min(secondSubtask.compute(),<br />
