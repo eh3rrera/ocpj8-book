@@ -332,7 +332,7 @@
 	  &nbsp; &nbsp;}<br />
 	  }</code></p>
 
-            <p><code>&lt;T extends String&gt;</code> means that any class that extends (or implements when working with an interface) <code>String</code> (or <code>String</code> itself) can be used as the type parameter. As <code>T</code> is replaced by <code>String</code>, it's safe to its methods:</p>
+            <p><code>&lt;T extends String&gt;</code> means that any class that extends (or implements when working with an interface) <code>String</code> (or <code>String</code> itself) can be used as the type parameter. As <code>T</code> is replaced by <code>String</code>, it's safe to use its methods:</p>
 
             <p><code class="java hljs">Printer&lt;String&gt; p1 = <span class="hljs-keyword">new</span> Printer&lt;&gt;(); <span class="hljs-comment">// OK</span><br />
 	  <span style="color: rgb(0, 106, 0);">// Error, Byte is not a String<br /></span>Printer&lt;Byte&gt; p2 = <span class="hljs-keyword">new</span> Printer&lt;&gt;();&nbsp;</code></p>
