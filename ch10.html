@@ -801,8 +801,7 @@
 
             <p>This interface inherits the default method of the <code>BiFunction</code> interface:</p>
 
-            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; Function&lt;T, V&gt; andThen(<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Function&lt;? <span class="hljs-keyword">super</span> R, ? extends V&gt; after)</code></p>
+            <p><code class="java hljs"><span class="hljs-keyword">default</span> &lt;V&gt; BiFunction&lt;T, U, V&gt; andThen(Function&lt;? <span class="hljs-keyword">super</span> R, ? extends V&gt; after)</code></p>
 
             <p>And defines two new <code>static</code> methods:</p>
 

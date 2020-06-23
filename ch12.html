@@ -218,19 +218,29 @@
 
             <p>There's a <code>Stream.Builder&lt;T&gt;</code> class (that follows the builder design pattern) with methods that add an element to the stream being built:</p>
 
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(T t)</span> Stream.Builder&lt;T&gt; <span class="hljs-title">add</span><span class="hljs-params">(T t)</span></span></code></p>
+            <p><code class="java hljs">
+                <span class="hljs-function">
+                    <span class="hljs-keyword">void</span> <span class="hljs-title">accept</span><span class="hljs-params">(T t)<br /></span>
+                    <span class="hljs-keyword">default</span> Stream.Builder&lt;T&gt; <span class="hljs-title">add</span><span class="hljs-params">(T t)</span>
+                </span>
+            </code></p>
 
             <p>For example:</p>
 
-            <p><code class="java hljs">Stream.Builder&lt;String&gt; builder =<br />
-	  &nbsp; &nbsp; Stream.&lt;String&gt;builder()<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp;.add(<span class="hljs-string">"h"</span>).add(<span class="hljs-string">"e"</span>).add(<span class="hljs-string">"l"</span>).add(<span class="hljs-string">"l"</span>);<br />
+            <p><code class="java hljs">Stream.Builder&lt;String&gt; builder = Stream.&lt;String&gt;builder().add(<span class="hljs-string">"h"</span>).add(<span class="hljs-string">"e"</span>).add(<span class="hljs-string">"l"</span>).add(<span class="hljs-string">"l"</span>);<br />
 	  builder.accept(<span class="hljs-string">"o"</span>);<br />
 	  Stream&lt;String&gt; s = builder.build();</code></p>
 
             <p><code>IntStream</code> and <code>LongStream</code> define the methods:</p>
 
-            <p><code class="java hljs"><span class="hljs-function"><span class="hljs-keyword">static</span> IntStream <span class="hljs-title">range</span><span class="hljs-params">(<span class="hljs-keyword">int</span> startInclusive, <span class="hljs-keyword">int</span> endExclusive)<br /></span><span class="hljs-keyword">static</span> IntStream <span class="hljs-title">rangeClosed</span><span class="hljs-params">(<span class="hljs-keyword">int</span> startInclusive, <span class="hljs-keyword">int</span> endInclusive)<br /></span><span class="hljs-keyword">static</span> LongStream <span class="hljs-title">range</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endExclusive)<br /></span><span class="hljs-keyword">static</span> LongStream <span class="hljs-title">rangeClosed</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endInclusive)</span></span></code></p>
+            <p><code class="java hljs">
+                <span class="hljs-function">
+                    <span class="hljs-keyword">static</span> IntStream <span class="hljs-title">range</span><span class="hljs-params">(<span class="hljs-keyword">int</span> startInclusive, <span class="hljs-keyword">int</span> endExclusive)<br /></span>
+                    <span class="hljs-keyword">static</span> IntStream <span class="hljs-title">rangeClosed</span><span class="hljs-params">(<span class="hljs-keyword">int</span> startInclusive, <span class="hljs-keyword">int</span> endInclusive)<br /></span>
+                    <span class="hljs-keyword">static</span> LongStream <span class="hljs-title">range</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endExclusive)<br /></span>
+                    <span class="hljs-keyword">static</span> LongStream <span class="hljs-title">rangeClosed</span><span class="hljs-params">(<span class="hljs-keyword">long</span> startInclusive, <span class="hljs-keyword">long</span> endInclusive)</span>
+                </span>
+            </code></p>
 
             <p>That returns a sequential stream for the range of <code>int</code> or <code>long</code> elements. For example:</p>
 
@@ -341,7 +351,7 @@
 
                     <td style="text-align: center;"><span class="small">Stateful</span></td>
 
-                    <td style="text-align: center;"><span class="small">Returns a stream with the sorted according to the provided <code>Comparator</code>.</span></td>
+                    <td style="text-align: center;"><span class="small">Returns a stream sorted according to the provided <code>Comparator</code>.</span></td>
                 </tr>
 
                 <tr>
@@ -400,19 +410,19 @@
                 <tr>
                     <td style="text-align: center;"><code>boolean allMatch(Predicate&lt;? super T&gt; predicate)</code></td>
 
-                    <td style="text-align: center;"><span class="small">Returns whether all elements of this stream match the provided predicate.</span></td>
+                    <td style="text-align: center;"><span class="small">Returns whether all elements of this stream match the provided predicate.<br /> If the stream is empty then <code>true</code> is returned and the predicate is not evaluated.</span></td>
                 </tr>
 
                 <tr>
                     <td style="text-align: center;"><code>boolean anyMatch(Predicate&lt;? super T&gt; predicate)</code></td>
 
-                    <td style="text-align: center;"><span class="small">Returns whether any elements of this stream match the provided predicate.</span></td>
+                    <td style="text-align: center;"><span class="small">Returns whether any elements of this stream match the provided predicate.<br /> If the stream is empty then <code>false</code> is returned and the predicate is not evaluated.</span></td>
                 </tr>
 
                 <tr>
                     <td style="text-align: center;"><code>boolean noneMatch(Predicate&lt;? super T&gt; predicate)</code></td>
 
-                    <td style="text-align: center;"><span class="small">Returns whether no elements of this stream match the provided predicate.</span></td>
+                    <td style="text-align: center;"><span class="small">Returns whether no elements of this stream match the provided predicate.<br /> If the stream is empty then <code>true</code> is returned and the predicate is not evaluated.</span></td>
                 </tr>
 
                 <tr>
