@@ -209,7 +209,7 @@
 
             <p><code class="java hljs"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Question_14_1</span></span> {<br />
 	  <span class="hljs-function"><span class="hljs-keyword">&nbsp; &nbsp; public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span> {<br />
-	  &nbsp; &nbsp; &nbsp; &nbsp; Optional opt = Optional.of(<span class="hljs-string">"1"</span>);<br />
+	  &nbsp; &nbsp; &nbsp; &nbsp; Optional&lt;String&gt; opt = Optional.of(<span class="hljs-string">"1"</span>);<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; String s =&nbsp;opt.orElseGet(<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; () -&gt; <span class="hljs-keyword">new</span> RuntimeException()<br />
 	  &nbsp; &nbsp; &nbsp; &nbsp; );<br />
