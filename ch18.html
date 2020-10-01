@@ -98,7 +98,7 @@
             <p><code class="java hljs"><span class="hljs-keyword">long</span> start = System.nanoTime();<br />
 	  String first = Stream.of(<span class="hljs-string">"a"</span>,<span class="hljs-string">"b"</span>,<span class="hljs-string">"c"</span>,<span class="hljs-string">"d"</span>,<span class="hljs-string">"e"</span>)<br />
 	  &nbsp; &nbsp; .parallel().findFirst().get();<br />
-	  <span class="hljs-keyword">long</span> duration = (System.nanoTime() - start) / <span class="hljs-number">1000000</span>;<br />
+	  <span class="hljs-keyword">double</span> duration = (System.nanoTime() - start) / <span class="hljs-number">1000000</span>;<br />
 	  System.out.println(<br />
 	  &nbsp; &nbsp; first + <span class="hljs-string">" found in "</span> + duration + <span class="hljs-string">" milliseconds"</span>);</code></p>
 
@@ -111,7 +111,7 @@
             <p><code class="java hljs"><span class="hljs-keyword">long</span> start = System.nanoTime();<br />
 	  String any = Stream.of(<span class="hljs-string">"a"</span>,<span class="hljs-string">"b"</span>,<span class="hljs-string">"c"</span>,<span class="hljs-string">"d"</span>,<span class="hljs-string">"e"</span>)<br />
 	  &nbsp; &nbsp; .parallel().findAny().get();<br />
-	  <span class="hljs-keyword">long</span> duration = (System.nanoTime() - start) / <span class="hljs-number">1000000</span>;<br />
+	  <span class="hljs-keyword">double</span> duration = (System.nanoTime() - start) / <span class="hljs-number">1000000</span>;<br />
 	  System.out.println(<br />
 	  &nbsp; &nbsp; any + <span class="hljs-string">" found in "</span> + duration + <span class="hljs-string">" milliseconds"</span>);</code></p>
 
