@@ -324,8 +324,8 @@
 
             <p><code class="java hljs"><span class="hljs-keyword">try</span> ( BufferedWriter bw =<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp;new</span> BufferedWriter( <span class="hljs-keyword">new</span> FileWriter(<span class="hljs-string">"/file.txt"</span>) ) ) {<br />
-	  &nbsp; &nbsp;w.write(<span class="hljs-string">"Writing to the file..."</span>);<br />
-      &nbsp; &nbsp;w.newLine();<br />
+	  &nbsp; &nbsp;bw.write(<span class="hljs-string">"Writing to the file..."</span>);<br />
+      &nbsp; &nbsp;bw.newLine();<br />
 	  } <span class="hljs-keyword">catch</span>(IOException e) { <span class="hljs-comment">/** ... */</span> }</code></p>
 
             <p>Since data is written to a buffer first, you can call the <code>flush()</code> method to make sure that the text written until that moment is indeed written to the disk.</p>

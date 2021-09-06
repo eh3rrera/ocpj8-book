@@ -278,7 +278,7 @@
 	  <span class="hljs-keyword">&nbsp; &nbsp;boolean</span> hasResults = stmt.execute(<span class="hljs-string">"SELECT * FROM user"</span>);<br />
 	  <span class="hljs-keyword">&nbsp; &nbsp;if</span>(hasResults) {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; // To retrieve the object with the results</span><br />
-	  &nbsp; &nbsp; &nbsp; ResultSet rs = stmt.getResultSet()<br />
+	  &nbsp; &nbsp; &nbsp; ResultSet rs = stmt.getResultSet();<br />
 	  &nbsp; &nbsp;} <span class="hljs-keyword">else</span> {<br />
 	  <span class="hljs-comment">&nbsp; &nbsp; &nbsp; // To get the number of affected rows</span><br />
 	  <span class="hljs-keyword">&nbsp; &nbsp; &nbsp; int</span> affectedRows = stmt.getUpdateCount();<br />
